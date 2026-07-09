@@ -2,13 +2,41 @@
   "cleanUrls": true,
   "redirects": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.dumbmodel.com"
+        }
+      ],
+      "destination": "https://dumbmodel.com/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.dumbmodel.com" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "www.dumbmodel.com"
+        }
+      ],
       "destination": "https://dumbmodel.com/:path*",
       "permanent": true
     },
-    { "source": "/hoops", "destination": "https://hoops.dumbmodel.com", "permanent": false },
-    { "source": "/pitch", "destination": "https://pitch.dumbmodel.com", "permanent": false },
-    { "source": "/gridiron", "destination": "https://gridiron.dumbmodel.com", "permanent": false }
+    {
+      "source": "/hoops",
+      "destination": "https://hoops.dumbmodel.com",
+      "permanent": false
+    },
+    {
+      "source": "/pitch",
+      "destination": "https://pitch.dumbmodel.com",
+      "permanent": false
+    },
+    {
+      "source": "/gridiron",
+      "destination": "https://gridiron.dumbmodel.com",
+      "permanent": false
+    }
   ]
 }
