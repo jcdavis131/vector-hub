@@ -7,8 +7,17 @@ Static. No build step, no dependencies.
 | Path | What |
 |---|---|
 | `index.html` | The whole page |
-| `assets/hub.css` | Styles; light + dark via `prefers-color-scheme` |
+| `assets/hub.css` | Neobrutalist styles aligned with the vector-games family (paper/ink, 2px borders, hard block shadows, orange/blue/purple data accents) — light only |
+| `assets/hub.js` | Scroll-spy nav highlight (vanilla, no deps) |
 | `vercel.json` | `www` → apex, plus `/hoops`, `/pitch`, `/gridiron` shortcuts |
+
+The visual system mirrors the vector games themselves (`vector-hoops`/`-gridiron`/`-pitch`):
+paper-white `#fafaf8` + near-black `#111` ink, 2px ink borders with hard
+`4px 4px 0` block shadows, 10px radius, bold uppercase mono labels, and color
+reserved for data — orange = Hoops, blue = Gridiron, purple = Pitch. The chrome
+(`.site-nav`, `.site-footer`, `.vh-card`, `.vh-btn`, `landing-*`, `mode-card`,
+`how-steps`, `credibility-strip`) reuses the games' token names and primitives so
+the hub reads as part of the same family. Light only — the games are light only.
 
 ## Claims made on this page, and where they come from
 

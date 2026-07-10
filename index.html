@@ -1,139 +1,221 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>dumbmodel — guess your way around a neural net</title>
-<meta name="description" content="Three daily sports puzzles built on learned player embeddings. Feed a model everything public about a player, squash it into one vector, then try to find your way back out.">
+<title>dumbmodel — the vector arcade</title>
+<meta name="description" content="Three daily sports puzzles built on learned player embeddings. Feed a model everything public about a player, squash it into one vector, then try to find your way back out. Beat the model.">
+<meta name="theme-color" content="#fafaf8">
 <link rel="canonical" href="https://dumbmodel.com/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://dumbmodel.com/">
-<meta property="og:title" content="dumbmodel — guess your way around a neural net">
-<meta property="og:description" content="Three daily sports puzzles built on learned player embeddings.">
+<meta property="og:title" content="dumbmodel — the vector arcade">
+<meta property="og:description" content="Three daily sports puzzles built on learned player embeddings. Beat the model.">
 <meta name="twitter:card" content="summary">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%233d5a73'/%3E%3Ccircle cx='11' cy='12' r='3' fill='%23f2efe9'/%3E%3Ccircle cx='21' cy='19' r='3' fill='%23f2efe9'/%3E%3Cpath d='M11 12 L21 19' stroke='%23f2efe9' stroke-width='1.6'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%226%22%20fill%3D%22%23111111%22%2F%3E%3Ccircle%20cx%3D%2211%22%20cy%3D%2212%22%20r%3D%223%22%20fill%3D%22%23eb6834%22%2F%3E%3Ccircle%20cx%3D%2221%22%20cy%3D%2219%22%20r%3D%223%22%20fill%3D%22%232a78d6%22%2F%3E%3Cpath%20d%3D%22M11%2012%20L21%2019%22%20stroke%3D%22%23fafaf8%22%20stroke-width%3D%221.6%22%2F%3E%3C%2Fsvg%3E">
 <link rel="stylesheet" href="/assets/hub.css">
 </head>
 <body>
-<a class="skip-link" href="#games">Skip to the games</a>
+<a class="skip-link" href="#main-content">Skip to content</a>
 
-<main>
-  <header class="hero">
-    <p class="kicker">dumbmodel.com</p>
-    <h1>It's a dumb model. Beat it anyway.</h1>
-    <p class="lede">
-      Take everything public about an athlete — the box score, the tracking data, the
-      draft slot, the salary, the awards nobody remembers — and squash it down into a
-      single list of numbers. That list is the whole player, as far as the model is
-      concerned.
-    </p>
-    <p class="lede">
-      Then we hide the names and hand you the numbers. Three sports, one puzzle a day.
-    </p>
-    <div class="hero__actions">
-      <a class="btn btn--fill" href="https://hoops.dumbmodel.com/">Play today's Vector Hoops</a>
-      <a class="btn" href="#how">How it works</a>
-    </div>
-  </header>
+<nav class="site-nav" aria-label="Primary">
+  <a class="site-nav__brand" href="/">DUMB<span class="site-nav__accent">MODEL</span></a>
+  <div class="site-nav__links">
+    <a class="site-nav__link" href="#games">Games</a>
+    <a class="site-nav__link" href="#status">Status</a>
+    <a class="site-nav__link" href="#model">The model</a>
+    <a class="site-nav__link" href="#fine">Fine print</a>
+    <a class="site-nav__cta" href="https://hoops.dumbmodel.com/">Play today's &rarr;</a>
+  </div>
+</nav>
 
-  <section id="games" aria-labelledby="games-heading">
-    <h2 id="games-heading" class="label">The games</h2>
+<main class="landing-main" id="main-content">
 
-    <div class="games">
-      <a class="game" href="https://hoops.dumbmodel.com/">
-        <h3>Vector Hoops</h3>
-        <p class="game__hook">Two real NBA seasons got fused into one impossible player. Name both.</p>
-        <p class="game__body">
-          12,966 player-seasons, each one a point in a 48-dimensional space the model
-          learned on its own. Guesses are scored by how close you land — so a wrong
-          answer that <em>feels</em> right usually is.
-        </p>
-        <p class="game__meta">NBA · 48-d embedding · daily</p>
-      </a>
-
-      <a class="game" href="https://gridiron.dumbmodel.com/">
-        <h3>Vector Gridiron</h3>
-        <p class="game__hook">Who should you actually start this week?</p>
-        <p class="game__body">
-          One net predicts a player's fantasy points and his stat line at the same
-          time. Learning both makes it better at each — and the 32-dimensional trunk
-          it builds along the way doubles as the map.
-        </p>
-        <p class="game__meta">NFL · 32-d trunk · weekly</p>
-      </a>
-
-      <a class="game" href="https://pitch.dumbmodel.com/">
-        <h3>Vector Pitch</h3>
-        <p class="game__hook">The same trick, played on the World Cup.</p>
-        <p class="game__body">
-          Built from StatsBomb's open event data for 2018 and 2022, normalized inside
-          each tournament so a 2018 workhorse isn't judged against 2022 averages. The
-          map here is still classical — honest PCA, no neural net yet.
-        </p>
-        <p class="game__meta">World Cup · PCA(3) · daily</p>
-      </a>
-    </div>
-  </section>
-
-  <section id="how" aria-labelledby="how-heading">
-    <h2 id="how-heading" class="label">What the model is doing</h2>
-
-    <p>
-      A player isn't one kind of thing. He's a body, a shot chart, a contract, a draft
-      night, a postseason. Most models pick one of those and throw the rest away.
-    </p>
-
-    <p>
-      Vector Hoops doesn't. It runs <strong>seventeen separate towers</strong> — one each for
-      volume, playmaking, rebounding, defense, efficiency, shot mix, biometrics,
-      tracking, form, market value, roster context, career arc, strength of schedule,
-      team, draft pedigree, playoffs, and honors — and then fuses them into a single
-      48-number embedding. Every player-season in history becomes one point.
-    </p>
-
-    <p>
-      The trick is what happens next. That one embedding gets graded on many jobs at
-      once: cluster the archetypes, name the position, rebuild the box score, guess the
-      salary, predict who rises in the playoffs, predict who gets All-NBA votes. A
-      vector that can do all of that simultaneously has nowhere left to hide a lie. It
-      has to actually mean something. That's the <strong>MTNN</strong> — a multi-tower,
-      multi-task net.
-    </p>
-
-    <p>
-      Vector Gridiron runs the same idea with a shared trunk and multiple heads.
-      Vector Pitch is the older, simpler method — PCA — which is exactly what the MTNN
-      was built to replace.
-    </p>
-
-    <div class="note">
-      <p>
-        <strong>Where this is going.</strong> Right now each sport has its own space:
-        48 dimensions for basketball, 32 for football, 3 for soccer. They don't talk to
-        each other. The goal is one joint embedding — many data sources, eventually many
-        sports, folded into a single geometry where you could ask what a power forward
-        and a strong safety have in common and get a real answer.
-      </p>
-      <p>That part isn't built yet. The games are.</p>
+  <section class="landing-hero-band" aria-label="The arcade">
+    <div class="landing-hero">
+      <div class="landing-hero__visual">
+        <p class="landing-hero__eyebrow">Three sports &middot; one puzzle a day &middot; free &middot; no account</p>
+        <div class="hub-roster" aria-hidden="true">
+          <div class="hub-roster__tile hub-roster__tile--orange">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="14" cy="11" r="5" stroke="#eb6834" stroke-width="2.5"/>
+              <circle cx="26" cy="29" r="5" stroke="#2a78d6" stroke-width="2.5"/>
+              <path d="M17 15 L23 25" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="hub-roster__tile hub-roster__tile--blue">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 30 L16 22 L22 26 L34 10" stroke="#2a78d6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M27 10 L34 10 L34 17" stroke="#111111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="hub-roster__tile hub-roster__tile--purple">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 32 L8 8 M8 32 L34 32" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="15" cy="25" r="2.6" fill="#7d5cc9"/>
+              <circle cx="23" cy="18" r="2.6" fill="#7d5cc9"/>
+              <circle cx="30" cy="13" r="2.6" fill="#7d5cc9"/>
+            </svg>
+          </div>
+        </div>
+        <ul class="landing-hero__chips" aria-label="Quick facts">
+          <li>3 sports in rotation</li>
+          <li>12,966 player-seasons</li>
+          <li>Era-honest comparisons</li>
+        </ul>
+      </div>
+      <div class="landing-hero__copy">
+        <h1 class="landing-hero__title">It's a dumb model.<br>Beat it <span class="landing-hero__title-accent">anyway</span>.</h1>
+        <p class="landing-tagline">Take everything public about an athlete &mdash; the box score, the tracking data, the draft slot, the salary, the awards nobody remembers &mdash; and squash it down into a single list of numbers. That list is the whole player, as far as the model is concerned.</p>
+        <p class="landing-puzzle-line">Then we hide the names and hand you the numbers. <b>The model is wrong all the time &mdash; that's the fun part.</b></p>
+        <div class="landing-hero__actions">
+          <a class="vh-btn vh-btn--primary" href="https://hoops.dumbmodel.com/">Play today's Vector Hoops &rarr;</a>
+          <a class="vh-btn vh-btn--accent" href="#model">How it works</a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section aria-labelledby="honest-heading">
-    <h2 id="honest-heading" class="label">The fine print</h2>
-    <ul class="fine">
-      <li>Every number is recomputable from public sources: stats.nba.com, Basketball-Reference, nflverse, StatsBomb open data.</li>
-      <li>Era- and context-honest. Stats are normalized inside their own season or tournament before anything is compared.</li>
-      <li>Free. No account, no ads, no tracking.</li>
-      <li>It is called dumbmodel for a reason. It is wrong all the time. That's the fun part.</li>
-    </ul>
+  <section class="landing-section" id="games" aria-labelledby="games-label">
+    <span class="landing-section__label" id="games-label">The roster &middot; three games</span>
+    <p class="landing-section__intro">One puzzle a day per sport. Each game runs a real model on real public data &mdash; no staged scores, no decorative math.</p>
+    <div class="mode-grid">
+
+      <a class="vh-card mode-card mode-card--orange" href="https://hoops.dumbmodel.com/">
+        <div class="mode-card__glyph" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="14" cy="11" r="5" stroke="#eb6834" stroke-width="2.5"/>
+            <circle cx="26" cy="29" r="5" stroke="#2a78d6" stroke-width="2.5"/>
+            <path d="M17 15 L23 25" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="mode-card__head">
+          <h3 class="mode-card__title">Vector Hoops</h3>
+          <span class="mode-card__num">Game 01</span>
+        </div>
+        <p class="mode-card__hook">Two real NBA seasons got fused into one impossible player. Name both.</p>
+        <p class="mode-card__pitch">12,966 player-seasons, each one a point in a 48-dimensional space the model learned on its own. Guesses are scored by how close you land &mdash; so a wrong answer that <em>feels</em> right usually is.</p>
+        <p class="mode-card__meta"><span class="pill">NBA</span> &middot; 48-d embedding &middot; daily</p>
+      </a>
+
+      <a class="vh-card mode-card mode-card--blue" href="https://gridiron.dumbmodel.com/">
+        <div class="mode-card__glyph" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 30 L16 22 L22 26 L34 10" stroke="#2a78d6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M27 10 L34 10 L34 17" stroke="#111111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="mode-card__head">
+          <h3 class="mode-card__title">Vector Gridiron</h3>
+          <span class="mode-card__num">Game 02</span>
+        </div>
+        <p class="mode-card__hook">Who should you actually start this week?</p>
+        <p class="mode-card__pitch">One net predicts a player's fantasy points and his stat line at the same time. Learning both makes it better at each &mdash; and the 32-dimensional trunk it builds along the way doubles as the map.</p>
+        <p class="mode-card__meta"><span class="pill">NFL</span> &middot; 32-d trunk &middot; weekly</p>
+      </a>
+
+      <a class="vh-card mode-card mode-card--purple" href="https://pitch.dumbmodel.com/">
+        <div class="mode-card__glyph" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 32 L8 8 M8 32 L34 32" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="15" cy="25" r="2.6" fill="#7d5cc9"/>
+            <circle cx="23" cy="18" r="2.6" fill="#7d5cc9"/>
+            <circle cx="30" cy="13" r="2.6" fill="#7d5cc9"/>
+          </svg>
+        </div>
+        <div class="mode-card__head">
+          <h3 class="mode-card__title">Vector Pitch</h3>
+          <span class="mode-card__num">Game 03</span>
+        </div>
+        <p class="mode-card__hook">The same trick, played on the World Cup.</p>
+        <p class="mode-card__pitch">Built from StatsBomb's open event data for 2018 and 2022, normalized inside each tournament so a 2018 workhorse isn't judged against 2022 averages. The map here is still classical &mdash; honest PCA, no neural net yet.</p>
+        <p class="mode-card__meta"><span class="pill">World Cup</span> &middot; PCA(3) &middot; daily</p>
+      </a>
+
+    </div>
   </section>
+
+  <section class="landing-section" id="status" aria-labelledby="status-label">
+    <span class="landing-section__label" id="status-label">Season status</span>
+    <div class="stat-grid" aria-label="The arcade at a glance">
+      <div class="stat-card">
+        <p class="stat-card__value">3</p>
+        <p class="stat-card__label">Sports in rotation</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-card__value">12,966</p>
+        <p class="stat-card__label">Hoops player-seasons</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-card__value stat-card__value--accent">48 / 32 / 3</p>
+        <p class="stat-card__label">Embedding dims &middot; NBA / NFL / WC</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-card__value">Free</p>
+        <p class="stat-card__label">No account &middot; no ads</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="landing-section" id="model" aria-labelledby="model-label">
+    <span class="landing-section__label" id="model-label">What the model is doing</span>
+    <p class="landing-section__intro">A player isn't one kind of thing. He's a body, a shot chart, a contract, a draft night, a postseason. Most models pick one of those and throw the rest away.</p>
+    <ol class="how-steps" aria-label="How the model works">
+      <li>
+        <span class="how-steps__num">01 &middot; Towers</span>
+        <h3 class="how-steps__title">Seventeen towers, fused</h3>
+        <p class="how-steps__text">Vector Hoops runs <strong>seventeen separate towers</strong> &mdash; one each for volume, playmaking, rebounding, defense, efficiency, shot mix, biometrics, tracking, form, market value, roster context, career arc, strength of schedule, team, draft pedigree, playoffs, and honors &mdash; then fuses them into a single 48-number embedding. Every player-season in history becomes one point.</p>
+      </li>
+      <li>
+        <span class="how-steps__num">02 &middot; Multi-task</span>
+        <h3 class="how-steps__title">One vector, many jobs</h3>
+        <p class="how-steps__text">That embedding gets graded on many jobs at once: cluster the archetypes, name the position, rebuild the box score, guess the salary, predict who rises in the playoffs, predict who gets All-NBA votes. A vector that can do all of that simultaneously has nowhere left to hide a lie. That's the <strong>MTNN</strong> &mdash; a multi-tower, multi-task net.</p>
+      </li>
+      <li>
+        <span class="how-steps__num">03 &middot; Per sport</span>
+        <h3 class="how-steps__title">Shared trunk, classical fallback</h3>
+        <p class="how-steps__text">Vector Gridiron runs the same idea with a shared trunk and multiple heads. Vector Pitch is the older, simpler method &mdash; PCA &mdash; which is exactly what the MTNN was built to replace.</p>
+      </li>
+    </ol>
+    <div class="note-card">
+      <p class="note-card__head">Where this is going</p>
+      <p>Right now each sport has its own space: <strong>48 dimensions for basketball, 32 for football, 3 for soccer.</strong> They don't talk to each other. The goal is one joint embedding &mdash; many data sources, eventually many sports, folded into a single geometry where you could ask what a power forward and a strong safety have in common and get a real answer.</p>
+      <p>No joint embedding exists yet. The games do.</p>
+    </div>
+  </section>
+
+  <section class="landing-section" id="fine" aria-labelledby="fine-label">
+    <span class="landing-section__label" id="fine-label">The fine print</span>
+    <div class="vh-card fine-card">
+      <ul class="fine-list">
+        <li>Every number is recomputable from public sources: stats.nba.com, Basketball-Reference, nflverse, StatsBomb open data.</li>
+        <li>Era- and context-honest. Stats are normalized inside their own season or tournament before anything is compared.</li>
+        <li>Free. No account, no ads, no tracking.</li>
+        <li>It is called dumbmodel for a reason. It is wrong all the time. That's the fun part.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="landing-section landing-section--strip" aria-label="Built honest">
+    <div class="credibility-strip">
+      <p>Every number on every game is recomputable from public source data &mdash; an accuracy harness gates every deploy.</p>
+      <a href="#games">Back to the roster &rarr;</a>
+    </div>
+  </section>
+
 </main>
 
-<footer>
-  <p>
-    Built by <a href="https://jcamd.com/">J. Cameron Davis</a> ·
-    <a href="https://github.com/jcdavis131">GitHub</a>
-  </p>
+<footer class="site-footer">
+  <div class="site-footer__links">
+    <a href="https://hoops.dumbmodel.com/">Vector Hoops</a>
+    <a href="https://gridiron.dumbmodel.com/">Vector Gridiron</a>
+    <a href="https://pitch.dumbmodel.com/">Vector Pitch</a>
+    <a href="https://jcamd.com/">J. Cameron Davis</a>
+    <a href="https://github.com/jcdavis131" target="_blank" rel="noopener">GitHub</a>
+  </div>
+  <div class="site-footer__attribution">Three daily sports puzzles built on learned player embeddings &middot; the model is wrong all the time &mdash; that's the fun part &middot; &copy; 2026 dumbmodel, built by J. Cameron Davis</div>
 </footer>
+
+<script src="/assets/hub.js" defer></script>
 </body>
 </html>
