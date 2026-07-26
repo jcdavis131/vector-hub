@@ -28,10 +28,12 @@ Copy here asserts things about the models. Keep it true.
 - **Multi-task heads** (archetype, position, profile reconstruction, salary, playoff
   riser, honors, per-skill towers) — `vector-hoops/pipeline/train_mtnn.py`.
 - **Gridiron: shared trunk, 32-d embedding** — `vector-gridiron/pipeline/train_models.py`.
-- **Pitch: PCA(3) + k-means(8), no neural net** — `vector-pitch/pipeline/build_vectors.py`.
-  Do not describe Pitch as an MTNN. It isn't one.
-- **No cross-sport joint embedding exists.** The page frames it as a goal, explicitly
-  not shipped. Do not upgrade that to a claim.
+- **Pitch: MTNN 24-d (SupCon v1.1) additive export** — `vector-pitch/pipeline/train_mtnn.py`
+  + `assets/pitch_mtnn_embeddings.json`. Live daily game board still PCA(3)+k-means via
+  `build_vectors.py` / `assets/vectors.json` until the UI swaps.
+- **Cross-sport joint embedding shipped (v0.1+)** — `vector-unified/assets/unified.json`
+  (20,721 player-seasons × 64-d). G1/G3/G4 PASS; G2 sport-invariance deferred.
+  Hub copy: shipped-with-caveats, not a joint daily puzzle yet.
 
 Note: `train_mtnn.py`'s docstring says "gated attention fusion (not naive concat)", but
 the promoted checkpoint is `mtnn_v5_concat_…` and `mtnn_arch.json` records

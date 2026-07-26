@@ -174,13 +174,13 @@
       <li>
         <span class="how-steps__num">03 &middot; Per sport</span>
         <h3 class="how-steps__title">Shared trunk, classical fallback</h3>
-        <p class="how-steps__text">Vector Gridiron runs the same idea with a shared trunk and multiple heads. Vector Pitch is the older, simpler method &mdash; PCA &mdash; which is exactly what the MTNN was built to replace.</p>
+        <p class="how-steps__text">Vector Gridiron runs the same idea with a shared trunk and multiple heads. Vector Pitch now ships a true MTNN (24-d) that beats the old PCA baseline on role recovery; the live daily game still uses the PCA board until the UI swaps.</p>
       </li>
     </ol>
     <div class="note-card">
       <p class="note-card__head">Where this is going</p>
-      <p>Right now each sport has its own space: <strong>48 dimensions for basketball, 32 for football, 3 for soccer.</strong> They don't talk to each other. The goal is one joint embedding &mdash; many data sources, eventually many sports, folded into a single geometry where you could ask what a power forward and a strong safety have in common and get a real answer.</p>
-      <p>No joint embedding exists yet. The games do.</p>
+      <p>The per-sport games still live in their own spaces (<strong>48-d hoops, 32-d gridiron, 24-d pitch MTNN</strong>). On top of that, a <strong>64-d joint embedding</strong> now folds ~20.7k player-seasons across the three sports into one shared role geometry &mdash; so you <em>can</em> ask what a power forward and a strong safety have in common and get a real neighbour.</p>
+      <p>Shipped with caveats: sport identity is still partly recoverable from the joint vector (fairness-style invariance is deferred), and there is no joint daily puzzle yet. The three games are still the product you play.</p>
     </div>
   </section>
 
