@@ -3,21 +3,43 @@
  * Paper white + near-black ink, 2px ink borders, hard offset block shadows,
  * bold uppercase mono labels. Color is reserved for DATA: orange = Hoops,
  * blue = Gridiron, purple = Pitch. Tokens mirror assets/hoops.css so the
- * chrome (nav/footer/cards/buttons) is identical to the games. */
+ * chrome (nav/footer/cards/buttons) is identical to the games.
+ *
+ * The data colours are the Fargekart set — see the :root block. This is the
+ * one page in the family where all four appear at once, so it is where the
+ * set has to hold up. */
 
 :root{
-  --paper: #fafaf8;
+  /* Ground: a warmer gallery white and a blue-black ink, both off the
+     Fargekart. 16.36:1, so the contrast headroom is unchanged. */
+  --paper: #f7f5f0;
   --surface: #ffffff;
-  --ink: #111111;
+  --ink: #14181d;
   --ink-soft: #52514e;
   --ink-muted: #898781;
   --hairline: #e1e0d9;
   --panel-dark: #131312;
 
-  --data-orange: #eb6834;  /* Vector Hoops */
-  --data-blue:   #2a78d6;  /* Vector Gridiron */
-  --data-purple: #7d5cc9;  /* Vector Pitch */
-  --data-green:  #009E73;  /* Vector Equities - Okabe-Ito green */
+  /* Fargekart — the categorical set. Named for their sources so the family
+     shares vocabulary rather than four loose hex codes.
+
+     Chosen as a SET, not one at a time: the previous palette put Pitch and
+     Equities 15.8 dE apart under deuteranopia, close enough that a reader
+     with it could not separate the two series on a chart. This set moves the
+     worst pair, across deuteranopia / protanopia / tritanopia, to 29.5, and
+     lifts the weakest contrast on paper from 2.94:1 to 3.64:1.
+
+     Slot names keep their hue family on purpose — .mode-card--purple still
+     carries a purple — so no class or selector had to be renamed. */
+  --korall:   #d8452a;     /* the red cabin, Nordfjord print */
+  --fjord:    #1b45a7;     /* deep water under the layered bands */
+  --lavendel: #9b6bc4;     /* Fargekart, first row */
+  --furu:     #2e6b19;     /* pine slope, and the stadium turf */
+
+  --data-orange: var(--korall);    /* Vector Hoops     4.01:1 on paper */
+  --data-blue:   var(--fjord);     /* Vector Gridiron  7.85:1 */
+  --data-purple: var(--lavendel);  /* Vector Pitch     3.64:1 */
+  --data-green:  var(--furu);      /* Vector Equities  5.96:1 */
   --cold: #d03b3b;
 
   --shadow-block:    4px 4px 0 var(--ink);
