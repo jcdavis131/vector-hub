@@ -425,6 +425,7 @@ a:focus-visible, button:focus-visible{
   color: var(--ink);
   border-bottom: 2px solid var(--data-orange);
   display: inline-block;
+  margin: 0;
   padding-bottom: 2px;
   align-self: flex-start;
 }
