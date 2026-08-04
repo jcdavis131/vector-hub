@@ -4,17 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>dumbmodel — the vector arcade</title>
-<meta name="description" content="Four daily vector puzzles — NBA, NFL, World Cup, and public companies. Feed a model everything public, squash it into one vector, then try to find your way back out.">
+<meta name="description" content="Six model cards, four daily vector puzzles — NBA, NFL, World Cup, tennis, public companies, and one joint cross-sport embedding. Every number recomputable from public data.">
 <meta name="theme-color" content="#fafaf8">
 <link rel="canonical" href="https://dumbmodel.com/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://dumbmodel.com/">
 <meta property="og:title" content="dumbmodel — the vector arcade">
-<meta property="og:description" content="Four daily vector puzzles — NBA, NFL, World Cup, and Equities. Beat the model.">
+<meta property="og:description" content="Six models, four daily vector puzzles — NBA, NFL, World Cup, tennis, equities, and a joint cross-sport embedding. Beat the model.">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%226%22%20fill%3D%22%23111111%22%2F%3E%3Ccircle%20cx%3D%2211%22%20cy%3D%2212%22%20r%3D%223%22%20fill%3D%22%23eb6834%22%2F%3E%3Ccircle%20cx%3D%2221%22%20cy%3D%2219%22%20r%3D%223%22%20fill%3D%22%232a78d6%22%2F%3E%3Cpath%20d%3D%22M11%2012%20L21%2019%22%20stroke%3D%22%23fafaf8%22%20stroke-width%3D%221.6%22%2F%3E%3C%2Fsvg%3E">
 <link rel="stylesheet" href="/assets/hub.css">
 <link rel="stylesheet" href="/assets/motion.css">
+<link rel="stylesheet" href="/assets/model.css">
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -23,7 +24,7 @@
   <a class="site-nav__brand" href="/">DUMB<span class="site-nav__accent">MODEL</span></a>
   <div class="site-nav__links">
     <a class="site-nav__link" href="#games">Games</a>
-    <a class="site-nav__link" href="#status">Status</a>
+    <a class="site-nav__link" href="#models">Model cards</a>
     <a class="site-nav__link" href="#model">The model</a>
     <a class="site-nav__link" href="#fine">Fine print</a>
     <a class="site-nav__cta" href="https://hoops.dumbmodel.com/">Play today's &rarr;</a>
@@ -35,7 +36,7 @@
   <section class="landing-hero-band" aria-label="The arcade">
     <div class="landing-hero">
       <div class="landing-hero__visual">
-        <p class="landing-hero__eyebrow">Four vectors &middot; one puzzle a day &middot; free &middot; no account</p>
+        <p class="landing-hero__eyebrow">Six models &middot; four daily puzzles &middot; free &middot; no account</p>
         <div class="hub-roster" aria-hidden="true">
           <div class="hub-roster__tile hub-roster__tile--orange">
             <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -68,8 +69,8 @@
           </div>
         </div>
         <ul class="landing-hero__chips" aria-label="Quick facts">
-          <li>4 models in rotation</li>
-          <li>12,966 NBA + 3371 tickers</li>
+          <li>6 models &middot; 4 daily puzzles</li>
+          <li>12,966 NBA &middot; 3,371 tickers &middot; 4,022 tennis</li>
           <li>Era-honest comparisons</li>
         </ul>
       </div>
@@ -86,8 +87,8 @@
   </section>
 
   <section class="landing-section" id="games" aria-labelledby="games-label">
-    <h2 class="landing-section__label" id="games-label">The roster &middot; four models</h2>
-    <p class="landing-section__intro">One puzzle a day per model. Each runs a real model on real public data &mdash; no staged scores, no decorative math. Three sports + one market.</p>
+    <h2 class="landing-section__label" id="games-label">The roster &middot; four daily games</h2>
+    <p class="landing-section__intro">One puzzle a day per game. Each runs a real model on real public data &mdash; no staged scores, no decorative math. Three sports + one market. Two more models &mdash; <a href="/models/tennis.html">tennis</a> and the <a href="/models/unified.html">joint cross-sport embedding</a> &mdash; ship as model cards with a playable probe, but no daily puzzle yet.</p>
     <div class="mode-grid" data-vx-stagger>
 
       <a class="vh-card mode-card mode-card--orange" href="https://hoops.dumbmodel.com/">
@@ -162,20 +163,33 @@
     </div>
   </section>
 
+  <section class="landing-section" id="models" aria-labelledby="models-label">
+    <h2 class="landing-section__label" id="models-label">Model cards &middot; six</h2>
+    <p class="landing-section__intro">One card per model. Real measured findings, the model&rsquo;s own limitations quoted from its artifacts rather than paraphrased, and <strong>Split Decision</strong> &mdash; a game that shows you two real entities and asks which one the model rates higher. The answer key is the model&rsquo;s own numbers, so you are probing the model, not guessing at a future it never predicted.</p>
+    <div class="model-switch model-switch--hub">
+      <a href="/models/hoops.html">Hoops &rarr;</a>
+      <a href="/models/gridiron.html">Gridiron &rarr;</a>
+      <a href="/models/pitch.html">Pitch &rarr;</a>
+      <a href="/models/equities.html">Equities &rarr;</a>
+      <a href="/models/tennis.html">Tennis &rarr;</a>
+      <a href="/models/unified.html">Unified &rarr;</a>
+    </div>
+  </section>
+
   <section class="landing-section" id="status" aria-labelledby="status-label">
     <h2 class="landing-section__label" id="status-label">Season status</h2>
     <div class="stat-grid" aria-label="The arcade at a glance" data-vx-stagger>
       <div class="stat-card">
-        <p class="stat-card__value">4</p>
-        <p class="stat-card__label">Models in rotation</p>
+        <p class="stat-card__value">6</p>
+        <p class="stat-card__label">Model cards &middot; 4 with a daily game</p>
       </div>
       <div class="stat-card">
-        <p class="stat-card__value">16,337</p>
-        <p class="stat-card__label">Hoops + Equities entities</p>
+        <p class="stat-card__value">20,359</p>
+        <p class="stat-card__label">Hoops + Equities + Tennis rows</p>
       </div>
       <div class="stat-card">
-        <p class="stat-card__value stat-card__value--accent">48 / 32 / 3 / 96</p>
-        <p class="stat-card__label">Embedding dims &middot; NBA / NFL / WC / EQ</p>
+        <p class="stat-card__value stat-card__value--accent">48/32/24/96/64</p>
+        <p class="stat-card__label">Dims &middot; NBA / NFL / WC / EQ / joint</p>
       </div>
       <div class="stat-card">
         <p class="stat-card__value">Free</p>
@@ -238,6 +252,8 @@
     <a href="https://gridiron.dumbmodel.com/">Vector Gridiron</a>
     <a href="https://pitch.dumbmodel.com/">Vector Pitch</a>
     <a href="https://equities.dumbmodel.com/">Vector Equities</a>
+    <a href="/models/tennis.html">Vector Tennis</a>
+    <a href="/models/unified.html">Vector Unified</a>
     <a href="https://jcamd.com/">J. Cameron Davis</a>
     <a href="https://github.com/jcdavis131" target="_blank" rel="noopener">GitHub</a>
   </div>
