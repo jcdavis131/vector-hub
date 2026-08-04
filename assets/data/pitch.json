@@ -1,0 +1,211 @@
+{
+ "slug": "pitch",
+ "name": "Vector Pitch",
+ "tagline": "2,430 player-seasons from five international tournaments and six club league seasons, embedded in 24 dimensions where playing role — not league — sets the geometry.",
+ "dims": "24-d MTNN",
+ "entity_count": 2430,
+ "source_files": [
+  "C:/Users/jcdav/vector-pitch/assets/pitch_mtnn_embeddings.json",
+  "C:/Users/jcdav/vector-unified/data/pitch_age_axis.json",
+  "C:/Users/jcdav/vector-unified/data/pitch_expectation_sources.json"
+ ],
+ "headline_stats": [
+  {
+   "value": "2,430",
+   "label": "player-seasons embedded (1,833 distinct names)",
+   "source": "pitch_mtnn_embeddings.json → n_players; pitch_expectation_sources.json → distinct_names"
+  },
+  {
+   "value": "85.3%",
+   "label": "nearest neighbours that share a position label",
+   "source": "computed from pitch_mtnn_embeddings.json → players[].e_p and players[].pos (top-1 cosine over all 2,430 rows)"
+  },
+  {
+   "value": "43.8%",
+   "label": "of rows scorable on the age-expectation axis",
+   "source": "pitch_age_axis.json → report.pct_scorable (1,064 of 2,430)"
+  },
+  {
+   "value": "24",
+   "label": "embedding dimensions per player-season",
+   "source": "pitch_mtnn_embeddings.json → d_emb"
+  }
+ ],
+ "insights": [
+  {
+   "title": "Role is the geometry, not fame",
+   "body": "The model is recorded as \"PitchMTNN v1.1 (position SupCon)\" and the vectors bear that out: the top-1 nearest neighbour of a player-season shares its position label 85.3% of the time. Mean cosine between same-position rows is 0.9244, against 0.7600 for different-position rows. Kevin De Bruyne's 2015/16 Manchester City vector sits 0.9098 from Mohamed Salah's Roma season, which is filed FWD, and only 0.8212 from Declan Rice at Euro 2024, which is filed MID.",
+   "source": "C:/Users/jcdav/vector-pitch/assets/pitch_mtnn_embeddings.json → model, players[].e_p, players[].pos (pairwise cosines computed over all rows)"
+  },
+  {
+   "title": "The league is essentially invisible",
+   "body": "Mean cosine between rows drawn from the same context is 0.8153; between rows from different contexts it is 0.8189 — the cross-context figure is marginally higher. Only 28.6% of top-1 nearest neighbours come from the same one of the 11 contexts. Messi's WC 2022 row is 0.9964 from Mbappé's WC 2022 but 0.9859 from his own 2018/19 Barcelona season, which ranks only 85th of 2,429 candidates.",
+   "source": "C:/Users/jcdav/vector-pitch/assets/pitch_mtnn_embeddings.json → contexts, players[].e_p, players[].context (cosines and ranks computed)"
+  },
+  {
+   "title": "The age axis is largely a team-quality ranking",
+   "body": "pitch_age_axis records corr(age, delivery) = -0.1671, while the delivery residual correlates 0.2626 with the leave-one-out teammate mean across 1,040 pairs. The file's own verdict on that comparison is \"DOMINATES — the residual tracks team strength more strongly than age tracks delivery.\" Only 1,064 of 2,430 rows are scorable at all, and the labelled tails come to 208 P0 and 208 P1 with 624 left unlabelled.",
+   "source": "C:/Users/jcdav/vector-unified/data/pitch_age_axis.json → report.corr_age_delivery, report.team_strength_confound.{n_pairs, corr_residual_vs_teammate_mean, verdict}, report.rows_scorable, report.counts"
+  },
+  {
+   "title": "There is no free market prior for football, so age had to stand in",
+   "body": "The expectation-source audit resolved 1,538 of 1,833 distinct names (83.9%) using Wikidata SPARQL alone, with dob coverage at 83.9% and first-club-start at 80.2%. 115 names stayed ambiguous — \"Paulinho\" alone returned 18 candidate people, \"Marquinhos\" 13. Transfer fees and market values were rejected in advance because \"No free source. Transfermarkt is the only real one and scraping it at corpus scale is neither polite nor reliable,\" and the file warns that age \"is NOT the same construct as a draft slot.\"",
+   "source": "C:/Users/jcdav/vector-unified/data/pitch_expectation_sources.json → resolved_unambiguously, distinct_names, resolved_pct, field_coverage_pct_of_names, ambiguous_names, ambiguous_examples, rejected_in_advance, construct_warning"
+  },
+  {
+   "title": "Two \"right-backs\" the model refuses to pair",
+   "body": "Kyle Walker's Euro 2024 vector is 0.9977 from Thiago Silva's WC 2018 row and only 0.8276 from Achraf Hakimi at WC 2022, though all three carry the same DEF label. The same split shows up from the other side: van Dijk's WC 2022 row reaches 0.9992 to John Stones at Euro 2020 but falls to 0.8300 for Hakimi. Inside a single position label the spread is nearly 0.17 — wider than anything the league boundary produces.",
+   "source": "C:/Users/jcdav/vector-pitch/assets/pitch_mtnn_embeddings.json → players[].e_p for rows keyed on (name, context); cosines computed"
+  }
+ ],
+ "game": {
+  "kind": "split-decision",
+  "prompt": "Two real player-seasons, one anchor. Which one does Vector Pitch place closer to the anchor in its 24-dimensional space?",
+  "axis_label": "Cosine similarity to the anchor (24-d e_p)",
+  "explainer": "Every e_p vector in the file is unit length, so the score is the pure angle between two 24-dimensional role vectors — 1.0000 would mean identical direction.",
+  "rounds": [
+   {
+    "a": {
+     "name": "Florian Wirtz",
+     "sub": "Euro 2024 · FWD · Germany → anchor: Luka Modrić (WC 2018)",
+     "value": 0.9865
+    },
+    "b": {
+     "name": "Toni Kroos",
+     "sub": "Euro 2024 · MID · Germany → anchor: Luka Modrić (WC 2018)",
+     "value": 0.8938
+    },
+    "answer": "a",
+    "reveal": "Wirtz is filed FWD and Kroos MID, yet Modrić's WC 2018 vector lands 0.9865 from Wirtz and only 0.8938 from his long-time Real Madrid midfield partner."
+   },
+   {
+    "a": {
+     "name": "Lionel Messi",
+     "sub": "La Liga 2020/2021 · FWD · Barcelona → anchor: Lionel Messi (WC 2022)",
+     "value": 0.9818
+    },
+    "b": {
+     "name": "Kylian Mbappé",
+     "sub": "WC 2022 · FWD · France → anchor: Lionel Messi (WC 2022)",
+     "value": 0.9964
+    },
+    "answer": "b",
+    "reveal": "Messi's WC 2022 row sits 0.9964 from the man he beat in the final and 0.9818 from his own 2020/21 Barcelona season, which ranks 126th of 2,429 rows by closeness to him."
+   },
+   {
+    "a": {
+     "name": "Mohamed Salah",
+     "sub": "Serie A 2015/2016 · FWD · AS Roma → anchor: Kevin De Bruyne (Premier League 2015/2016)",
+     "value": 0.9098
+    },
+    "b": {
+     "name": "Declan Rice",
+     "sub": "Euro 2024 · MID · England → anchor: Kevin De Bruyne (Premier League 2015/2016)",
+     "value": 0.8212
+    },
+    "answer": "a",
+    "reveal": "De Bruyne's 2015/16 City vector reaches 0.9098 to a forward and 0.8212 to a fellow midfielder — against a file-wide mean same-position cosine of 0.9244, Rice is below even the average stranger sharing his label."
+   },
+   {
+    "a": {
+     "name": "Thiago Silva",
+     "sub": "WC 2018 · DEF · Brazil → anchor: Virgil van Dijk (WC 2022)",
+     "value": 0.9991
+    },
+    "b": {
+     "name": "John Stones",
+     "sub": "Euro 2020 · DEF · England → anchor: Virgil van Dijk (WC 2022)",
+     "value": 0.9992
+    },
+    "answer": "b",
+    "reveal": "A 0.0001 gap — van Dijk's WC 2022 vector is 0.9992 from Stones and 0.9991 from Thiago Silva, the two rows that head his entire neighbour list."
+   },
+   {
+    "a": {
+     "name": "Thiago Silva",
+     "sub": "WC 2018 · DEF · Brazil → anchor: Kyle Walker (Euro 2024)",
+     "value": 0.9977
+    },
+    "b": {
+     "name": "Achraf Hakimi",
+     "sub": "WC 2022 · DEF · Morocco → anchor: Kyle Walker (Euro 2024)",
+     "value": 0.8276
+    },
+    "answer": "a",
+    "reveal": "Walker and Hakimi share the DEF label and the same attacking-full-back reputation, but Walker's Euro 2024 vector is 0.9977 from a 33-year-old centre-back and 0.8276 from Hakimi."
+   },
+   {
+    "a": {
+     "name": "Kevin De Bruyne",
+     "sub": "Premier League 2015/2016 · MID · Manchester City → anchor: N'Golo Kanté (Premier League 2015/2016)",
+     "value": 0.891
+    },
+    "b": {
+     "name": "Casemiro",
+     "sub": "WC 2022 · MID · Brazil → anchor: N'Golo Kanté (Premier League 2015/2016)",
+     "value": 0.9855
+    },
+    "answer": "b",
+    "reveal": "Same league, same season, same MID label puts De Bruyne at 0.8910 from Kanté, while Casemiro's WC 2022 row — different competition, different continent, six years later — sits at 0.9855."
+   },
+   {
+    "a": {
+     "name": "Robert Lewandowski",
+     "sub": "WC 2022 · FWD · Poland → anchor: Harry Kane (Euro 2024)",
+     "value": 0.9968
+    },
+    "b": {
+     "name": "Cristiano Ronaldo",
+     "sub": "Euro 2024 · FWD · Portugal → anchor: Harry Kane (Euro 2024)",
+     "value": 0.9952
+    },
+    "answer": "a",
+    "reveal": "0.0016 apart: Kane's Euro 2024 row is 0.9968 from Lewandowski's WC 2022 and 0.9952 from Ronaldo at the same tournament — all three sit inside the dense centre-forward cluster."
+   },
+   {
+    "a": {
+     "name": "Casemiro",
+     "sub": "WC 2022 · MID · Brazil → anchor: Sergio Busquets (WC 2018)",
+     "value": 0.9452
+    },
+    "b": {
+     "name": "Rodri",
+     "sub": "Euro 2024 · MID · Spain → anchor: Sergio Busquets (WC 2018)",
+     "value": 0.9875
+    },
+    "answer": "b",
+    "reveal": "The Spain succession is the closer match by 0.0423 — Busquets' WC 2018 vector reads 0.9875 to Rodri's Euro 2024 row and 0.9452 to Casemiro's."
+   },
+   {
+    "a": {
+     "name": "Trent Sainsbury",
+     "sub": "WC 2018 · DEF · Australia → anchor: Joshua Kimmich (Euro 2024)",
+     "value": 0.9356
+    },
+    "b": {
+     "name": "Kyle Walker",
+     "sub": "Euro 2024 · DEF · England → anchor: Joshua Kimmich (Euro 2024)",
+     "value": 0.9292
+    },
+    "answer": "a",
+    "reveal": "0.0064 separates them: Kimmich's Euro 2024 row is 0.9356 from Australia's Trent Sainsbury at WC 2018 and 0.9292 from Kyle Walker at the very same tournament."
+   },
+   {
+    "a": {
+     "name": "Neymar",
+     "sub": "WC 2022 · MID · Brazil → anchor: Neymar (WC 2018)",
+     "value": 0.9854
+    },
+    "b": {
+     "name": "Eden Hazard",
+     "sub": "WC 2018 · FWD · Belgium → anchor: Neymar (WC 2018)",
+     "value": 0.9911
+    },
+    "answer": "b",
+    "reveal": "Neymar appears twice — FWD at WC 2018 and MID at WC 2022 — and his 2018 vector is 0.9911 from Hazard's 2018 row against 0.9854 from his own 2022 self."
+   }
+  ]
+ },
+ "caveat": "Recorded verbatim in pitch_age_axis.json → report.team_strength_confound: \"DOMINATES — the residual tracks team strength more strongly than age tracks delivery. Read P0/P1 as team-quality-contaminated.\" The per-position control that follows drives corr(residual, teammate mean) from 0.2626 to -0.0, but the same file flags that number as \"ORTHOGONALITY BY CONSTRUCTION, not evidence — OLS residuals are orthogonal to their own predictors, so this check can no longer detect a residual team effect and must not be read as proving one is absent.\"",
+ "_verification": "CLEAN — adversarially verified against source artifacts"
+}

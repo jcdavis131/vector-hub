@@ -1,0 +1,214 @@
+{
+ "slug": "gridiron",
+ "name": "Vector Gridiron",
+ "tagline": "An NFL model that projects per-game PPR output for 646 players in the 2026 season, and publishes the week-by-week walk-forward accuracy it actually earned on 2025.",
+ "dims": "32-d MTNN v2 gated fusion (d_emb=32, 13 feature families)",
+ "entity_count": 646,
+ "source_files": [
+  "C:/Users/jcdav/vector-gridiron/assets/projections.json",
+  "C:/Users/jcdav/vector-gridiron/assets/eval_backtest.json",
+  "C:/Users/jcdav/vector-unified/data/trajectory_axis_gridiron.json"
+ ],
+ "headline_stats": [
+  {
+   "value": "0.6899",
+   "label": "Walk-forward weekly Spearman across 17 scored weeks of 2025 (last-4 baseline: 0.6539)",
+   "source": "eval_backtest.json → overall.spearman, overall.baseline_last4"
+  },
+  {
+   "value": "4.296",
+   "label": "PPR points MAE on 5,412 held-out 2025 player-weeks (last-4 baseline: 4.616)",
+   "source": "projections.json → model.report.model_fpts_mae, model.report.baseline_last4_mae"
+  },
+  {
+   "value": "646",
+   "label": "Players projected for the 2026 season, 21 of them rookies",
+   "source": "projections.json → count, rookie_count"
+  },
+  {
+   "value": "47,872",
+   "label": "Trainable parameters over 85 features in 13 families",
+   "source": "projections.json → model.report.n_params, n_features, n_families"
+  }
+ ],
+ "insights": [
+  {
+   "title": "It beats the baselines, but by less than the marketing would want",
+   "body": "Over 17 scored weeks of 2025 the model's ordering hit 0.6899 Spearman against 0.6539 for a last-4-game average and 0.6611 for season-to-date — a margin of 0.0360 and 0.0288. The gain is unevenly distributed: TE improves most (0.6367 vs 0.5792 last-4), RB least (0.7251 vs 0.7038, worth just 0.0213). On raw points the same story holds — 4.296 MAE against 4.616 and 4.523 for the two baselines.",
+   "source": "eval_backtest.json → overall.spearman / baseline_last4 / baseline_std, positions.TE, positions.RB; projections.json → model.report.baseline_last4_mae, baseline_seasontodate_mae"
+  },
+  {
+   "title": "Quarterback is where the model is weakest, and it says so",
+   "body": "QB walk-forward Spearman is 0.4314 with a week-to-week standard deviation of 0.1524 — more than three times the 0.0402 sd of the overall number, and far below RB's 0.7251. QB also carries the worst points error (6.371 MAE vs 3.486 for TE) and the widest 80% conformal band at ±10.29 points. That is why Josh Allen, the model's overall #1 at 20.34 projected PPR per game, still ships a floor of 10.05 and a ceiling of 30.63.",
+   "source": "eval_backtest.json → positions.QB.spearman / spearman_sd, overall.spearman_sd; projections.json → model.report.per_pos_mae, conformal_q_by_pos.QB, players[Josh Allen].proj/floor/ceil"
+  },
+  {
+   "title": "The last two weeks of the season are where it falls apart",
+   "body": "The per-week Spearman series runs 0.690, 0.744, 0.727, 0.736 … then bottoms out at 0.652 in Week 17 and 0.561 in Week 18. Week 18 is the worst of all 17 scored weeks and Week 17 the second worst; the peak was 0.744 in Week 3. Week 1 is not scored at all because the feature builder requires at least one prior in-season game.",
+   "source": "eval_backtest.json → overall.per_week (weeks 2-18), caveats[1]"
+  },
+  {
+   "title": "By its own promote gate, v2 did not clear the bar",
+   "body": "The training harness scores candidates on a Composite Quality Score and refuses to promote below baseline + 0.5. This checkpoint recorded cqs 63.19 against a baseline_cqs of 63.16 and a promote bar of 63.66, with would_promote_vs_baseline set to false. Its MAE of 4.296 is only 0.017 better than the v1 reference of 4.313, and the shipped weights are the selection split — trained on ≤2023, early-stopped on 2024 — not a full-data refit.",
+   "source": "projections.json → model.report.composite.cqs / baseline_cqs / promote_check / would_promote_vs_baseline, v1_mae_reference, deploy.note"
+  },
+  {
+   "title": "Draft position explains about 17% of who actually delivers",
+   "body": "Across 1,156 charted careers the correlation between draft-capital expectation and career PPR-per-game delivery is 0.4175 — roughly 17% of the variance. The extremes are enormous: Desmond Howard, pick 4, lands at the 9.6th delivery percentile (residual -64.3), while Tyreek Hill at pick 165 sits at 95.0 (+48.5). And the sample is survivorship-biased by construction — 1,514 players were dropped for having fewer than 4 charted seasons, so the worst busts never appear at all.",
+   "source": "trajectory_axis_gridiron.json → report.fit.corr_expectation_delivery, report.careers_scored, report.dropped.too_few_seasons, report.T0_examples[0], report.T1_examples[2]"
+  }
+ ],
+ "game": {
+  "kind": "split-decision",
+  "prompt": "Which player does the model project higher for 2026?",
+  "axis_label": "Projected PPR points per game, 2026 season",
+  "explainer": "Each number is the MTNN's projected per-game PPR output for 2026 under neutral conditions, built off 2025 form — a forward prediction, not a historical average.",
+  "rounds": [
+   {
+    "a": {
+     "name": "Justin Jefferson",
+     "sub": "WR · MIN",
+     "value": 14.35
+    },
+    "b": {
+     "name": "Wan'Dale Robinson",
+     "sub": "WR · TEN",
+     "value": 15.21
+    },
+    "answer": "b",
+    "reveal": "The model projects Robinson at 5.2 catches for 62.6 receiving yards a game after his move from NYG, just ahead of Jefferson's 5.1 for 61.0 — and it lists Jefferson as Robinson's third-closest comp at 0.986 similarity. WR5 vs WR8."
+   },
+   {
+    "a": {
+     "name": "Jaxson Dart",
+     "sub": "QB · NYG",
+     "value": 16.62
+    },
+    "b": {
+     "name": "Lamar Jackson",
+     "sub": "QB · BAL",
+     "value": 15.33
+    },
+    "answer": "a",
+    "reveal": "Dart's projected 20.3 rushing yards a game beats Jackson's 13.1, and the two are near-twins in embedding space — Jackson is Dart's closest comp at 0.986. The model ranks Dart QB9 and Jackson QB20."
+   },
+   {
+    "a": {
+     "name": "Amon-Ra St. Brown",
+     "sub": "WR · DET",
+     "value": 18.17
+    },
+    "b": {
+     "name": "Jaxon Smith-Njigba",
+     "sub": "WR · SEA",
+     "value": 18.01
+    },
+    "answer": "a",
+    "reveal": "0.16 points apart. Smith-Njigba is projected for more yardage (70.3 to 65.3) and more catches (5.8 to 5.5), but St. Brown's 0.45 projected touchdowns per game against 0.41 flips the total."
+   },
+   {
+    "a": {
+     "name": "Brock Bowers",
+     "sub": "TE · LV",
+     "value": 12.99
+    },
+    "b": {
+     "name": "Kyle Pitts",
+     "sub": "TE · ATL",
+     "value": 13.67
+    },
+    "answer": "b",
+    "reveal": "These two are 0.99 similar to each other and share the same top comp, Colston Loveland. Pitts edges it on 55.6 projected receiving yards a game to 52.6. Both are well behind Trey McBride at 16.52."
+   },
+   {
+    "a": {
+     "name": "Patrick Mahomes",
+     "sub": "QB · KC",
+     "value": 17.92
+    },
+    "b": {
+     "name": "Trevor Lawrence",
+     "sub": "QB · JAX",
+     "value": 19.43
+    },
+    "answer": "b",
+    "reveal": "Lawrence is the model's QB2 behind only Josh Allen, projected for 248.1 passing yards and 1.65 touchdowns a game to Mahomes' 235.4 and 1.51. Pedigree features carry 0.214 of Lawrence's fused tower weight versus 0.167 of Mahomes'."
+   },
+   {
+    "a": {
+     "name": "Marvin Harrison Jr.",
+     "sub": "WR · ARI",
+     "value": 7.33
+    },
+    "b": {
+     "name": "Rome Odunze",
+     "sub": "WR · CHI",
+     "value": 10.87
+    },
+    "answer": "b",
+    "reveal": "A 3.54-point gap between two 2024 first-rounders. Odunze projects 3.9 catches for 48.3 yards a game and lands WR25 in tier 1; Harrison gets 2.7 for 33.2, WR53 in tier 2."
+   },
+   {
+    "a": {
+     "name": "Derrick Henry",
+     "sub": "RB · BAL",
+     "value": 13.91
+    },
+    "b": {
+     "name": "De'Von Achane",
+     "sub": "RB · MIA",
+     "value": 14.66
+    },
+    "answer": "b",
+    "reveal": "Henry out-rushes Achane 54.4 to 44.2 yards a game, but Achane's projected 3.0 catches for 26.7 receiving yards against Henry's 1.5 for 8.5 is worth more under PPR. RB7 vs RB9."
+   },
+   {
+    "a": {
+     "name": "Ja'Marr Chase",
+     "sub": "WR · CIN",
+     "value": 17.64
+    },
+    "b": {
+     "name": "Rashee Rice",
+     "sub": "WR · KC",
+     "value": 16.15
+    },
+    "answer": "a",
+    "reveal": "Chase carries the highest projected receiving yardage of any WR in the file at 70.9 a game. Opportunity features account for 0.187 of his fused tower weight, roughly double Rice's 0.096."
+   },
+   {
+    "a": {
+     "name": "Joe Burrow",
+     "sub": "QB · CIN",
+     "value": 15.71
+    },
+    "b": {
+     "name": "Justin Fields",
+     "sub": "QB · KC",
+     "value": 17.09
+    },
+    "answer": "b",
+    "reveal": "Fields projects 26.5 rushing yards a game to Burrow's 5.2, which more than covers Burrow's passing edge of 239.7 to 200.7. The model has Fields QB7 in tier 1 and Burrow QB14 in tier 2."
+   },
+   {
+    "a": {
+     "name": "Trey McBride",
+     "sub": "TE · ARI",
+     "value": 16.52
+    },
+    "b": {
+     "name": "CeeDee Lamb",
+     "sub": "WR · DAL",
+     "value": 13.34
+    },
+    "answer": "a",
+    "reveal": "McBride is the only tight end anywhere in the model's top 50 overall, at #16, projected for 5.2 catches and 59.3 yards a game. Lamb sits at #60 overall and WR13, at 4.6 for 56.4."
+   }
+  ]
+ },
+ "caveat": "\"No timestamped archive of published projections exists — the site only ships the upcoming week — so this is a backtest of the projection METHOD: the frozen pre-2025 checkpoint scored on as-of features built strictly from prior weeks.\" (eval_backtest.json → caveats[0])",
+ "_round_notes": [
+  "round 6 REMOVED (Christian McCaffrey vs Bijan Robinson): reveal claimed the two are each other's nearest comps; projections.json shows Bijan Robinson's comps[0] is a different player"
+ ],
+ "_verification": "PARTIALLY VERIFIED — the adversarial verifier confirmed every other figure and flagged specific round(s), which were REMOVED rather than corrected. See _round_notes."
+}

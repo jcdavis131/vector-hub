@@ -70,7 +70,7 @@
         </div>
         <ul class="landing-hero__chips" aria-label="Quick facts">
           <li>6 models &middot; 4 daily puzzles</li>
-          <li>12,966 NBA &middot; 3,371 tickers &middot; 4,022 tennis</li>
+          <li>12,966 NBA &middot; 4,831 company-years &middot; 4,022 tennis</li>
           <li>Era-honest comparisons</li>
         </ul>
       </div>
@@ -104,8 +104,8 @@
           <span class="mode-card__num">Game 01</span>
         </div>
         <p class="mode-card__hook">Two real NBA seasons got fused into one impossible player. Name both.</p>
-        <p class="mode-card__pitch">12,966 player-seasons, each one a point in a 48-dimensional space the model learned on its own. Guesses are scored by how close you land &mdash; so a wrong answer that <em>feels</em> right usually is.</p>
-        <p class="mode-card__meta"><span class="pill">NBA</span> &middot; 48-d embedding &middot; daily</p>
+        <p class="mode-card__pitch">12,966 player-seasons, each one a point in a 64-dimensional space the model learned on its own. Guesses are scored by how close you land &mdash; so a wrong answer that <em>feels</em> right usually is.</p>
+        <p class="mode-card__meta"><span class="pill">NBA</span> &middot; 64-d embedding &middot; 18 towers &middot; daily</p>
       </a>
 
       <a class="vh-card mode-card mode-card--blue" href="https://gridiron.dumbmodel.com/">
@@ -138,8 +138,8 @@
           <span class="mode-card__num">Game 03</span>
         </div>
         <p class="mode-card__hook">The same trick, played on the World Cup.</p>
-        <p class="mode-card__pitch">Built from StatsBomb's open event data for 2018 and 2022, normalized inside each tournament so a 2018 workhorse isn't judged against 2022 averages. The map here is still classical &mdash; honest PCA, no neural net yet.</p>
-        <p class="mode-card__meta"><span class="pill">World Cup</span> &middot; PCA(3) &middot; daily</p>
+        <p class="mode-card__pitch">Built from StatsBomb's open event data for 2018 and 2022, normalized inside each tournament so a 2018 workhorse isn't judged against 2022 averages. The map is a 24-d MTNN over 2,430 player-rows across 11 tournament and league contexts.</p>
+        <p class="mode-card__meta"><span class="pill">World Cup</span> &middot; 24-d MTNN &middot; daily</p>
       </a>
 
       <a class="vh-card mode-card mode-card--green" href="https://equities.dumbmodel.com/">
@@ -156,8 +156,8 @@
           <span class="mode-card__num">Game 04</span>
         </div>
         <p class="mode-card__hook">Public companies as vectors — SEC EDGAR XBRL + market tape.</p>
-        <p class="mode-card__pitch">3,371 tickers × 33,710 filing-years. 248 feats across 29 towers — Altman Z, Piotroski F, Beneish M, Sloan accruals, QMJ quality, plus 20-market microstructure. One 96-d MTNN has to predict sector, next-year profile, distress and payout at once. Guess the ticker from its vector.</p>
-        <p class="mode-card__meta"><span class="pill">Equities</span> &middot; 3371 tickers · 33.7k FYs · 29 towers · 96-d</p>
+        <p class="mode-card__pitch">4,831 company-years — 500 tickers across 2015-2024 — as 64-d vectors from SEC EDGAR XBRL. 17 towers: Altman Z distress, Piotroski F quality, Beneish M, Sloan accruals, QMJ, plus market microstructure. One net predicts sector, next-year profile, distress and payout at once. Guess the ticker from its vector.</p>
+        <p class="mode-card__meta"><span class="pill">Equities</span> &middot; 500 tickers · 4,831 company-years · 17 towers · 64-d</p>
       </a>
 
     </div>
@@ -184,11 +184,11 @@
         <p class="stat-card__label">Model cards &middot; 4 with a daily game</p>
       </div>
       <div class="stat-card">
-        <p class="stat-card__value">20,359</p>
+        <p class="stat-card__value">21,819</p>
         <p class="stat-card__label">Hoops + Equities + Tennis rows</p>
       </div>
       <div class="stat-card">
-        <p class="stat-card__value stat-card__value--accent">48/32/24/96/64</p>
+        <p class="stat-card__value stat-card__value--accent">64/32/24/64/64</p>
         <p class="stat-card__label">Dims &middot; NBA / NFL / WC / EQ / joint</p>
       </div>
       <div class="stat-card">
@@ -205,7 +205,7 @@
       <li>
         <span class="how-steps__num">01 &middot; Towers</span>
         <h3 class="how-steps__title">Seventeen towers, fused (Hoops)</h3>
-        <p class="how-steps__text">Vector Hoops runs <strong>seventeen separate towers</strong> &mdash; one each for volume, playmaking, rebounding, defense, efficiency, shot mix, biometrics, tracking, form, market value, roster context, career arc, strength of schedule, team, draft pedigree, playoffs, and honors &mdash; then fuses them into a single 48-number embedding. Equities runs <strong>29 towers</strong> — Altman Z distress, Piotroski F quality, Beneish M earnings manipulation, Sloan accrual quality, QMJ quality, investment, payout, growth, operational efficiency, market microstructure, and more — into a 96-d company vector.</p>
+        <p class="how-steps__text">Vector Hoops runs <strong>eighteen separate towers</strong> &mdash; one each for volume, playmaking, rebounding, defense, efficiency, shot mix, biometrics, tracking, form, market value, roster context, career arc, strength of schedule, team, draft pedigree, playoffs, and honors &mdash; then fuses them into a single 48-number embedding. Equities runs <strong>17 towers</strong> — Altman Z distress, Piotroski F quality, Beneish M earnings manipulation, Sloan accrual quality, QMJ quality, investment, payout, growth, operational efficiency, market microstructure, and more — into a 64-d company vector.</p>
       </li>
       <li>
         <span class="how-steps__num">02 &middot; Multi-task</span>
@@ -215,12 +215,12 @@
       <li>
         <span class="how-steps__num">03 &middot; Per domain</span>
         <h3 class="how-steps__title">Shared trunk, classical fallback</h3>
-        <p class="how-steps__text">Vector Gridiron runs the same idea with a shared trunk and multiple heads. Vector Pitch now ships a true MTNN (24-d) that beats the old PCA baseline on role recovery; Equities ships a 96-d MTNN (29 towers) trained SOTA with CQS_v2 = 0.4*recall_no_wiki + 0.25*purity + 0.2*next_R2 + 0.15*sector.</p>
+        <p class="how-steps__text">Vector Gridiron runs the same idea with a shared trunk and multiple heads. Vector Pitch now ships a true MTNN (24-d) that beats the old PCA baseline on role recovery; Equities ships a 64-d MTNN (17 towers) trained with CQS_v2 = 0.4*recall_no_wiki + 0.25*purity + 0.2*next_R2 + 0.15*sector.</p>
       </li>
     </ol>
     <div class="note-card">
       <p class="note-card__head">Where this is going</p>
-      <p>The per-sport games still live in their own spaces (<strong>48-d hoops, 32-d gridiron, 24-d pitch MTNN, 96-d equities MTNN</strong>). On top of that, a <strong>64-d joint embedding</strong> now folds ~20.7k player-seasons across the three sports into one shared role geometry &mdash; so you <em>can</em> ask what a power forward and a strong safety have in common and get a real neighbour.</p>
+      <p>The per-sport games still live in their own spaces (<strong>64-d hoops, 32-d gridiron, 24-d pitch, 64-d equities</strong>). On top of that, a <strong>64-d joint embedding</strong> now folds 20,719 player-seasons across the three sports into one shared role geometry &mdash; so you <em>can</em> ask what a power forward and a strong safety have in common and get a real neighbour.</p>
       <p>Shipped with caveats: sport identity is still partly recoverable from the joint vector, and there is no joint daily puzzle yet. Equities is its own market puzzle — guess the ticker from the vector. The four games are the product you play.</p>
     </div>
   </section>

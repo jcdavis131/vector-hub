@@ -1,0 +1,202 @@
+{
+ "slug": "hoops",
+ "name": "Vector Hoops",
+ "tagline": "A 64-dimensional multi-tower embedding of 12,966 NBA player-seasons from 1996-97 through 2025-26, used here to grade every career against what its draft slot was supposed to be worth.",
+ "dims": "64-d MTNN, 18 towers",
+ "entity_count": 12966,
+ "source_files": [
+  "C:/Users/jcdav/vector-unified/data/trajectory_axis.json",
+  "C:/Users/jcdav/vector-unified/data/direction_axis_hoops.json",
+  "C:/Users/jcdav/vector-unified/data/hoops_vor_draft_value.json",
+  "C:/Users/jcdav/vector-hoops/assets/vectors.json",
+  "C:/Users/jcdav/vector-hoops/assets/mtnn_meta.json",
+  "C:/Users/jcdav/vector-hoops/assets/mtnn_arch.json",
+  "C:/Users/jcdav/vector-hoops/assets/mtnn_training/live.json"
+ ],
+ "headline_stats": [
+  {
+   "value": "12,966",
+   "label": "player-seasons embedded, 1996-97 through 2025-26",
+   "source": "C:/Users/jcdav/vector-hoops/assets/vectors.json → players[] length (12966) and seasons = ['1996-97','2025-26']; corroborated by assets/mtnn_meta.json → rows = 12966"
+  },
+  {
+   "value": "0.2611",
+   "label": "correlation between draft-slot expectation and actual career delivery",
+   "source": "C:/Users/jcdav/vector-unified/data/trajectory_axis.json → report.fit.corr_expectation_delivery"
+  },
+  {
+   "value": "48.8%",
+   "label": "late-second-round picks who never played an NBA game",
+   "source": "C:/Users/jcdav/vector-unified/data/hoops_vor_draft_value.json → report.cells[bucket='late-2nd'].never_played_pct"
+  },
+  {
+   "value": "1,293",
+   "label": "careers with 4+ charted seasons scored on the trajectory axis",
+   "source": "C:/Users/jcdav/vector-unified/data/trajectory_axis.json → report.careers_scored"
+  }
+ ],
+ "insights": [
+  {
+   "title": "After pick 30, the expectation curve flatlines",
+   "body": "The predicted delivery for pick 1 is 61.6909 and it decays smoothly down to 46.7269 at pick 30 — then every single pick from 31 through 60 (plus the stray 75, 154, 160 entries) shares the identical predicted value of 45.0642. Undrafted players get 44.3252. So the model's own expectation says the difference between the 31st pick and the 57th pick is exactly zero, and the difference between the last pick in the draft and going undrafted is 0.7390. Manu Ginobili at 57 and Nikola Jokic at 41 are graded against the same number.",
+   "source": "C:/Users/jcdav/vector-unified/data/trajectory_axis.json → careers[].predicted grouped by careers[].overall / careers[].undrafted"
+  },
+  {
+   "title": "Draft capital predicts playing time better than it predicts quality",
+   "body": "On the matched fantasy-VOR construct over 1,503 drafted players, the correlation between draft expectation and 5-year VOR total is 0.4918 — nearly double the 0.2611 the same draft slot manages against per-season delivery quality. Expected VOR falls off a cliff by bucket: 18.19 for lottery, 6.21 for late-1st, 3.05 for early-2nd, 1.59 for late-2nd. The mechanism shows up in the attrition column: 0.6% of lottery picks never played, versus 22.7% of early-2nd and 48.8% of late-2nd.",
+   "source": "C:/Users/jcdav/vector-unified/data/hoops_vor_draft_value.json → report.corr_expectation_vor, report.drafted_scored, report.cells[].{bucket, ev_vor, never_played_pct}"
+  },
+  {
+   "title": "Over-delivering and still rising are different axes",
+   "body": "The direction axis scores 566 careers and splits them 114 rising (D0) / 114 declining (D1) / 338 unlabelled, with 287 more dropped for never clearing replacement level at all. It is built to be independent of the over/under-delivery axis: Jokic is simultaneously T1 (residual +49.1176 against his pick-41 expectation) and D0 (first-half VOR 21.87, second-half 34.52, delta +12.65), while Brook Lopez is a positive-residual career that is also D1 (11.39 → 1.13, delta -10.27). The file's own orthogonality note says the earlier single-axis encoding made that combination inexpressible.",
+   "source": "C:/Users/jcdav/vector-unified/data/direction_axis_hoops.json → report.{careers_scored, counts, dropped, orthogonality_note}, report.D0_examples[2], report.D1_examples[4]; trajectory_axis.json → careers[name='nikola jokic'].residual"
+  },
+  {
+   "title": "The model's published spec was wrong on disk, and the file says so",
+   "body": "The live trainer manifest records dim = 64 with n_towers = 18 (tower_width 32, tower_hidden 160, 2 blocks, concat fusion), run 20260730-162011, finishing at test_recall_at_10 = 0.83 and purity_at_20 = 0.7765381406948745. The older mtnn_arch.json carries an explicit self-correction: 'dEmb = 48 -> 64, verified from assets/mtnn_embeddings.f32 = 12966*64*4 = 3319296 bytes', plus a still_wrong list noting it lists 11 tower families when the live manifest has 18. The shipped embedding in mtnn_meta.json is dim 64 over 12,966 rows at test_recall_at_10 = 0.846 and archetype_top1_acc = 0.9701527070800555.",
+   "source": "C:/Users/jcdav/vector-hoops/assets/mtnn_training/live.json → arch.{dim, n_towers, tower_width, tower_hidden, tower_blocks, fusion}, run_id, val[4]; assets/mtnn_arch.json → _stale.corrected_2026-07-26.dEmb, _stale.still_wrong.towerFamilies; assets/mtnn_meta.json → {dim, rows, test_recall_at_10, archetype_top1_acc}"
+  }
+ ],
+ "game": {
+  "kind": "Split Decision",
+  "prompt": "Which player out-delivered his draft slot by more?",
+  "axis_label": "Residual — career delivery minus what the draft slot predicted",
+  "explainer": "Delivery is a player's mean percentile-within-season impact grade across his charted career (0-100). Predicted is what the fitted rookie-scale curve says a player taken at that slot should grade. Residual is delivery minus predicted, so +40 means the career came in 40 percentile points above what the pick was worth — where you were drafted moves the bar, not the grade.",
+  "rounds": [
+   {
+    "a": {
+     "name": "Kobe Bryant",
+     "sub": "pick 13",
+     "value": 33.8841
+    },
+    "b": {
+     "name": "Karl Malone",
+     "sub": "pick 13",
+     "value": 43.5617
+    },
+    "answer": "b",
+    "reveal": "Same draft slot, same 50.0633 bar. Malone graded 93.625 across his 8 charted seasons; Bryant graded 83.947 across 19 — a longer career at a lower average percentile costs him the residual."
+   },
+   {
+    "a": {
+     "name": "Jimmy Butler",
+     "sub": "pick 30",
+     "value": 38.8065
+    },
+    "b": {
+     "name": "Fred VanVleet",
+     "sub": "undrafted",
+     "value": 40.7859
+    },
+    "answer": "b",
+    "reveal": "Butler actually graded higher — 85.533 to VanVleet's 85.111 — but Butler was held to a pick-30 bar of 46.7269 while VanVleet's undrafted bar was 44.3252, and the 2.4-point handicap flips the result."
+   },
+   {
+    "a": {
+     "name": "Sam Hauser",
+     "sub": "undrafted",
+     "value": 39.6748
+    },
+    "b": {
+     "name": "Jalen Brunson",
+     "sub": "pick 33",
+     "value": 37.8108
+    },
+    "answer": "a",
+    "reveal": "The model has no idea who is famous. Hauser's 5 charted seasons grade 84.000 against an undrafted bar of 44.3252; Brunson's 8 grade 82.875 against 45.0642. Both carry the T1 label."
+   },
+   {
+    "a": {
+     "name": "Kawhi Leonard",
+     "sub": "pick 15",
+     "value": 45.7452
+    },
+    "b": {
+     "name": "Donovan Mitchell",
+     "sub": "pick 13",
+     "value": 44.3811
+    },
+    "answer": "a",
+    "reveal": "Leonard grades 95.077 over 13 seasons against a 49.3317 bar; Mitchell grades 94.444 over 9 against a slightly steeper 50.0633. Two draft slots of separation, 1.3641 of residual."
+   },
+   {
+    "a": {
+     "name": "Stephen Curry",
+     "sub": "pick 7",
+     "value": 36.2474
+    },
+    "b": {
+     "name": "Giannis Antetokounmpo",
+     "sub": "pick 15",
+     "value": 33.5913
+    },
+    "answer": "a",
+    "reveal": "Curry was picked eight slots earlier and still wins: 89.625 delivery against a 53.3776 bar beats Giannis's 82.923 against 49.3317. Neither clears the cut for the T1 label — the over-delivery tail is mostly second-rounders."
+   },
+   {
+    "a": {
+     "name": "Tony Parker",
+     "sub": "pick 28",
+     "value": 42.6162
+    },
+    "b": {
+     "name": "John Stockton",
+     "sub": "pick 16",
+     "value": 43.8579
+    },
+    "answer": "b",
+    "reveal": "Stockton has only 7 charted seasons because the data starts at 1996-97 — and those late-career seasons still graded 92.857 against a 48.9992 bar, edging Parker's 89.556 over 18 seasons against 46.9393."
+   },
+   {
+    "a": {
+     "name": "Alex Caruso",
+     "sub": "undrafted",
+     "value": 30.6748
+    },
+    "b": {
+     "name": "Rudy Gobert",
+     "sub": "pick 27",
+     "value": 30.2575
+    },
+    "answer": "a",
+    "reveal": "Gobert grades higher in absolute terms — 77.308 to Caruso's 75.000 — but his pick-27 bar of 47.0502 sits 2.725 above Caruso's undrafted 44.3252, and Caruso takes it by 0.4173."
+   },
+   {
+    "a": {
+     "name": "LeBron James",
+     "sub": "pick 1",
+     "value": 28.6569
+    },
+    "b": {
+     "name": "Draymond Green",
+     "sub": "pick 35",
+     "value": 25.0072
+    },
+    "answer": "a",
+    "reveal": "The hardest bar in the file is pick 1 at 61.6909, and James clears it by 28.6569 across 23 charted seasons (delivery 90.348). Green's 70.071 against the flat 45.0642 second-round bar earns the T1 label but a smaller residual."
+   },
+   {
+    "a": {
+     "name": "Anthony Davis",
+     "sub": "pick 1",
+     "value": 14.1662
+    },
+    "b": {
+     "name": "Isaiah Thomas",
+     "sub": "pick 60",
+     "value": 13.4358
+    },
+    "answer": "a",
+    "reveal": "The last pick in the draft nearly catches a number-one overall. Davis grades 75.857 against the 61.6909 top-pick bar; Thomas grades 58.500 against 45.0642. The gap is 0.7304 — smaller than the 0.7390 the model puts between the 60th pick and going undrafted."
+   }
+  ]
+ },
+ "caveat": "From the model's own artifact (trajectory_axis.json → caveat_survivorship): \"A high pick who never earned 4 charted seasons is ABSENT, not labelled T0. The worst busts leave the league before they accumulate a career, so T0 is biased toward players who under-delivered while still being good enough to keep playing. This understates the tail it is trying to name.\" The same file's caveat_scope adds: \"hoops only. gridiron has the inputs but no exported artifact; pitch has none.\" 1,107 careers were dropped from the axis for having too few seasons.",
+ "_insight_notes": [
+  "insight 0 REMOVED ('Draft position barely explains what a career became'): claimed delivery floor of 8.5 (Anthony Bennett); artifact min is byron mullens 5.2 at pick 24 — 8.5 is the min among pick-1 players only"
+ ],
+ "_round_notes": [
+  "round 0 REMOVED (Manu Ginobili vs Nikola Jokic): reveal claimed 'the two closest careers in the entire file'; 160 adjacent residual gaps are smaller and 53 are exactly 0.0"
+ ],
+ "_verification": "PARTIALLY VERIFIED — the adversarial verifier confirmed every other figure and flagged specific round(s), which were REMOVED rather than corrected. See _round_notes."
+}

@@ -1,0 +1,231 @@
+{
+ "slug": "unified",
+ "name": "Vector Unified",
+ "tagline": "20,719 player-seasons of basketball, football and soccer folded into one 64-dimensional role space, where a defensive anchor means the same thing in two sports and the sport a row came from is still 5.88 accuracy points more guessable than it should be.",
+ "dims": "64-d UnifiedTrunk Stage 2.1 — per-sport encoders (64-d hoops / 32-d gridiron / 24-d pitch) into a shared trunk",
+ "entity_count": 20719,
+ "source_files": [
+  "C:/Users/jcdav/vector-unified/assets/unified.json",
+  "C:/Users/jcdav/vector-unified/data/unified_report.json",
+  "C:/Users/jcdav/vector-unified/data/gate_nonvacuity.json",
+  "C:/Users/jcdav/vector-unified/data/stage2_report.json",
+  "C:/Users/jcdav/vector-unified/data/unified_meta.json",
+  "C:/Users/jcdav/vector-unified/data/archetype_map.json",
+  "C:/Users/jcdav/vector-unified/data/analogy_report.json",
+  "C:/Users/jcdav/vector-unified/data/analogy_triples_report.json",
+  "C:/Users/jcdav/vector-unified/data/direction_axis_hoops.json",
+  "C:/Users/jcdav/vector-unified/data/direction_axis_gridiron.json",
+  "C:/Users/jcdav/vector-unified/data/trajectory_axis.json",
+  "C:/Users/jcdav/vector-unified/data/trajectory_axis_gridiron.json",
+  "C:/Users/jcdav/vector-unified/data/tennis_archetype_probe.json",
+  "C:/Users/jcdav/vector-unified/data/merged_careers.json",
+  "C:/Users/jcdav/vector-unified/data/matched_draft_value_comparison.json",
+  "C:/Users/jcdav/vector-unified/data/hoops_name_collisions.json",
+  "C:/Users/jcdav/vector-unified/data/gridiron_name_collisions.json",
+  "C:/Users/jcdav/vector-unified/data/hoops_vor_draft_value.json",
+  "C:/Users/jcdav/vector-unified/pipeline/export_unified_stage2.py",
+  "C:/Users/jcdav/vector-unified/pipeline/check_artifact_freshness.py",
+  "C:/Users/jcdav/vector-unified/pipeline/build_direction_axis.py",
+  "C:/Users/jcdav/vector-unified/pipeline/build_vor_draft_value.py",
+  "C:/Users/jcdav/vector-unified/pipeline/build_hoops_vor_draft_value.py"
+ ],
+ "headline_stats": [
+  {
+   "value": "20,719",
+   "label": "player-seasons in one 64-d space: 12,966 hoops + 5,323 gridiron + 2,430 pitch",
+   "source": "assets/unified.json -> n_players, d_emb, sports[].n (cross-checked against data/unified_meta.json -> coverage)"
+  },
+  {
+   "value": "0.6846 vs 0.6258",
+   "label": "sport identity read off the joint vector, against the majority-class floor: +0.0588 of leakage that has not been trained away",
+   "source": "data/stage2_report.json -> g2.sport_acc, g2.majority_class_share, g2.delta_vs_majority"
+  },
+  {
+   "value": "6 of 12",
+   "label": "archetypes that ever appear on a row; A4 and A6-A10 are declared in the shipped file and never assigned to anyone",
+   "source": "assets/unified.json -> archetypes[] (12 ids A0-A11) vs the 6 distinct values of players[].cross_arch"
+  },
+  {
+   "value": "0.9401 / 0.978x",
+   "label": "bulk cross-sport role coherence, and named-pair analogy retrieval, which is indistinguishable from random",
+   "source": "data/analogy_report.json -> G4_cross_sport_nn_role_coherence.hit_rate; data/analogy_triples_report.json -> better_than_random_ratio"
+  }
+ ],
+ "insights": [
+  {
+   "title": "The shipped file grades itself against a bar that cannot be reached",
+   "body": "assets/unified.json carries g2_target 0.433 and g2_status \"soft_target_not_met\". That 0.433 is 1/3 + 0.10 and assumes the three sports are balanced. They are 12,966 / 5,323 / 2,430, so a majority-class predictor already scores 0.6258 — and a globally shuffled embedding, carrying no sport information at all, scored 0.6257. The current exporter computes the target as majority + 0.10 = 0.7258, against which stage2_report.json records g2_pass true. The repo's own freshness checker prints \"STALE assets/unified.json (79.7h behind)\", so the number the site would have read is a bar from a superseded gate definition, not a failed model.",
+   "source": "assets/unified.json -> g2_target / g2_status; data/stage2_report.json -> g2.g2_target (0.7258), g2.SUPERSEDED_g2_target_chance_plus_10 (0.4333), g2.g2_pass; data/gate_nonvacuity.json -> g2_baseline_correction.verdict; pipeline/check_artifact_freshness.py output"
+  },
+  {
+   "title": "Sport identity got quieter, it did not go away",
+   "body": "A classifier reads the sport off the 64-d joint vector at 0.6846 where the achievable floor is 0.6258 — a lift of 0.0588, not the 0.3513 you get by comparing to 1/3. The report says so itself: \"Quote delta_vs_majority. delta_vs_chance assumes balanced classes and these are 62.6 / 25.7 / 11.7.\" The one gate that looks unambiguously green, effective rank 12.0 of 64 dimensions, is disqualified in the same estate: rank is permutation-invariant, so both shuffle nulls score exactly the real 12.4, and random gaussian rows score 64.0 — higher than the real embedding. Rank detects collapse and nothing more.",
+   "source": "data/stage2_report.json -> g2.sport_acc / g2.majority_class_share / g2.effective_rank; data/unified_report.json -> G2_sport_invariance.baseline_note; data/gate_nonvacuity.json -> note_rank"
+  },
+  {
+   "title": "It can find the role. It cannot find the player.",
+   "body": "In bulk the geometry works: a row's nearest neighbour in a different sport shares its archetype 94.01% of the time against a 17.12% random baseline, holding at 0.9334 hoops / 0.9587 gridiron / 0.9350 pitch. On 40 hand-written analogies it collapses. Top-10 retrieval of the intended partner is 0.000 and the better-than-random ratio is 0.978, which the file itself calls \"INDISTINGUISHABLE FROM RANDOM and if anything slightly worse\". Ask it for the Tom Brady of another sport and the top match is Antoine Griezmann at cos 0.986; Stephen Curry's best row sits at rank 1,592.",
+   "source": "data/analogy_report.json -> G4_cross_sport_nn_role_coherence.hit_rate / random_baseline / per_sport; data/analogy_triples_report.json -> retrieval_top10_hit_rate_informational, better_than_random_ratio, metric_note, triples[0]"
+  },
+  {
+   "title": "The two role poles each lose a sport",
+   "body": "Only six archetypes are ever assigned across the 20,719 rows: A2 5,159, A1 4,860, A3 3,983, A11 3,058, A0 2,348, A5 1,311. Two of them are not cross-sport in the way the taxonomy implies. A3 (defensive anchor) is 3,293 hoops rows plus 690 pitch rows and exactly zero gridiron rows, because the open football data has no defensive players. A5 (connector / two-way grinder) is 851 gridiron plus 460 pitch and zero hoops. Only A0, A1, A2 and A11 span all three sports. A4 was deferred outright: it had \"pitch-only members (cluster 2, 81% DEF) with no hoops/gridiron counterpart, so cross-sport analogy was trivially impossible (G4 hit 0.000)\".",
+   "source": "assets/unified.json -> players[].cross_arch cross-tabulated with players[].sport; data/archetype_map.json -> scope_note_v0, archetypes_in_scope_v0, archetypes_deferred_v0"
+  },
+  {
+   "title": "Tennis is missing on purpose",
+   "body": "The role taxonomy is a team-sport taxonomy — offensive engine, defensive anchor, connector — and tennis has no roles to map onto it. The probe that tested this over 4,022 tennis player-seasons found six k-means clusters of which five are quality tiers, PC1 explaining 0.3748 of the variance with WIN_RATE 0.41 and DRAW_PROGRESS_MEAN 0.402 as its top loadings. Exactly one cluster (n=487, surface specialisation z +1.655) is role-like. Its verdict: \"QUALITY TIERING — clusters separate mainly on how good the player is. NOT usable as archetypes; naming these would repeat the role-vs-trajectory category error.\" So unified.json ships three sports, not four.",
+   "source": "data/tennis_archetype_probe.json -> verdict, rows, k, pc1_variance_share, pc1_top_loadings, role_like_clusters, per_cluster['4']; assets/unified.json -> sports[]"
+  }
+ ],
+ "caveat": "What this model cannot yet do, from its own files. (1) Sport is still partly recoverable from the joint vector: 0.6846 sport-classification accuracy against a 0.6258 majority-class floor (data/stage2_report.json -> g2), so the shared space has not fully erased which league a row came from. (2) The shipped asset is stale — assets/unified.json still carries g2_target 0.433 and g2_status \"soft_target_not_met\" from a superseded gate that assumed balanced sports, and the repo's freshness checker flags it 79.7h behind its exporter. Its g1_verdict pos_drop of 0.0 for all three sports is a bug artefact, not a result: the exporter's own text says \"knn5_acc used an int64 mask as an INDEX rather than a mask, scoring exactly 1.0 on both arms and even on a shuffled embedding. Fixed 2026-08-03 (7.21) ... True position accuracy is ~0.78 hoops / 0.999 gridiron / 0.88 pitch.\" (3) Half the taxonomy is deferred, not solved: A4 and A6-A10 are declared and never assigned, A4 because it had pitch-only members (cluster 2, 81% DEF) and cross-sport analogy was trivially impossible at G4 hit 0.000. (4) Named-pair analogy does not work — top-10 retrieval 0.000, 0.978x random. (5) Tennis is deliberately out of scope: the role taxonomy is team-sport roles and the tennis probe found quality tiers, not roles, so forcing a mapping would manufacture a finding. (6) G3's cross-sport separation is real (0.8448 against a null 95th percentile of 0.0301) but partly confounded — the within-archetype and between-archetype samples draw different sport-pair mixes, up to 8.9 percentage points apart.",
+ "game": {
+  "kind": "split-decision",
+  "prompt": "Two careers, two sports, one axis. Which one rose more?",
+  "axis_label": "career direction: mean value over replacement, second half of career minus first half",
+  "explainer": "Each career's per-season value-over-replacement series is split in half and the number is the mean of the second half minus the mean of the first — so a long career does not read as rising merely for being long. Both sports use fantasy points per game above a positional replacement level, floored at zero, deliberately matched in construction; but hoops points and PPR points are not the same currency, which is why the basketball numbers run larger. Careers below replacement in both halves are dropped rather than labelled, because 'bad then bad' is not a direction.",
+  "rounds": [
+   {
+    "a": {
+     "name": "jimmy butler",
+     "sub": "hoops",
+     "value": 6.12
+    },
+    "b": {
+     "name": "trey mcbride",
+     "sub": "gridiron",
+     "value": 6.13
+    },
+    "answer": "b",
+    "reveal": "One hundredth of a point apart: Butler's 15 seasons go 5.98 to 12.10, McBride's 4 go 0.47 to 6.60 — and McBride's is the single largest rise in the entire gridiron file, at the 100.0th percentile."
+   },
+   {
+    "a": {
+     "name": "kevin durant",
+     "sub": "hoops",
+     "value": 0.28
+    },
+    "b": {
+     "name": "ryan fitzpatrick",
+     "sub": "gridiron",
+     "value": 0.29
+    },
+    "answer": "b",
+    "reveal": "Durant's 18 seasons average 15.74 then 16.02 — one of the highest levels in the file and almost no slope, which leaves him unlabelled at the 65.0th percentile. Fitzpatrick went 0.00 to 0.29 and beats him by 0.01."
+   },
+   {
+    "a": {
+     "name": "chris bosh",
+     "sub": "hoops",
+     "value": -2.76
+    },
+    "b": {
+     "name": "aaron rodgers",
+     "sub": "gridiron",
+     "value": -2.75
+    },
+    "answer": "b",
+    "reveal": "Both are labelled D1, declining. Bosh 10.81 to 8.05 over 13 seasons; Rodgers 4.69 to 1.94 over 17. Rodgers falls 0.01 less, and sits deeper in his sport's tail anyway — 9.7th percentile against Bosh's 18.4th."
+   },
+   {
+    "a": {
+     "name": "dwyane wade",
+     "sub": "hoops",
+     "value": -8.57
+    },
+    "b": {
+     "name": "odell beckham",
+     "sub": "gridiron",
+     "value": -9.01
+    },
+    "answer": "a",
+    "reveal": "Beckham is the steepest decline in the gridiron file, 0.0th percentile, 9.08 to 0.07 across 9 seasons. Wade fell further in absolute level, 19.89 to 11.32, and still lands 0.44 above him."
+   },
+   {
+    "a": {
+     "name": "amare stoudemire",
+     "sub": "hoops",
+     "value": -5.42
+    },
+    "b": {
+     "name": "alvin kamara",
+     "sub": "gridiron",
+     "value": -5.43
+    },
+    "answer": "a",
+    "reveal": "Thirteen seasons of 13.29 to 7.87 against nine seasons of 9.46 to 4.03. Both D1, 0.01 apart — but Kamara is at the 1.4th percentile of his sport and Stoudemire the 5.0th."
+   },
+   {
+    "a": {
+     "name": "derrick rose",
+     "sub": "hoops",
+     "value": -3.27
+    },
+    "b": {
+     "name": "aj green",
+     "sub": "gridiron",
+     "value": -3.28
+    },
+    "answer": "a",
+    "reveal": "A number-one pick against a number-four pick, both D1, 0.01 apart. Rose 6.17 to 2.90 over 14 seasons; Green 5.67 to 2.39 over 11."
+   },
+   {
+    "a": {
+     "name": "michael olowokandi",
+     "sub": "hoops",
+     "value": -0.35
+    },
+    "b": {
+     "name": "andrew luck",
+     "sub": "gridiron",
+     "value": -0.34
+    },
+    "answer": "b",
+    "reveal": "Two number-one overall picks whose careers are remembered very differently, and the direction axis reads both as flat rather than declining: Olowokandi 1.34 to 0.98 at the 47.8th percentile, Luck 2.11 to 1.77 at the 48.7th. Neither gets a D label."
+   },
+   {
+    "a": {
+     "name": "immanuel quickley",
+     "sub": "hoops",
+     "value": 2.48
+    },
+    "b": {
+     "name": "garrett wilson",
+     "sub": "gridiron",
+     "value": 2.47
+    },
+    "answer": "a",
+    "reveal": "Quickley 0.11 to 2.59 over 6 seasons; Wilson 0.68 to 3.15 over 4. The raw gap is 0.01 in Quickley's favour — but the same rise is worth the 96.5th percentile in football and only the 85.7th in basketball."
+   },
+   {
+    "a": {
+     "name": "james harden",
+     "sub": "hoops",
+     "value": 7.88
+    },
+    "b": {
+     "name": "calvin johnson",
+     "sub": "gridiron",
+     "value": 4.4
+    },
+    "answer": "a",
+    "reveal": "Harden wins the raw number 7.88 to 4.40 (12.04 to 19.92 across 17 seasons, against 3.82 to 8.22 across 9). Inside their own sports the order flips: Johnson is at the 99.3rd percentile, Harden the 98.1st. Matched in form, not in scale."
+   },
+   {
+    "a": {
+     "name": "tim duncan",
+     "sub": "hoops",
+     "value": -4.18
+    },
+    "b": {
+     "name": "ladainian tomlinson",
+     "sub": "gridiron",
+     "value": -4.27
+    },
+    "answer": "a",
+    "reveal": "Duncan's 19 seasons run 25.17 to 21.00 — declining only because the starting level was so high — while Tomlinson's 11 go 10.40 to 6.12. The two decline by within 0.09 of each other."
+   }
+  ]
+ },
+ "_verification": "CLEAN — adversarially verified against source artifacts"
+}
