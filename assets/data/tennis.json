@@ -2,7 +2,7 @@
  "slug": "tennis",
  "name": "Vector Tennis",
  "tagline": "4,022 player-seasons of ATP and WTA behaviour, 16 masked features, and a ridge regression that beats \"next year looks like this year\" by +0.0941.",
- "dims": "28 features x 4,022 player-seasons (2,035 WTA / 1,987 ATP). A 7-tower MTNN now exists and produces a 32-d embedding; the ridge forward model over the masked feature columns is still separate and still the thing the +0.0941 result comes from.",
+ "dims": "315 features x 4,022 player-seasons (2,035 WTA / 1,987 ATP). An 8-tower MTNN produces a 32-d embedding; 287 of those features are a binary block of WHICH tournaments a player entered. The ridge forward model over the masked feature columns is separate and is still where the +0.0941 result comes from.",
  "entity_count": 4022,
  "source_files": [
   "vector-unified/data/tennis_forward_report.json",
@@ -17,7 +17,8 @@
   "vector-unified/data/tennis_candidate_features.json",
   "vector-unified/data/tennis_metric_probe_enriched.json",
   "vector-unified/data/tennis_forward_enriched.json",
-  "vector-unified/data/tennis_feature_identity.json"
+  "vector-unified/data/tennis_feature_identity.json",
+  "vector-unified/data/tennis_calendar_identity.json"
  ],
  "headline_stats": [
   {
@@ -41,9 +42,9 @@
    "source": "tennis_sponsors.json -> CONFIRMED_count (of corroborated_count 53)"
   },
   {
-   "value": "0.0783",
+   "value": "0.1168",
    "label": "MTNN retrieval recall@10, against 0.0584 for a learned linear map and a 0.0050 random floor",
-   "source": "vector-unified/data/tennis_mtnn_report.json -> mtnn_mean=0.0783, bar=0.0584"
+   "source": "vector-unified/data/tennis_mtnn_report.json -> mtnn_mean=0.1168, bar=0.0584"
   }
  ],
  "insights": [
@@ -69,13 +70,18 @@
   },
   {
    "title": "The model was only worth building once the features changed",
-   "body": "Retrieval — find the same player's next season among everyone on their tour — went 0.0328 with the original 16 features against a measured random floor of 0.0050. A learned linear map over those 16 added +0.0016 and beat raw cosine on 3 of 5 seeds, a coin flip, so no model was built. Measuring which features carry IDENTITY changed the answer: 12 new schedule and shot-shape features derived from match data already on disk lifted raw cosine to 0.0447, and 8 schedule features alone (0.0441) out-identify all 9 surviving performance features (0.0393). Where a player shows up says more about who they are than how they did once there. On the richer set the same learned linear map reached 0.0584 on 5 of 5 seeds, which set the bar the MTNN had to clear. It reached 0.0783 with a seed sd of 0.0061, over that bar on all five.",
-   "source": "vector-unified/data/tennis_mtnn_report.json -> mtnn_mean=0.0783, mtnn_sd=0.0061, bar=0.0584, raw_cosine_same_features=0.0447, delta_vs_bar=0.0199; vector-unified/data/tennis_metric_probe_enriched.json -> baseline_raw_cosine=0.0447, learned_mean=0.0584"
+   "body": "Retrieval — find the same player's next season among everyone on their tour — went 0.0328 with the original 16 features against a measured random floor of 0.0050. A learned linear map over those 16 added +0.0016 and beat raw cosine on 3 of 5 seeds, a coin flip, so no model was built. Measuring which features carry IDENTITY changed the answer: 12 new schedule and shot-shape features derived from match data already on disk lifted raw cosine to 0.0447, and 8 schedule features alone (0.0441) out-identify all 9 surviving performance features (0.0393). Where a player shows up says more about who they are than how they did once there. On the richer set the learned linear map reached 0.0584 on 5 of 5 seeds, which set the bar the MTNN had to clear; it reached 0.0783. Then the schedule was encoded properly — not how MANY tournaments but WHICH of the 287, as a binary block — and it reached 0.1168, five of five seeds over the bar and 3.6x the whole thread's starting point.",
+   "source": "vector-unified/data/tennis_mtnn_report.json -> mtnn_mean=0.1168, mtnn_sd=0.0152, bar=0.0584, raw_cosine_same_features=0.0447; vector-unified/data/tennis_metric_probe_enriched.json -> baseline_raw_cosine=0.0447, learned_mean=0.0584"
   },
   {
    "title": "Those features identify a player and do not forecast him",
    "body": "The same 12 features that lifted retrieval 2.4x take rank forecasting from +0.0941 to +0.1012 over a rank-only baseline — a difference of +0.0071, below the 0.01 bar fixed before the run. It beats its shuffled-extras null at p=0.000, so it is not noise; it is just small. Knowing who a player is and knowing where he will finish are different problems, and a schedule is a fingerprint rather than a forecast. The +0.0941 headline on this page is unchanged and was reproduced exactly by the enriched probe as a check that its construction was sound.",
    "source": "vector-unified/data/tennis_forward_enriched.json -> ridge16_gain=0.0941, ridge28_gain=0.1012, candidates_add_over_16=0.0071, persistence_r=0.7486, ridge28_null_p"
+  },
+  {
+   "title": "A calendar is a signature, not a fingerprint — checked before it was believed",
+   "body": "Encoding which of 287 tournaments a player entered was worth +0.0385, more than three times the measurement floor. A jump that large on a wide binary block can mean the model memorised a near-unique key rather than learning anything, so the block was characterised before being adopted. A player enters a median of 17 tournaments. The overlap between their own consecutive years is 0.3329 by Jaccard against 0.1782 for a random player on the same tour — everyone plays the Slams. Not one of the 2,926 pairs has an identical set two years running, and 24.3% of calendars are duplicated exactly by some other player in the same year. So the signal is real and partly shared, which is what an embedding is for; a lookup table would not survive any of those four numbers.",
+   "source": "vector-unified/data/tennis_calendar_identity.json -> jaccard_own_next_year=0.3329, jaccard_random_same_tour=0.1782, pairs_with_identical_set=0, pct_calendars_duplicated_in_same_tour_year=24.3, median_tournaments_per_player_year=17, n_pairs=2926"
   }
  ],
  "game": {
@@ -226,8 +232,8 @@
    }
   ]
  },
- "caveat": "The MTNN is an IDENTITY model, not a forecaster. It is scored on retrieving a player's adjacent season, the same task hoops and equities are scored on, and its 12 new features add only +0.0071 to predicting next year's rank. The forward result on this page (+0.0941 over rank-only) comes from a separate ridge regression over the masked feature columns, evaluated on a temporal split, and its value is that gain rather than its raw r. Tennis is still outside the unified joint embedding by design: A0-A11 are team-sport roles. Every number here is a 5-seed mean with its spread reported, because a single training run is a draw, not a measurement.",
- "_verification": "MECHANICAL — every cited numeric claim compared against its artifact by check_cited_fields.py. Stronger than review for NUMBERS, weaker for PROSE: it proves each value matches its source and says nothing about whether the sentence around it draws a fair conclusion. Scope: insights[0..3], headline_stats[0..n-2] and all game rounds are passed through unchanged and keep their original adversarial status: CLEAN — adversarially verified against source artifacts; The two new insights, the new headline stat, dims and caveat are new. Their numeric claims are verified by check_cited_fields.py against the artifacts; their prose framing is unreviewed. RETRACTION: dims and caveat previously asserted 'no learned tennis tower exists — no embedding, no MTNN, no network of any kind', which 47edd8e made false.",
+ "caveat": "The MTNN is an IDENTITY model, not a forecaster. It is scored on retrieving a player's adjacent season, the same task hoops and equities are scored on, and the 12 schedule/shot features add only +0.0071 to predicting next year's rank. The forward result on this page (+0.0941 over rank-only) comes from a separate ridge regression over the masked feature columns. Matching a player partly on 'played Rosmalen and Eastbourne both years' is a real behavioural signature and not leakage — nothing about the target season is read — but it is a narrower claim than 'the model learned playing style'. Adding the tournament block also widened the seed spread from 0.0061 to 0.0152, so the gain is 2.5x the new spread rather than 3.6x the old one. Tennis is still outside the unified joint embedding by design: A0-A11 are team-sport roles. Every number here is a 5-seed mean with its spread reported, because a single training run is a draw, not a measurement.",
+ "_verification": "MECHANICAL — every cited numeric claim compared against its artifact by check_cited_fields.py. Stronger than review for NUMBERS, weaker for PROSE: it proves each value matches its source and says nothing about whether the sentence around it draws a fair conclusion. Scope: Passed through unchanged with their original status: MECHANICAL — every cited numeric claim compared against its artifact by check_cited_fields; dims, one insight body, one headline stat and the caveat are UPDATED because 728751c improved the model after the page was written (0.0783 -> 0.1168, 28 -> 315 features, 7 -> 8 towers). One insight is new. Numeric claims verified by check_cited_fields.py; prose framing unreviewed.",
  "source_hashes": {
   "vector-unified/data/tennis_forward_report.json": "b1c575a545ba3d77",
   "vector-unified/data/tennis_matrix_report.json": "06d097fa996f4ff3",
@@ -237,10 +243,11 @@
   "vector-unified/data/tennis_expectation_probe.json": "27a46f8ab7d30385",
   "vector-unified/pipeline/data/tennis_matrix.npz": "ccfc7e4a6f2eb7e0",
   "vector-unified/pipeline/data/meta_tennis_matrix.json": "f711869af98327e9",
-  "vector-unified/data/tennis_mtnn_report.json": "edd36ae15d36e6f7",
+  "vector-unified/data/tennis_mtnn_report.json": "bff00370e9d36675",
   "vector-unified/data/tennis_candidate_features.json": "10fded11945ddeb9",
   "vector-unified/data/tennis_metric_probe_enriched.json": "f2f34e95353a2155",
   "vector-unified/data/tennis_forward_enriched.json": "eead8f5216f2dab3",
-  "vector-unified/data/tennis_feature_identity.json": "b5298bfc9b022ec7"
+  "vector-unified/data/tennis_feature_identity.json": "b5298bfc9b022ec7",
+  "vector-unified/data/tennis_calendar_identity.json": "13f0617232044c9f"
  }
 }
