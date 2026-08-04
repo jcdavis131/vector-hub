@@ -10,7 +10,8 @@
   "vector-unified/data/trajectory_axis_gridiron.json",
   "vector-unified/data/gridiron_name_collisions.json",
   "vector-unified/data/gridiron_pedigree.json",
-  "vector-gridiron/pipeline/cache/draft_picks.csv"
+  "vector-gridiron/pipeline/cache/draft_picks.csv",
+  "vector-unified/data/gridiron_forward_report.json"
  ],
  "headline_stats": [
   {
@@ -32,6 +33,11 @@
    "value": "47,872",
    "label": "Trainable parameters over 85 features in 13 families",
    "source": "projections.json → model.report.n_params, n_features, n_families"
+  },
+  {
+   "value": "0 of 4",
+   "label": "positions where the profile beats carrying this year's number forward",
+   "source": "vector-unified/data/gridiron_forward_report.json -> headline_positions_earning_keep=0, headline_positions_tested=4"
   }
  ],
  "insights": [
@@ -59,6 +65,11 @@
    "title": "The same-name defect was measured for football, not borrowed from basketball",
    "body": "A Wikidata probe of 2,707 corpus names found 117 where two or more age-plausible American-football players share the name. Football makes that ordinary: the pedigree expectation normalises by pick 262 (expect_log = 1 - log1p(overall)/log1p(262)), and the draft table resolves 377 duplicate names across 12,927 rows by keeping the earlier pick. Roy Williams is both 2002 R1 P8 DAL DB and 2004 R1 P7 DET WR; Zach Miller is 2007 R2 P38 OAK TE and 2009 R6 P180 JAX TE — each pair two drafts apart, so a close draft year is weak evidence. The age band is computed rather than asserted: 21 to 40, the 0.5/99.5 percentiles of 9,250 ages taken from names Wikidata returns exactly one candidate for, with the percentiles fixed before the first run (the hoops probe asserted 17/45, watched a 44-year-old rookie pass, then tightened to 18/42 against the very cases it judges). vector-gridiron's train_matrix.npz gsis id is direct evidence where the band is inference, but it covers 2016-2025 against vectors.json's 1999-2025, so one gsis means one person since 2016 and only a name whose entire corpus span sits inside that window qualifies. It acquitted 14 flagged names, 6 of them ones the suffix sweep could not (anthony miller, chad williams, dj moore, jesse james, mike davis, tyler davis), and on 5 of those the DOB pass had confirmed two people and was wrong. 101 arithmetic-flagged names minus 33 suffix acquittals minus those 6 leaves the 62-name EXCLUSION_SET — Roy Williams and Zach Miller both in it, their corpus spans of 2004-2011 and 2007-2017 falling outside the gsis window.",
    "source": "gridiron_name_collisions.json → names_probed, colliding_names, PLAUSIBILITY_BAND.band / percentiles / n_age_observations / derived_from / why_computed, SUFFIX_SWEEP.arithmetic_flagged / acquitted / gsis_acquitted_of_flagged / gsis_note / confirmed_two_or_more / EXCLUSION_SET, colliding['roy williams'].corpus_seasons, colliding['zach miller'].corpus_seasons; gridiron_pedigree.json → report.draft_rows_read / distinct_drafted_names / name_collisions_kept_earlier_pick / expectation_field; draft_picks.csv → the two 'Roy Williams' and two 'Zach Miller' rows"
+  },
+  {
+   "title": "A tight-end signal that disappeared when the split moved",
+   "body": "Asked whether this season's 18-feature profile predicts next season's PPR points-per-game beyond what this season's PPR already predicts, the answer is no for every position: 0 of 4. The tight-end result is the one worth showing. On the 2018 split the profile added +0.0105, clearing the 0.01 bar set before the run at p=0.000, and would have been published as a real forecasting edge. Moving the boundary to 2021 turns the same gain into -0.0022. A result that changes sign with where the split was drawn is a fact about the split. Quarterback is the only negative of the four — the profile makes QB prediction WORSE (-0.0151, with the null beating the real gain half the time), and QB persistence is itself the weakest of the four at 0.4914 against 0.74-0.77 elsewhere, which is the same weakness the model's own per-position error already reports. 227 of 7,262 name-keyed season pairs were dropped first: they join two different players across the boundary.",
+   "source": "vector-unified/data/gridiron_forward_report.json -> headline_positions_earning_keep=0, headline_positions_tested=4, headline_te_gain_at_main_cut=0.0105, headline_te_gain_at_2021_cut=-0.0022, headline_qb_gain=-0.0151, headline_qb_persistence_r=0.4914, n_excluded_merged_names=227, n_pairs_raw=7262, min_games=8"
   }
  ],
  "game": {
@@ -199,13 +210,14 @@
  "_round_notes": [
   "round 2 REMOVED (Amon-Ra St. Brown vs Jaxon Smith-Njigba): reveal said Smith-Njigba is 'projected for more yardage (70.3 to 65.3)'; those are RECEIVING yards only. Totals from projections.json line[]: St. Brown 65.3+6.5+0.6=72.4 vs Smith-Njigba 70.3+2.8-1.1=72.0, so St. Brown projects more. The touchdown mechanism offered was also invented"
  ],
- "_verification": "PARTIALLY VERIFIED — the adversarial verifier confirmed every other figure and flagged specific round(s), which were REMOVED rather than corrected. See _round_notes.",
+ "_verification": "MECHANICAL — every cited numeric claim compared against its artifact by check_cited_fields.py. Stronger than review for NUMBERS, weaker for PROSE: it proves each value matches its source and says nothing about whether the sentence around it draws a fair conclusion. Scope: insights[0..4], headline_stats[0..3] and all 9 rounds carry the adversarial PARTIALLY VERIFIED status from the original build and are passed through unchanged; insights[5] and headline_stats[4] are new; their numeric claims are verified by check_cited_fields.py and their prose framing is unreviewed",
  "source_hashes": {
   "vector-gridiron/assets/projections.json": "938f001dadd3239f",
   "vector-gridiron/assets/eval_backtest.json": "40ecb428d28d4a70",
   "vector-unified/data/trajectory_axis_gridiron.json": "ecd184b18fbff152",
   "vector-unified/data/gridiron_name_collisions.json": "6cf24e61f932059c",
   "vector-unified/data/gridiron_pedigree.json": "4cd0c671efae4ccc",
-  "vector-gridiron/pipeline/cache/draft_picks.csv": "91f1ead0d531aec7"
+  "vector-gridiron/pipeline/cache/draft_picks.csv": "91f1ead0d531aec7",
+  "vector-unified/data/gridiron_forward_report.json": "d3501a0d282c2724"
  }
 }
