@@ -210,5 +210,13 @@
   ]
  },
  "caveat": "Recorded verbatim in the model's own eval file: \"Engineering quality metric for the embedding space only; measures label coherence of the geometry, not investment merit and not predictive of returns.\" (assets/eval_sector_coherence.json -> note). The forward-return head backs that up - assets/forward_calibration_isotonic.json records \"passed\": false, because passed_requires is \"bias_within_tolerance AND trained_on == 'real'\" and trained_on is \"synthetic matching 11.37% vs 5.61% spec + real bundle if available\". Nothing here is a forecast.",
- "_verification": "CLEAN — adversarially verified against source artifacts"
+ "_verification": "CLEAN — adversarially verified against source artifacts",
+ "source_hashes": {
+  "C:/Users/jcdav/vector-equities/assets/real_data.json": "8c3db05c088d96cd",
+  "C:/Users/jcdav/vector-equities/assets/eval_sector_coherence.json": "67dfa196cadecb56",
+  "C:/Users/jcdav/vector-equities/assets/forward_calibration_isotonic.json": "7de9ed1055d76982",
+  "C:/Users/jcdav/vector-equities/assets/manifest_v6_real.json": "1ada86aaf64498c0",
+  "C:/Users/jcdav/vector-equities/pipeline/data/mtnn_report.json": "724c05abfddbb624",
+  "C:/Users/jcdav/vector-equities/pipeline/data/feature_audit.json": "6d7b464584b820ed"
+ }
 }

@@ -227,5 +227,30 @@
    }
   ]
  },
- "_verification": "CLEAN — adversarially verified against source artifacts"
+ "_verification": "CLEAN — adversarially verified against source artifacts",
+ "source_hashes": {
+  "C:/Users/jcdav/vector-unified/assets/unified.json": "8cae0b4f25b598ad",
+  "C:/Users/jcdav/vector-unified/data/unified_report.json": "8f548a272ba7ee3f",
+  "C:/Users/jcdav/vector-unified/data/gate_nonvacuity.json": "600be7f3c2059d41",
+  "C:/Users/jcdav/vector-unified/data/stage2_report.json": "296dea092c603682",
+  "C:/Users/jcdav/vector-unified/data/unified_meta.json": "a5607fe32f1fc591",
+  "C:/Users/jcdav/vector-unified/data/archetype_map.json": "82bf0379eb9db5a9",
+  "C:/Users/jcdav/vector-unified/data/analogy_report.json": "0c08683e514148cf",
+  "C:/Users/jcdav/vector-unified/data/analogy_triples_report.json": "8a40da829c8f532a",
+  "C:/Users/jcdav/vector-unified/data/direction_axis_hoops.json": "c40a777556c4177b",
+  "C:/Users/jcdav/vector-unified/data/direction_axis_gridiron.json": "3141b1eba71f3165",
+  "C:/Users/jcdav/vector-unified/data/trajectory_axis.json": "e38363900d0f90b0",
+  "C:/Users/jcdav/vector-unified/data/trajectory_axis_gridiron.json": "ecd184b18fbff152",
+  "C:/Users/jcdav/vector-unified/data/tennis_archetype_probe.json": "351c026041647214",
+  "C:/Users/jcdav/vector-unified/data/merged_careers.json": "ea683c4ae158ff9f",
+  "C:/Users/jcdav/vector-unified/data/matched_draft_value_comparison.json": "0b6feb98d2a8fc6d",
+  "C:/Users/jcdav/vector-unified/data/hoops_name_collisions.json": "6f0082319c1e3e0c",
+  "C:/Users/jcdav/vector-unified/data/gridiron_name_collisions.json": "6cf24e61f932059c",
+  "C:/Users/jcdav/vector-unified/data/hoops_vor_draft_value.json": "d32eabfd99551c35",
+  "C:/Users/jcdav/vector-unified/pipeline/export_unified_stage2.py": "b1148762080b1c22",
+  "C:/Users/jcdav/vector-unified/pipeline/check_artifact_freshness.py": "2564536c6af1eb7a",
+  "C:/Users/jcdav/vector-unified/pipeline/build_direction_axis.py": "54e4da9d8c031493",
+  "C:/Users/jcdav/vector-unified/pipeline/build_vor_draft_value.py": "fa8fe46148db8730",
+  "C:/Users/jcdav/vector-unified/pipeline/build_hoops_vor_draft_value.py": "3501ef0fb2dab650"
+ }
 }

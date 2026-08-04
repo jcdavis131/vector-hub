@@ -210,5 +210,10 @@
  "_round_notes": [
   "round 6 REMOVED (Christian McCaffrey vs Bijan Robinson): reveal claimed the two are each other's nearest comps; projections.json shows Bijan Robinson's comps[0] is a different player"
  ],
- "_verification": "PARTIALLY VERIFIED — the adversarial verifier confirmed every other figure and flagged specific round(s), which were REMOVED rather than corrected. See _round_notes."
+ "_verification": "PARTIALLY VERIFIED — the adversarial verifier confirmed every other figure and flagged specific round(s), which were REMOVED rather than corrected. See _round_notes.",
+ "source_hashes": {
+  "C:/Users/jcdav/vector-gridiron/assets/projections.json": "938f001dadd3239f",
+  "C:/Users/jcdav/vector-gridiron/assets/eval_backtest.json": "40ecb428d28d4a70",
+  "C:/Users/jcdav/vector-unified/data/trajectory_axis_gridiron.json": "ecd184b18fbff152"
+ }
 }

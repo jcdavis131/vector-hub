@@ -198,5 +198,14 @@
  "_round_notes": [
   "round 0 REMOVED (Manu Ginobili vs Nikola Jokic): reveal claimed 'the two closest careers in the entire file'; 160 adjacent residual gaps are smaller and 53 are exactly 0.0"
  ],
- "_verification": "PARTIALLY VERIFIED — the adversarial verifier confirmed every other figure and flagged specific round(s), which were REMOVED rather than corrected. See _round_notes."
+ "_verification": "PARTIALLY VERIFIED — the adversarial verifier confirmed every other figure and flagged specific round(s), which were REMOVED rather than corrected. See _round_notes.",
+ "source_hashes": {
+  "C:/Users/jcdav/vector-unified/data/trajectory_axis.json": "e38363900d0f90b0",
+  "C:/Users/jcdav/vector-unified/data/direction_axis_hoops.json": "c40a777556c4177b",
+  "C:/Users/jcdav/vector-unified/data/hoops_vor_draft_value.json": "d32eabfd99551c35",
+  "C:/Users/jcdav/vector-hoops/assets/vectors.json": "8786e93d0957db23",
+  "C:/Users/jcdav/vector-hoops/assets/mtnn_meta.json": "37335d35d769ccbc",
+  "C:/Users/jcdav/vector-hoops/assets/mtnn_arch.json": "38750d365aab7979",
+  "C:/Users/jcdav/vector-hoops/assets/mtnn_training/live.json": "7734136b38b690a9"
+ }
 }

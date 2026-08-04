@@ -214,5 +214,17 @@
   ]
  },
  "caveat": "No serve or shot statistics exist in this source — no aces, first-serve percentage, winners or unforced errors. The classic big-server vs baseline-grinder style axis is therefore NOT derivable here and is not faked. What is derivable is behavioural: surface specialisation, upset vs hold rate, decider rate, margin. (verbatim from tennis_matrix_report.json → not_derivable)",
- "_verification": "CLEAN — adversarially verified against source artifacts"
+ "_verification": "CLEAN — adversarially verified against source artifacts",
+ "source_hashes": {
+  "C:/Users/jcdav/vector-unified/pipeline/data/tennis_matrix.npz": "ccfc7e4a6f2eb7e0",
+  "C:/Users/jcdav/vector-unified/pipeline/data/meta_tennis_matrix.json": "f711869af98327e9",
+  "C:/Users/jcdav/vector-unified/data/tennis_matrix_report.json": "06d097fa996f4ff3",
+  "C:/Users/jcdav/vector-unified/data/tennis_archetype_probe.json": "351c026041647214",
+  "C:/Users/jcdav/vector-unified/data/tennis_sponsors.json": "788e0b61b4b36c84",
+  "C:/Users/jcdav/vector-unified/data/tennis_coverage.json": "2cf6f911e0d9fdd7",
+  "C:/Users/jcdav/vector-unified/data/tennis_expectation_probe.json": "27a46f8ab7d30385",
+  "C:/Users/jcdav/vector-unified/data/tennis_entities.json": "83f806953bc8b4a2",
+  "C:/Users/jcdav/vector-unified/data/tennis_ranking_axis.json": "a4dff3fd3e194320",
+  "C:/Users/jcdav/vector-unified/data/unified_meta.json": "a5607fe32f1fc591"
+ }
 }

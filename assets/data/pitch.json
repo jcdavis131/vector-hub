@@ -207,5 +207,10 @@
   ]
  },
  "caveat": "Recorded verbatim in pitch_age_axis.json → report.team_strength_confound: \"DOMINATES — the residual tracks team strength more strongly than age tracks delivery. Read P0/P1 as team-quality-contaminated.\" The per-position control that follows drives corr(residual, teammate mean) from 0.2626 to -0.0, but the same file flags that number as \"ORTHOGONALITY BY CONSTRUCTION, not evidence — OLS residuals are orthogonal to their own predictors, so this check can no longer detect a residual team effect and must not be read as proving one is absent.\"",
- "_verification": "CLEAN — adversarially verified against source artifacts"
+ "_verification": "CLEAN — adversarially verified against source artifacts",
+ "source_hashes": {
+  "C:/Users/jcdav/vector-pitch/assets/pitch_mtnn_embeddings.json": "88002e0d75ca012d",
+  "C:/Users/jcdav/vector-unified/data/pitch_age_axis.json": "e8bd8dd193d097ae",
+  "C:/Users/jcdav/vector-unified/data/pitch_expectation_sources.json": "7cae71e300fd116d"
+ }
 }
