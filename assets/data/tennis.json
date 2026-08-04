@@ -2,7 +2,7 @@
  "slug": "tennis",
  "name": "Vector Tennis",
  "tagline": "4,022 player-seasons of ATP and WTA behaviour, 16 masked features, and a ridge regression that beats \"next year looks like this year\" by +0.0941.",
- "dims": "16 features x 4,022 player-seasons (2,035 WTA / 1,987 ATP). There is still no learned tennis tower — no embedding, no MTNN. The only model on this page is a ridge regression over the 16 masked feature columns.",
+ "dims": "16 features x 4,022 player-seasons (2,035 WTA / 1,987 ATP). There is still no learned tennis tower — no embedding, no MTNN, no network of any kind. The only model on this page is a ridge regression over the 16 masked feature columns.",
  "entity_count": 4022,
  "source_files": [
   "C:/Users/jcdav/vector-unified/data/tennis_forward_report.json",
@@ -39,18 +39,18 @@
  "insights": [
   {
    "title": "Style adds 0.0941 on top of rank — and the raw r is not the story",
-   "body": "A ridge on this year's ranking column alone reproduces next year's ranking at r=0.7486. That is the persistence baseline: rank is sticky, and a page quoting the 16-feature model's r=0.8427 on its own would be selling persistence as if it were a model. The number that carries information is the gain, +0.0941. The split is temporal, not random — train on target year <= 2022 and test strictly after (2,032 train pairs, 894 test, 2,926 total) — because a random split puts the same player's adjacent years on opposite sides, and rank is persistent enough that the model would score well by memorising the player rather than learning anything, and would not match the actual use of predicting a season that has not happened. Sweeping the cut year across 2019, 2020, 2021, 2022 and 2023 leaves the gain positive at every cut, mean +0.0949, ranging from +0.0873 at the 2020 cut to +0.1059 at the 2021 cut. Shuffling the target collapses r to 0.0124.",
-   "source": "tennis_forward_report.json -> persistence_r, ridge16_all_features_r, gain_over_rank_alone, split, why_temporal, n_pairs/n_train/n_test, cut_year_sweep, gain_positive_at_every_cut, gain_mean_across_cuts, shuffled_target_null_r"
+   "body": "A ridge on this year's ranking column alone reproduces next year's ranking at r=0.7486. That is the persistence baseline: rank is sticky, and a page quoting the 16-feature model's r=0.8427 on its own would be selling persistence as if it were a model. The number that carries information is the gain, +0.0941. The split is temporal, not random — train on target year <= 2022 and test strictly after (2,032 train pairs, 894 test, 2,926 total) — because a random split puts the same player's adjacent years on opposite sides, and rank is persistent enough that the model would score well by memorising the player rather than learning anything, and would not match the actual use of predicting a season that has not happened. Sweeping the cut year across 2019, 2020, 2021, 2022 and 2023 leaves the gain positive at every cut, mean +0.0949, ranging from +0.0873 at the 2020 cut to +0.1059 at the 2021 cut. The null test asks the same question the gain does: it keeps the target and the ENTERING_RANK_LOG column intact and shuffles only the other feature columns, so what is destroyed is exactly the style signal being claimed. Over 60 reps that shuffled gain has mean -0.003 and sd 0.0022, its 95th percentile is -0.0001, and the p-value of the real gain against that distribution is 0.0. An earlier check permuted the target instead and drew r=0.0124 against a 0.15 tolerance; the file itself marks that superseded — the tolerance was asserted rather than computed, and a permuted target makes the ridge fit roughly the mean, so the resulting correlation is unstable (sd 0.1487 over 40 seeds, 95th percentile 0.2943). It is recorded as history, not used as evidence.",
+   "source": "tennis_forward_report.json -> persistence_r, ridge16_all_features_r, gain_over_rank_alone, split, why_temporal, n_pairs/n_train/n_test, cut_year_sweep, gain_positive_at_every_cut, gain_mean_across_cuts, null_extras_shuffled (mean, sd, pct95, p_value_of_real_gain, reps, what), gain_beats_null, superseded_shuffled_target_null_r, superseded_null_note"
   },
   {
    "title": "The sponsor was hiding in the tournament name",
-   "body": "The feasibility doc recorded the tennis sponsor rationale as failed at 0.29% coverage. That figure measured Wikidata P859, a sparse editorial property — a real value answering a different question. The sponsor of a tennis tournament is its name, and the name was already in the xlsx this repo had downloaded. Of 307 tournament-location pairs, 162 (52.8%) carry a candidate token, and 60 of 169 locations (35.5%) show a token arriving or departing at a fixed venue. Requiring both signals — the rename AND a match against 5,482 company-name tokens from the local equities universe — cuts 53 corroborated tokens to 36 confirmed. The strongest single piece of evidence is AEGON giving way to Viking at Birmingham and Eastbourne in the same year (AEGON present 2013-2018 at Birmingham, 2013-2017 at Eastbourne; Viking present 2021 at both). The file also names the false-positive class it refuses to hand-filter: Melbourne's 2021 quarantine-bubble events — Great Ocean Road, Murray River, Phillip Island, Yarra Valley — pass both tiers on Australian toponyms, because the stoplist only knows the one city in the location column.",
+   "body": "The feasibility doc recorded the tennis sponsor rationale as failed at 0.29% coverage. That figure measured Wikidata P859, a sparse editorial property — a real value answering a different question. The sponsor of a tennis tournament is its name, and the name was already in the xlsx this repo had downloaded. Of 307 tournament-location pairs, 162 (52.8%) carry a candidate token, and 60 of 169 locations (35.5%) show a token arriving or departing at a fixed venue. Requiring both signals — the rename AND a match against 5,482 company-name tokens from the local equities universe — cuts 53 corroborated tokens to 36 confirmed. The file names AEGON giving way to Viking at Birmingham and Eastbourne in the same year as its strongest single piece of evidence (AEGON present 2013-2018 at Birmingham, 2013-2017 at Eastbourne; Viking present 2021 at both). It also names the false-positive class it refuses to hand-filter: Melbourne's 2021 quarantine-bubble events — Great Ocean Road Open, Murray River Open, Phillip Island Trophy, Yarra Valley Classic — pass both tiers on Australian toponyms, because the stoplist only knows the one city in the location column.",
    "source": "tennis_sponsors.json -> what_this_corrects, tournament_location_pairs, pairs_with_a_candidate_token/_pct, locations_with_a_rename/_pct, TIERS, equities_name_tokens, corroborated_count, CONFIRMED_count, CONFIRMED_strongest_evidence, CONFIRMED_detail.aegon / .viking, CONFIRMED_known_false_positive_class"
   },
   {
    "title": "The k=6 clusters are quality tiers, and the file refuses to name them",
-   "body": "K-means was fit with the quality axis projected out, and quality still dominates what survived: PC1 takes 37.48% of variance against PC2's 10.36%, loading on WIN_RATE 0.41, DRAW_PROGRESS_MEAN 0.402 and GAMES_WON_PCT 0.397. Across the six clusters the largest spread on the quality columns is 2.631 (DRAW_PROGRESS_MEAN) against 2.225 on the behavioural ones (BIG_EVENT_SHARE). The verdict is quality tiering, not archetypes, and the file proposes no cluster names at all — labelling a k-means partition would launder it into a taxonomy. One cluster is exempted by the file's own stated rule (quality flat, a behavioural column past |z|=1.0): cluster 4, n=487, sits at max |z|=0.271 on quality with SURFACE_SPECIALISATION at +1.655.",
-   "source": "tennis_archetype_probe.json -> pc1_variance_share, pc2_variance_share, pc1_top_loadings, spread_across_clusters, max_spread_quality_cols, max_spread_behavioural_cols, verdict, naming_note, method_note, per_cluster['4'], role_like_clusters"
+   "body": "K-means was fit with the quality axis projected out, and quality still dominates what survived: PC1 takes 37.48% of variance against PC2's 10.36%, loading on WIN_RATE 0.41, DRAW_PROGRESS_MEAN 0.402 and GAMES_WON_PCT 0.397. Across the six clusters the largest spread on the quality columns is 2.631 (DRAW_PROGRESS_MEAN) against 2.225 on the behavioural ones (BIG_EVENT_SHARE). The verdict is quality tiering, not archetypes, and the file proposes no cluster names at all — labelling a k-means partition would launder it into a taxonomy. Exactly one cluster is exempted by the file's own stated rule (quality flat, a behavioural column past |z|=1.0): cluster 4, n=487, sits at max |z|=0.271 on quality with SURFACE_SPECIALISATION at +1.655.",
+   "source": "tennis_archetype_probe.json -> pc1_variance_share, pc2_variance_share, pc1_top_loadings, spread_across_clusters, max_spread_quality_cols, max_spread_behavioural_cols, verdict, naming_note, method_note, per_cluster['4'], per_cluster_note, role_like_clusters"
   },
   {
    "title": "The ranking had to be lagged, and the corpus everyone used is gone",
@@ -62,7 +62,64 @@
   "kind": "higher",
   "prompt": "Same season, same tour. Which player's ranking level came out better the FOLLOWING season?",
   "axis_label": "Next season's ENTERING_RANK_LOG (negated log rank — higher is better)",
+  "explainer": "This is the target the forward model is trained to hit, not the model's output. Every round takes two players from the same year and the same tour whose entering-rank levels that season were within 0.30 of each other on the log scale. Scored against this year's rank alone: in 4 of these 10 rounds the better of the two current levels belonged to the player who came out ahead, in 3 it belonged to the one who fell away, and in 3 the two entered on exactly the same level, so rank by itself gives no answer at all.",
   "rounds": [
+   {
+    "a": {
+     "name": "Nishikori K.",
+     "sub": "2014 ATP",
+     "value": -1.7918
+    },
+    "b": {
+     "name": "Haas T.",
+     "sub": "2014 ATP",
+     "value": -6.2285
+    },
+    "answer": "a",
+    "reveal": "Both entered 2014 on the same level, -2.5649 (a rank of 13), off 67 matches for Nishikori and 25 for Haas. In 2015 Nishikori's level was -1.7918 (6) over 68 matches for 51 wins; Haas's was -6.2285 (507) over 11 matches for 2 wins."
+   },
+   {
+    "a": {
+     "name": "Bencic B.",
+     "sub": "2016 WTA",
+     "value": -4.8598
+    },
+    "b": {
+     "name": "Pliskova Ka.",
+     "sub": "2016 WTA",
+     "value": -1.3863
+    },
+    "answer": "b",
+    "reveal": "2016 had Bencic the better placed of the two, -2.6391 (14) to Pliskova's -2.8904 (18). In 2017 Bencic's level was -4.8598 (129) over 11 matches for 3 wins; Pliskova's was -1.3863 (4) over 70 matches for 52 wins."
+   },
+   {
+    "a": {
+     "name": "Nadal R.",
+     "sub": "2017 ATP",
+     "value": -0.6931
+    },
+    "b": {
+     "name": "Wawrinka S.",
+     "sub": "2017 ATP",
+     "value": -4.4886
+    },
+    "answer": "a",
+    "reveal": "Wawrinka entered 2017 a step ahead, -1.3863 (4) to Nadal's -1.6094 (5), but played 37 matches to Nadal's 79. In 2018 Nadal's level was -0.6931 (2) over 47 matches for 43 wins; Wawrinka's was -4.4886 (89) over 34 matches for 17 wins."
+   },
+   {
+    "a": {
+     "name": "Rybarikova M.",
+     "sub": "2018 WTA",
+     "value": -4.3041
+    },
+    "b": {
+     "name": "Osaka N.",
+     "sub": "2018 WTA",
+     "value": -0.6931
+    },
+    "answer": "b",
+    "reveal": "Both entered 2018 at -2.9957 (a rank of 20). In 2019 Rybarikova's level was -4.3041 (74) over 14 matches for 5 wins; Osaka's was -0.6931 (2) over 53 matches for 40 wins."
+   },
    {
     "a": {
      "name": "Kenin S.",
@@ -75,63 +132,21 @@
      "value": -1.9459
     },
     "answer": "b",
-    "reveal": "Both carried the same 2021 ranking level, -1.6094 (a rank of 5). In 2022 Kenin's level was -5.743 (312) over 17 matches for 4 wins; Sabalenka's was -1.9459 (7) over 55 matches for 33 wins."
+    "reveal": "Both carried the same 2021 ranking level, -1.6094 (a rank of 5), off 21 matches for Kenin and 61 for Sabalenka. In 2022 Kenin's level was -5.743 (312) over 17 matches for 4 wins; Sabalenka's was -1.9459 (7) over 55 matches for 33 wins."
    },
    {
     "a": {
-     "name": "Badosa P.",
-     "sub": "2025 WTA",
-     "value": -4.6396
-    },
-    "b": {
-     "name": "Rybakina E.",
-     "sub": "2025 WTA",
-     "value": -1.0986
-    },
-    "answer": "b",
-    "reveal": "In 2025 they were one step apart, Badosa at -2.4849 (12) and Rybakina at -2.3979 (11). In the partial 2026 file Badosa's level is -4.6396 (103.5) and Rybakina's is -1.0986 (3)."
-   },
-   {
-    "a": {
-     "name": "Thiem D.",
-     "sub": "2021 ATP",
-     "value": -5.2095
-    },
-    "b": {
      "name": "Tsitsipas S.",
      "sub": "2021 ATP",
      "value": -1.7918
     },
-    "answer": "b",
-    "reveal": "Thiem entered 2021 a step ahead at -1.6094 (5) to Tsitsipas's -1.7918 (6), but played only 16 matches that season. In 2022 Thiem's level was -5.2095 (183) over 34 matches; Tsitsipas held at -1.7918 (6) over 79 matches for 57 wins."
-   },
-   {
-    "a": {
-     "name": "Stephens S.",
-     "sub": "2016 WTA",
-     "value": -5.0239
-    },
     "b": {
-     "name": "Wozniacki C.",
-     "sub": "2016 WTA",
-     "value": -2.4849
+     "name": "Thiem D.",
+     "sub": "2021 ATP",
+     "value": -5.2095
     },
-    "answer": "b",
-    "reveal": "2016 had them close, Stephens at -3.2189 (25) and Wozniacki at -3.1355 (23). In 2017 Stephens's level was -5.0239 (152) over 23 matches; Wozniacki's was -2.4849 (12) over 82 matches for 60 wins."
-   },
-   {
-    "a": {
-     "name": "Isner J.",
-     "sub": "2022 ATP",
-     "value": -4.5109
-    },
-    "b": {
-     "name": "Rune H.",
-     "sub": "2022 ATP",
-     "value": -2.0794
-    },
-    "answer": "b",
-    "reveal": "In 2022 Isner was ahead at -3.2958 (27) to Rune's -3.4657 (32). In 2023 Isner's level was -4.5109 (91) over 23 matches for 9 wins; Rune's was -2.0794 (8) over 67 matches for 44 wins."
+    "answer": "a",
+    "reveal": "Thiem entered 2021 a step ahead at -1.6094 (5) to Tsitsipas's -1.7918 (6), but played only 16 matches that season to Tsitsipas's 69. In 2022 Tsitsipas held at -1.7918 (6) over 79 matches for 57 wins; Thiem's level was -5.2095 (183) over 34 matches for 18 wins."
    },
    {
     "a": {
@@ -145,76 +160,56 @@
      "value": -4.3567
     },
     "answer": "a",
-    "reveal": "One step apart in 2022 — Pegula -2.4849 (12), Raducanu -2.5649 (13). In 2023 Pegula's level was -1.3863 (4) over 71 matches for 54 wins; Raducanu's was -4.3567 (78) over 10 matches."
+    "reveal": "One step apart in 2022 — Pegula -2.4849 (12), Raducanu -2.5649 (13). In 2023 Pegula's level was -1.3863 (4) over 71 matches for 54 wins; Raducanu's was -4.3567 (78) over 10 matches for 5 wins."
    },
    {
     "a": {
-     "name": "Auger-Aliassime F.",
-     "sub": "2025 ATP",
+     "name": "Zhang S.",
+     "sub": "2023 WTA",
+     "value": -6.3902
+    },
+    "b": {
+     "name": "Zheng Q.",
+     "sub": "2023 WTA",
+     "value": -2.0794
+    },
+    "answer": "b",
+    "reveal": "2023 had them close, Zhang at -3.3499 (28.5) and Zheng at -3.2189 (25). In 2024 Zhang's level was -6.3902 (596) over 17 matches for 5 wins; Zheng's was -2.0794 (8) over 59 matches for 42 wins."
+   },
+   {
+    "a": {
+     "name": "Draper J.",
+     "sub": "2024 ATP",
      "value": -1.9459
     },
     "b": {
-     "name": "Dimitrov G.",
-     "sub": "2025 ATP",
-     "value": -4.9273
+     "name": "Evans D.",
+     "sub": "2024 ATP",
+     "value": -5.1417
     },
     "answer": "a",
-    "reveal": "Dimitrov held the better 2025 level, -2.8034 (16.5) to Auger-Aliassime's -3.1781 (24), off 30 matches to 73. In the partial 2026 file Auger-Aliassime is at -1.9459 (7) and Dimitrov at -4.9273 (138)."
+    "reveal": "Draper entered 2024 ahead of Evans, -3.6376 (38) to -3.9318 (51). In 2025 Draper's level was -1.9459 (7) over 40 matches for 30 wins; Evans's was -5.1417 (171) over 13 matches for 7 wins."
    },
    {
     "a": {
-     "name": "Dimitrov G.",
-     "sub": "2023 ATP",
-     "value": -2.3979
+     "name": "Badosa P.",
+     "sub": "2025 WTA",
+     "value": -4.6396
     },
     "b": {
-     "name": "Shapovalov D.",
-     "sub": "2023 ATP",
-     "value": -4.804
+     "name": "Rybakina E.",
+     "sub": "2025 WTA",
+     "value": -1.0986
     },
-    "answer": "a",
-    "reveal": "2023 had them near each other at -3.2387 (25.5) and -3.3844 (29.5). In 2024 Dimitrov's level was -2.3979 (11) over 63 matches for 45 wins; Shapovalov's was -4.804 (122) over 45 matches for 23 wins."
-   },
-   {
-    "a": {
-     "name": "Barty A.",
-     "sub": "2019 WTA",
-     "value": -0.6931
-    },
-    "b": {
-     "name": "Stephens S.",
-     "sub": "2019 WTA",
-     "value": -3.5835
-    },
-    "answer": "a",
-    "reveal": "Barty led 2019 at -1.7918 (6) to Stephens's -2.1972 (9). In the shortened 2020 season Barty's level was -0.6931 (2) over 15 matches for 12 wins; Stephens's was -3.5835 (36) over 15 matches for 4 wins."
-   },
-   {
-    "a": {
-     "name": "Djokovic N.",
-     "sub": "2018 ATP",
-     "value": -0.6931
-    },
-    "b": {
-     "name": "Kyrgios N.",
-     "sub": "2018 ATP",
-     "value": -3.6889
-    },
-    "answer": "a",
-    "reveal": "Djokovic's 2018 level was -2.5649 (13) — his lowest-ranked season in the file's ATP rows for him — against Kyrgios at -3.091 (22). In 2019 Djokovic was at -0.6931 (2) over 66 matches for 55 wins; Kyrgios at -3.6889 (40) over 35 matches for 21 wins."
+    "answer": "b",
+    "reveal": "In 2025 they were one step apart, Badosa at -2.4849 (12) and Rybakina at -2.3979 (11), off 31 matches to 72. In the partial 2026 file Badosa's level is -4.6396 (103.5) over 30 matches for 14 wins, and Rybakina's is -1.0986 (3) over 45 matches for 34 wins."
    }
   ]
  },
- "caveat": "No learned tennis tower exists — no embedding, no MTNN. The forward model is a ridge regression over 16 masked features, evaluated on a temporal split, and its value is the +0.0941 gain over the rank-only baseline rather than its raw r. The 16 features are behavioural only: the source carries no serve or shot statistics, so no style axis built on serving is derivable. The corpus is free per-season xlsx from tennis-data.co.uk, used because the canonical free tennis dataset (JeffSackmann/tennis_atp and tennis_wta) now 404s — measured 2026-08-03. The 2026 season file is partial (1,786 ATP and 1,731 WTA match rows against 2,644 and 2,505 for 2025). Sponsor tokens are name matches, not entity resolution: a token matching a company name does not prove that company sponsored that event.",
- "_insight_notes": [
-  "insight 3 REMOVED ('A player who never played grass did not lose every grass match'): claimed 'six of the sixteen columns are observed on all 4,022 rows' — tennis_matrix_report.json feature_coverage shows EIGHT at 4022"
- ],
- "_field_notes": [
-  "game.explainer REMOVED: claimed the rounds are cases where this year's rank would not get you there; in 6 of 10 rounds it would  (was: This is the target the forward model is trained to hit, not the model's output. Every round takes two players from the same year and the same tour and)"
- ],
- "_verification": "PARTIALLY VERIFIED — the adversarial verifier confirmed every other figure and flagged specific round(s), which were REMOVED rather than corrected. See _round_notes.",
+ "caveat": "No learned tennis tower exists — no embedding, no MTNN. The forward model is a ridge regression over 16 masked features, evaluated on a temporal split, and its value is the +0.0941 gain over the rank-only baseline rather than its raw r. The null it is tested against shuffles only the non-rank feature columns and leaves the target and the rank column intact; the older permuted-target null that drew r=0.0124 is marked superseded in the artifact and is not evidence for anything here. The 16 features are behavioural only: the source carries no serve or shot statistics, so no style axis built on serving is derivable. The corpus is free per-season xlsx from tennis-data.co.uk, used because the canonical free tennis dataset (JeffSackmann/tennis_atp and tennis_wta) now 404s — measured 2026-08-03. The 2026 season file is partial (1,786 ATP and 1,731 WTA match rows against 2,644 and 2,505 for 2025). Sponsor tokens are name matches, not entity resolution: a token matching a company name does not prove that company sponsored that event.",
+ "_verification": "CLEAN — adversarially verified against source artifacts",
  "source_hashes": {
-  "C:/Users/jcdav/vector-unified/data/tennis_forward_report.json": "20ca1088341e2c26",
+  "C:/Users/jcdav/vector-unified/data/tennis_forward_report.json": "b1c575a545ba3d77",
   "C:/Users/jcdav/vector-unified/data/tennis_matrix_report.json": "06d097fa996f4ff3",
   "C:/Users/jcdav/vector-unified/data/tennis_archetype_probe.json": "351c026041647214",
   "C:/Users/jcdav/vector-unified/data/tennis_sponsors.json": "788e0b61b4b36c84",
