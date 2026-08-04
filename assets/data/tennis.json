@@ -5,14 +5,14 @@
  "dims": "16 features x 4,022 player-seasons (2,035 WTA / 1,987 ATP). There is still no learned tennis tower — no embedding, no MTNN, no network of any kind. The only model on this page is a ridge regression over the 16 masked feature columns.",
  "entity_count": 4022,
  "source_files": [
-  "C:/Users/jcdav/vector-unified/data/tennis_forward_report.json",
-  "C:/Users/jcdav/vector-unified/data/tennis_matrix_report.json",
-  "C:/Users/jcdav/vector-unified/data/tennis_archetype_probe.json",
-  "C:/Users/jcdav/vector-unified/data/tennis_sponsors.json",
-  "C:/Users/jcdav/vector-unified/data/tennis_coverage.json",
-  "C:/Users/jcdav/vector-unified/data/tennis_expectation_probe.json",
-  "C:/Users/jcdav/vector-unified/pipeline/data/tennis_matrix.npz",
-  "C:/Users/jcdav/vector-unified/pipeline/data/meta_tennis_matrix.json"
+  "vector-unified/data/tennis_forward_report.json",
+  "vector-unified/data/tennis_matrix_report.json",
+  "vector-unified/data/tennis_archetype_probe.json",
+  "vector-unified/data/tennis_sponsors.json",
+  "vector-unified/data/tennis_coverage.json",
+  "vector-unified/data/tennis_expectation_probe.json",
+  "vector-unified/pipeline/data/tennis_matrix.npz",
+  "vector-unified/pipeline/data/meta_tennis_matrix.json"
  ],
  "headline_stats": [
   {
@@ -209,13 +209,13 @@
  "caveat": "No learned tennis tower exists — no embedding, no MTNN. The forward model is a ridge regression over 16 masked features, evaluated on a temporal split, and its value is the +0.0941 gain over the rank-only baseline rather than its raw r. The null it is tested against shuffles only the non-rank feature columns and leaves the target and the rank column intact; the older permuted-target null that drew r=0.0124 is marked superseded in the artifact and is not evidence for anything here. The 16 features are behavioural only: the source carries no serve or shot statistics, so no style axis built on serving is derivable. The corpus is free per-season xlsx from tennis-data.co.uk, used because the canonical free tennis dataset (JeffSackmann/tennis_atp and tennis_wta) now 404s — measured 2026-08-03. The 2026 season file is partial (1,786 ATP and 1,731 WTA match rows against 2,644 and 2,505 for 2025). Sponsor tokens are name matches, not entity resolution: a token matching a company name does not prove that company sponsored that event.",
  "_verification": "CLEAN — adversarially verified against source artifacts",
  "source_hashes": {
-  "C:/Users/jcdav/vector-unified/data/tennis_forward_report.json": "b1c575a545ba3d77",
-  "C:/Users/jcdav/vector-unified/data/tennis_matrix_report.json": "06d097fa996f4ff3",
-  "C:/Users/jcdav/vector-unified/data/tennis_archetype_probe.json": "351c026041647214",
-  "C:/Users/jcdav/vector-unified/data/tennis_sponsors.json": "788e0b61b4b36c84",
-  "C:/Users/jcdav/vector-unified/data/tennis_coverage.json": "2cf6f911e0d9fdd7",
-  "C:/Users/jcdav/vector-unified/data/tennis_expectation_probe.json": "27a46f8ab7d30385",
-  "C:/Users/jcdav/vector-unified/pipeline/data/tennis_matrix.npz": "ccfc7e4a6f2eb7e0",
-  "C:/Users/jcdav/vector-unified/pipeline/data/meta_tennis_matrix.json": "f711869af98327e9"
+  "vector-unified/data/tennis_forward_report.json": "b1c575a545ba3d77",
+  "vector-unified/data/tennis_matrix_report.json": "06d097fa996f4ff3",
+  "vector-unified/data/tennis_archetype_probe.json": "351c026041647214",
+  "vector-unified/data/tennis_sponsors.json": "788e0b61b4b36c84",
+  "vector-unified/data/tennis_coverage.json": "2cf6f911e0d9fdd7",
+  "vector-unified/data/tennis_expectation_probe.json": "27a46f8ab7d30385",
+  "vector-unified/pipeline/data/tennis_matrix.npz": "ccfc7e4a6f2eb7e0",
+  "vector-unified/pipeline/data/meta_tennis_matrix.json": "f711869af98327e9"
  }
 }

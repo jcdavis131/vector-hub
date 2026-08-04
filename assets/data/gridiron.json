@@ -5,12 +5,12 @@
  "dims": "32-d MTNN v2 gated fusion (d_emb=32, 13 feature families)",
  "entity_count": 646,
  "source_files": [
-  "C:/Users/jcdav/vector-gridiron/assets/projections.json",
-  "C:/Users/jcdav/vector-gridiron/assets/eval_backtest.json",
-  "C:/Users/jcdav/vector-unified/data/trajectory_axis_gridiron.json",
-  "C:/Users/jcdav/vector-unified/data/gridiron_name_collisions.json",
-  "C:/Users/jcdav/vector-unified/data/gridiron_pedigree.json",
-  "C:/Users/jcdav/vector-gridiron/pipeline/cache/draft_picks.csv"
+  "vector-gridiron/assets/projections.json",
+  "vector-gridiron/assets/eval_backtest.json",
+  "vector-unified/data/trajectory_axis_gridiron.json",
+  "vector-unified/data/gridiron_name_collisions.json",
+  "vector-unified/data/gridiron_pedigree.json",
+  "vector-gridiron/pipeline/cache/draft_picks.csv"
  ],
  "headline_stats": [
   {
@@ -201,11 +201,11 @@
  ],
  "_verification": "PARTIALLY VERIFIED — the adversarial verifier confirmed every other figure and flagged specific round(s), which were REMOVED rather than corrected. See _round_notes.",
  "source_hashes": {
-  "C:/Users/jcdav/vector-gridiron/assets/projections.json": "938f001dadd3239f",
-  "C:/Users/jcdav/vector-gridiron/assets/eval_backtest.json": "40ecb428d28d4a70",
-  "C:/Users/jcdav/vector-unified/data/trajectory_axis_gridiron.json": "ecd184b18fbff152",
-  "C:/Users/jcdav/vector-unified/data/gridiron_name_collisions.json": "6cf24e61f932059c",
-  "C:/Users/jcdav/vector-unified/data/gridiron_pedigree.json": "4cd0c671efae4ccc",
-  "C:/Users/jcdav/vector-gridiron/pipeline/cache/draft_picks.csv": "91f1ead0d531aec7"
+  "vector-gridiron/assets/projections.json": "938f001dadd3239f",
+  "vector-gridiron/assets/eval_backtest.json": "40ecb428d28d4a70",
+  "vector-unified/data/trajectory_axis_gridiron.json": "ecd184b18fbff152",
+  "vector-unified/data/gridiron_name_collisions.json": "6cf24e61f932059c",
+  "vector-unified/data/gridiron_pedigree.json": "4cd0c671efae4ccc",
+  "vector-gridiron/pipeline/cache/draft_picks.csv": "91f1ead0d531aec7"
  }
 }

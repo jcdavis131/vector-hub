@@ -5,18 +5,18 @@
  "dims": "20,719 player-seasons x 64-d joint embedding (hoops 12,966 / gridiron 5,323 / pitch 2,430); per-sport encoders of native width 64 / 32 / 24 feeding a shared trunk",
  "entity_count": 20719,
  "source_files": [
-  "C:/Users/jcdav/vector-unified/assets/unified.json",
-  "C:/Users/jcdav/vector-unified/data/unified_report.json",
-  "C:/Users/jcdav/vector-unified/data/stage2_report.json",
-  "C:/Users/jcdav/vector-unified/data/gate_nonvacuity.json",
-  "C:/Users/jcdav/vector-unified/data/archetype_map.json",
-  "C:/Users/jcdav/vector-unified/data/analogy_report.json",
-  "C:/Users/jcdav/vector-unified/data/analogy_triples_report.json",
-  "C:/Users/jcdav/vector-unified/data/tennis_archetype_probe.json",
-  "C:/Users/jcdav/vector-unified/data/direction_axis_hoops.json",
-  "C:/Users/jcdav/vector-unified/data/direction_axis_gridiron.json",
-  "C:/Users/jcdav/vector-unified/data/unified_meta.json",
-  "C:/Users/jcdav/vector-unified/data/g1_position_probe.json"
+  "vector-unified/assets/unified.json",
+  "vector-unified/data/unified_report.json",
+  "vector-unified/data/stage2_report.json",
+  "vector-unified/data/gate_nonvacuity.json",
+  "vector-unified/data/archetype_map.json",
+  "vector-unified/data/analogy_report.json",
+  "vector-unified/data/analogy_triples_report.json",
+  "vector-unified/data/tennis_archetype_probe.json",
+  "vector-unified/data/direction_axis_hoops.json",
+  "vector-unified/data/direction_axis_gridiron.json",
+  "vector-unified/data/unified_meta.json",
+  "vector-unified/data/g1_position_probe.json"
  ],
  "headline_stats": [
   {
@@ -235,17 +235,17 @@
  ],
  "_verification": "PARTIALLY VERIFIED — the adversarial verifier confirmed every other figure and flagged specific round(s), which were REMOVED rather than corrected. See _round_notes.",
  "source_hashes": {
-  "C:/Users/jcdav/vector-unified/assets/unified.json": "5f2cfb0891113802",
-  "C:/Users/jcdav/vector-unified/data/unified_report.json": "d2ee1ca2e45c6cbd",
-  "C:/Users/jcdav/vector-unified/data/stage2_report.json": "9e36229792fee699",
-  "C:/Users/jcdav/vector-unified/data/gate_nonvacuity.json": "650bdf2371d2d412",
-  "C:/Users/jcdav/vector-unified/data/archetype_map.json": "82bf0379eb9db5a9",
-  "C:/Users/jcdav/vector-unified/data/analogy_report.json": "3a76d4f925defa93",
-  "C:/Users/jcdav/vector-unified/data/analogy_triples_report.json": "b9d8926549c7e8c7",
-  "C:/Users/jcdav/vector-unified/data/tennis_archetype_probe.json": "351c026041647214",
-  "C:/Users/jcdav/vector-unified/data/direction_axis_hoops.json": "c40a777556c4177b",
-  "C:/Users/jcdav/vector-unified/data/direction_axis_gridiron.json": "3141b1eba71f3165",
-  "C:/Users/jcdav/vector-unified/data/unified_meta.json": "a5607fe32f1fc591",
-  "C:/Users/jcdav/vector-unified/data/g1_position_probe.json": "97b16eb454836102"
+  "vector-unified/assets/unified.json": "5f2cfb0891113802",
+  "vector-unified/data/unified_report.json": "d2ee1ca2e45c6cbd",
+  "vector-unified/data/stage2_report.json": "9e36229792fee699",
+  "vector-unified/data/gate_nonvacuity.json": "650bdf2371d2d412",
+  "vector-unified/data/archetype_map.json": "82bf0379eb9db5a9",
+  "vector-unified/data/analogy_report.json": "3a76d4f925defa93",
+  "vector-unified/data/analogy_triples_report.json": "b9d8926549c7e8c7",
+  "vector-unified/data/tennis_archetype_probe.json": "351c026041647214",
+  "vector-unified/data/direction_axis_hoops.json": "c40a777556c4177b",
+  "vector-unified/data/direction_axis_gridiron.json": "3141b1eba71f3165",
+  "vector-unified/data/unified_meta.json": "a5607fe32f1fc591",
+  "vector-unified/data/g1_position_probe.json": "97b16eb454836102"
  }
 }
