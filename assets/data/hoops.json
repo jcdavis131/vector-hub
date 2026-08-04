@@ -8,6 +8,8 @@
   "C:/Users/jcdav/vector-unified/data/trajectory_axis.json",
   "C:/Users/jcdav/vector-unified/data/direction_axis_hoops.json",
   "C:/Users/jcdav/vector-unified/data/hoops_vor_draft_value.json",
+  "C:/Users/jcdav/vector-unified/data/hoops_name_collisions.json",
+  "C:/Users/jcdav/vector-unified/data/merged_careers.json",
   "C:/Users/jcdav/vector-hoops/assets/vectors.json",
   "C:/Users/jcdav/vector-hoops/assets/mtnn_meta.json",
   "C:/Users/jcdav/vector-hoops/assets/mtnn_arch.json",
@@ -38,23 +40,28 @@
  "insights": [
   {
    "title": "After pick 30, the expectation curve flatlines",
-   "body": "The predicted delivery for pick 1 is 61.6909 and it decays smoothly down to 46.7269 at pick 30 — then every single pick from 31 through 60 (plus the stray 75, 154, 160 entries) shares the identical predicted value of 45.0642. Undrafted players get 44.3252. So the model's own expectation says the difference between the 31st pick and the 57th pick is exactly zero, and the difference between the last pick in the draft and going undrafted is 0.7390. Manu Ginobili at 57 and Nikola Jokic at 41 are graded against the same number.",
-   "source": "C:/Users/jcdav/vector-unified/data/trajectory_axis.json → careers[].predicted grouped by careers[].overall / careers[].undrafted"
+   "body": "The predicted delivery for pick 1 is 61.6909 and it decays smoothly down to 46.7269 at pick 30 — then every pick from 31 to 60 that has a career in this file shares the identical predicted value 45.0642, as do the stray 75, 154 and 160 entries (pick 59 has no careers at all). Undrafted players get 44.3252. So the model's own expectation says the difference between the 31st pick and the 57th pick is exactly zero, and the difference between the last pick in the draft and going undrafted is 0.7390. Manu Ginobili at 57 and Nikola Jokic at 41 are graded against the same number.",
+   "source": "C:/Users/jcdav/vector-unified/data/trajectory_axis.json → careers[].predicted grouped by careers[].overall / careers[].undrafted (32 distinct slot keys map to 45.0642)"
   },
   {
    "title": "Draft capital predicts playing time better than it predicts quality",
-   "body": "On the matched fantasy-VOR construct over 1,503 drafted players, the correlation between draft expectation and 5-year VOR total is 0.4918 — nearly double the 0.2611 the same draft slot manages against per-season delivery quality. Expected VOR falls off a cliff by bucket: 18.19 for lottery, 6.21 for late-1st, 3.05 for early-2nd, 1.59 for late-2nd. The mechanism shows up in the attrition column: 0.6% of lottery picks never played, versus 22.7% of early-2nd and 48.8% of late-2nd.",
-   "source": "C:/Users/jcdav/vector-unified/data/hoops_vor_draft_value.json → report.corr_expectation_vor, report.drafted_scored, report.cells[].{bucket, ev_vor, never_played_pct}"
+   "body": "On the matched fantasy-VOR construct over 1,503 drafted players, the correlation between draft expectation and 5-year VOR total is 0.4918 — nearly double the 0.2611 the same draft slot manages against per-season delivery quality. Expected VOR falls off a cliff by bucket: 18.19 for lottery (359 drafted), 6.21 for late-1st (404), 3.05 for early-2nd (375), 1.59 for late-2nd (365). The mechanism shows up in the attrition column: 0.6% of lottery picks never played, versus 22.7% of early-2nd and 48.8% of late-2nd.",
+   "source": "C:/Users/jcdav/vector-unified/data/hoops_vor_draft_value.json → report.corr_expectation_vor, report.drafted_scored, report.cells[].{bucket, drafted, ev_vor, never_played_pct}"
   },
   {
    "title": "Over-delivering and still rising are different axes",
-   "body": "The direction axis scores 566 careers and splits them 114 rising (D0) / 114 declining (D1) / 338 unlabelled, with 287 more dropped for never clearing replacement level at all. It is built to be independent of the over/under-delivery axis: Jokic is simultaneously T1 (residual +49.1176 against his pick-41 expectation) and D0 (first-half VOR 21.87, second-half 34.52, delta +12.65), while Brook Lopez is a positive-residual career that is also D1 (11.39 → 1.13, delta -10.27). The file's own orthogonality note says the earlier single-axis encoding made that combination inexpressible.",
-   "source": "C:/Users/jcdav/vector-unified/data/direction_axis_hoops.json → report.{careers_scored, counts, dropped, orthogonality_note}, report.D0_examples[2], report.D1_examples[4]; trajectory_axis.json → careers[name='nikola jokic'].residual"
+   "body": "The direction axis scores 566 careers and splits them 114 rising (D0) / 114 declining (D1) / 338 unlabelled, with 287 more dropped for never clearing replacement level at all and 650 for too few seasons. It is built to be independent of the over/under-delivery axis: Jokic is simultaneously T1 (residual +49.1176 against his pick-41 expectation) and D0 (first-half VOR 21.87, second-half 34.52, delta +12.65), while Brook Lopez is a positive-residual career (+16.2428 off a pick-10 bar) that is also D1 (11.39 → 1.13, delta -10.27). The file's own orthogonality note says the earlier single-axis encoding made that combination inexpressible.",
+   "source": "C:/Users/jcdav/vector-unified/data/direction_axis_hoops.json → report.{careers_scored, counts, dropped, orthogonality_note}, report.D0_examples[2], report.D1_examples[4]; trajectory_axis.json → careers[name='nikola jokic'].residual, careers[name='brook lopez'].residual"
   },
   {
    "title": "The model's published spec was wrong on disk, and the file says so",
-   "body": "The live trainer manifest records dim = 64 with n_towers = 18 (tower_width 32, tower_hidden 160, 2 blocks, concat fusion), run 20260730-162011, finishing at test_recall_at_10 = 0.83 and purity_at_20 = 0.7765381406948745. The older mtnn_arch.json carries an explicit self-correction: 'dEmb = 48 -> 64, verified from assets/mtnn_embeddings.f32 = 12966*64*4 = 3319296 bytes', plus a still_wrong list noting it lists 11 tower families when the live manifest has 18. The shipped embedding in mtnn_meta.json is dim 64 over 12,966 rows at test_recall_at_10 = 0.846 and archetype_top1_acc = 0.9701527070800555.",
+   "body": "The live trainer manifest records dim = 64 with n_towers = 18 (tower_width 32, tower_hidden 160, 2 blocks, concat fusion), run 20260730-162011, finishing at epoch 39 with test_recall_at_10 = 0.83 and purity_at_20 = 0.7765381406948745. The older mtnn_arch.json carries an explicit self-correction: 'dEmb = 48 -> 64, verified from assets/mtnn_embeddings.f32 = 12966*64*4 = 3319296 bytes', plus a still_wrong list noting it lists 11 tower families when the live manifest has 18. The shipped embedding in mtnn_meta.json is dim 64 over 12,966 rows at test_recall_at_10 = 0.846 and archetype_top1_acc = 0.9701527070800555.",
    "source": "C:/Users/jcdav/vector-hoops/assets/mtnn_training/live.json → arch.{dim, n_towers, tower_width, tower_hidden, tower_blocks, fusion}, run_id, val[4]; assets/mtnn_arch.json → _stale.corrected_2026-07-26.dEmb, _stale.still_wrong.towerFamilies; assets/mtnn_meta.json → {dim, rows, test_recall_at_10, archetype_top1_acc}"
+  },
+  {
+   "title": "A same-name defect, and a test that was documented as definitive and wasn't",
+   "body": "The operator reported on 2026-08-03 that Jaren Jackson and Jaren Jackson Jr. were being combined. The root cause was not suffix stripping: vectors.json carries zero suffixed names across its 12,966 rows, so Sr. and Jr. arrive as one key before this repo sees them, and its `id` field is a row index rather than a player id — LeBron James has 23 of them. There is no player identity key in the source at all. Two tests ran over 2,415 eligible career keys. The arithmetic one — nobody records a season before the year he was drafted — is definitive where it fires, and it fires on exactly one name: `jaren jackson`, earliest draft year 2018 while holding seasons 1996, 1997, 1998, 1999 and 2000 inside a 1996-2025 span. The second test, more than one draft entry for a name (44 names), was DOCUMENTED AS DEFINITIVE AND IS NOT: a drafted player who does not sign can re-enter, and Arvydas Sabonis holds 1985 #77 (voided as underage) and 1986 #24 (Portland) as one person, Wikidata Q297750, born 1964. A Wikidata suffix sweep over all 45 flagged names acquitted 21 of them, confirmed 23 as two or more people, and got no answer for 1 (`greg anderson`), which stays excluded because no evidence is not evidence of one person — leaving an exclusion set of 24. The sweep is required because label matching is exact: asking for 'Glen Rice' never returns Glen Rice Jr. (Q4811246, born 1991), so a bare query reports one person and would clear a genuine father/son pair. Several acquittals are exactly that shape read the other way — the `patrick ewing` key carries picks 1985 #1 and 2008 #43 but only seasons 1996-2001, and `glen rice` carries 1989 #4 and 2013 #35 over seasons 1996-2003; the 18-42 age band leaves one plausible person for each. Downstream, 24 names are excluded from the VOR table and 15 careers are dropped from the trajectory axis as merged.",
+   "source": "C:/Users/jcdav/vector-unified/data/merged_careers.json → {operator_report, root_cause, eligible_careers=2415, impossible_count=1, ambiguous_count=44, acquitted_count=21, acquittal_note}, impossible['jaren jackson'], ambiguous['patrick ewing'|'glen rice'|'arvydas sabonis']; C:/Users/jcdav/vector-unified/data/hoops_name_collisions.json → SUFFIX_SWEEP.{what, names_swept=45, acquitted (21), confirmed_two_or_more (23), no_wikidata_answer=['greg anderson'], EXCLUSION_SET (24), rule}, plausibility_band=[18,42]; hoops_vor_draft_value.json → report.merged_names_excluded=24; trajectory_axis.json → report.dropped.merged_career=15; vectors.json → players[].name (0 suffixed), players[name='LeBron James'].id (23 distinct)"
   }
  ],
  "game": {
@@ -75,7 +82,7 @@
      "value": 43.5617
     },
     "answer": "b",
-    "reveal": "Same draft slot, same 50.0633 bar. Malone graded 93.625 across his 8 charted seasons; Bryant graded 83.947 across 19 — a longer career at a lower average percentile costs him the residual."
+    "reveal": "Same draft slot, same 50.0633 bar. Malone graded 93.625 across his 8 charted seasons; Bryant graded 83.947 across 19. Delivery is a career mean, so the extra seasons pull his average down."
    },
    {
     "a": {
@@ -89,7 +96,7 @@
      "value": 40.7859
     },
     "answer": "b",
-    "reveal": "Butler actually graded higher — 85.533 to VanVleet's 85.111 — but Butler was held to a pick-30 bar of 46.7269 while VanVleet's undrafted bar was 44.3252, and the 2.4-point handicap flips the result."
+    "reveal": "Butler actually graded higher — 85.533 to VanVleet's 85.111 — but Butler was held to a pick-30 bar of 46.7269 while VanVleet's undrafted bar was 44.3252, and that 2.4016 handicap flips the result. Both carry the T1 label."
    },
    {
     "a": {
@@ -131,7 +138,7 @@
      "value": 33.5913
     },
     "answer": "a",
-    "reveal": "Curry was picked eight slots earlier and still wins: 89.625 delivery against a 53.3776 bar beats Giannis's 82.923 against 49.3317. Neither clears the cut for the T1 label — the over-delivery tail is mostly second-rounders."
+    "reveal": "Curry was picked eight slots earlier and still wins: 89.625 delivery against a 53.3776 bar beats Giannis's 82.923 against 49.3317. Neither is labelled T1 — of the 99 T1 careers, 61 were picked 31st or later and 31 went undrafted, leaving only 7 from the top 30."
    },
    {
     "a": {
@@ -145,21 +152,7 @@
      "value": 43.8579
     },
     "answer": "b",
-    "reveal": "Stockton has only 7 charted seasons because the data starts at 1996-97 — and those late-career seasons still graded 92.857 against a 48.9992 bar, edging Parker's 89.556 over 18 seasons against 46.9393."
-   },
-   {
-    "a": {
-     "name": "Alex Caruso",
-     "sub": "undrafted",
-     "value": 30.6748
-    },
-    "b": {
-     "name": "Rudy Gobert",
-     "sub": "pick 27",
-     "value": 30.2575
-    },
-    "answer": "a",
-    "reveal": "Gobert grades higher in absolute terms — 77.308 to Caruso's 75.000 — but his pick-27 bar of 47.0502 sits 2.725 above Caruso's undrafted 44.3252, and Caruso takes it by 0.4173."
+    "reveal": "The corpus starts at 1996-97, so only 7 of Stockton's seasons are charted — and those late-career seasons still graded 92.857 against a 48.9992 bar, edging Parker's 89.556 over 18 seasons against 46.9393."
    },
    {
     "a": {
@@ -173,7 +166,7 @@
      "value": 25.0072
     },
     "answer": "a",
-    "reveal": "The hardest bar in the file is pick 1 at 61.6909, and James clears it by 28.6569 across 23 charted seasons (delivery 90.348). Green's 70.071 against the flat 45.0642 second-round bar earns the T1 label but a smaller residual."
+    "reveal": "The hardest bar in the file is pick 1 at 61.6909 — no slot is graded against a higher number — and James clears it by 28.6569 across 23 charted seasons (delivery 90.348). Green's 70.071 against the flat 45.0642 second-round bar earns the T1 label but a smaller residual."
    },
    {
     "a": {
@@ -188,21 +181,34 @@
     },
     "answer": "a",
     "reveal": "The last pick in the draft nearly catches a number-one overall. Davis grades 75.857 against the 61.6909 top-pick bar; Thomas grades 58.500 against 45.0642. The gap is 0.7304 — smaller than the 0.7390 the model puts between the 60th pick and going undrafted."
+   },
+   {
+    "a": {
+     "name": "Jeff Hornacek",
+     "sub": "pick 46",
+     "value": 51.1858
+    },
+    "b": {
+     "name": "Arvydas Sabonis",
+     "sub": "pick 24",
+     "value": 46.4211
+    },
+    "answer": "a",
+    "reveal": "Hornacek's 51.1858 is the largest residual in the file — no career scores above it — off 96.250 delivery over 4 charted seasons, the minimum this axis accepts, against the flat 45.0642 second-round bar. Sabonis grades 93.833 over 6 seasons against a pick-24 bar of 47.4123, and he is only in the file because the Wikidata suffix sweep acquitted him: two draft rows (1985 #77, 1986 #24) flagged the name, and Q297750, born 1964, is one person."
    }
   ]
  },
- "caveat": "From the model's own artifact (trajectory_axis.json → caveat_survivorship): \"A high pick who never earned 4 charted seasons is ABSENT, not labelled T0. The worst busts leave the league before they accumulate a career, so T0 is biased toward players who under-delivered while still being good enough to keep playing. This understates the tail it is trying to name.\" The same file's caveat_scope adds: \"hoops only. gridiron has the inputs but no exported artifact; pitch has none.\" 1,107 careers were dropped from the axis for having too few seasons.",
- "_insight_notes": [
-  "insight 0 REMOVED ('Draft position barely explains what a career became'): claimed delivery floor of 8.5 (Anthony Bennett); artifact min is byron mullens 5.2 at pick 24 — 8.5 is the min among pick-1 players only"
- ],
+ "caveat": "From the model's own artifact (trajectory_axis.json → caveat_survivorship): \"A high pick who never earned 4 charted seasons is ABSENT, not labelled T0. The worst busts leave the league before they accumulate a career, so T0 is biased toward players who under-delivered while still being good enough to keep playing. This understates the tail it is trying to name.\" The same file's caveat_scope adds: \"hoops only. gridiron has the inputs but no exported artifact; pitch has none.\" 1,107 careers were dropped from the axis for having too few seasons and 15 more as merged careers — names that provably cover more than one person, which merged_careers.json says should be excluded rather than split, because \"splitting without an identity key is a guess dressed as a repair.\"",
  "_round_notes": [
-  "round 0 REMOVED (Manu Ginobili vs Nikola Jokic): reveal claimed 'the two closest careers in the entire file'; 160 adjacent residual gaps are smaller and 53 are exactly 0.0"
+  "round 6 REMOVED (Alex Caruso vs Rudy Gobert): reveal said 'Caruso takes it by 0.4173'; the exact residual difference is 0.4172430 which rounds to 0.4172. 0.4173 is the difference of the two already-ROUNDED display values, and round 2 on the same page computes from full precision"
  ],
  "_verification": "PARTIALLY VERIFIED — the adversarial verifier confirmed every other figure and flagged specific round(s), which were REMOVED rather than corrected. See _round_notes.",
  "source_hashes": {
   "C:/Users/jcdav/vector-unified/data/trajectory_axis.json": "e38363900d0f90b0",
   "C:/Users/jcdav/vector-unified/data/direction_axis_hoops.json": "c40a777556c4177b",
   "C:/Users/jcdav/vector-unified/data/hoops_vor_draft_value.json": "d32eabfd99551c35",
+  "C:/Users/jcdav/vector-unified/data/hoops_name_collisions.json": "6f0082319c1e3e0c",
+  "C:/Users/jcdav/vector-unified/data/merged_careers.json": "ea683c4ae158ff9f",
   "C:/Users/jcdav/vector-hoops/assets/vectors.json": "8786e93d0957db23",
   "C:/Users/jcdav/vector-hoops/assets/mtnn_meta.json": "37335d35d769ccbc",
   "C:/Users/jcdav/vector-hoops/assets/mtnn_arch.json": "38750d365aab7979",
