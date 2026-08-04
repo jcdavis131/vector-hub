@@ -233,12 +233,12 @@
  "_round_notes": [
   "round 3 REMOVED (giannis antetokounmpo vs calvin johnson): reveal claimed 'johnson's career ends at its high point rather than tapering' — the direction axis stores only first-half and second-half means, so no source file supports a claim about the career's final shape"
  ],
- "_verification": "PARTIALLY VERIFIED — the adversarial verifier confirmed every other figure and flagged specific round(s), which were REMOVED rather than corrected. See _round_notes.",
+ "_verification": "MECHANICAL — every cited numeric claim compared against its artifact by check_cited_fields.py. Stronger than review for NUMBERS, weaker for PROSE: it proves each value matches its source and says nothing about whether the sentence around it draws a fair conclusion. Scope: NO CONTENT CHANGE — hashes only. Every insight, headline stat and game round is passed through unmodified from the published page and retains the adversarial status it was written with: PARTIALLY VERIFIED — the adversarial verifier confirmed every other figure and flagged specific round(s), which were REM; Re-published because gate_nonvacuity.json (rewritten by validate.py each run) moved 650bdf23 -> 85b17133. Every value the page quotes from it was re-checked against the current file and still holds.",
  "source_hashes": {
   "vector-unified/assets/unified.json": "5f2cfb0891113802",
   "vector-unified/data/unified_report.json": "d2ee1ca2e45c6cbd",
   "vector-unified/data/stage2_report.json": "9e36229792fee699",
-  "vector-unified/data/gate_nonvacuity.json": "650bdf2371d2d412",
+  "vector-unified/data/gate_nonvacuity.json": "85b17133f3c9722f",
   "vector-unified/data/archetype_map.json": "82bf0379eb9db5a9",
   "vector-unified/data/analogy_report.json": "3a76d4f925defa93",
   "vector-unified/data/analogy_triples_report.json": "b9d8926549c7e8c7",
