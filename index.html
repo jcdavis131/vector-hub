@@ -176,6 +176,65 @@
     </div>
   </section>
 
+  <section class="landing-section" id="unified-ablation" aria-labelledby="unified-ablation-label" style="gap:18px">
+    <h2 class="landing-section__label" id="unified-ablation-label" style="border-bottom-color: var(--data-green)">Unified ablation &middot; Δ G1/G2/G3/G4 &middot; each loss must earn keep</h2>
+    <p class="landing-section__intro">The <a href="/models/unified.html">joint 64-d model</a> ships from <code>unified_stage2_best.pt</code> (best_epoch 58, 60ep, enc_lr 3e-5, GRL λ 0.10). It was gated on four tests. Every gate was measured against a null that could have failed it. Below are the shipped numbers and what happens when you drop one alignment loss — house rule from <code>SPEC.md</code> §5: drop each loss and measure Δ, each must earn its keep.</p>
+
+    <div class="vh-card" style="padding:0; overflow:hidden; border-radius:10px; background:#ffffff; box-shadow:var(--shadow-block); border:2px solid var(--ink)">
+      <div style="overflow-x:auto">
+      <table aria-label="Unified ablation Δ G1-G4" style="width:100%; border-collapse:collapse; font-family:var(--mono); font-size:12px; text-align:left;">
+        <thead>
+          <tr style="background:var(--ink); color:var(--paper)">
+            <th style="padding:10px 12px; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; border-right:1px solid #2a2a2a">Gate</th>
+            <th style="padding:10px 12px; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; border-right:1px solid #2a2a2a">Shipped</th>
+            <th style="padding:10px 12px; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; border-right:1px solid #2a2a2a">Null / baseline</th>
+            <th style="padding:10px 12px; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; border-right:1px solid #2a2a2a">Δ = earns keep?</th>
+            <th style="padding:10px 12px; font-weight:800; text-transform:uppercase; letter-spacing:0.06em">Source</th>
+          </tr>
+        </thead>
+        <tbody style="color:var(--ink)">
+          <tr style="border-bottom:1.5px dashed var(--hairline)">
+            <td style="padding:10px 12px; font-weight:800; white-space:nowrap"><span style="display:inline-block; background:var(--korall); color:#fff; padding:1px 6px; border-radius:999px; font-size:10px; margin-right:6px">G1</span>per-sport pos non-inf</td>
+            <td style="padding:10px 12px">hoops <b>-0.0526</b> (0.7385→0.7911) · gridiron <b>0.0000</b> (0.9991 at ceiling) · pitch <b>+0.0021</b> (0.8930→0.8909)<br><span style="color:var(--ink-muted)">convention baseline−joint, negative = joint better</span></td>
+            <td style="padding:10px 12px">shuffled null drops +0.5493 / +0.6920 / +0.5617<br><span style="color:var(--ink-muted)">old buggy value was 0.0 for all 3 — mask used as index</span></td>
+            <td style="padding:10px 12px"><span style="background:#f7f5f0; border:1.5px solid var(--ink); border-radius:6px; padding:2px 6px; font-weight:800">PASS</span> joint ≥ baseline for 2/3, third +0.0021 inside noise; shuffled would have failed</td>
+            <td style="padding:10px 12px; font-size:11px; color:var(--ink-soft)">assets/unified.json → g1_verdict pos_drop / pos_baseline_e_s / pos_joint_z; g1_pos_caveat</td>
+          </tr>
+          <tr style="border-bottom:1.5px dashed var(--hairline); background:#fafaf8">
+            <td style="padding:10px 12px; font-weight:800; white-space:nowrap"><span style="display:inline-block; background:var(--fjord); color:#fff; padding:1px 6px; border-radius:999px; font-size:10px; margin-right:6px">G2</span>sport-blind</td>
+            <td style="padding:10px 12px"><b>0.6851</b> vs majority 0.6258 (Δ <b>+0.0593</b>)<br>target ≤0.7258 (0.6258+0.10) <span style="color:var(--furu); font-weight:800">MET — weak</span></td>
+            <td style="padding:10px 12px">majority 0.6258 = floor any embedding hits (globally shuffled 0.6257); retired target 0.433 was UNREACHABLE (balanced-class math)</td>
+            <td style="padding:10px 12px">drop contrastive → leakage +0.130 over majority (Stage1 0.771→0.799 baseline); drop GRL → 0.799. Each earns its keep but ceiling ~0.68</td>
+            <td style="padding:10px 12px; font-size:11px; color:var(--ink-soft)">assets/unified.json → g2_sport_acc / g2_majority_baseline / g2_delta_vs_majority / g2_target</td>
+          </tr>
+          <tr style="border-bottom:1.5px dashed var(--hairline)">
+            <td style="padding:10px 12px; font-weight:800; white-space:nowrap"><span style="display:inline-block; background:var(--lavendel); color:#111; padding:1px 6px; border-radius:999px; font-size:10px; margin-right:6px">G3</span>archetype coherence</td>
+            <td style="padding:10px 12px"><b>0.683</b> silhouette; within-arch x-sport <b>0.746</b> >> between <b>-0.121</b> (sep <b>+0.867</b>, measured +0.8448)<br>within>between holds on null ~½ time (up to +0.0440 across 50 shuffles)</td>
+            <td style="padding:10px 12px">composition gap up to <b>8.9 pp</b> sport-pair mix differs between within/between samples — some separation is sport-pair effect</td>
+            <td style="padding:10px 12px"><span style="background:#f7f5f0; border:1.5px solid var(--ink); border-radius:6px; padding:2px 6px; font-weight:800">PASS</span> 0.683 > SIL_FLOOR 0.05; drop CORAL → rank 12.4 same as shuffle, silhouette collapses</td>
+            <td style="padding:10px 12px; font-size:11px; color:var(--ink-soft)">unified_report → g3_silhouette / within_vs_between / null calibration; archetype_map → 6/12 archetypes never assigned (A4 folds into A3)</td>
+          </tr>
+          <tr style="background:#fafaf8">
+            <td style="padding:10px 12px; font-weight:800; white-space:nowrap"><span style="display:inline-block; background:var(--furu); color:#fff; padding:1px 6px; border-radius:999px; font-size:10px; margin-right:6px">G4</span>analogy</td>
+            <td style="padding:10px 12px"><b>0.9828</b> cross-sport NN same-archetype hit (random <b>0.1712</b>) lift <b>+0.8116</b><br>curated 40 triples top-10 hit 0.000, mean rank 2114 vs random 2067 ratio 0.978 (indistinguishable)</td>
+            <td style="padding:10px 12px">curated 40 pairs: arch-agreement 0.65 vs baseline 0.1621 (+0.488) — space knows role, not person. Earlier 3.287× salvage used N/2 not (N−k)/(k+1)</td>
+            <td style="padding:10px 12px"><span style="background:#e9f5e8; border:1.5px solid var(--furu); border-radius:6px; padding:2px 6px; font-weight:800; color:var(--furu)">STRONG</span> but curated names fail — house rule still holds: without contrastive, hit-rate falls to shuffle baseline</td>
+            <td style="padding:10px 12px; font-size:11px; color:var(--ink-soft)">analogy_report → G4_cross_sport_nn_role_coherence.hit_rate 0.9828 / random_baseline 0.1712; analogy_triples_report → retrieval_top10 0.000 / mean_b_rank 2114</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <div style="padding:10px 14px; font-family:var(--mono); font-size:11px; color:var(--ink-muted); border-top:1.5px solid var(--ink); background:#f7f5f0">
+        House rule from <code>SPEC.md</code> §5: ablation — drop each alignment loss (contrastive / CORAL / adversarial GRL) and measure Δ on G2/G3/G4. Each must earn its keep. Shipped joint 20,719 player-seasons (hoops 12,966 / gridiron 5,323 / pitch 2,430) x 64-d. All numbers from <code>vector-unified/assets/unified.json</code> and sibling reports; 0.0-pos_drop bug noted in g1_pos_caveat.
+      </div>
+    </div>
+
+    <div class="note-card" style="border-left:4px solid var(--data-green)">
+      <p class="note-card__head" style="color:var(--furu)">scout-cli powers this</p>
+      <p>Training now runs through <a href="/assets/data/scout_cli.json"><code>scout-cli v0.8</code></a> — <code>scout vector train --game hoops</code>, <code>scout vector eval --game unified --gates G1-G4</code>, <code>scout unified ablation --ablate contrastive|coral|adversarial</code>. Router picks 5 tiers: deterministic cheap (no LLM, reads mtnn_meta.json), LLM medium (3-5 sub-swarm via CommsBus), or deep_research heavy 9K (13-swarm checkpointed). Checkpoint Manager writes <code>bundles/ultra/runs/&lt;runId&gt;/checkpoint.json</code> with fields nodeId/agentId/attempt/latency/tokens/status/errorClass so a 60-epoch unified job can pause days and resume. Verification econ budget3 threshold8.0 early-exit delta&lt;0.3 catches mask-as-index pos_drop 0.0 via shuffled null 0.5493.</p>
+    </div>
+  </section>
+
   <section class="landing-section" id="status" aria-labelledby="status-label">
     <h2 class="landing-section__label" id="status-label">Season status</h2>
     <div class="stat-grid" aria-label="The arcade at a glance" data-vx-stagger>
