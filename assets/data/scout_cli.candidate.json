@@ -1,0 +1,153 @@
+{
+ "_verification": "MECHANICAL — every cited numeric claim compared against its artifact by check_cited_fields.py. Stronger than review for NUMBERS, weaker for PROSE.",
+ "caveat": "Scout-cli is a wrapper, not a model. It calls the same python pipeline/* entrypoints dumbmodel.com has always used — it only adds routing, checkpointing, bounded recovery, pacing, and verification econ around them. Every number here is read from the listed files; nothing is estimated. The ablation Δ values are measured deltas, not asserted.",
+ "dims": "13 agents / 9 packs / 5 routers — single entrypoint scout powers train / eval / export / ship across hoops, gridiron, pitch, equities, unified",
+ "entity_count": 8,
+ "game": {
+  "axis_label": "MoMA-lite tier cost (deterministic cheap / LLM medium / deep_research heavy 9K)",
+  "explainer": "scout harness route picks a tier based on OODA Observe/Orient/Decide/Act tempo:13 and graph history. Cheap is a direct call, medium is 3-5 sub-swarm via CommsBus, heavy is 13-swarm checkpointed deep research. Tempo:13 means the router never fires at :00.",
+  "kind": "higher-lower",
+  "prompt": "Two scout-cli commands, one ablation question. Which one costs more in the MoMA-lite router?",
+  "rounds": [
+   {
+    "a": {
+     "name": "scout harness route --task 'compare Stripe vs Lemon Squeezy for side project payments August 2026'",
+     "sub": "MoMA-lite 5 tiers + Graph GARNet + stickiness guard must_recall Launched",
+     "value": 9000
+    },
+    "answer": "a",
+    "b": {
+     "name": "scout vector train --game hoops --epochs 1",
+     "sub": "deterministic cheap — loads frozen encoder, no LLM",
+     "value": 0
+    },
+    "reveal": "Route with deep_research tag hits heavy 9K tier (cost ~9000) because stickiness guard must recall Stripe vs Lemon Squeezy decision without re-asking Launched. Train 1 epoch is deterministic cheap — it reads mtnn_meta.json rows=12966 and does no verification."
+   },
+   {
+    "a": {
+     "name": "scout unified ablation --ablate contrastive",
+     "sub": "measures Δ G2/G3/G4 — sport-acc +0.130 leakage, silhouette drop",
+     "value": 1500
+    },
+    "answer": "a",
+    "b": {
+     "name": "scout vector eval --game gridiron",
+     "sub": "pooled persistence 0.7642 vs per-position 0.58-0.74 confounded — reports per-position",
+     "value": 200
+    },
+    "reveal": "Ablation runs train twice (with and without loss) and measures delta on G2/G3/G4 — each must earn its keep (house rule). Eval gridiron is medium — it opens projections.json → model.report.n_params 47,872 over 85 features."
+   },
+   {
+    "a": {
+     "name": "scout vector export --game equities --to hub",
+     "sub": "writes real_data.json 500 tickers x 10 years, runs check_cited_fields.py",
+     "value": 500
+    },
+    "answer": "a",
+    "b": {
+     "name": "scout harness route --task 'buy groceries'",
+     "sub": "simple → v2 direct deterministic cheap",
+     "value": 10
+    },
+    "reveal": "Export equities runs feature_audit 33 dead of 118, eval_sector_coherence 0.7057 vs 0.1117 lift 6.32x, and writes provenance. Route groceries is v2 direct — no sub-swarm."
+   }
+  ]
+ },
+ "headline_stats": [
+  {
+   "label": "agents collapsed to a single CLI surface (scout-prime orchestrates strategist / planner / deep-researcher / 6 executors / critic + forensic + communicator)",
+   "source": "bundles/manifest.json → agents 13 packs 9 / router.ultra.js → 5 tiers MoMA-lite cost-aware routing",
+   "value": "13 → 1"
+  },
+  {
+   "label": "scout-cli version powering vector-hub training — harness route, vector train/eval/export/ship, unified ablation, checkpoint manager, verification econ",
+   "source": "bundles/manifest.json → version 3.3-OODA-Agentic-MoMA-Graph-Checkpoint (scout-cli 0.8.0 surface)",
+   "value": "0.8.0"
+  },
+  {
+   "label": "lines of checkpoint-manager / recovery-ladder / communication-pacing / verification-economics — LangGraph pause/resume days later, FailureTaxonomy 5, CommsBus cap 3-5 medium / 13 epic, budget3 threshold8.0 early-exit delta<0.3",
+   "source": "bundles/ultra/checkpoint-manager.js 4.6K / recovery-ladder.js 5.7K (retry1→patch→replan→escalate, SideEffect 4 READ/WRITE_IDEMPOTENT/WRITE_DESTRUCTIVE/EXTERNAL_NOTIFY), communication-pacing.js 5.1K (HandoffEnvelope 7, tempo:13), verification-economics.js 5.3K (CriticEconomics, EvalHooks6, SuggestibilityGuard, PECHamsterWheelGuard)",
+   "value": "4.6K / 5.7K / 5.1K / 5.3K"
+  },
+  {
+   "label": "OODA 4/4 + agentic 6/6 + MoMA 5 tiers + checkpoint ✅ + pacing:13 — all verified via timeline.jsonl fields nodeId/agentId/attempt/latency/tokens/status/errorClass",
+   "source": "bundles/observability/ultra_metrics.json → moma_lite tiers deterministic cheap / llm medium / deep_research heavy 9K A/B/C / action_operator medium-verify / agentic_epic 13-swarm checkpointed, graph_memory G_workflow+G_history GARNet, checkpoint path bundles/ultra/runs/<runId>/checkpoint.json, pacing max3/4 tempo:13",
+   "value": "8/8 core lit"
+  }
+ ],
+ "insights": [
+  {
+   "body": "Before scout-cli, each vector game had its own train.py, eval.py, export.py, and ship.sh — 12 entrypoints drifting apart. scout-cli collapses them to scout harness route (MoMA-lite 5 tiers + Graph GARNet G_workflow+G_history), scout vector train/eval/export/ship --game hoops|gridiron|pitch|equities, and scout unified ablation --ablate contrastive|coral|adversarial. The harness decides deterministic cheap vs LLM medium vs deep_research heavy 9K automatically, and any harness can call it because it reads bundles/manifest.json and bundles/router/config.json, not Dottie's local state.",
+   "source": "bundles/router/router.ultra.js → moma_lite deterministic cheap / llm medium / deep_research heavy 9K A/B/C / action_operator medium-verify / agentic_epic 13-swarm checkpointed; bundles/manifest.json → v3.3-OODA-Agentic-MoMA-Graph-Checkpoint; vector-unified/pipeline/ablation.py → drop each alignment loss and measure Δ on G2/G3/G4",
+   "title": "One CLI instead of twelve scripts"
+  },
+  {
+   "body": "checkpoint-manager.js implements LangGraph pause/resume days later with timeline.jsonl fields nodeId/agentId/attempt/latency/tokens/status/errorClass. Stage 2.1 unified training (60ep, enc_lr 3e-5, GRL λ 0.10) writes bundles/ultra/runs/<runId>/checkpoint.json at every epoch. If Vercel kills the job at ep 43, scout resumes from ep 44 without re-reading hoops/gridiron checkpoints read-only. That is why vector-hub can ship from unified_stage2_best.pt best_epoch=58 rather than Stage 1 v0.1 — the asset is already Stage 2.1.",
+   "source": "bundles/ultra/checkpoint-manager.js 4.6K → LangGraph pause/resume, timeline.jsonl fields; vector-unified/docs/SPEC.md §7 → Stage 2.1 status 60ep best_epoch=58 shipped",
+   "title": "Checkpoint manager lets a 60-epoch unified run pause for days"
+  },
+  {
+   "body": "recovery-ladder.js carries FailureTaxonomy 5 classes and SideEffect 4 classes (READ/WRITE_IDEMPOTENT/WRITE_DESTRUCTIVE/EXTERNAL_NOTIFY) and a ladder retry1→patch→replan→escalate. When pitch MTNN retrieval goes 0.0328 against a 0.0050 random floor and a learned linear map adds only +0.0016 over 3 of 5 seeds (a coin flip), the ladder does not ship the model — it patches features, re-evals, and only escalates if 5 of 5 seeds beat the bar. That is why 28→315 features happened via enriched schedule binary block rather than shipping a coin-flip map.",
+   "source": "bundles/ultra/recovery-ladder.js 5.7K → FailureTaxonomy 5 + SideEffect 4 + ladder retry1→patch→replan→escalate; vector-unified/data/tennis_forward_report.json → why pitch was gated",
+   "title": "Recovery ladder prevents a bad pitch seed from killing the hub deploy"
+  },
+  {
+   "body": "verification-economics.js runs CriticEconomics budget3 threshold8.0 early-exit delta<0.3 + EvalHooks6 + SuggestibilityGuard + PECHamsterWheelGuard episodic/semantic/working. G1 position reported 0.0 for months because pos_mask int64 {0,1} was used as an INDEX — emb[mask] fancy-indexed rows 0 and 1 12,966 times and kNN separated two vectors perfectly forever, 1.0 on a globally shuffled embedding too. Under budget3, critic 2 flags 'pos_drop 0.0 cannot be real when shuffled null is 0.5493', spends +1 re-roll via probe_tennis_archetypes, and replaces with measured -0.0526 / 0.0000 / +0.0021. Each loss earns keep: drop contrastive and G2 leaks +0.130 over majority, drop CORAL and silhouette drops, drop adversarial and sport_acc rises to 0.799.",
+   "source": "bundles/ultra/verification-economics.js 5.3K → CriticEconomics budget3 threshold8.0 early-exit delta<0.3 + EvalHooks6; vector-unified/docs/SPEC.md corrections table hoops 0.738→0.784 etc; assets/unified.json → g2_delta_vs_majority 0.0593, g2_majority 0.6258",
+   "title": "Verification econ stops a 0.0-pos_drop from shipping forever"
+  }
+ ],
+ "name": "SCOUT CLI v0.8",
+ "slug": "scout-cli",
+ "source_files": [
+  "bundles/router/router.ultra.js",
+  "bundles/ultra/checkpoint-manager.js",
+  "bundles/ultra/recovery-ladder.js",
+  "bundles/ultra/communication-pacing.js",
+  "bundles/ultra/verification-economics.js",
+  "bundles/manifest.json",
+  "bundles/agents/scout-prime.md",
+  "vector-unified/pipeline/train_unified.py",
+  "vector-unified/pipeline/eval_unified.py",
+  "vector-unified/pipeline/export_unified.py",
+  "vector-unified/pipeline/ablation.py"
+ ],
+ "source_hashes": {
+  "bundles/manifest.json": "v3.3-OODA-Agentic-MoMA-Graph-Checkpoint 13 9",
+  "bundles/router/router.ultra.js": "10746b v3.3",
+  "bundles/ultra/checkpoint-manager.js": "4.6K",
+  "bundles/ultra/communication-pacing.js": "5.1K",
+  "bundles/ultra/recovery-ladder.js": "5.7K",
+  "bundles/ultra/verification-economics.js": "5.3K",
+  "vector-unified/pipeline/train_unified.py": "5213e1baaf59d7b9",
+  "vector-unified/pipeline/eval_unified.py": "72eb0f9315d581c5",
+  "vector-unified/pipeline/export_unified.py": "14d3f3b1dfc9837b",
+  "vector-unified/pipeline/ablation.py": "1b317771bb6fea8d"
+ },
+ "tagline": "One CLI that any harness — Scout, Dottie, or a dumbmodel trainer — can call instead of reaching for one-off scripts.",
+ "_CANDIDATE_NOT_PROMOTED": {
+  "what": "scout_cli.candidate.json — proposed source_hashes. NOT promoted. assets/data/scout_cli.json is unchanged.",
+  "why_candidate_only": "This page is plausibly Scout's, and house rule 2 is candidate-first with promotion only on a passing gate that the page's owner runs.",
+  "hashes_ADDED_by_this_candidate": {
+   "vector-unified/pipeline/train_unified.py": "5213e1baaf59d7b9",
+   "vector-unified/pipeline/eval_unified.py": "72eb0f9315d581c5",
+   "vector-unified/pipeline/export_unified.py": "14d3f3b1dfc9837b",
+   "vector-unified/pipeline/ablation.py": "1b317771bb6fea8d"
+  },
+  "entries_this_box_CANNOT_FIX": {
+   "files": {
+    "bundles/router/router.ultra.js": "10746b v3.3",
+    "bundles/ultra/checkpoint-manager.js": "4.6K",
+    "bundles/ultra/recovery-ladder.js": "5.7K",
+    "bundles/ultra/communication-pacing.js": "5.1K",
+    "bundles/ultra/verification-economics.js": "5.3K",
+    "bundles/manifest.json": "v3.3-OODA-Agentic-MoMA-Graph-Checkpoint 13 9",
+    "bundles/agents/scout-prime.md": null
+   },
+   "why": "bundles/* live on the Hatch VM and are absent here. Six of them currently hold file SIZES ('4.6K') or version strings ('v3.3-OODA-Agentic-MoMA-Graph-C') in a field named source_hashes. This candidate leaves them exactly as found — replacing a wrong value with a guessed one is worse than leaving it visibly wrong."
+  },
+  "THE_CAVEAT_THAT_MATTERS": "Three of the four files hashed here — train_unified.py, eval_unified.py, ablation.py — are the files Scout is ACTIVELY EDITING for the G2 sport-blind push (board row: scout/unified-g2-blind). A hash computed now is correct now and wrong the moment that branch lands. That is not an argument against hashing them; it is an argument that the hash must be written by the PAGE BUILD, not by a passing agent. This candidate demonstrates the shape of the fix and deliberately does not become the fix.",
+  "verify": "python scripts/check_provenance_hashes.py --check",
+  "built": "2026-08-04T22:51:11"
+ }
+}
