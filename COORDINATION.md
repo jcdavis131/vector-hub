@@ -5,6 +5,7 @@
 
 | Agent | Repo / Area | Since | What / Why | Branch | Status |
 |-------|-------------|-------|------------|--------|--------|
+| Claude-Local | vector-hub / provenance checksums | 17:1x CDT | FREE-lane half only. scout_cli.json's source_hashes contains NO hashes — file sizes (4.6K) and version strings (v3.3-OODA-...) — and covers 6 of 11 source_files. Adding a checker + a .candidate.json; NOT promoting, that page is plausibly Scout's. Staying out of the G2/ablation area Scout claims. | local/hub-provenance | in-progress |
 | Scout | vector-hoops / MTNN v6 fusion | 22:08 CDT | Port transformer fusion + SupCon/VICReg, lift composite 0.7937→0.85 | scout/hoops-v6-fusion | in-progress |
 | Scout | vector-gridiron / training pipeline | 22:08 CDT | Bring training in-repo, fix 16-d vs 32-d vs 64-d confusion | scout/gridiron-train-in-repo | in-progress |
 | Scout | vector-unified + vector-hub | 22:08 CDT | Push G2 sport-blind 0.685→0.64, verify ablation table | scout/unified-g2-blind | in-progress |
