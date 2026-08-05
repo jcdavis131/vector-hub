@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>dumbmodel — the vector arcade</title>
-<meta name="description" content="Six model cards, four daily vector puzzles — NBA, NFL, World Cup, tennis, public companies, and one joint cross-sport embedding. Every number recomputable from public data.">
+<meta name="description" content="Six model cards, five daily vector puzzles — NBA, NFL, World Cup, tennis, public companies, and one joint cross-sport embedding. Every number recomputable from public data.">
 <meta name="theme-color" content="#fafaf8">
 <link rel="canonical" href="https://dumbmodel.com/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://dumbmodel.com/">
 <meta property="og:title" content="dumbmodel — the vector arcade">
-<meta property="og:description" content="Six models, four daily vector puzzles — NBA, NFL, World Cup, tennis, equities, and a joint cross-sport embedding. Beat the model.">
+<meta property="og:description" content="Six models, five daily vector puzzles — NBA, NFL, World Cup, tennis, equities, and a joint cross-sport embedding. Beat the model.">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%226%22%20fill%3D%22%23111111%22%2F%3E%3Ccircle%20cx%3D%2211%22%20cy%3D%2212%22%20r%3D%223%22%20fill%3D%22%23eb6834%22%2F%3E%3Ccircle%20cx%3D%2221%22%20cy%3D%2219%22%20r%3D%223%22%20fill%3D%22%232a78d6%22%2F%3E%3Cpath%20d%3D%22M11%2012%20L21%2019%22%20stroke%3D%22%23fafaf8%22%20stroke-width%3D%221.6%22%2F%3E%3C%2Fsvg%3E">
 <link rel="stylesheet" href="/assets/hub.css">
@@ -36,7 +36,7 @@
   <section class="landing-hero-band" aria-label="The arcade">
     <div class="landing-hero">
       <div class="landing-hero__visual">
-        <p class="landing-hero__eyebrow">Six models &middot; four daily puzzles &middot; free &middot; no account</p>
+        <p class="landing-hero__eyebrow">Six models &middot; five daily puzzles &middot; free &middot; no account</p>
         <div class="hub-roster" aria-hidden="true">
           <div class="hub-roster__tile hub-roster__tile--orange">
             <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -67,9 +67,18 @@
               <path d="M8 28 L33 28" stroke="#111111" stroke-width="2" stroke-linecap="round"/>
             </svg>
           </div>
+          <div class="hub-roster__tile hub-roster__tile--chimera" title="Vector Unified — 20,719 × 64-d joint, dailySeed LCG">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="13" cy="13" r="5" stroke="#d8452a" stroke-width="2.2"/>
+              <circle cx="27" cy="14.5" r="4.2" stroke="#1b45a7" stroke-width="2.2"/>
+              <circle cx="20" cy="27" r="3.8" stroke="#9b6bc4" stroke-width="2.2"/>
+              <path d="M16.2 16.5 L18.5 23" stroke="#14181d" stroke-width="1.5" stroke-dasharray="2 2" stroke-linecap="round"/>
+              <path d="M23.8 18 L21.5 23.2" stroke="#14181d" stroke-width="1.5" stroke-dasharray="2 2" stroke-linecap="round"/>
+            </svg>
+          </div>
         </div>
         <ul class="landing-hero__chips" aria-label="Quick facts">
-          <li>6 models &middot; 4 daily puzzles</li>
+          <li>6 models &middot; 5 daily puzzles</li>
           <li>12,966 NBA &middot; 4,831 company-years &middot; 4,022 tennis</li>
           <li>Era-honest comparisons</li>
         </ul>
@@ -87,8 +96,8 @@
   </section>
 
   <section class="landing-section" id="games" aria-labelledby="games-label">
-    <h2 class="landing-section__label" id="games-label">The roster &middot; four daily games</h2>
-    <p class="landing-section__intro">One puzzle a day per game. Each runs a real model on real public data &mdash; no staged scores, no decorative math. Three sports + one market. Two more models &mdash; <a href="/models/tennis.html">tennis</a> and the <a href="/models/unified.html">joint cross-sport embedding</a> &mdash; ship as model cards with a playable probe, but no daily puzzle yet.</p>
+    <h2 class="landing-section__label" id="games-label">The roster &middot; five daily games</h2>
+    <p class="landing-section__intro">One puzzle a day per game. Each runs a real model on real public data &mdash; no staged scores, no decorative math. Three sports + one market + one joint cross-sport chimera. One more model &mdash; <a href="/models/tennis.html">tennis</a> &mdash; still ships as a model card with a playable probe and no daily puzzle yet. <a href="/models/unified.html">Unified</a> is now live as the fifth daily: 20,719 player-seasons in 64-d, deterministic dailySeed LCG.</p>
     <div class="mode-grid" data-vx-stagger>
 
       <a class="vh-card mode-card mode-card--orange" href="https://hoops.dumbmodel.com/">
@@ -158,6 +167,25 @@
         <p class="mode-card__hook">Public companies as vectors — SEC EDGAR XBRL + market tape.</p>
         <p class="mode-card__pitch">4,831 company-years — 500 tickers across 2015-2024 — as 64-d vectors from SEC EDGAR XBRL. 17 towers: Altman Z distress, Piotroski F quality, Beneish M, Sloan accruals, QMJ, plus market microstructure. One net predicts sector, next-year profile, distress and payout at once. Guess the ticker from its vector.</p>
         <p class="mode-card__meta"><span class="pill">Equities</span> &middot; 500 tickers · 4,831 company-years · 17 towers · 64-d</p>
+      </a>
+
+      <a class="vh-card mode-card mode-card--chimera" href="/models/unified.html">
+        <div class="mode-card__glyph" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="13" cy="13" r="5.5" stroke="#eb6834" stroke-width="2.3"/>
+            <circle cx="27" cy="14.5" r="4.5" stroke="#2a78d6" stroke-width="2.3"/>
+            <circle cx="20" cy="26.5" r="4" stroke="#9b6bc4" stroke-width="2.3"/>
+            <path d="M16.5 16.5 L18.2 22.8" stroke="#111111" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="2 2"/>
+            <path d="M23 18 L21.5 22" stroke="#111111" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="2 2"/>
+          </svg>
+        </div>
+        <div class="mode-card__head">
+          <h3 class="mode-card__title">Vector Unified</h3>
+          <span class="mode-card__num">Game 05</span>
+        </div>
+        <p class="mode-card__hook">Cross-sport chimera — 20,719 player-seasons in one 64-d joint, dailySeed LCG.</p>
+        <p class="mode-card__pitch">Three encoders (64-d hoops / 32-d gridiron / 24-d pitch) folded into 64-d with CORAL + contrastive + adversarial GRL. Guess the archetype from a cross-sport neighbour — sport-blind probe, deterministic daily seed — <code>year*10000+month*100+day</code> LCG.</p>
+        <p class="mode-card__meta"><span class="pill">Joint</span> &middot; 64-d x-sport &middot; daily &middot; 20719 player-seasons</p>
       </a>
 
     </div>
@@ -240,7 +268,7 @@
     <div class="stat-grid" aria-label="The arcade at a glance" data-vx-stagger>
       <div class="stat-card">
         <p class="stat-card__value">6</p>
-        <p class="stat-card__label">Model cards &middot; 4 with a daily game</p>
+        <p class="stat-card__label">Model cards &middot; 5 with a daily game</p>
       </div>
       <div class="stat-card">
         <p class="stat-card__value">21,819</p>
@@ -280,7 +308,7 @@
     <div class="note-card">
       <p class="note-card__head">Where this is going</p>
       <p>The per-sport games still live in their own spaces (<strong>64-d hoops, 32-d gridiron, 24-d pitch, 64-d equities</strong>). On top of that, a <strong>64-d joint embedding</strong> now folds 20,719 player-seasons across the three sports into one shared role geometry &mdash; so you <em>can</em> ask what a power forward and a strong safety have in common and get a real neighbour.</p>
-      <p>Shipped with caveats: sport identity is still partly recoverable from the joint vector, and there is no joint daily puzzle yet. Equities is its own market puzzle — guess the ticker from the vector. The four games are the product you play.</p>
+      <p>Shipped with caveats: sport identity is still partly recoverable from the joint vector (Δ +0.0593 over majority), but the joint daily puzzle is now live — 20,719 × 64-d chimera, dailySeed LCG deterministic, probe daily on the <a href="/models/unified.html">unified model card</a>. Equities is its own market puzzle — guess the ticker from the vector. The five games are the product you play.</p>
     </div>
   </section>
 
@@ -316,7 +344,7 @@
     <a href="https://jcamd.com/">J. Cameron Davis</a>
     <a href="https://github.com/jcdavis131" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <div class="site-footer__attribution">Four daily vector puzzles — NBA, NFL, World Cup, and public companies &middot; the model is wrong all the time &mdash; that's the fun part &middot; &copy; 2026 dumbmodel, built by J. Cameron Davis</div>
+  <div class="site-footer__attribution">Five daily vector puzzles — NBA, NFL, World Cup, public companies, and joint cross-sport chimera (20,719 × 64-d, dailySeed LCG) &middot; the model is wrong all the time &mdash; that's the fun part &middot; &copy; 2026 dumbmodel, built by J. Cameron Davis</div>
 </footer>
 
 <script src="/assets/hub.js" defer></script>

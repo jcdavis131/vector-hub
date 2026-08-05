@@ -309,6 +309,7 @@ a:focus-visible, button:focus-visible{
 .hub-roster__tile--blue{ box-shadow: 4px 4px 0 var(--data-blue); }
 .hub-roster__tile--purple{ box-shadow: 4px 4px 0 var(--data-purple); }
 .hub-roster__tile--green{ box-shadow: 4px 4px 0 var(--data-green); }
+.hub-roster__tile--chimera{ box-shadow: 4px 4px 0 var(--ink); background: repeating-linear-gradient(135deg, var(--surface), var(--surface) 6px, #f0ebe2 6px, #f0ebe2 8px); }
 
 .landing-hero__chips{
   display: flex;
@@ -518,6 +519,9 @@ a:focus-visible, button:focus-visible{
 .mode-card--blue .mode-card__glyph{ color: var(--data-blue); }
 .mode-card--purple .mode-card__glyph{ color: var(--data-purple); }
 .mode-card--green .mode-card__glyph{ color: var(--data-green); }
+.mode-card--chimera .mode-card__glyph{ color: var(--ink); }
+.mode-card--chimera{ border-style: solid; }
+.mode-card--chimera .mode-card__meta .pill{ background: var(--ink); color: var(--paper); padding: 2px 6px; border-radius: 999px; letter-spacing: 0.06em; }
 
 /* ---------- stat grid (season status) ---------- */
 
