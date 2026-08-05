@@ -43,7 +43,7 @@ right ones.
     python scripts/check_provenance_hashes.py
     python scripts/check_provenance_hashes.py --check   # exit 1 on coverage or shape failure
 
-Writes: assets/data/_provenance_audit.json
+Writes: reports/provenance_audit.json  (NOT assets/data/ — see the OUT comment)
 """
 
 from __future__ import annotations
@@ -58,7 +58,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "assets" / "data"
 ESTATE = ROOT.parent
-OUT = DATA / "_provenance_audit.json"
+# NOT under assets/data/. That directory is the PAGE namespace, and
+# vector-unified/pipeline/check_superlatives.py globs every *.json in it and
+# reads d["slug"] on each. Writing a non-page there crashed that checker with
+# KeyError: 'slug' — my artifact broke a sibling repo's gate.
+OUT = ROOT / "reports" / "provenance_audit.json"
 
 # A hash is hex and long enough to mean something. The recorded ones elsewhere in this
 # repo are 16-char truncated sha256, so 8 is a generous floor.
@@ -76,6 +80,7 @@ def main() -> int:
                     help="exit 1 if any page fails COVERAGE or SHAPE")
     args = ap.parse_args()
 
+    OUT.parent.mkdir(parents=True, exist_ok=True)
     pages, uncovered, malformed, mismatched, unresolvable = {}, [], [], [], []
     for f in sorted(DATA.glob("*.json")):
         if f.name.startswith("_"):
