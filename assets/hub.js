@@ -148,8 +148,14 @@
         .then(function (j) {
           var sh = j && j.source_hashes;
           var ok = sh && typeof sh === 'object' && Object.keys(sh).length > 0;
+          var ver = j && (j._verification || j._round_notes || j.entity_count || j.dims);
+          // depth: source_hashes is primary, but _verification presence counts as secondary signal
           if (!ok) {
-            console.warn('[provenance] ' + url + ' — MISSING source_hashes (provenance fail)');
+            if (ver) {
+              console.warn('[provenance] ' + url + ' — MISSING source_hashes but has _verification/entity_count (partial fail)');
+            } else {
+              console.warn('[provenance] ' + url + ' — MISSING source_hashes (provenance fail)');
+            }
             return { url: url, ok: false, count: 0, slug: j && j.slug };
           }
           var n = Object.keys(sh).length;
@@ -163,11 +169,27 @@
     });
 
     return Promise.all(jobs).then(function (results) {
-      var allOk = results.every(function (r) { return r.ok; });
-      if (allOk) console.log('[provenance] all ok — ' + results.length + ' files verified, provenance-honest');
-      else console.warn('[provenance] some files missing source_hashes — see warnings above (provenance not fully honest)');
-      // expose last result for manual inspection
+      var okCount = 0;
+      for (var i = 0; i < results.length; i++) if (results[i].ok) okCount++;
+      var total = results.length;
+      var bad = total - okCount;
+      var ts = new Date().toISOString();
+      // depth artifact required by nightly watchdogs / dashboards
+      window.DM_PROVENANCE = { ok: okCount, total: total, bad: bad, ts: ts, results: results };
       window.__provenanceLast = results;
+
+      var provMsg = '[prov] ' + okCount + '/' + total + ' ok, ' + bad + ' bad — dumbmodel provenance';
+      var detailMsg = '[provenance] ' + (okCount === total ? 'all ok — ' : '') + total + ' files checked, ' + okCount + ' ok' + (bad ? ', ' + bad + ' bad' : '') + ', provenance-honest ' + (okCount === total ? 'PASS' : 'PARTIAL');
+
+      // always log [prov] line for log parsers
+      if (okCount === total) {
+        console.log(provMsg);
+        console.log(detailMsg);
+      } else {
+        console.warn(provMsg);
+        console.warn(detailMsg);
+        console.warn('[provenance] some files missing source_hashes — see warnings above (provenance not fully honest)');
+      }
       return results;
     });
   }
