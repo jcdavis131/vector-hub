@@ -1,0 +1,14 @@
+{
+  "checkpoints": [],
+  "path": "/home/hatch/.cache/scout/checkpoints",
+  "required_fields": [
+    "nodeId",
+    "agentId",
+    "attempt",
+    "latency",
+    "tokens",
+    "status",
+    "errorClass"
+  ],
+  "ok": true
+}

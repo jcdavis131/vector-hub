@@ -1,0 +1,23 @@
+{
+  "score": 8.7,
+  "prev": 8.5,
+  "delta": 0.2,
+  "early_exit": true,
+  "early_exit_rule": "delta<0.3 -> accept resist marginal",
+  "passed": true,
+  "threshold_pass": 8.0,
+  "budget": 3,
+  "first_retry_value": "80%",
+  "eval_hooks_6": [
+    "correctness",
+    "reliability",
+    "coherence",
+    "tool_failures",
+    "hallucination",
+    "comms_quality"
+  ],
+  "hamster_guard": "PEC without memory = repeat same failure DAG version never inc. Fix immediate lattice write BLOCKED/DONE/PLANNED not metrics-dance",
+  "memory_is_diff": "Memory is difference iteration\u2192improvement",
+  "suggestibility_best": "[BLOCKER] file: evidence \u2192 fix concrete single-resp",
+  "ok": true
+}

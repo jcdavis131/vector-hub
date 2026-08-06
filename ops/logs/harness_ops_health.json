@@ -1,0 +1,136 @@
+{
+  "ok": true,
+  "command": "harness ops health",
+  "timestamp": "2026-08-06T03:07:19.435262",
+  "version": "3.3-OODA-Agentic-MoMA-Graph-Checkpoint + scout-cli 0.8.0",
+  "agents": {
+    "count": 13,
+    "expected": 13,
+    "healthy": true,
+    "list": [
+      "scout-prime",
+      "researcher",
+      "deep-researcher",
+      "synthesist",
+      "builder",
+      "communicator",
+      "operator",
+      "action-operator",
+      "strategist",
+      "planner",
+      "executor",
+      "critic",
+      "forensic-auditor"
+    ]
+  },
+  "packs": {
+    "count": 11,
+    "expected_min": 9,
+    "healthy": true
+  },
+  "router": {
+    "config_exists": true,
+    "single_source": "config.v3.3.json -> symlink config.json",
+    "moma_tiers": [
+      "deterministic",
+      "llm",
+      "deep_research",
+      "action_operator",
+      "agentic_epic"
+    ],
+    "embedding_model": "Qdrant/all-MiniLM-L6-v2-onnx"
+  },
+  "checkpointing": {
+    "manager": "bundles/ultra/checkpoint-manager.js",
+    "disk_backed": true,
+    "timeline_required_fields": [
+      "nodeId",
+      "agentId",
+      "attempt",
+      "latency",
+      "tokens",
+      "status",
+      "errorClass"
+    ],
+    "pause_resume": "days later pickup exactly"
+  },
+  "crons": {
+    "custom_files": 1,
+    "custom_crons_parsed": 3,
+    "self_improvement_scheduled": true,
+    "interval_crons": [
+      {
+        "file": "README.md",
+        "id": "README.md",
+        "owner": "system",
+        "schedule_kind": "unknown",
+        "at": "",
+        "every": ""
+      },
+      {
+        "file": "_archive/self_improvement__daily@02:13:00.md",
+        "id": "self_improvement",
+        "owner": "system",
+        "schedule_kind": "daily",
+        "at": "Why:",
+        "every": ""
+      },
+      {
+        "file": "minutely/heartbeat__interval@30m.md",
+        "id": "heartbeat",
+        "owner": "system",
+        "schedule_kind": "interval",
+        "at": "2026-01-01T00:00:00",
+        "every": "30m"
+      }
+    ],
+    "heartbeat": ":13 Never :00 timing>speed"
+  },
+  "hooks": {
+    "total": 3,
+    "live": [
+      "gmail_triage_live",
+      "price_watch_live",
+      "podcast_brief_auto_exec"
+    ],
+    "gmail_triage": "gmail_triage_live enabled 90s",
+    "price_watch": "price_watch_live enabled 120s",
+    "pacing": "ScoutCommsBus relevantAgents sub-swarm cap 3-5 medium 13 epic"
+  },
+  "memory": {
+    "lattice_nodes": 34,
+    "graph_files": "/home/hatch/workspace/bundles/memory/memory_graph.json",
+    "people_inference": "placeholder->real enrichment",
+    "retrieval": "dense 0.7 + sparse 0.3 + rerank jinaai/jina-reranker-v1-turbo-en + 1-2 hop graph walk"
+  },
+  "dashboard_metrics": {
+    "path": "/home/hatch/workspace/bundles/observability/dashboard_metrics.json",
+    "generated_at": "2026-08-05T09:29:01.730Z",
+    "version_match": true
+  },
+  "ultra_metrics": {
+    "path": "/home/hatch/workspace/bundles/observability/ultra_metrics.json",
+    "last_sync": "2026-08-04T20:55:00 America/Chicago",
+    "status": "healthy v3.2"
+  },
+  "verification_econ": {
+    "budget": 3,
+    "threshold_pass": 8.0,
+    "early_exit_delta": 0.3,
+    "first_retry_value": "80%"
+  },
+  "pacing_filter": {
+    "observe_max_parallel": 3,
+    "orient_timebox_ms": 180000,
+    "decide_single": true,
+    "max_concurrent_safe": 4,
+    "epic_13_only": true,
+    "tempo": ":13"
+  },
+  "stickiness": {
+    "query": "Stripe vs Lemon Aug 2026 + Launched",
+    "must_recall": "Launched=live URL+3 users+payments/analytics Aug31 11:59pm CT locked no re-ask",
+    "passed": true
+  },
+  "dashboard": "scout-ops-always-on-2 v3.3 warm cream sage peach charcoal 16-20px rounded sparkle healthy MoMA Graph Checkpoint Recovery Pacing Verification"
+}

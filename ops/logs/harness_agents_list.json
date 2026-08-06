@@ -1,0 +1,29 @@
+{
+  "agents": [
+    "scout-prime-coordinator",
+    "strategist",
+    "planner",
+    "deep-researcher",
+    "synthesist",
+    "builder",
+    "operator",
+    "action-operator",
+    "executor",
+    "critic",
+    "forensic-auditor",
+    "researcher",
+    "communicator"
+  ],
+  "count": 13,
+  "packs": 9,
+  "intent": "agentic_loop",
+  "relevant": [
+    "scout-prime-coordinator",
+    "strategist",
+    "planner",
+    "builder",
+    "executor"
+  ],
+  "no_direct_calls": "ScoutCommsBus queue via orchestrator, relevantAgents() cap 5-6 medium epic 13",
+  "ok": true
+}
