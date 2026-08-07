@@ -1,0 +1,38 @@
+{
+  "runId": "unified-20260807T1020Z",
+  "ts_utc": "2026-08-07T10:20:00Z",
+  "domain": "vector-unified",
+  "gold_standard": "hoops-level",
+  "overall_score": 8.6,
+  "threshold": 8.0,
+  "passes": true,
+  "honest": true,
+  "zero_deps": true,
+  "torch": false,
+  "entity_count": 20719,
+  "dims": 64,
+  "native": {
+    "hoops": 12966,
+    "gridiron": 5323,
+    "pitch": 2430
+  },
+  "checks": {
+    "index_hero_band_dailySeed_LCG_20719_stars": "PASS",
+    "model_cockpit_glass_box_3_encoders_CORAL_GRL_SupCon": "PASS",
+    "provenance_12_hashes_entity_count_20719": "PASS",
+    "manifest_2208_void_dark_20719_chimera": "PASS",
+    "sw_v66_core_20_deny_vectors": "PASS",
+    "offline_void_dark_shell": "PASS",
+    "dailySeed_LCG_deterministic_python_node_agree": "PASS",
+    "G2_FULL_0_6236_vs_CTRL_0_7087_not_promoted_honest": "PASS"
+  },
+  "dailySeed_example": {
+    "seed": 20260807,
+    "a": 11190772,
+    "idx": 2512,
+    "pair": 11804,
+    "triple": 13128,
+    "deterministic": true
+  },
+  "notes": "20719×64-d joint chimera 3 encoders 64-d/32-d/24-d folded CORAL centroid+GRL λ0.10→0.3→0.5+SupCon G1 −0.0526 G2 FULL 0.6236 vs CTRL 0.7087 NOT promoted honest, drift Procrustes chained root1996-97, 12 archetypes A0-A11, PWA v66 CORE20 DENY, offline void dark 20719 shell, 29 JS+CSS shared-map 22990 manim 4 vids 55K honest, zero-deps true."
+}

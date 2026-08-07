@@ -1,0 +1,134 @@
+{
+  "candidate_id": "vector-hoops-parity-20260807T093127Z",
+  "ts": "2026-08-07T14:33:00Z",
+  "domain": "vector-* parity / dumbmodel.com 5th game chimera",
+  "task": "refine-dottie-scout-cli-dumbmodel-com-with-vector-models: vector hoops polish + domain-by-domain parity + dumbmodel.com site 5th game chimera live verify",
+  "live_checks": {
+    "dumbmodel.com": {
+      "http": 200,
+      "etag": "54218c8a89893899b56cbcdd47562d28",
+      "vercel": "HIT",
+      "hub.js": {
+        "dailySeed": "present hubDailySeed() UTC YYYYMMDD int",
+        "lcg": "present hubLcg(seed) glibc (seed*1103515245+12345)&0x7fffffff",
+        "unifiedChimeraDaily": "present entityCount 20719 dims 64 index pair triple lcg.a/b/c native hoops 12966 gridiron 5323 pitch 2430",
+        "verifyProvenance": "present PROV_FILES 7 files /assets/data unified hoops gridiron pitch equities tennis scout_cli",
+        "DM_PROVENANCE": "present window.DM_PROVENANCE ok/total/bad ts results",
+        "console": "[hub-daily] DAILY_SEED UNIFIED_CHIMERA_DAILY [prov] [provenance]"
+      },
+      "today_example": {
+        "seed": 20260807,
+        "a": 11190772,
+        "idx": 2512,
+        "b_mod": 11804,
+        "c_mod": 13128,
+        "entityCount": 20719,
+        "deterministic": true,
+        "reproducible_same_link_same_stars": true
+      },
+      "game05": {
+        "card": "Vector Unified — Game 05 — Cross-sport chimera — 20,719 player-seasons in one 64-d joint, dailySeed LCG — Three encoders (64-d hoops / 32-d gridiron / 24-d pitch) folded into 64-d with CORAL + contrastive + adversarial GRL",
+        "live_heading": "Cross-sport chimera — 20,719 player-seasons in one 64-d joint, dailySeed LCG.",
+        "hook": "Guess the archetype from a cross-sport neighbour — sport-blind probe, deterministic daily seed — year*10000+month*100+day LCG"
+      },
+      "provenance": {
+        "files": 7,
+        "ok": 7,
+        "bad": 0,
+        "counts": {
+          "hoops": 10,
+          "gridiron": 7,
+          "pitch": 3,
+          "equities": 7,
+          "tennis": 14,
+          "unified": 12,
+          "scout_cli": 6
+        },
+        "total_hashes_scanned_live_200": "7/7/10/3/6/14/12 (unordered matches spec)",
+        "honest": true,
+        "verdict": "PASS 7/7/0 still holds — no fix needed per heartbeat 2026-08-07 09:11 CDT verified"
+      }
+    }
+  },
+  "hoops_reference_checklist": {
+    "index": "sky-canvas 12966 rotating map drag pause/reset legend SHAPE=POS COLOR=ARCH eyebrow pills cta Play Todays Random tri Trends/Players/Lab viral Pack Battle 1/3/5 shareable ?pack= streak daily reset toast OG 1200x630 manifest theme #0A0C10 fonts architects daughter error-boundary keyboard-a11y pwa-install site-nav",
+    "model_cockpit": "130 feats 18 families masking 17 residual towers fusion 48-d L2 cosine similarity stats-strip 130x17 30 seasons 8 types 64-d L2 Live Training Cockpit v4→v6 v6 upgrade 120 feats robust median/IQR clip[-3,3] 17 families cat([x·m,m]) towers d40 h192 x3 17x40 tokens CLS+season 12→128+17 tokens=19 tokens Transformer128-d 4L4H FF512 drop0.15 CLS128→512→64 L2 ~1.2M params target CQS87.5-88.0 purity0.89-0.91 train cmd python pipeline/train_mtnn.py --epochs150 --dim64 --tower-width40 etc architecture 4 manim MP4 MTNNFlow truthful boxes Input mask m cat 2residual blocks 160→32 LN GELU+skip season12-d concat L2 48-d heads 8/5/14/18 tap node inspector attr-grid 3 panels network-map-canvas 3D glass-box ONNX WASM 2MB ExecuTorch Procrustes chained RTR=I root1996-97",
+    "methods": "Doctrine every number recomputable Games 14 era-z per-100 fast+honest MTNN v5 130 feats/17towers→64-d L2 neighbor pills Vector-space/MTNNv4/map/archetypes/drift/skills/harness method-grid vector-space 14 features table PTS AST OREB/DREB STL/BLK TOV FG3A/FGA/FTA FG%/FT% PLUS_MINUS pace era-z EB percentile cleaning dedupe missing→season mean+mask m weighted EB% clip±4σ MTNN v4 expanded 130 feats/17towers 30 seasons 8types 64-d L2 Plainly box z-score era-z mask per100 arch-diagram 130 feats mask→2d_in 17×2d_in→160 LN GELU→160→32 LN+skip×2 32-d 544+season12→556→256 GELU→64 L2 Heads 8arch/5pos/14next/18skills 64→16→1 ~224K ONNX549KB injury durability readout -0.088 recall map 3D PCA minmax [0,1] axes X Paint↔Perimeter Y Role→Scorer Z Def↔Off Off-ball↔On-ball center=league avg archetypes K=8 kmeans reproducible list 3PAccLowTOV ScoringShotVol DefGlassRimP 3PVolAcc OffGlassLowOnCourt RimProtOffGlass OffGlassDefGlass PlaymakingSteals LeagueDrift Procrustes orthogonal consecutive shared≥30 rotation mean principal angle Q vs I residual Frobenius chained1996 root RTR=I Trends biggest 2021-22 11.1° 2022-23 7.6° Skills Lens 0-99 12 skills fixed linear composite era-z per100 percentile badges90+ gold97+ Recall vs Purity recall@10 same guy next year purity@20 neighbors share archetype Accuracy harness blocks deploy V1 dims ranges no dupes V2 cluster labels recompute nearest-centroid all12966 match V3 deadline.json deltas 0.01 tolerance V4 chimera determinism 30 dates cosine<0.3 MTNN extras recall@10 leakfree leakfree.py purity@20 next_profile MAE Attribution limits 6 bullets No lineup TEAM_ID change not verified trade tracking only 2013+ masked not imputed Position99.7% coverage Archetype centroid not scouting Chimera fused never existed footer sw reg",
+    "players_dir": "search any name directory+skills radar canvas 360x280 0-100 percentile per FY Top Similar cosine64-d holdout masked aliases META/GOOGL/MSFT S&P500 ModelStatus pre report KPI EmbeddingQA SectorCoherence eval_sector_coherence.json",
+    "play": "Daily Guess Wordle 6 tries 48-d cosine Lab fusion A+B=C impossible before tabs daily/lab streak shareable pack link ?pack=672-123-456 identical friends streak-safe beat friend score input suggest guesses-list ranked similarity cosine feel right",
+    "PWA": "manifest standalone display_override standalone minimal-ui browser background #FFFEF7 theme #1A150F icons 192 512 any/maskable id /?utm_source=pwa short_name Hoops shortcuts Daily Lab UTM screenshots wide 1200x630 og-embed.png categories sports games education dir ltr orientation any prefer_related_apps false scope / sw.js v66 PWA shell-only CORE 14 files immutable stale-while-revalidate large JSON_ONNX deny-cached network-first js/css/img 1MB cap JSON never SW-cached network browser HTTP cache offline shell-only data need connection stale-while-revalidate immutable CORE install skipWaiting precache CORE reload activate navigationPreload enable delete old caches clients.claim fetch DENY504 nav preloadResponse immutable+fp fallback message SKIP_WAITING offline.html shell"
+  },
+  "parity_actions_applied": {
+    "gridiron": {
+      "before": "NO manifest NO sw NO offline assets 3 js weak PWA",
+      "after": {
+        "manifest.json": "created 1.9K standalone icons 192/512 any/maskable display_override standalone minimal-ui browser background #0f1d14 theme #0a130d categories sports games education screenshots og-embed wide shortcuts Daily Lab UTM 2 entries Play Daily 6 guesses Lab fusion A+B=C Fusion PWA installable",
+        "sw.js": "created 2.8K v1 cockpit mirrors hoops v66 shell-only CORE 19 files includes / /play /model /players /methods /trends /dashboard manifest offline shell.css gridiron.css unified.css responsive motion final-qa site-nav error-boundary pwa-install keyboard-a11y icon192 512 DENY vectors.json mtnn.onnx data heads embeddings full JSON 504 Denied offline network-first nav preloadResponse cache.put immutable stale-while-revalidate asset cache offline fallback /offline.html SKIP_WAITING",
+        "offline.html": "created 852 dark card 2000 weeks needs connection shell links Map Play Lab Players"
+      },
+      "still_missing": "40 js delight suite embedding-nebula insight-engine network-viz full suite manim 4 MP4 real not placeholder — acceptable for parity v1, hoops-level reference best; honest eval not beating incumbent yet"
+    },
+    "unified": {
+      "before": "NO manifest NO sw NO offline viral-today hard-coded 20260805 static date",
+      "after": {
+        "manifest.json": "created 1.9K Vector Unified 20719 stars joint chimera background #FFFEF7 theme #080A0F icons 192 512 any/maskable screenshots og-embed wide shortcuts Daily Chimera Archetype Quiz Lab Fusion UTM",
+        "sw.js": "created 2.8K v1 chimera shell-only CORE 20 files includes / /play /model /methods manifest offline shell.css responsive final-qa unified.css motion lemmino css trading-card.css site-nav error-boundary keyboard-a11y pwa-install icon192 512 og-embed DENY vectors.json unified.json vectors_full mtnn onnx 504 Denied",
+        "offline.html": "created 911 void dark 20719 needs connection shell links Void Map Daily Chimera Lab Methods ablation",
+        "index.html patch": "viral-today static 20260805 → YYYYMMDD placeholder generic plus JS dynamic via hubDailySeed() already present in inline script hubDailySeed() window.DAILY_SEED window.UNIFIED_CHIMERA_DAILY daily-seed-pill lcg-meta puzzle-meta JS fills today deterministic LCG same link same stars"
+      },
+      "still_missing": "honest eval G2 FULL 0.6236 sd0.0030 vs CTRL 0.7087 not beating — no promotion; but ablation excellent; parity PWA now matches hoops"
+    },
+    "equities": {
+      "status": "near parity no major PWA gap — manifest standalone exists icons any maskable description 4831 FYs Dark Map theme #0b0e14 scope / display standalone missing display_override categories lang etc minor — ok",
+      "sw": "v1 dark shell-only lightweight mirrors hoops v51-light CORE 19 DENY real_data.json real_pca_full universe_full_history — acceptable",
+      "offline": "present dark card 4831 FYs needs connection — ok"
+    },
+    "pitch": {
+      "status": "near parity manifest standalone icons any maskable screenshots shortcuts Daily Lab UTM good mirrors hoops",
+      "sw": "v1 shell-only ok",
+      "offline": "present — ok"
+    }
+  },
+  "zero_deps_compliance": {
+    "bundles/zero_deps.json": {"zero_deps": true, "allow": "acne:./src", "note": "No pip installs, no cloud, ACNE optional local — v5 Prime", "version": "5.0-prime"},
+    "torch_pip": "NOT performed — zero-deps flag forbids pip torch, local GPU heavy trains OOM exempt handed to LOCAL-GPU claimed rows 57h+ preserved per AGENTS.md, no pip torch in Hatch",
+    "candidate_first": true,
+    "no_force_push": true,
+    "verify": "ls ~/workspace/bundles/bundles/zero_deps.json returns true; pyproject.toml dependencies include torch but not installed in Hatch env — intentional per zero_deps pattern"
+  },
+  "honesty_gate": {
+    "rule": "no promotion unless eval beats incumbent + verifier 8.0+",
+    "applied": true,
+    "promoted": false,
+    "reason": "Polishing PWA parity for gridiron/unified is infrastructure not model metric — does not need eval beat; eval remains incumbent 0.6851 hoops? unified G2 FULL 0.6236 sd0.0030 vs CTRL 0.7087 — FULL variance clamps majority floor 0.6258 NOT decodable residual acc - majority -0.0022 CI [-0.0060,+0.0016] — MEASURED not promoted per LOCAL_GPU_G2_RESULT.md (5 seeds x3 arms 60ep paired CTRL 0.7087 sd0.0564 LAM0.6525sd0.0278 FULL0.6236sd0.0030 predicted 0.64-0.65 measured0.6236 variance ratio 343x F p=0.00005) — honest gate blocks promotion, audit docs/LOCAL_GPU_G2_AUDIT_2026-08-05.md",
+    "verifier": "not run on infrastructure polish (PWA manifest sw offline) — verifier would score 8.0+ for file existence pattern? but not model eval — separate lanes vector-* already have eval_scoreboard.json measured",
+    "cqs": "not applicable to PWA polish"
+  },
+  "timeline_7field": {
+    "example": {
+      "ts": "2026-08-07T14:33:00Z",
+      "runId": "vector-parity-20260807T1433Z",
+      "nodeId": "parity.gridiron-unified-pwa",
+      "agentId": "9362f9c8-cde1-46a7-ab78-09625aa50e08",
+      "attempt": 1,
+      "latency_ms": 4200,
+      "tokens_est": 8500,
+      "status": "ok",
+      "errorClass": null,
+      "layer": 3,
+      "ooda": {"observe": "live 200 provenance 7/7/0 chimera Game05 entityCount20719", "orient": "hoops reference 40js 14CORE v66 PWA vs gridiron MISSING unified MISSING", "decide": "create manifest sw offline mirror hoops v66 shell-only", "act": "created 6 files gridiron+unified manifest sw offline patched unified viral-today static→generic", "feedback": "parity PWA now 5/5 domains have manifest sw offline; live hub still 200 7/7/0"}
+    }
+  },
+  "board_claim": "claimed vector-hub daily 5th puzzle + provenance / vector-hoops polish parity lane via hidden_files/vector-hoops-polish-checklist-20260807.md + candidate-20260807T093127Z.json — no collision with LOCAL-GPU hoops-v6-gpu gridiron-real claimed rows OOM exempt",
+  "files_produced": [
+    "~/workspace/goals/refine-dottie-scout-cli-dumbmodel-com-with-vector-models/hidden_files/vector-hoops-polish-checklist-20260807.md",
+    "~/workspace/goals/refine-dottie-scout-cli-dumbmodel-com-with-vector-models/hidden_files/candidate-20260807T093127Z.json",
+    "~/workspace/goals/refine-dottie-scout-cli-dumbmodel-com-with-vector-models/hidden_files/polish-run-20260807T0931Z.md",
+    "~/workspace/vector-gridiron/manifest.json",
+    "~/workspace/vector-gridiron/sw.js",
+    "~/workspace/vector-gridiron/offline.html",
+    "~/workspace/vector-unified/manifest.json",
+    "~/workspace/vector-unified/sw.js",
+    "~/workspace/vector-unified/offline.html"
+  ]
+}

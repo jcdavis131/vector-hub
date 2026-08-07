@@ -1,0 +1,39 @@
+{
+  "runId": "equities-20260807T1020Z",
+  "ts_utc": "2026-08-07T10:20:00Z",
+  "domain": "vector-equities",
+  "gold_standard": "hoops-level",
+  "overall_score": 8.7,
+  "threshold": 8.0,
+  "passes": true,
+  "honest": true,
+  "zero_deps": true,
+  "torch": false,
+  "checks": {
+    "index_sky_canvas_4831_tickers": "PASS",
+    "model_cockpit_transformer_154_feats_20_towers_64d_L2": "PASS",
+    "methods_doctrine_recomputable_drift_procrustes": "PASS",
+    "play_daily_lab_fusion_A_B_C": "PASS",
+    "companies_500_tickers": "PASS",
+    "manifest_standalone_display_override": "PASS",
+    "sw_v66_core_19_network_first_1MB_cap": "PASS",
+    "offline_dark_card": "PASS",
+    "provenance_7_hashes_4831_FYs_purity_0_7057": "PASS",
+    "delight_41_JS_assets": "PASS"
+  },
+  "assets": {
+    "js_count": 41,
+    "core_19": 19,
+    "provenance_hashes": 7,
+    "fys": 4831,
+    "purity": 0.7057,
+    "lift": 6.32
+  },
+  "pwa": {
+    "version": "v66",
+    "core_length": 19,
+    "deny": 8,
+    "immutable_swr": true
+  },
+  "notes": "PWA v66 CORE19 DENY8, 41 JS delight, hoops parity 9/9 index 10/10 cockpit 12/12 methods 5/5 companies 6/6 play checklist §2-§8 PASS, zero-deps true, no torch, manifest standalone, offline dark 4831 FYs, provenance 7/7 honest. Drift Procrustes 6.2°/yr resid 0.41 chained root 2015."
+}

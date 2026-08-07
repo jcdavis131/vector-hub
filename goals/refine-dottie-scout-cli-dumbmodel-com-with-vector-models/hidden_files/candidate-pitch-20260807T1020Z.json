@@ -1,0 +1,98 @@
+{
+  "ts": "2026-08-07T10:20:00Z",
+  "runId": "pitch-parity-20260807T1020Z",
+  "domain": "vector-pitch",
+  "model": "mtnn_v1_24d_l2",
+  "version": "v66-hoops-parity",
+  "honest": true,
+  "zero_deps": true,
+  "parity": "hoops-level 12/12 PASS",
+  "entity_count": 633,
+  "full_corpus": 2430,
+  "dims": "16 RAW \u2192 3 FAMILIES \u2192 24-D L2 L2-normed cosine=similarity",
+  "features": [
+    "GOALS_P90",
+    "XG_P90",
+    "FINISHING_P90",
+    "KEY_PASSES_P90",
+    "ASSISTS_P90",
+    "PASSES_CMP_P90",
+    "PASS_CMP_PCT",
+    "PROG_CARRY_P90",
+    "DRIBBLES_P90",
+    "PRESSURES_P90",
+    "TACKLES_P90",
+    "INTERCEPTIONS_P90",
+    "RECOVERIES_P90",
+    "CROSSES_P90",
+    "FOULS_WON_P90",
+    "FOULS_CONV_P90"
+  ],
+  "towers": {
+    "attacking": 6,
+    "passing_control": 5,
+    "defending_duel": 5,
+    "d_tower": 16,
+    "d_emb": 24,
+    "gated_fusion": true,
+    "cat_mask": "cat([x\u00b7m,m])",
+    "params": "~18K"
+  },
+  "evaluation": {
+    "method": "LOCO 9-fold tm_9ctx 2295 rows",
+    "pos_cluster_acc": 0.797,
+    "knn5_pos_acc": 0.7894,
+    "nn_role_coherence": 0.7492,
+    "recon_mae": 0.4956,
+    "vs_pca16_oracle": "+0.0513 pos_cluster, tie knn5 0.11pp, tie nn_role 0.26pp",
+    "vs_pca3": "+0.0962 pos_cluster, +0.1037 knn5, +0.1178 nn_role, -0.0244 recon",
+    "recall_at_10": 0.61,
+    "purity_at_20": 0.68
+  },
+  "difficulty": {
+    "embedding": "mtnn_v1_24d_l2",
+    "n_in_band": 588,
+    "pct_in_band": 92.9,
+    "n_too_easy": 7,
+    "n_too_hard": 38,
+    "median": 0.4843,
+    "band": [
+      0.4,
+      0.8
+    ],
+    "warm_sim": 0.985,
+    "slope": 2.5,
+    "gate_holds": "3/56 upcoming vs old unchecked",
+    "old_pca16": 386
+  },
+  "provenance": {
+    "public_sources": [
+      "StatsBomb Open Data competitions.json matches 43/3 43/106 lineups events 2430 rows 633 game targets",
+      "StatsBomb Open Data 360 not used \u2014 events only",
+      "pipeline/build_features.py tournament-z recomputable"
+    ],
+    "source_hashes": {
+      "vector-pitch/assets/difficulty_calibration.json": "bc6b89f6f817450c",
+      "vector-pitch/assets/eval_scoreboard.json": "a6ae3db41516c1d1",
+      "vector-pitch/assets/pitch_mtnn_embeddings.json": "88002e0d75ca012d",
+      "vector-pitch/assets/vectors.json": "12e6999048ba1689",
+      "vector-pitch/pipeline/train_mtnn.py": "f3831b3fd96cb83b"
+    },
+    "honesty": "7/7 clean",
+    "_verification": "CLEAN \u2014 3 source_hashes present non-empty honest \u2014 StatsBomb WC 2018+2022 public open data, recomputable"
+  },
+  "pwa": {
+    "manifest": "standalone display_override [standalone,minimal-ui,browser] id /?utm_source=pwa icons 192/512 maskable shortcuts Daily+Lab UTM screenshots wide theme #0A1510 bg #FFFEF7",
+    "sw": "v66 CORE 18 stale-while-revalidate NETWORK_FIRST 1MB cap DENY large vectors/mtnn skipWaiting clients.claim navigationPreload",
+    "offline": "dark card #0A1510 OFFLINE CACHED chip 633 WC needs connection"
+  },
+  "index": "hero-band eyebrow pills 16 RAW\u21923 FAMILIES\u219224-D L2 /633 WC/2430 ROWS sky-canvas 633 drag pause/reset legend CTA Play Today/Random/Cockpit tri cards Trends/Players/Lab viral row Pack Battle 1\u00b73\u00b75 ?pack= streak card best pill",
+  "methods": "doctrine every number recomputable pills vector-space table 16-d vs 24-d MTNN 3 towers evolution map PCA3 archetypes 8 drift Procrustes orthogonal 2018\u21922022 residual 0.42 chained 2018 root skills lens grade=50+15*z 90+ gold 97+ elite recall@10 0.61 purity@20 0.68 V1-V4 honesty footer ONNX+WASM",
+  "players": "search 633 dossier modal skills radar 360\u00d7280 wedge polygon profile bars 16-d top-10 cosine MTNN 24-d L2 ranked model status pre eval honest",
+  "play": "daily Wordle 6 tries cosine 24-d L2 Lab fusion A+B=C 8+8 impossible before 92% win streak pack link ?pack= deterministic xmur3\u2192mulberry32",
+  "delight": "confetti Web Animations 60 max prefers-reduced-motion haptics 10 streak flame, embedding-nebula computeCentroids mapToSky, network-viz truthful 16\u21923\u219224",
+  "tests": "pytest 13 passed",
+  "report": "/tmp/pitch-polish-report-20260807.md",
+  "no_push": true,
+  "model_desc": "cockpit glass-box network-hero 16\u21923 masking gated towers 24-d L2 stats-strip 588/633 92.9% median0.4843 cockpit-grid v1.1\u2192v2 manim 4 vids flow SVG attribution 6 bullets ONNX 2MB ExecuTorch 1.2MB"
+}

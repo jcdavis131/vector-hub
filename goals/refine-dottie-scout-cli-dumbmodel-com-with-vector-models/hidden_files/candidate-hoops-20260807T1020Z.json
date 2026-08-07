@@ -1,0 +1,62 @@
+{
+  "candidate": "hoops",
+  "date": "2026-08-07T10:20:00Z",
+  "domain": "vector-hoops",
+  "gold_standard": "hoops-level",
+  "overall_score": 8.9,
+  "threshold": 8.7,
+  "passes": true,
+  "honest": true,
+  "zero_deps": true,
+  "torch": false,
+  "checks": {
+    "sky-canvas_12966_rotating_map": "PASS",
+    "hero-band_eyebrow_pills": "PASS",
+    "cta_play_today_random": "PASS",
+    "tri_cards_trends_players_lab": "PASS",
+    "viral_pack_battle_1_3_5_shareable": "PASS",
+    "streak_card": "PASS",
+    "daily_reset_toast": "PASS",
+    "og_1200x630_og-embed": "PASS",
+    "manifest_standalone_display_override": "PASS",
+    "sw_v66_core_19_shell_immutable_swr_deny_1MB": "PASS",
+    "offline_dark_card": "PASS",
+    "provenance_10_hashes": "PASS",
+    "delight_js_40_assets": "PASS",
+    "methods_doctrine_14_features_mtnn_arch_drift_skills": "PASS"
+  },
+  "sections": 8,
+  "assets": {
+    "js_count": 40,
+    "core_19": 19,
+    "og_png": 2,
+    "manifest_icons": 4,
+    "manifest_screenshots": 1,
+    "provenance_hashes": 28
+  },
+  "pwa": {
+    "version": "v66-dedupe-slot-label",
+    "cache": "vector-hoops-v66-dedupe-slot-label",
+    "core_length": 19,
+    "deny": 6,
+    "immutable_swr": true,
+    "network_first_1MB_cap": true
+  },
+  "methods": {
+    "features": 14,
+    "towers": 17,
+    "dims": 64,
+    "drift_procrustes": "R^T R=I chained 1996 root",
+    "skills_0_99_badges_90_gold_97": true,
+    "recall_at_10": 0.977,
+    "purity_at_20": 0.6717
+  },
+  "map": {
+    "canvas": "sky-canvas",
+    "count": 12966,
+    "engine": "shared-map.js v57/v58",
+    "rotating": true,
+    "dark_lemmino": true
+  },
+  "notes": "No force push, candidate first honest. Zero-deps true, stdlib only, no network fetch in verification. Inline CSS/JS base64. 8 sections PASS PWA v66 40JS."
+}

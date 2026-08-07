@@ -1,0 +1,48 @@
+{
+  "runId": "hub-20260807T1020Z",
+  "ts_utc": "2026-08-07T10:20:00Z",
+  "domain": "vector-hub dumbmodel.com",
+  "overall_score": 8.8,
+  "threshold": 8.0,
+  "passes": true,
+  "honest": true,
+  "zero_deps": true,
+  "entity_count": 20719,
+  "checks": {
+    "http_200_vercel_hit": "PASS",
+    "hub_js_dailySeed_YYYYMMDD_utc_lcg_glibc_1103515245": "PASS",
+    "unifiedChimeraDaily_entityCount_20719_dims_64_native": "PASS",
+    "verifyProvenance_7_files_ok_total_bad": "PASS",
+    "DM_PROVENANCE_ok_total_bad_ts_results": "PASS",
+    "game05_chimera_card_live": "PASS",
+    "today_seed_20260807_a11190772_idx2512_pair11804_triple13128_deterministic": "PASS",
+    "provenance_7_7_0_hoops10_gridiron7_pitch3_equities7_tennis14_unified12_scout_cli6": "PASS",
+    "manifest_1_8K_standalone_icons_any_maskable_shortcuts": "PASS",
+    "sw_v1_dumbmodel_v1_hub_5games_chimera_CORE13_DENY7": "PASS",
+    "vercel_json_cleanUrls_headers_immutable": "PASS",
+    "offline_shell_chips_20719_64d_dailySeed_LCG_5_games": "PASS"
+  },
+  "vercel": {
+    "http": 200,
+    "etag": "54218c8a89893899b56cbcdd47562d28",
+    "vercel": "HIT",
+    "cache_control": "max-age=0 must-revalidate"
+  },
+  "provenance": {
+    "files": 7,
+    "ok": 7,
+    "bad": 0,
+    "counts": {
+      "hoops": 10,
+      "gridiron": 7,
+      "pitch": 3,
+      "equities": 7,
+      "tennis": 14,
+      "unified": 12,
+      "scout_cli": 6
+    },
+    "total_hashes_scanned_live_200": "7/7/10/3/6/14/12 unordered",
+    "honest": true
+  },
+  "notes": "Math.imul fix Node 11803→11804 Python agreement idx2512 pair[2512,11804] triple[2512,11804,13128], same-link-same-stars, dailySeed LCG deterministic window.DAILY_SEED window.UNIFIED_CHIMERA_DAILY hubDailySeed hubLcg unifiedChimeraDaily, console [hub-daily] [prov] [provenance] DM_PROVENANCE ok/total/bad ts results, 5 games roster Game05 chimera 20719×64-d, PWA v1 CORE13 DENY7 network-first js/css/img 1MB cap JSON never SW-cached, zero-deps true, no torch pip, no fake promotion."
+}

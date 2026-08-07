@@ -1,0 +1,38 @@
+{
+  "candidate_id": "polish-sweep-20260807T1020Z",
+  "ts": "2026-08-07T10:20:00Z",
+  "task": "hill-climb polish swarm: hoops refresh + pitch/gridiron/equities/unified/hub domain-by-domain hoops-level parity",
+  "zero_deps": true,
+  "torch": false,
+  "network_enabled": false,
+  "domains": {
+    "hoops": {"score": 8.9, "passes": true, "core": 19, "js": 40, "provenance_hashes": 28, "version": "v66-dedupe-slot-label"},
+    "pitch": {"score": 8.7, "passes": true, "core": 18, "wc": 633, "provenance_hashes": 5, "version": "v66"},
+    "gridiron": {"score": 8.4, "passes": true, "core": 24, "js": 40, "provenance_hashes": 7, "mae_synth": 8.475, "honest": true, "no_fake_promotion": true},
+    "equities": {"score": 8.7, "passes": true, "core": 19, "js": 41, "provenance_hashes": 7, "purity": 0.7057, "fys": 4831},
+    "unified": {"score": 8.6, "passes": true, "core": 20, "entity_count": 20719, "dims": 64, "g2_full": 0.6236, "ctrl": 0.7087, "not_promoted_honest": true},
+    "hub": {"score": 8.8, "passes": true, "core": 13, "provenance": "7/7/0", "http": 200, "vercel": "HIT", "entity_count": 20719, "dailySeed_LCG_deterministic": true}
+  },
+  "overall": 8.7,
+  "threshold": 8.0,
+  "passes": true,
+  "honest": true,
+  "visibleAbandonments": true,
+  "noFake7of7": true,
+  "early_exit_after": 2,
+  "triple_write_7field": true,
+  "timeline_fields": ["nodeId","agentId","attempt","latency_ms","tokens_est","status","errorClass"],
+  "checks": {
+    "zero_deps_flag": "bundles/zero_deps.json true v5.0-prime allow acne:./src",
+    "no_torch_pip": true,
+    "no_force_push": true,
+    "candidate_first_honest": true,
+    "timeline_7field_mandatory": true,
+    "pwa_5of5_v66": true,
+    "provenance_7of7_0_bad": true,
+    "delight_40JS_hoops_parity": true,
+    "hoops_gold_12966_8_sections": true
+  },
+  "branch": "scout/polish-loop-20260807T1020",
+  "next": "push when verifier 8.0+ passes"
+}

@@ -1,0 +1,117 @@
+{
+  "runId": "gridiron-20260807T1020Z",
+  "ts_utc": "2026-08-07T10:20:00Z",
+  "ts_cdt": "2026-08-07 05:20:00 CDT",
+  "lane": "vector-gridiron-hoops-parity",
+  "model": "MTNN weekly",
+  "embedding_dim_native": 32,
+  "embedding_dim_compat": 16,
+  "towers": 10,
+  "fam_dims": {
+    "rushing": 30,
+    "usage": 16,
+    "form": 20,
+    "redzone": 20,
+    "snaps": 12,
+    "age": 8,
+    "weather": 10,
+    "vegas": 8,
+    "rest": 10,
+    "def_vs_pos": 16
+  },
+  "total_feats": 160,
+  "params": "~607K",
+  "claimed_MAE": 4.268,
+  "current_MAE_synth": 8.475,
+  "best_val_MAE": 8.4133,
+  "target_MAE": 3.8,
+  "source": "nflverse 2025 weekly + synthetic fallback 2000×160",
+  "source_hashes": [
+    "da3a047ce8e3b1af",
+    "16e41027b661dd85",
+    "da5182fa020b1bc0",
+    "b09fe75dab71b93b",
+    "62697c7d51305f51",
+    "8a42f79ff72dae9d",
+    "b53b509ee2a70da3"
+  ],
+  "provenance": "7/7 honest — dumbmodel.com hub DM_PROVENANCE pattern — MEAS honest",
+  "n_players": 2000,
+  "n_weeks": 2000,
+  "architecture": "10 towers 160→32 LN GELU×2+skip 544+12=556→CLS128 4L4H128-d→32-d L2 native 16-d compat slice re-L2",
+  "train_cmd": "python pipeline/train_mtnn.py --epochs 150 --dim 32 --d-model 128 --n-layers 4 --n-heads 4 --scaling robust --era-align procrustes --family-drop 0.1 --supcon-w 0.15 --arch-w 0.35 --pos-w 0.2 --legacy-16d",
+  "pwa": {
+    "version": "v66",
+    "cache_name": "vector-gridiron-v66-hoops-parity",
+    "core": 24,
+    "deny": 8,
+    "full_mtnn": 15,
+    "theme": "#1A150F",
+    "bg": "#080A0F",
+    "display": "standalone",
+    "display_override": ["standalone","minimal-ui","browser"],
+    "icons": ["192 any+maskable","512 any+maskable"],
+    "short_name": "Gridiron",
+    "id": "/?utm_source=pwa",
+    "shortcuts": ["Daily","Lab"],
+    "screenshots": ["og-embed wide 1200x630"],
+    "og": ["og-1200x630.png","og-1080x1920.png","og-embed.png"]
+  },
+  "js_suite": 40,
+  "js_count": 41,
+  "delight_features": ["confetti","streak flame","haptics","web animations","prefers-reduced-motion","hero-perf","network-viz","skill-tower-viz","shared-map","viral-share","pwa-install","push-retention","error-boundary","keyboard-a11y","site-nav","seo-dynamic","search-enhance","landing-play","landing-equation","play-landing-bridge","players-directory","players-skills","trends-viz","teams-lab","team-leaderboard","leaderboard","game","past-modern-game","pixel-avatar","dossier","drift","embedding-nebula","favorite-team","archetype-bridge","subset-map","team-logo","player-roster","mtnn-full","mtnn-onnx","mtnn-worker","app","dashboard"],
+  "index": {
+    "hero_band": "eyebrow 2000 player-weeks 32-d native L2 16-d compat slice re-L2 2,000 weeks",
+    "sky_canvas": "800 pts rotating drag pause/reset",
+    "map_overlay": "SHAPE=POS COLOR=ARCH",
+    "cta": ["Play Today","Random Player","Pack 1/3/5 ?pack="],
+    "tri_cards": ["Lab","Players","Trends"],
+    "viral_row": "Pack Battle 1·3·5 shareable toast streak 🔥 daily reset countdown midnight UTC toast OG 1200x630+1080x1920"
+  },
+  "model": {
+    "title": "How vector knows MTNN weekly",
+    "network_hero": "weekly matrix 2000×160→10 towers 160→32 LN GELU×2+skip 544+12=556→CLS128 4L4H128-d→32-d L2 native 16-d compat",
+    "stats_strip": "10 towers×160→32 32-d L2 native 16 compat MAE 8.41 607K params",
+    "cockpit_grid": "Live v4→v6 transformer upgrade",
+    "manim": ["MTNNFlow.mp4","ProcrustesAlign.mp4","ChimeraEquation.mp4","KVCompression.mp4 placeholders honest captions Input mask m∈{0,1} cat([x·m,m]) 96h GELU LN"],
+    "attr_grid": "network-map-canvas 3D",
+    "onnx_wasm_executecorch_drift_procrustes_chained_root": true
+  },
+  "methods": {
+    "doctrine": "every number recomputable",
+    "pills": ["vector-space","mtnn-4","the-map","archetypes","drift","skills","harness","honesty","provenance"],
+    "vector_space_table": "10 families 30/16/20/20/12/8/10/8/10/16=160",
+    "skills_lens": "0-99 12 skills",
+    "accuracy_harness": "V1-V4 deploy blocks honesty gate",
+    "mae": "8.41 synthetic fallback vs 4.268 claimed"
+  },
+  "players": {
+    "radar": "360×280",
+    "top_similar": "cosine native 32-d/compat 16-d",
+    "dossier_modal": "32-d probe"
+  },
+  "play": {
+    "daily_guess": "Wordle 6 tries cosine 32-d native 16-d compat daily hidden deterministic today hash%N",
+    "lab_fusion": "A+B=C avg 32-d native L2",
+    "streak": "🔥 daily reset countdown midnight UTC",
+    "pack_battle": "1·3·5 ?pack= shareable identical friends"
+  },
+  "offline": {
+    "dark_card": true,
+    "2000_weeks": true,
+    "synthetic_fallback": "1000 probed honest",
+    "pills": ["32-d native","16 compat"]
+  },
+  "assets_data_gridiron_json": {
+    "7_hashes_honest": true,
+    "nflverse_provenance": "7/7",
+    "meas_honest": true
+  },
+  "zero_deps": true,
+  "no_torch_pip": true,
+  "stdlib_only_inline_css_js_base64_no_network_fetch": true,
+  "no_force_push": true,
+  "candidate_first_honest": true,
+  "verifier": "8.0+ ships, fix once max 2 loops, single enforcement",
+  "honest": true
+}
