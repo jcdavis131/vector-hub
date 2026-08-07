@@ -1,0 +1,47 @@
+{
+  "command": "python3 -c \"from acne import ContactsHub; h=ContactsHub(workspace='~/workspace'); h.sync_from_bundles()\"",
+  "created": "2026-08-06T19:18 America/Chicago",
+  "cron": "0 * * * *",
+  "description": "Hourly checks if bundles/manifest.json changed (mtime) vs last sync in .sync.log. If newer, runs ContactsHub.sync_from_bundles() to keep Agent/Workflow/Skill/Bundle nodes current. Zero-deps, local-only. Timeline mandatory 7-field even no-change.",
+  "enabled": true,
+  "id": "sync_bundles",
+  "logging": {
+    "also_timeline": "bundles/ultra/runs/timeline.jsonl",
+    "file": "bundles/memory/contacts_harness/.sync.log",
+    "required_fields": [
+      "nodeId",
+      "agentId",
+      "attempt",
+      "latency_ms",
+      "tokens_est",
+      "status",
+      "errorClass",
+      "at",
+      "manifest_mtime",
+      "agents",
+      "workflows",
+      "skills",
+      "bundles",
+      "edges",
+      "owner"
+    ]
+  },
+  "logic": "compare manifest mtime > last_sync_mtime from bundles/memory/contacts_harness/.sync.log; if newer or no log, run sync; always log entry even no-change with owner",
+  "owner": "operator",
+  "owner_required": true,
+  "schedule": {
+    "cron": "0 * * * *",
+    "kind": "cron",
+    "timezone": "America/Chicago"
+  },
+  "tags": [
+    "always-on",
+    "operator",
+    "live-sync",
+    "tlpg",
+    "constructs"
+  ],
+  "title": "Sync bundles/manifest.json \u2192 TLPG constructs",
+  "version": "1.1",
+  "watcher": "bundles/scripts/sync_bundles_watch.py"
+}

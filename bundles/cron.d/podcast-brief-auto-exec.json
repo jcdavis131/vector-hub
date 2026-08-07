@@ -1,0 +1,39 @@
+{
+  "command": "echo '[podcast-brief-auto-exec] 90s check bundles/proactive/morning_edition_feed.md + evening_wrap_feed.md mtime \u2014 parse TODOs L1 3-lens \u2014 diff active-tasks.md free lanes claim if >4h \u2014 wire DAG Top5 tick+flags\u2192vec+lattice v2\u2192analytics+trace+ops v2\u2192meter \u2014 spawn subagents max4 pacingFilter \u2014 timeline 7-field mandatory even no-change' && ls ~/workspace/bundles/proactive/morning_edition_feed.md ~/workspace/bundles/proactive/evening_wrap_feed.md 2>/dev/null | head",
+  "created": "2026-08-07T14:47Z America/Chicago",
+  "description": "Podcast Brief Auto Exec 90s \u2014 turns briefs into TODOs, claims lanes, keeps timelines honest even no-change, paces comms max3/4 tempo :13 \u2014 SSOT mirrors interval/hook_podcast_brief_auto_exec__interval@90s.md",
+  "enabled": true,
+  "id": "podcast_brief_auto_exec",
+  "logging": {
+    "file": "workspace/bundles/ultra/runs/podcast-brief-auto-exec.jsonl",
+    "required_fields": [
+      "nodeId",
+      "agentId",
+      "attempt",
+      "latency",
+      "tokens",
+      "status",
+      "errorClass"
+    ]
+  },
+  "mode": "task",
+  "origin": "bundles/cron.d SSOT \u2014 mirrors bundles/cron.d/interval/hook_podcast_brief_auto_exec__interval@90s.md",
+  "owner": "goal:ultracode-brief-exec",
+  "schedule": {
+    "kind": "interval",
+    "every": "90s",
+    "timezone": "UTC"
+  },
+  "tags": [
+    ":13 pacing",
+    "always-on",
+    "auto-exec",
+    "brief",
+    "operator",
+    "podcast",
+    "proactive",
+    "v5 Prime"
+  ],
+  "version": "1.0",
+  "zero_deps": true
+}

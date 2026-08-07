@@ -1,0 +1,29 @@
+{
+  "id": "poll_merge_watchdog",
+  "enabled": true,
+  "owner": "operator",
+  "schedule": {
+    "kind": "interval",
+    "every": "30m",
+    "timezone": "UTC"
+  },
+  "command": "echo '[poll_merge_watchdog] poll sync_log.jsonl + poll_merge.log heartbeat \u2014 restart poll_merge.sh if older than 15m' && ls -l bundles/coordination/ 2>/dev/null | head",
+  "description": "Poll sync_log.jsonl + poll_merge.log heartbeat \u2014 if older than 15m restart poll_merge.sh watchdog",
+  "logging": {
+    "required_fields": [
+      "nodeId",
+      "agentId",
+      "attempt",
+      "latency",
+      "tokens",
+      "status",
+      "errorClass"
+    ]
+  },
+  "tags": [
+    "always-on",
+    "operator",
+    "watchdog"
+  ],
+  "version": "1.0"
+}

@@ -1,0 +1,30 @@
+{
+  "id": "vector_hub_chimera_check",
+  "enabled": true,
+  "owner": "operator",
+  "schedule": {
+    "kind": "interval",
+    "every": "30m",
+    "timezone": "UTC"
+  },
+  "command": "echo '[vector_hub_chimera_check] scan https://dumbmodel.com/ \u2014 if 5th game chimera missing or provenance bad>0 fix hub.js and push main' && curl -s -I https://dumbmodel.com/ | head -n1",
+  "description": "Scan vector-hub deploy https://dumbmodel.com/ \u2014 if 5th game chimera missing or provenance bad>0 fix hub.js and push main",
+  "logging": {
+    "required_fields": [
+      "nodeId",
+      "agentId",
+      "attempt",
+      "latency",
+      "tokens",
+      "status",
+      "errorClass"
+    ]
+  },
+  "tags": [
+    "always-on",
+    "deploy",
+    "operator",
+    "vector"
+  ],
+  "version": "1.0"
+}

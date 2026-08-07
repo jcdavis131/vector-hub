@@ -1,0 +1,25 @@
+{
+  "command": "node bundles/observability/metrics_collector.js",
+  "cron": "*/15 * * * *",
+  "description": "Every 15m collects per-run OODA 4/4, agentic 6/6, tempo :13, MoMA 5 tiers, graph G_workflow+G_history sizes, checkpoint health, verification scores, pacing filter stats. Writes JSONL to ultra/runs/metrics.jsonl and contacts_harness/.metrics.log and snapshots to observability/dashboard_metrics.json. Zero-deps node, no npm install. Even no-change logs mandatory 7-field timeline.",
+  "enabled": true,
+  "id": "observability_tick",
+  "interval": "15m",
+  "logging": {
+    "also": "bundles/memory/contacts_harness/.metrics.log",
+    "file": "bundles/ultra/runs/metrics.jsonl",
+    "required_fields": ["nodeId","agentId","attempt","latency_ms","tokens_est","status","errorClass","runId","at","ooda","agentic","tempo","moma","graph","checkpoint","verification","pacing"]
+  },
+  "mode": "task",
+  "node": "bundles/observability/metrics_collector.js",
+  "owner": "operator",
+  "owner_required": true,
+  "schedule": {
+    "interval_minutes": 15,
+    "kind": "interval",
+    "timezone": "America/Chicago"
+  },
+  "tags": ["always-on","observability","metrics","operator","live","zero-deps"],
+  "title": "Observability tick — live health collector",
+  "version": "1.1"
+}

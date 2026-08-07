@@ -1,0 +1,32 @@
+{
+  "command": "node -e \"const fs=require('fs');const path=require('path');const os=require('os');const h=os.homedir();const statePath=path.join(h,'workspace/bundles/hooks/state/brief_auto_exec.json');let m={};try{if(fs.existsSync(statePath)) m=JSON.parse(fs.readFileSync(statePath,'utf8'))}catch(e){};let manifestVer='unknown';try{manifestVer=JSON.parse(fs.readFileSync(path.join(h,'workspace/bundles/manifest.json'),'utf8')).version||'unknown'}catch(e){};const stale=Date.now()-new Date(m.last_run||m.lastRun||0).getTime()>15*60*1000;const mismatch=m.last_slug!==manifestVer;console.log('[podcast_brief_watchdog] validation manifest latest ['+manifestVer+'] != state last_slug ['+(m.last_slug||'none')+'] mismatch='+mismatch+' stale>15m='+stale+' ageMs='+(Date.now()-new Date(m.last_run||0).getTime()));if((mismatch&&m.last_slug)||stale||!m.last_run){console.log('STALE wake needed \u2014 manifest latest != state last_slug or stale>15m');process.exit(2)}else{console.log('fresh')}\" || echo \"[watchdog] stale detected, poll may need restart \u2014 manifest latest != state last_slug validation triggered\"",
+  "description": "Check podcast_brief_auto_exec hook \u2014 if manifest latest != state last_slug, it already wakes, but if stale >15m ensure poll still alive \u2014 validates manifest latest != state last_slug",
+  "enabled": true,
+  "id": "podcast_brief_watchdog",
+  "logging": {
+    "required_fields": [
+      "nodeId",
+      "agentId",
+      "attempt",
+      "latency",
+      "tokens",
+      "status",
+      "errorClass"
+    ]
+  },
+  "owner": "operator",
+  "schedule": {
+    "every": "30m",
+    "kind": "interval",
+    "timezone": "UTC"
+  },
+  "tags": [
+    "podcast",
+    "operator",
+    "watchdog",
+    "validation",
+    "manifest",
+    "always-on"
+  ],
+  "version": "1.1"
+}

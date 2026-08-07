@@ -1,0 +1,30 @@
+{
+  "id": "local_gpu_handoff",
+  "enabled": true,
+  "owner": "operator",
+  "schedule": {
+    "kind": "interval",
+    "every": "30m",
+    "timezone": "UTC"
+  },
+  "command": "echo '[local_gpu_handoff] look for LOCAL-GPU markers \u2014 if vector-unified/data/unified_report.json measured G2 appears copy to audit and celebrate'",
+  "description": "Look for LOCAL-GPU completed markers \u2014 if vector-unified/data/unified_report.json measured G2 appears copy to audit and add feed celebration",
+  "logging": {
+    "required_fields": [
+      "nodeId",
+      "agentId",
+      "attempt",
+      "latency",
+      "tokens",
+      "status",
+      "errorClass"
+    ]
+  },
+  "tags": [
+    "always-on",
+    "gpu",
+    "handoff",
+    "operator"
+  ],
+  "version": "1.0"
+}

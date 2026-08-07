@@ -1,0 +1,29 @@
+{
+  "command": "python3 ~/workspace/bundles/scripts/self_improve_tick.py",
+  "description": "Daily self-improvement scan \u2014 pattern detection + skill proposal",
+  "enabled": true,
+  "id": "self_improvement_tick",
+  "logging": {
+    "required_fields": [
+      "nodeId",
+      "agentId",
+      "attempt",
+      "latency",
+      "tokens",
+      "status",
+      "errorClass"
+    ]
+  },
+  "owner": "operator",
+  "schedule": {
+    "kind": "daily",
+    "time": "04:00:00",
+    "timezone": "America/Chicago"
+  },
+  "tags": [
+    "always-on",
+    "operator",
+    "self-improvement"
+  ],
+  "version": "1.0"
+}

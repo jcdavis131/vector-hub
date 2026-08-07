@@ -1,0 +1,22 @@
+{
+  "command": "python3 ~/workspace/bundles/scripts/goal_health_check.py",
+  "created": "2026-08-06",
+  "description": "Goal Slip-Proof daily healthcheck — ensures Goal TRACKS Task / REALIZES Project, creates placeholder when needs_tasks, logs to goal_health.jsonl + timeline.jsonl even no-change 7-field",
+  "enabled": true,
+  "id": "goal_health",
+  "logging": {
+    "also": "bundles/memory/goal_health.jsonl",
+    "file": "workspace/.scout/missions/_cron/timeline.jsonl",
+    "required_fields": ["nodeId","agentId","attempt","latency_ms","tokens_est","status","errorClass"]
+  },
+  "mode": "task",
+  "owner": "operator",
+  "schedule": {
+    "kind": "daily",
+    "time": "08:30:00",
+    "timezone": "America/Chicago"
+  },
+  "tags": ["goal","health","slip-proof","operator"],
+  "timeout_secs": 300,
+  "version": "1.1"
+}

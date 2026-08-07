@@ -1,0 +1,33 @@
+{
+  "id": "monthly_clean",
+  "enabled": true,
+  "owner": "operator",
+  "schedule": {
+    "kind": "cron",
+    "cron": "0 3 1 * *",
+    "timezone": "America/Chicago"
+  },
+  "command": "echo '[monthly_clean] prune workspace/exports/ older than 30d and workspace/your_files/.DS_Store + bundle tmp' && find ~/workspace/exports -type f -mtime +30 -delete 2>/dev/null; find ~/workspace/your_files -name '.DS_Store' -delete 2>/dev/null; echo cleaned $(date)",
+  "description": "Monthly clean \u2014 prune exports/ older than 30d, clean .DS_Store, enforce workspace/bundles/zero_deps flag, keep fs optimized",
+  "logging": {
+    "file": "workspace/.scout/missions/_cron/monthly_clean.jsonl",
+    "required_fields": [
+      "nodeId",
+      "agentId",
+      "attempt",
+      "latency",
+      "tokens",
+      "status",
+      "errorClass"
+    ]
+  },
+  "tags": [
+    "always-on",
+    "cleanup",
+    "operator",
+    "v5 Prime",
+    "zero-deps"
+  ],
+  "version": "1.0",
+  "created": "2026-08-06T19:18 America/Chicago"
+}

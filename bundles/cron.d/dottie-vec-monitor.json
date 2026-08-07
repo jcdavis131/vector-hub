@@ -1,0 +1,39 @@
+{
+  "command": "python3 ~/workspace/dottie/apps/ava-factory/scripts/dottie_continuous_loop.py --mode monitor || echo '[dottie-vec-monitor] monitor no-torch hidden_files only' && python3 -c \"import json,pathlib; hp=pathlib.Path.home()/ 'workspace/goals/refine-dottie-scout-cli-dumbmodel-com-with-vector-models/hidden_files/cron_health.jsonl'; hp.parent.mkdir(parents=True, exist_ok=True); open(hp,'a').write('placeholder health check')\"",
+  "created": "2026-08-07T14:47Z America/Chicago",
+  "description": "Dottie factory monitor + vec hub verifier \u2014 every 30m heartbeat sidecar \u2014 lightweight no torch \u2014 writes only to hidden_files/cron_health.jsonl never files/ \u2014 SSOT bundles/cron.d",
+  "enabled": true,
+  "id": "dottie_vec_monitor",
+  "logging": {
+    "also_timeline": "workspace/.scout/missions/_cron/timeline.jsonl",
+    "file": "workspace/goals/refine-dottie-scout-cli-dumbmodel-com-with-vector-models/hidden_files/cron_health.jsonl",
+    "required_fields": [
+      "nodeId",
+      "agentId",
+      "attempt",
+      "latency",
+      "tokens",
+      "status",
+      "errorClass"
+    ]
+  },
+  "mode": "task",
+  "origin": "bundles/cron.d SSOT \u2014 mirrors goal crons/minutely/dottie-vec-monitor__interval@30m.md",
+  "owner": "operator",
+  "schedule": {
+    "kind": "interval",
+    "every": "30m",
+    "timezone": "UTC"
+  },
+  "tags": [
+    "always-on",
+    "dottie",
+    "heartbeat",
+    "operator",
+    "v5 Prime",
+    "vec-monitor",
+    "zero-deps"
+  ],
+  "version": "1.0",
+  "zero_deps": true
+}

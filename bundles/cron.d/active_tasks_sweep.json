@@ -1,0 +1,32 @@
+{
+  "id": "active_tasks_sweep",
+  "enabled": true,
+  "owner": "operator",
+  "schedule": {
+    "kind": "interval",
+    "every": "30m",
+    "timezone": "UTC"
+  },
+  "command": "echo '[active_tasks_sweep] check bundles/coordination/active-tasks.md \u2014 clear stale >4h, claim free lane, sync COORDINATION.md to 7 repos and push' && python3 -c \"import json,os,time,pathlib; p=pathlib.Path('~/workspace/bundles/coordination/active-tasks.md').expanduser(); print('checked', p.exists())\"",
+  "description": "Check bundles/coordination/active-tasks.md \u2014 clear stale >4h in-progress, claim one free lane if any, sync COORDINATION.md to all 7 repos and push",
+  "logging": {
+    "file": "workspace/.scout/missions/_cron/timeline.jsonl",
+    "required_fields": [
+      "nodeId",
+      "agentId",
+      "attempt",
+      "latency",
+      "tokens",
+      "status",
+      "errorClass"
+    ]
+  },
+  "tags": [
+    "always-on",
+    "operator",
+    "heartbeat",
+    "v5 Prime"
+  ],
+  "version": "1.0",
+  "created": "2026-08-06T19:18 America/Chicago"
+}
