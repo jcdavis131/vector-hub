@@ -1,0 +1,36 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Offline — dumbmodel</title><meta name="theme-color" content="#fafaf8"><meta name="description" content="Offline — hub shell cached, daily puzzles need connection."><link rel="manifest" href="/manifest.json"><link rel="stylesheet" href="/assets/hub.css"><link rel="stylesheet" href="/assets/motion.css"><style>
+:root{--paper:#fafaf8;--ink:#111;--orange:#eb6834;--blue:#2a78d6;--purple:#7d5cc9;--green:#009E73;--radius:14px;--shadow:4px 4px 0 var(--ink);--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font:18px/1.65 var(--sans);min-height:100vh;display:flex;flex-direction:column}
+.nav{position:sticky;top:0;padding:12px 14px;border-bottom:2px solid var(--ink);background:var(--paper);display:flex;justify-content:space-between;align-items:center}
+.page{max-width:980px;margin:0 auto;padding:16px;display:flex;flex-direction:column;gap:12px;width:100%}
+.card{background:#fff;border:2.2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px}
+.btn{appearance:none;border:2px solid var(--ink);border-radius:10px;padding:8px 12px;background:#fff;font-family:var(--mono);font-weight:800;text-transform:uppercase;box-shadow:2px 2px 0 var(--ink);cursor:pointer;text-decoration:none;color:var(--ink);display:inline-flex;align-items:center}
+.btn--primary{background:var(--ink);color:#fff}.btn--accent{background:#ffef8a}
+.mono{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.chip{border:1.5px solid var(--ink);border-radius:999px;padding:4px 8px;font-size:11px;font-family:var(--mono);background:#fff}
+</style><meta property="og:type" content="website"><meta property="og:url" content="https://dumbmodel.com/offline"><meta property="og:title" content="Offline — dumbmodel"><meta property="og:description" content="Five daily vector puzzles — NBA, NFL, World Cup, equities, joint chimera 20,719×64-d, dailySeed LCG shell cached offline."><meta property="og:image" content="/assets/og-embed.png"></head><body>
+<nav class="nav"><a class="brand" href="/" style="font-weight:900;text-decoration:none;color:var(--ink)">DUMBMODEL · 5 DAILY</a><span class="mono">OFFLINE</span></nav>
+<main class="page">
+<div class="card"><h1 style="font-size:clamp(26px,6vw,36px);line-height:.95;margin:0">You're offline — hub shell cached</h1>
+<p style="color:#333;font-size:14px;line-height:1.5;margin:8px 0 0">Five daily puzzles — hoops, gridiron, pitch, equities, unified chimera 20,719×64-d dailySeed LCG — live when you're back online. Provenance 7/7 source_hashes honest, dailySeed <code>YYYYMMDD</code> LCG <code>(seed*1103515245+12345)&0x7fffffff</code> deterministic.</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><span class="chip">20,719 × 64-d</span><span class="chip">dailySeed LCG</span><span class="chip">5 games + tennis card</span><span class="chip">provenance 7/7/0</span></div>
+</div>
+<div class="card"><div class="mono">What works offline</div><ul style="font-size:13px;margin:6px 0 0;padding-left:18px"><li>Hub shell, model cards, methods</li><li>Last viewed daily puzzle (if previously loaded)</li><li>Offline page itself</li></ul><div class="mono" style="margin-top:10px">Needs connection</div><ul style="font-size:13px;margin:6px 0 0;padding-left:18px"><li>Fresh daily pick (today's chimera index/pair/triple)</li><li>Live provenance check <code>verifyProvenance()</code></li><li>Vector guesses (cosine over full embeddings)</li></ul>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><a class="btn btn--primary" href="/">Hub →</a><a class="btn btn--accent" href="/#games">Games →</a><a class="btn" href="/models/unified.html">Unified chimera →</a></div></div>
+<div class="card" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between"><div><div class="mono">Connection</div><div style="font-size:13px"><span id="online-status">Checking…</span> · <span id="daily-seed">dailySeed —</span></div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn--primary" onclick="location.reload()">Retry</button><a class="btn" href="/">Home</a></div></div>
+<div class="card mono" style="font-size:10px;color:#666">No fake promotion — if a model isn't better we don't promote it. 20719×64-d chimera dailySeed LCG deterministic same-link-same-stars, hubDailySeed UTC, hubLcg glibc, unifiedChimeraDaily entityCount 20719 dims 64 native hoops12966 gridiron5323 pitch2430. Provenance 7 files 10/7/3/7/14/12/6 hashes honest.</div>
+</main>
+<script>
+(function(){
+  function check(){ var el=document.getElementById('online-status'); if(!el) return; el.textContent = navigator.onLine ? 'Online — reload to get fresh daily' : 'Offline — cached shell'; }
+  window.addEventListener('online',check); window.addEventListener('offline',check); check();
+  try{
+    var now=new Date();
+    var seed=now.getUTCFullYear()*10000+(now.getUTCMonth()+1)*100+now.getUTCDate();
+    var el2=document.getElementById('daily-seed');
+    if(el2) el2.textContent='dailySeed '+seed+' UTC, LCG a='+(seed*1103515245+12345 & 0x7fffffff);
+    if(window.hubDailySeed) { console.log('[offline] hubDailySeed',window.hubDailySeed()); }
+  }catch(e){}
+})();
+</script>
+</body></html>

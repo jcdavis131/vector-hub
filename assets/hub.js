@@ -66,6 +66,11 @@
 
   function hubLcg(seed) {
     // glibc-style LCG masked to 31-bit, same as model.js shuffled()
+    // Use Math.imul for low-32 truncation to match C overflow and avoid 53-bit float rounding drift.
+    // Falls back to float mult if imul unavailable (very old JS) — deterministic within JS anyway.
+    if (typeof Math.imul === 'function') {
+      return ((Math.imul(seed, 1103515245) + 12345) >>> 0) & 0x7fffffff;
+    }
     return (seed * 1103515245 + 12345) & 0x7fffffff;
   }
 
