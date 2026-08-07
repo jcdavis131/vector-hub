@@ -155,7 +155,36 @@ def main() -> int:
     for m in mismatched:
         print(f"    MISMATCH  {m['page']} {m['source_file']} "
               f"recorded {m['recorded']} actual {m['actual']}")
+    # Also emit a SERVED, per-page status the site can render. Each card carries
+    # a static "_verification: CLEAN — adversarially verified" string, and that
+    # string stays frozen while the artifacts under it move: 22 of 64 hashes no
+    # longer match. Refreshing the hashes would launder the problem — a changed
+    # source means the card's numbers may describe a superseded artifact, which
+    # is precisely what a reader needs told. So the page renders the drift.
+    per_page: dict = {}
+    for m in mismatched:
+        e = per_page.setdefault(m["page"], {"mismatched": 0, "malformed": 0, "files": []})
+        e["mismatched"] += 1
+        e["files"].append(m["source_file"])
+    for m in malformed:
+        e = per_page.setdefault(m["page"], {"mismatched": 0, "malformed": 0, "files": []})
+        e["malformed"] += 1
+    served = {
+        "generated_by": "scripts/check_provenance_hashes.py",
+        "note": ("Recomputed hashes of every cited source. A page listed here cites at "
+                 "least one artifact that has changed since its numbers were verified; "
+                 "those figures may describe a superseded file."),
+        "totals": {
+            "mismatched": len(mismatched),
+            "malformed": len(malformed),
+            "uncovered": len(uncovered),
+        },
+        "pages": per_page,
+    }
+    served_path = ROOT / "assets" / "data" / "provenance_status.json"
+    served_path.write_text(json.dumps(served, indent=2), encoding="utf-8")
     print(f"\nwrote {OUT}")
+    print(f"wrote {served_path}")
     if args.check and (uncovered or malformed or mismatched):
         print(f"CHECK FAILED: {len(uncovered)} uncovered, {len(malformed)} malformed, "
               f"{len(mismatched)} mismatched", file=sys.stderr)
