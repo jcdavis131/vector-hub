@@ -240,7 +240,7 @@ python examples/realty/build_realty_task.py --realty-root /path/to/vector-realty
 ## Install
 
 ```bash
-pip install "vector-bench[sklearn] @ \\
+pip install "vector-bench[sklearn] @ \
   git+https://github.com/jcdavis131/vector-hub.git#subdirectory=packages/vector-bench"
 ```
 
