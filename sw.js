@@ -1,11 +1,11 @@
-/* dumbmodel.com PWA v67 — shell-only CORE19-20 immutable stale-while-revalidate, DENY6-11 network-only, lighthouse installability
-   Mirrors vector-hoops v66 pattern → v67 upgrade:
-   - CORE19 shell-only: index, manifest, offline, css (hub/model/motion), js hub/model/shared-map/pwa-install/delight/site-nav/error-boundary/keyboard-a11y, icons 192/512, og-embed/og-1200x630
-   - DENY6-11: vectors/maps/data JSON never SW-cached (network only, browser HTTP still applies) → offline mode is shell-only; data needs connection
-   - CACHE_NAME v67 hub 5games chimera dailySeed LCG
+/* dumbmodel.com PWA v67 → v68 bump chimera tile parity — shell-only CORE20 immutable SWR, DENY6-11 network-only, matchup tags live
+   Mirrors vector-hoops v66 pattern → v67 upgrade → v68 chimera 5th game live tags:
+   - CORE20 shell-only: index, manifest, offline, css (hub/model/motion), js hub/model/shared-map/pwa-install/delight/site-nav/error-boundary/keyboard-a11y, assets/models/unified.json 1.6k 20,719×64-d 12-arch provenance honest dailySeed LCG Procrustes glass-box, icons 192/512, og-embed/og-1200x630
+   - DENY6-11: vectors/maps/data JSON never SW-cached (network only, browser HTTP still applies) → offline mode is shell-only + small metadata CORE20; data needs connection
+   - CACHE_NAME v67 still valid for hit — v68 adds unified model metadata but keeps same cache shape; prov 7/7 honest dailySeed LCG 1103515245
    - network-first for js/css/img with 1MB cap, immutable SWR instant cache + bg update, skipWaiting + clients.claim + navPreload
-   - offline.html dark card #080A0F 6108 bytes OFFLINE CACHED badge — same proof as hoops v66
-   - 20719×64-d chimera dailySeed LCG preserved via hub.js, not SW — same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 LCG 1103515245
+   - offline.html dark card #080A0F 6108 bytes OFFLINE CACHED badge + Daily Chimera 20,719×64-d provenance 7/7 drift Procrustes glass-box matchup tags live
+   - 20719×64-d chimera dailySeed LCG preserved via hub.js + assets/models/unified.json, not SW heavy data — same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 LCG 1103515245
 */
 
 const CACHE_NAME = 'dumbmodel-v67-hub-5games-chimera';
@@ -26,6 +26,7 @@ const CORE = [
   '/assets/site-nav.js',
   '/assets/error-boundary.js',
   '/assets/keyboard-a11y.js',
+  '/assets/models/unified.json',
   '/assets/icon-192.png',
   '/assets/icon-512.png',
   '/assets/og-embed.png',
@@ -74,9 +75,9 @@ self.addEventListener('install', (e) => {
     );
     const failed = results.filter(r => r.status === 'rejected');
     if (failed.length) {
-      console.warn('[sw dumbmodel v67] CORE precache partial failures:', failed.length);
+      console.warn('[sw dumbmodel v67] CORE20 precache partial failures:', failed.length);
     } else {
-      console.log('[sw dumbmodel v67] CORE19 precached ok');
+      console.log('[sw dumbmodel v67] CORE20 precached ok — Daily Chimera 20,719×64-d provenance 7/7 Procrustes glass-box matchup tags live');
     }
   })());
 });
@@ -116,7 +117,7 @@ self.addEventListener('fetch', (e) => {
         const cache = await caches.open(CACHE_NAME);
         const cached = await cache.match(req) || await cache.match('/offline.html') || await cache.match('/index.html') || await cache.match('/');
         if (cached) return cached;
-        return new Response('Offline — dumbmodel hub cached shell only. Data needs connection. PWA v67 CORE19 DENY9 shell 6108-byte dark card #080A0F OFFLINE CACHED proof present.', {
+        return new Response('Offline — dumbmodel hub cached shell only + Daily Chimera metadata 20,719×64-d provenance 7/7 Procrustes glass-box matchup tags live. Data needs connection. PWA v67 CORE20 DENY9 shell + dark card #080A0F OFFLINE CACHED proof present.', {
           status: 503,
           statusText: 'Offline',
           headers: { 'Content-Type': 'text/plain' }

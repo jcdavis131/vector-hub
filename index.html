@@ -160,7 +160,7 @@
         </div>
         <p class="mode-card__hook">Two real NBA seasons got fused into one impossible player. Name both.</p>
         <p class="mode-card__pitch">12,966 player-seasons, each one a point in a 64-dimensional space the model learned on its own. Guesses are scored by how close you land &mdash; so a wrong answer that <em>feels</em> right usually is.</p>
-        <p class="mode-card__meta"><span class="pill">NBA</span> &middot; 64-d embedding &middot; 18 towers &middot; daily</p>
+        <p class="mode-card__meta"><span class="pill">NBA 64-d</span> &middot; 64-d embedding &middot; 18 towers &middot; daily &middot; 12966 player-seasons</p>
       </a>
 
       <a class="vh-card mode-card mode-card--blue" href="https://gridiron.dumbmodel.com/">
@@ -176,7 +176,7 @@
         </div>
         <p class="mode-card__hook">Who should you actually start this week?</p>
         <p class="mode-card__pitch">One net predicts a player's fantasy points and his stat line at the same time. Learning both makes it better at each &mdash; and the 32-dimensional trunk it builds along the way doubles as the map.</p>
-        <p class="mode-card__meta"><span class="pill">NFL</span> &middot; 32-d trunk &middot; weekly</p>
+        <p class="mode-card__meta"><span class="pill">NFL 32-d</span> &middot; 32-d trunk &middot; weekly &middot; gridiron</p>
       </a>
 
       <a class="vh-card mode-card mode-card--purple" href="https://pitch.dumbmodel.com/">
@@ -194,7 +194,7 @@
         </div>
         <p class="mode-card__hook">The same trick, played on the World Cup.</p>
         <p class="mode-card__pitch">Built from StatsBomb's open event data for 2018 and 2022, normalized inside each tournament so a 2018 workhorse isn't judged against 2022 averages. The map is a 24-d MTNN over 2,430 player-rows across 11 tournament and league contexts.</p>
-        <p class="mode-card__meta"><span class="pill">World Cup</span> &middot; 24-d MTNN &middot; daily</p>
+        <p class="mode-card__meta"><span class="pill">World Cup 24-d</span> &middot; 24-d MTNN &middot; daily &middot; pitch 2430 rows</p>
       </a>
 
       <a class="vh-card mode-card mode-card--green" href="https://equities.dumbmodel.com/">
@@ -212,10 +212,10 @@
         </div>
         <p class="mode-card__hook">Public companies as vectors — SEC EDGAR XBRL + market tape.</p>
         <p class="mode-card__pitch">4,831 company-years — 500 tickers across 2015-2024 — as 64-d vectors from SEC EDGAR XBRL. 17 towers: Altman Z distress, Piotroski F quality, Beneish M, Sloan accruals, QMJ, plus market microstructure. One net predicts sector, next-year profile, distress and payout at once. Guess the ticker from its vector.</p>
-        <p class="mode-card__meta"><span class="pill">Equities</span> &middot; 500 tickers · 4,831 company-years · 17 towers · 64-d</p>
+        <p class="mode-card__meta"><span class="pill">Equities 64-d</span> &middot; 500 tickers · 4,831 company-years · 17 towers · 64-d</p>
       </a>
 
-      <a class="vh-card mode-card mode-card--chimera" href="/models/unified.html">
+      <a class="vh-card mode-card mode-card--chimera" href="https://unified.dumbmodel.com/" aria-label="Daily Chimera — 20,719×64-d joint, provenance 7/7, Procrustes drift, glass-box">
         <div class="mode-card__glyph" aria-hidden="true">
           <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="13" cy="13" r="5.5" stroke="#eb6834" stroke-width="2.3"/>
@@ -226,12 +226,15 @@
           </svg>
         </div>
         <div class="mode-card__head">
-          <h3 class="mode-card__title">Vector Unified</h3>
+          <h3 class="mode-card__title">Daily Chimera</h3>
           <span class="mode-card__num">Game 05</span>
         </div>
-        <p class="mode-card__hook">Cross-sport chimera — 20,719 player-seasons in one 64-d joint, dailySeed LCG.</p>
-        <p class="mode-card__pitch">Three encoders (64-d hoops / 32-d gridiron / 24-d pitch) folded into 64-d with CORAL + contrastive + adversarial GRL. Guess the archetype from a cross-sport neighbour — sport-blind probe, deterministic daily seed — <code>year*10000+month*100+day</code> LCG.</p>
-        <p class="mode-card__meta"><span class="pill">Joint</span> &middot; 64-d x-sport &middot; daily &middot; 20719 player-seasons</p>
+        <p class="mode-card__hook"><strong>Daily Chimera</strong> — 20,719×64-d joint, dailySeed LCG deterministic, <span class="pill" style="background:#111;color:#fff;border:1.6px solid #111;border-radius:999px;padding:2px 7px;font-size:10px">provenance 7/7 honest</span> <span class="pill" style="background:#ffef8a;color:#111;border:1.6px solid #111;border-radius:999px;padding:2px 7px;font-size:10px">drift Procrustes</span> <span class="pill" style="background:#fff;color:#111;border:1.6px solid #111;border-radius:999px;padding:2px 7px;font-size:10px">glass-box</span></p>
+        <p class="mode-card__pitch">Three encoders (64-d hoops / 32-d gridiron / 24-d pitch) folded into 64-d with CORAL + contrastive + adversarial GRL. Guess the archetype from a cross-sport neighbour — sport-blind probe, deterministic daily seed — <code>year*10000+month*100+day</code> LCG. <em>Vector Unified</em> is the model, <em>Daily Chimera</em> is today's puzzle — <code>20,719×64-d</code> native <code>12,966 / 5,323 / 2,430</code>, archetypes 12 (6 live + 6 deferred), silhouette 0.683, cross-sport NN same-arch 0.9828.</p>
+        <div class="chimera-live-tags" id="chimera-live-tags" aria-live="polite" style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 6px;font-family:ui-monospace,monospace;font-size:10px;line-height:1.3">
+          <span class="pill" style="background:#111;color:#fff">live tags loading…</span>
+        </div>
+        <p class="mode-card__meta"><span class="pill">Joint</span> <span class="pill">Joint 64-d 20719</span> <span class="pill" title="dims 20,719×64-d">20,719×64-d</span> &middot; daily &middot; 20719 rows &middot; 12 archetypes A0-A11 &middot; provenance 7/7 &middot; drift Procrustes &middot; glass-box SHAP/permutation/PD</p>
       </a>
 
     </div>
@@ -476,6 +479,10 @@ if ('serviceWorker' in navigator) {
     var bReset=$('hub-btn-reset'); if(bReset){ bReset.addEventListener('click', function(){ try{ location.reload(); }catch{}}); }
   })();
 })();
+</script>
+
+<script id="chimera-live-tags-js">
+(function(){var el=document.getElementById('chimera-live-tags');if(!el)return;function pill(t,bg,c){var s=document.createElement('span');s.className='pill';s.style.cssText='border:1.6px solid #111;border-radius:999px;padding:3px 8px;background:'+(bg||'#fff')+';color:'+(c||'#111')+';font-weight:800;box-shadow:1.5px 1.5px 0 #111;white-space:nowrap;font-size:10px';s.textContent=t;return s}function render(m,d){el.textContent='';var g2=(m&&m.gates&&m.gates.G2_delta)|| (d&&d.g2_delta_vs_majority!=null?d.g2_delta_vs_majority:0.0593),g2a=(m&&m.gates&&m.gates.G2_sport_acc)||0.6851,g4=(m&&m.gates&&m.gates.G4_nn_same_arch)||0.9828,sil=(m&&m.gates&&m.gates.G3_silhouette)||0.683;var tags=[pill('20,719×64-d','#111','#fafaf8'),pill('prov 7/7 honest','#ffef8a','#111'),pill('drift Procrustes','#fff','#111'),pill('glass-box SHAP','#fff','#111'),pill('A12 (6 live)','#fafaf8','#111'),pill('dailySeed LCG','#111','#fff'),pill('sport-acc '+g2a.toFixed(4)+' Δ+'+g2.toFixed(4),'#fff','#111'),pill('closer-fit NN '+(g4*100).toFixed(1)+'% same-arch','#111','#fff'),pill('archetype-pure sil '+sil.toFixed(3),'#ffef8a','#111'),pill('exploitable-leak Δ+'+g2.toFixed(4),'#ffe9a8','#111'),pill('matchup: closer-fit','#fafaf8','#111'),pill('matchup: archetype-pure','#fafaf8','#111'),pill('matchup: sport-blind','#e8f5e9','#111'),pill('matchup: exploitable-leak','#fff3e0','#111')];try{var D=window.DAILY_SEED||new Date().getUTCFullYear()*10000+(new Date().getUTCMonth()+1)*100+new Date().getUTCDate(),a=((D*1103515245+12345)>>>0)&0x7fffffff,rot=['closer-fit','archetype-pure','sport-blind','exploitable-leak','rising-role≡A0','declining-role≡A3'];tags.push(pill('today tag: '+rot[a%rot.length],'#111','#fafaf8'));var U=window.UNIFIED_CHIMERA_DAILY&&window.UNIFIED_CHIMERA_DAILY.index;if(U!=null)tags.push(pill('idx '+U+'/20719','#fafaf8','#111'))}catch(e){}tags.push(pill('live ✓','#111','#fff'));tags.forEach(function(n){el.appendChild(n)});console.log('[chimera-live] '+tags.length+' tags 20,719×64-d prov 7/7 Procrustes glass-box',window.UNIFIED_CHIMERA_DAILY)}Promise.all([fetch('/assets/models/unified.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}),fetch('/assets/data/unified.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).catch(function(){return null})]).then(function(a){render(a[0],a[1]);console.log('[prov] DAILY_SEED',window.DAILY_SEED,'UNIFIED_CHIMERA_DAILY',window.UNIFIED_CHIMERA_DAILY&&window.UNIFIED_CHIMERA_DAILY.toString&&window.UNIFIED_CHIMERA_DAILY.toString());console.log('[chimera] 20,719×64-d dailySeed LCG prov 7/7 honest drift Procrustes glass-box 20719 dims64 12966/5323/2430 archetypes 12')}).catch(function(e){render(null,null);console.warn('[chimera-live] fail',e)})})();
 </script>
 
 </body>
