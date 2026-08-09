@@ -13,13 +13,13 @@ from . import align, era_align, eval, losses, preproc, realmlp, schema
 from .align import apply as align_apply
 from .align import fit as align_fit
 from .era_align import align_batch, align_vector, load_alignment
-from .eval import purity_at_k, recall_at_k, silhouette_cosine
+from .eval import purity_at_k, purity_from_neighbors, recall_at_k, silhouette_cosine
 from .losses import info_nce_numpy, sup_con_numpy
-from .preproc import RobustScaler, ple_bin_edges, ple_transform
+from .preproc import MaskedZScaler, RobustScaler, ple_bin_edges, ple_transform
 from .realmlp import RealMLPPreprocessor, audit_current_scaling
 from .schema import FleetEntry, validate_entry
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 __all__ = [
     # submodules
@@ -32,6 +32,7 @@ __all__ = [
     "era_align",
     # preproc (clean fleet primitives)
     "RobustScaler",
+    "MaskedZScaler",
     "ple_bin_edges",
     "ple_transform",
     # realmlp (sports-reference drop-in preproc — numpy-safe)
@@ -50,6 +51,7 @@ __all__ = [
     # eval
     "recall_at_k",
     "purity_at_k",
+    "purity_from_neighbors",
     "silhouette_cosine",
     # schema
     "FleetEntry",
