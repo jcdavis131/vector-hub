@@ -1,0 +1,44 @@
+name: vector-core
+
+# Scoped CI: runs ONLY when the hosted vector-core library changes.
+# The static site (index.html, assets/, models/, sw.js, vercel.json, ...) is
+# untouched by this workflow, and site changes never trigger it.
+on:
+  push:
+    paths:
+      - "packages/vector-core/**"
+      - ".github/workflows/vector-core.yml"
+  pull_request:
+    paths:
+      - "packages/vector-core/**"
+      - ".github/workflows/vector-core.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/vector-core
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install package with dev extras
+        run: pip install -e ".[dev]"
+
+      - name: Run tests
+        run: pytest -q
+
+      - name: Lint (ruff)
+        # pyproject declares ruff>=0.4 (unpinned) — the same spec vector-unified
+        # verified the library against, which resolves to the latest ruff. We pin
+        # a concrete version here for deterministic CI; the library is clean under
+        # it (exit 0). Note: ruff 0.4.x is NOT green on this code (UP038 was later
+        # removed from stable and isort ordering changed), so we pin forward.
+        run: |
+          pip install "ruff==0.16.2"
+          ruff check .
