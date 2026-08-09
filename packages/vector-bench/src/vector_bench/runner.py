@@ -14,6 +14,7 @@ first-class result of this function, not a failure of it.
 from __future__ import annotations
 
 import time
+from collections.abc import Mapping
 from dataclasses import dataclass, field
 
 from .baselines import (
@@ -28,13 +29,16 @@ from .metrics import (
     prediction_metrics,
     retrieval_metrics,
 )
-from .tasks import BenchmarkTask
+from .tasks import BenchmarkTask, DomainSpec
 
 __all__ = [
     "MethodResult",
     "MetricVerdict",
     "Scorecard",
+    "TargetScorecard",
+    "DomainScorecard",
     "run_benchmark",
+    "run_domain_benchmark",
     "compute_metric_verdict",
 ]
 
@@ -274,4 +278,147 @@ def run_benchmark(
         verdicts=verdicts,
         summary=summary,
         notes=dict(task.notes),
+    )
+
+
+# --------------------------------------------------------------------------- #
+# Multi-target: one scorecard per (domain, target), aggregated per domain
+# --------------------------------------------------------------------------- #
+@dataclass
+class TargetScorecard:
+    """One target's outcome inside a domain run.
+
+    ``status`` is the *runtime* state of this target in this run:
+
+    - ``"scored"`` — a task was supplied and the ladder ran; ``scorecard`` is set.
+    - ``"spec-only"`` — no data/task was wired for the target; nothing is
+      fabricated, ``scorecard`` is ``None``.
+    - ``"error"`` — a task was supplied but the run raised; ``note`` has the repr.
+
+    The per-target MTNN verdict lives in ``scorecard.verdicts[primary_metric]`` —
+    the aggregate reads exactly that, so the MTNN's advantage is reportable
+    target-by-target, never collapsed to one domain number.
+    """
+
+    target_name: str
+    kind: str
+    horizon: str
+    split: str
+    primary_metric: str
+    status: str
+    scorecard: Scorecard | None = None
+    note: str = ""
+
+
+@dataclass
+class DomainScorecard:
+    """A domain's full multi-target result: one entry per declared target."""
+
+    domain: str
+    primary_task_type: str
+    description: str
+    targets: list[TargetScorecard]
+    aggregate: dict[str, object]
+    notes: dict[str, str] = field(default_factory=dict)
+
+
+def _primary_verdict(ts: TargetScorecard) -> bool | None:
+    """The MTNN-beats-best-baseline verdict on the target's primary metric.
+
+    ``None`` when the target was not scored, the primary metric is absent, or no
+    MTNN rung was present (so there is nothing to judge) — the aggregate counts
+    those as unjudged rather than as a baseline win, keeping the tally honest.
+    """
+    if ts.scorecard is None:
+        return None
+    v = ts.scorecard.verdicts.get(ts.primary_metric)
+    return None if v is None else v.mtnn_beats_best_baseline
+
+
+def run_domain_benchmark(
+    spec: DomainSpec,
+    tasks: Mapping[str, BenchmarkTask | None],
+    mtnns: Mapping[str, RetrievalBaseline | PredictionBaseline] | None = None,
+    ladder: list | None = None,
+) -> DomainScorecard:
+    """Run every target a domain declares and aggregate per-target verdicts.
+
+    ``tasks`` maps ``target.name -> BenchmarkTask`` (data-wired) or ``None``
+    (spec-only, no data yet). ``mtnns`` optionally maps ``target.name -> MTNN
+    rung`` so the thesis is tested per target. Each scored target runs the FULL
+    applicable baseline gauntlet plus its MTNN rung via :func:`run_benchmark`, and
+    emits its own ``beats_best_baseline`` verdict — there is one verdict per
+    target, never one per domain. Spec-only targets are carried through honestly.
+    """
+    mtnns = mtnns or {}
+    target_results: list[TargetScorecard] = []
+    for target in spec.targets:
+        pm = target.primary_metric or target.metrics[0]
+        base = dict(
+            target_name=target.name,
+            kind=target.kind,
+            horizon=target.horizon,
+            split=target.split,
+            primary_metric=pm,
+        )
+        task = tasks.get(target.name)
+        if task is None:
+            target_results.append(
+                TargetScorecard(**base, status="spec-only", note="no data wired")
+            )
+            continue
+        try:
+            sc = run_benchmark(task, mtnn=mtnns.get(target.name), ladder=ladder)
+            target_results.append(TargetScorecard(**base, status="scored", scorecard=sc))
+        except Exception as e:  # noqa: BLE001 - record, never hide
+            target_results.append(TargetScorecard(**base, status="error", note=repr(e)))
+
+    total = len(target_results)
+    scored = [t for t in target_results if t.status == "scored"]
+    spec_only = sum(1 for t in target_results if t.status == "spec-only")
+    errored = sum(1 for t in target_results if t.status == "error")
+    verdicts = {t.target_name: _primary_verdict(t) for t in scored}
+    mtnn_wins = sum(1 for v in verdicts.values() if v is True)
+    baseline_wins = sum(1 for v in verdicts.values() if v is False)
+    judged = mtnn_wins + baseline_wins
+
+    if total == 0:
+        headline = "no targets declared for this domain"
+    elif not scored:
+        headline = f"0/{total} targets scored ({spec_only} spec-only) — no results yet"
+    elif judged == 0:
+        headline = (
+            f"{len(scored)}/{total} targets scored, none judged "
+            "(no MTNN rung present); baseline ladder only"
+        )
+    elif mtnn_wins == judged:
+        headline = f"MTNN beats best baseline on all {judged} judged target(s)"
+    elif mtnn_wins == 0:
+        headline = f"baseline wins all {judged} judged target(s) on their primary metric"
+    else:
+        headline = (
+            f"MTNN beats best baseline on {mtnn_wins}/{judged} judged target(s) "
+            "(primary metric); baseline wins the rest"
+        )
+
+    aggregate = {
+        "targets_total": total,
+        "targets_scored": len(scored),
+        "targets_spec_only": spec_only,
+        "targets_errored": errored,
+        "targets_judged": judged,
+        "mtnn_target_wins": mtnn_wins,
+        "baseline_target_wins": baseline_wins,
+        "primary_metric_verdicts": verdicts,
+        "headline": headline,
+        "built": time.strftime("%Y-%m-%dT%H:%M:%S"),
+    }
+
+    return DomainScorecard(
+        domain=spec.domain,
+        primary_task_type=spec.primary_task_type,
+        description=spec.description,
+        targets=target_results,
+        aggregate=aggregate,
+        notes={"transfer_probe": spec.transfer_probe} if spec.transfer_probe else {},
     )

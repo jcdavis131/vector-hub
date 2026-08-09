@@ -12,11 +12,27 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from .runner import Scorecard
+from .runner import DomainScorecard, Scorecard
 
-__all__ = ["SCHEMA_VERSION", "scorecard_to_dict", "write_report"]
+__all__ = [
+    "SCHEMA_VERSION",
+    "DOMAIN_REPORT_SCHEMA_VERSION",
+    "scorecard_to_dict",
+    "write_report",
+    "domain_report_to_dict",
+    "write_domain_report",
+]
 
+# Single-scorecard report. UNCHANGED — every existing 1.0 reader (and the shipped
+# examples/realty/benchmark_report.json) keeps working byte-for-byte.
 SCHEMA_VERSION = "1.0"
+
+# Multi-target domain report. Minor bump: additive wrapper around a list of
+# per-target entries, each embedding an unmodified 1.0 scorecard. A 1.0 reader
+# that only understands the single-scorecard document is unaffected — this is a
+# new, separately-named artifact — and a 1.1 reader can walk ``targets[].scorecard``
+# and find the exact 1.0 shape it already knows.
+DOMAIN_REPORT_SCHEMA_VERSION = "1.1"
 
 
 def _round(v, ndigits: int = 6):
@@ -71,4 +87,53 @@ def write_report(sc: Scorecard, path: str | Path) -> Path:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(scorecard_to_dict(sc), indent=2) + "\n", encoding="utf-8")
+    return path
+
+
+def domain_report_to_dict(dsc: DomainScorecard) -> dict:
+    """Convert a multi-target :class:`DomainScorecard` to a dict (schema v1.1).
+
+    Each entry in ``targets`` carries the target's metadata and, when the target
+    was scored, an embedded schema-1.0 scorecard under ``scorecard`` (``null`` for
+    spec-only / errored targets). The per-target MTNN verdict is therefore exactly
+    as legible as in a single-scorecard report, one level down.
+    """
+    targets = []
+    for t in dsc.targets:
+        targets.append(
+            {
+                "target": {
+                    "name": t.target_name,
+                    "kind": t.kind,
+                    "horizon": t.horizon,
+                    "split": t.split,
+                    "primary_metric": t.primary_metric,
+                    "status": t.status,
+                },
+                "note": t.note,
+                "scorecard": (
+                    scorecard_to_dict(t.scorecard) if t.scorecard is not None else None
+                ),
+            }
+        )
+
+    return {
+        "schema_version": DOMAIN_REPORT_SCHEMA_VERSION,
+        "domain": dsc.domain,
+        "primary_task_type": dsc.primary_task_type,
+        "description": dsc.description,
+        "aggregate": dsc.aggregate,
+        "targets": targets,
+        "notes": dsc.notes,
+    }
+
+
+def write_domain_report(dsc: DomainScorecard, path: str | Path) -> Path:
+    """Write a multi-target ``benchmark_report.json`` (schema 1.1) and return path."""
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(domain_report_to_dict(dsc), indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
     return path

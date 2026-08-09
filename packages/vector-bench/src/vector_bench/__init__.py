@@ -22,7 +22,7 @@ torch is optional: importing ``vector_bench`` never imports torch. Only
 
 from __future__ import annotations
 
-from . import baselines, metrics, report, runner, tasks
+from . import baselines, metrics, registry, report, runner, tasks
 from .baselines import (
     DummyMean,
     HistGradientBoosting,
@@ -40,18 +40,39 @@ from .baselines import (
     default_retrieval_ladder,
 )
 from .metrics import prediction_metrics, retrieval_metrics
-from .report import SCHEMA_VERSION, scorecard_to_dict, write_report
+from .registry import (
+    DOMAIN_REGISTRY,
+    all_targets,
+    get_domain_spec,
+    list_domains,
+)
+from .report import (
+    DOMAIN_REPORT_SCHEMA_VERSION,
+    SCHEMA_VERSION,
+    domain_report_to_dict,
+    scorecard_to_dict,
+    write_domain_report,
+    write_report,
+)
 from .runner import (
+    DomainScorecard,
     MethodResult,
     MetricVerdict,
     Scorecard,
+    TargetScorecard,
     compute_metric_verdict,
     run_benchmark,
+    run_domain_benchmark,
 )
 from .tasks import (
+    BINARY_METRICS,
+    REGRESSION_METRICS,
     BenchmarkTask,
+    DomainSpec,
+    PredictionTarget,
     Split,
     build_adjacent_period_pairs,
+    build_task_for_target,
     group_split,
     random_split,
     temporal_split,
@@ -66,13 +87,24 @@ __all__ = [
     "metrics",
     "runner",
     "report",
+    "registry",
     # tasks
     "BenchmarkTask",
+    "PredictionTarget",
+    "DomainSpec",
     "Split",
     "random_split",
     "temporal_split",
     "group_split",
     "build_adjacent_period_pairs",
+    "build_task_for_target",
+    "REGRESSION_METRICS",
+    "BINARY_METRICS",
+    # registry
+    "DOMAIN_REGISTRY",
+    "get_domain_spec",
+    "list_domains",
+    "all_targets",
     # baselines
     "RawCosine",
     "PCACosine",
@@ -93,12 +125,18 @@ __all__ = [
     "retrieval_metrics",
     # runner
     "run_benchmark",
+    "run_domain_benchmark",
     "Scorecard",
+    "TargetScorecard",
+    "DomainScorecard",
     "MethodResult",
     "MetricVerdict",
     "compute_metric_verdict",
     # report
     "write_report",
     "scorecard_to_dict",
+    "write_domain_report",
+    "domain_report_to_dict",
     "SCHEMA_VERSION",
+    "DOMAIN_REPORT_SCHEMA_VERSION",
 ]
