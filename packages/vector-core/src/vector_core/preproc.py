@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import numpy as np
 
-__all__ = ["RobustScaler", "ple_bin_edges", "ple_transform"]
+__all__ = ["RobustScaler", "MaskedZScaler", "ple_bin_edges", "ple_transform"]
 
 
 class RobustScaler:
@@ -56,6 +56,60 @@ class RobustScaler:
 
     def fit_transform(self, X: np.ndarray) -> np.ndarray:
         return self.fit(X).transform(X)
+
+
+class MaskedZScaler:
+    """Per-column z-score computed over observed (masked) cells only.
+
+    Reproduces vector-realty's ``build_features`` scaling: statistics are taken
+    over the cells a feature actually observes, so a column that is 30% observed is
+    not scaled by the zeros standing in for its missing cells. For each column
+    ``j`` with mask ``M[:, j]`` (``> 0`` == observed)::
+
+        mu_j = mean(X[M>0, j])   if any observed else 0.0
+        sd_j = std (X[M>0, j])   if >1 observed  else 1.0     # population std
+        sd_j = 1.0               where sd_j < eps
+        Z    = ((X - mu) / sd) * M                            # masked cells stay 0
+
+    All arithmetic is float32, matching the reference bit-for-bit. This is additive
+    and independent of :class:`RobustScaler`, which is unchanged.
+    """
+
+    def __init__(self, eps: float = 1e-6):
+        self.eps = float(eps)
+        self.mean_: np.ndarray | None = None
+        self.std_: np.ndarray | None = None
+
+    def fit(self, X: np.ndarray, mask: np.ndarray) -> MaskedZScaler:
+        Xf = np.asarray(X, dtype=np.float32)
+        M = np.asarray(mask, dtype=np.float32)
+        if Xf.ndim != 2:
+            raise ValueError(f"expected 2D array, got shape {Xf.shape}")
+        if M.shape != Xf.shape:
+            raise ValueError("X and mask must have the same shape")
+        d = Xf.shape[1]
+        mu = np.array(
+            [Xf[M[:, j] > 0, j].mean() if M[:, j].sum() else 0.0 for j in range(d)],
+            dtype=np.float32,
+        )
+        sd = np.array(
+            [Xf[M[:, j] > 0, j].std() if M[:, j].sum() > 1 else 1.0 for j in range(d)],
+            dtype=np.float32,
+        )
+        sd[sd < self.eps] = 1.0
+        self.mean_ = mu
+        self.std_ = sd
+        return self
+
+    def transform(self, X: np.ndarray, mask: np.ndarray) -> np.ndarray:
+        if self.mean_ is None or self.std_ is None:
+            raise RuntimeError("MaskedZScaler must be fit before transform")
+        Xf = np.asarray(X, dtype=np.float32)
+        M = np.asarray(mask, dtype=np.float32)
+        return ((Xf - self.mean_) / self.std_) * M
+
+    def fit_transform(self, X: np.ndarray, mask: np.ndarray) -> np.ndarray:
+        return self.fit(X, mask).transform(X, mask)
 
 
 def ple_bin_edges(x: np.ndarray, n_bins: int = 8) -> np.ndarray:

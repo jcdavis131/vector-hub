@@ -21,6 +21,7 @@ __all__ = [
     "sup_con_numpy",
     "info_nce_torch",
     "sup_con_torch",
+    "temporal_info_nce",
 ]
 
 # --------------------------------------------------------------------------- #
@@ -106,8 +107,34 @@ def sup_con_numpy(
 # --------------------------------------------------------------------------- #
 
 
-def info_nce_torch(anchors, positives, temperature: float = 0.07, normalize: bool = True):
-    """InfoNCE loss (torch). Returns a scalar tensor. Requires torch installed."""
+def info_nce_torch(
+    anchors,
+    positives,
+    temperature: float = 0.07,
+    normalize: bool = True,
+    symmetric: bool = False,
+    hard_boost: float = 0.0,
+    pos_a=None,
+    pos_b=None,
+):
+    """InfoNCE loss (torch). Returns a scalar tensor. Requires torch installed.
+
+    The defaults (``normalize=True``, ``symmetric=False``, ``hard_boost=0.0``)
+    reproduce the v0.1 loss exactly: cross-entropy of the normalised anchor/positive
+    logits against the diagonal.
+
+    The extra knobs generalise it to vector-equities' ``train_mtnn.info_nce``:
+
+    - ``symmetric`` — average the two directions
+      ``0.5 * (CE(logits) + CE(logits.T))``.
+    - ``hard_boost`` with ``pos_a``/``pos_b`` — a hard-negative miner: any
+      off-diagonal pair whose ``pos_a[i] == pos_b[j]`` (same label, e.g. sector)
+      gets ``hard_boost`` added to its logit. Applied only when ``hard_boost > 0``
+      and both label vectors are given.
+
+    To match vector-equities exactly, call with ``normalize=False, symmetric=True``
+    (it feeds raw, pre-normalised embeddings).
+    """
     import torch
     import torch.nn.functional as F
 
@@ -115,8 +142,107 @@ def info_nce_torch(anchors, positives, temperature: float = 0.07, normalize: boo
         anchors = F.normalize(anchors, dim=1)
         positives = F.normalize(positives, dim=1)
     logits = anchors @ positives.T / temperature
+    if hard_boost > 0 and pos_a is not None and pos_b is not None:
+        b = logits.shape[0]
+        idx = torch.arange(b, device=logits.device)
+        hard = (pos_a.unsqueeze(1) == pos_b.unsqueeze(0)) & (idx.unsqueeze(0) != idx.unsqueeze(1))
+        logits = logits + hard.float() * hard_boost
     targets = torch.arange(anchors.shape[0], device=anchors.device)
+    if symmetric:
+        return 0.5 * (F.cross_entropy(logits, targets) + F.cross_entropy(logits.T, targets))
     return F.cross_entropy(logits, targets)
+
+
+def temporal_info_nce(
+    c_seq,
+    valid_mask,
+    sector_ids,
+    temp: float = 0.08,
+    hard_boost: float = 0.3,
+    delta_decay: float = 3.0,
+):
+    """Temporal InfoNCE over per-ticker sequences (torch).
+
+    A faithful port of vector-equities' ``train_career_mtnn.temporal_info_nce``.
+    ``c_seq`` is ``(B, L, D)`` of L2-normalised step embeddings, ``valid_mask`` is
+    ``(B, L)`` bool, ``sector_ids`` is ``(B,)`` int (one sector per ticker/row).
+
+    For every ticker, adjacent valid steps ``(l, l+1)`` form an anchor/positive
+    pair; the negative pool is *every* valid step across the batch. Same-sector
+    steps from a *different* ticker get ``hard_boost`` added to their logit (the
+    sector hard-negative miner). Returns ``(loss, n_anchor_pairs, n_valid_steps)``,
+    matching the reference's tuple contract so it is a drop-in replacement.
+
+    ``delta_decay`` is accepted for signature compatibility but, exactly as in the
+    reference, it does not weight the loss: positives are always adjacent
+    (``delta == 1``) so the ``exp(-|delta|/decay)`` weighting the docstring mentions
+    is a documented no-op there and here.
+    """
+    import torch
+    import torch.nn.functional as F
+
+    B, L, _D = c_seq.shape
+    device = c_seq.device
+
+    valid_flat_idx = -torch.ones((B, L), dtype=torch.long, device=device)
+    all_valid_embs = []
+    all_valid_sector = []
+    all_valid_coords = []
+
+    flat_counter = 0
+    for b in range(B):
+        for seq_pos in range(L):
+            if valid_mask[b, seq_pos]:
+                valid_flat_idx[b, seq_pos] = flat_counter
+                flat_counter += 1
+                all_valid_embs.append(c_seq[b, seq_pos])
+                all_valid_sector.append(sector_ids[b])
+                all_valid_coords.append((b, seq_pos))
+
+    if flat_counter < 2:
+        return c_seq.sum() * 0.0, 0, 0
+
+    all_valid_embs = torch.stack(all_valid_embs)
+    all_valid_sector = torch.tensor(all_valid_sector, device=device)
+
+    anchors = []
+    positives = []
+    anchor_sector = []
+    anchor_pos_index = []
+    for b in range(B):
+        for seq_pos in range(L - 1):
+            if valid_mask[b, seq_pos] and valid_mask[b, seq_pos + 1]:
+                anchors.append(c_seq[b, seq_pos])
+                positives.append(c_seq[b, seq_pos + 1])
+                anchor_sector.append(sector_ids[b])
+                anchor_pos_index.append(int(valid_flat_idx[b, seq_pos + 1]))
+
+    if len(anchors) == 0:
+        return c_seq.sum() * 0.0, 0, flat_counter
+
+    anchors = torch.stack(anchors)
+    torch.stack(positives)
+
+    logits = anchors @ all_valid_embs.T / temp
+
+    anchor_b = []
+    for b in range(B):
+        for seq_pos in range(L - 1):
+            if valid_mask[b, seq_pos] and valid_mask[b, seq_pos + 1]:
+                anchor_b.append(b)
+
+    anchor_b_t = torch.tensor(anchor_b, device=device)
+    all_valid_b = torch.tensor([c[0] for c in all_valid_coords], device=device)
+    sector_match = (
+        torch.tensor(anchor_sector, device=device).unsqueeze(1) == all_valid_sector.unsqueeze(0)
+    )
+    diff_ticker = anchor_b_t.unsqueeze(1) != all_valid_b.unsqueeze(0)
+    hard_mask = sector_match & diff_ticker
+    logits = logits + hard_mask.float() * hard_boost
+
+    target = torch.tensor(anchor_pos_index, device=device, dtype=torch.long)
+    loss = F.cross_entropy(logits, target)
+    return loss, len(anchors), flat_counter
 
 
 def sup_con_torch(features, labels, temperature: float = 0.07, normalize: bool = True):
