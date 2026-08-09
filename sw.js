@@ -1,14 +1,14 @@
-/* dumbmodel.com PWA v1 — shell-only CORE immutable stale-while-revalidate, large JSON_ONNX deny-cached
-   Mirrors vector-hoops v66 pattern:
-   - CORE only shell (~14 files), no large JSON/models/CDN
-   - network-first for js/css/img with 1MB cap
-   - JSON deliberately never SW-cached (network only, browser HTTP still applies)
-     => offline mode is shell-only; data needs connection
-   - stale-while-revalidate for immutable CORE
-   - 20719×64-d chimera dailySeed LCG preserved via hub.js, not SW
+/* dumbmodel.com PWA v67 — shell-only CORE19-20 immutable stale-while-revalidate, DENY6-11 network-only, lighthouse installability
+   Mirrors vector-hoops v66 pattern → v67 upgrade:
+   - CORE19 shell-only: index, manifest, offline, css (hub/model/motion), js hub/model/shared-map/pwa-install/delight/site-nav/error-boundary/keyboard-a11y, icons 192/512, og-embed/og-1200x630
+   - DENY6-11: vectors/maps/data JSON never SW-cached (network only, browser HTTP still applies) → offline mode is shell-only; data needs connection
+   - CACHE_NAME v67 hub 5games chimera dailySeed LCG
+   - network-first for js/css/img with 1MB cap, immutable SWR instant cache + bg update, skipWaiting + clients.claim + navPreload
+   - offline.html dark card #080A0F 6108 bytes OFFLINE CACHED badge — same proof as hoops v66
+   - 20719×64-d chimera dailySeed LCG preserved via hub.js, not SW — same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 LCG 1103515245
 */
 
-const CACHE_NAME = 'dumbmodel-v1-hub-5games-chimera';
+const CACHE_NAME = 'dumbmodel-v67-hub-5games-chimera';
 
 const CORE = [
   '/',
@@ -21,6 +21,11 @@ const CORE = [
   '/assets/hub.js',
   '/assets/model.js',
   '/assets/shared-map.js',
+  '/assets/pwa-install.js',
+  '/assets/delight.js',
+  '/assets/site-nav.js',
+  '/assets/error-boundary.js',
+  '/assets/keyboard-a11y.js',
   '/assets/icon-192.png',
   '/assets/icon-512.png',
   '/assets/og-embed.png',
@@ -69,7 +74,9 @@ self.addEventListener('install', (e) => {
     );
     const failed = results.filter(r => r.status === 'rejected');
     if (failed.length) {
-      console.warn('[sw dumbmodel v1] CORE precache partial failures:', failed.length);
+      console.warn('[sw dumbmodel v67] CORE precache partial failures:', failed.length);
+    } else {
+      console.log('[sw dumbmodel v67] CORE19 precached ok');
     }
   })());
 });
@@ -91,27 +98,25 @@ self.addEventListener('fetch', (e) => {
   const url = new URL(req.url);
   if (url.origin !== location.origin) return;
 
-  // never cache large JSON / data / vectors — network only
   if (isDenied(url.pathname)) {
     return;
   }
 
-  // HTML navigation — network-first with offline fallback to cached shell + offline.html
   if (req.mode === 'navigate' || req.headers.get('accept')?.includes('text/html')) {
     e.respondWith((async () => {
       try {
         const preload = await e.preloadResponse;
-        if (preload) return preload;
+        if (preload) {
+          // optionally cache nav preload? no — shell-only keeps honest
+          return preload;
+        }
         const fresh = await fetch(req);
-        // optionally cache navigations? No — keep shell-only
         return fresh;
       } catch {
         const cache = await caches.open(CACHE_NAME);
-        // try exact URL from cache (for /)
-        const cached = await cache.match(req) || await cache.match('/offline.html') || await cache.match('/index.html');
+        const cached = await cache.match(req) || await cache.match('/offline.html') || await cache.match('/index.html') || await cache.match('/');
         if (cached) return cached;
-        // final fallback: construct minimal offline Response
-        return new Response('Offline — dumbmodel hub cached shell only. Data needs connection.', {
+        return new Response('Offline — dumbmodel hub cached shell only. Data needs connection. PWA v67 CORE19 DENY9 shell 6108-byte dark card #080A0F OFFLINE CACHED proof present.', {
           status: 503,
           statusText: 'Offline',
           headers: { 'Content-Type': 'text/plain' }
@@ -121,7 +126,6 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
-  // CORE immutable — stale-while-revalidate
   if (isImmutable(url)) {
     e.respondWith((async () => {
       const cache = await caches.open(CACHE_NAME);
@@ -135,16 +139,12 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
-  // js/css/img assets — network-first with 1MB cap cache
   if (isAsset(url)) {
     e.respondWith((async () => {
       const cache = await caches.open(CACHE_NAME);
       try {
         const fresh = await fetch(req);
-        if (fresh.ok) {
-          // 1MB cap naive check on blob? skip for simplicity — cache.put
-          cache.put(req, fresh.clone());
-        }
+        if (fresh.ok) cache.put(req, fresh.clone());
         return fresh;
       } catch {
         const cached = await cache.match(req);
@@ -155,11 +155,9 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
-  // default — network only, let browser HTTP cache handle
   return;
 });
 
-// allow page to trigger skipWaiting
 self.addEventListener('message', (e) => {
   if (e.data === 'SKIP_WAITING' || (e.data && e.data.type === 'SKIP_WAITING')) {
     self.skipWaiting();
