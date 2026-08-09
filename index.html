@@ -351,12 +351,69 @@
     <div style="font-size:10px;opacity:.6;margin-top:6px;font-family:ui-monospace,monospace">Pack Battle Solo1 Triple3 Full5 ?pack= same-link-same-stars · PWA v66 prompt · Copy daily link clipboard · countdown midnight UTC · streak Week Warrior 7-dot · OG 1200×630 · hero-band map-overlay shared-map.js reuse 22990 bytes · delight.js pattern</div>
   </section>
 
+  <section class="landing-section" id="persona-lens" aria-labelledby="persona-lens-label" style="gap:12px;max-width:1180px;margin:8px auto 0;padding:0 clamp(14px,3.5vw,28px)">
+    <h2 class="landing-section__label" id="persona-lens-label" style="border-bottom-color:var(--data-orange)">Pick Your Edge — persona lens</h2>
+    <p class="landing-section__intro" style="margin:0">Same 5 games, filtered by what you actually do. All = no filter. Owner = cap tools / win+valuation. Player = stay on floor / fit. Brand = wins→story / $B. DFS = optimizer / locks. Same engine, 5 sports. Global entry — hoops is canonical, cross-link daily.</p>
+    <div id="persona-chips" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0 2px" role="tablist" aria-label="Persona filter">
+      <button data-persona="all" type="button" class="pill" style="min-height:38px;cursor:pointer;border:2px solid #111;background:#111;color:#fff;font-weight:900;box-shadow:3px 3px 0 #111" aria-selected="true">All</button>
+      <button data-persona="owner" type="button" class="pill" style="min-height:38px;cursor:pointer;border:2px solid #111;background:#fff;font-weight:800" aria-selected="false">👑 Owner — cap / alpha</button>
+      <button data-persona="player" type="button" class="pill" style="min-height:38px;cursor:pointer;border:2px solid #111;background:#fff;font-weight:800" aria-selected="false">🟢 Player — stay on floor / fit</button>
+      <button data-persona="brand" type="button" class="pill" style="min-height:38px;cursor:pointer;border:2px solid #111;background:#fff;font-weight:800" aria-selected="false">📣 Brand — wins→story</button>
+      <button data-persona="dfs" type="button" class="pill" style="min-height:38px;cursor:pointer;border:2px solid #111;background:#fff;font-weight:800" aria-selected="false">🎯 DFS — optimizer / locks</button>
+      <span id="persona-active" class="pill" style="font-size:10px;border:1.6px dashed #111;background:#ffef8a">persona: all • best fit glows</span>
+    </div>
+    <div id="persona-deep" style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 0;font-family:var(--mono);font-size:11px">
+      <a href="https://hoops.dumbmodel.com/owner/" class="pill" title="Owner entry — hoops canonical">/owner → hoops.dumbmodel.com/owner</a>
+      <a href="https://hoops.dumbmodel.com/player/" class="pill">/player → hoops.dumbmodel.com/player</a>
+      <a href="https://hoops.dumbmodel.com/brand/" class="pill">/brand → hoops.dumbmodel.com/brand</a>
+      <a href="https://hoops.dumbmodel.com/dfs/" class="pill">/dfs → hoops.dumbmodel.com/dfs</a>
+      <span style="font-size:10px;opacity:.6;align-self:center">global entry — same engine, 5 sports • hoops is canonical, cross-link daily</span>
+    </div>
+  </section>
+  <style>
+    #persona-lens .mode-card-hl{outline:3px solid #111;box-shadow:6px 6px 0 #111;transform:translate(-1px,-1px)}
+    #persona-lens + * .mode-card{transition:transform .15s, box-shadow .15s, opacity .15s, filter .15s}
+    .mode-card.is-dim{opacity:.42;filter:saturate(.2)}
+    .mode-card.is-glow{outline:3px solid #111;box-shadow:8px 8px 0 #111;transform:translate(-1.5px,-1.5px);opacity:1;filter:none}
+  </style>
+  <script>
+  (function(){
+    var mapping={all:["hoops","gridiron","pitch","equities","unified"],owner:["hoops","unified","equities"],player:["hoops","pitch","gridiron"],brand:["hoops","pitch","equities","unified"],dfs:["hoops","pitch","gridiron","unified"]};
+    var labelMap={all:"persona: all • best fit glows",owner:"Owner — FOR W*/$M Val $9.1B • hoops unified equities",player:"Player — stay floor 1.28/0.62 • hoops pitch gridiron",brand:"Brand — Wins/$B ValΔ% • hoops pitch equities unified",dfs:"DFS — OU 944 + props + locks • hoops pitch gridiron unified"};
+    function apply(p){
+      var chips=document.querySelectorAll('#persona-chips [data-persona]');
+      chips.forEach(function(b){var sel=b.getAttribute('data-persona')===p; b.style.background=sel?"#111":"#fff"; b.style.color=sel?"#fff":"#111"; b.setAttribute('aria-selected',sel?"true":"false"); if(sel)b.style.boxShadow="3px 3px 0 #111"; else b.style.boxShadow="none";});
+      var active=document.getElementById('persona-active'); if(active) active.textContent=labelMap[p]||p;
+      var cards=document.querySelectorAll('.mode-grid .mode-card');
+      var order=mapping[p]||mapping.all;
+      cards.forEach(function(c){
+        var href=c.getAttribute('href')||""; var id="hoops";
+        if(href.includes("gridiron")) id="gridiron"; else if(href.includes("pitch")) id="pitch"; else if(href.includes("equities")) id="equities"; else if(href.includes("unified")) id="unified";
+        var fit=(c.getAttribute('data-persona-fit')||"").split(" ").includes(p) || p==="all";
+        var primary=(c.getAttribute('data-persona-primary')||"");
+        c.classList.toggle("is-dim", !fit && p!=="all");
+        c.classList.toggle("is-glow", fit && p!=="all" && (primary===p || order.indexOf(id) < 2));
+        c.style.order = p==="all" ? "0" : (order.indexOf(id)>-1 ? String(order.indexOf(id)) : "9");
+      });
+      try{localStorage.setItem('hub-persona',p);}catch(e){}
+      var u=new URL(location.href); u.searchParams.set('persona',p); history.replaceState(null,'',u.pathname+u.search+u.hash);
+      var evChips=document.querySelectorAll('#persona-chips [data-persona]'); // keep hub-pov in sync where possible
+      try{if(window.__hubPovFilter && ['owner','player','brand','dfs'].includes(p)) __hubPovFilter(p);}catch{}
+    }
+    window.__personaLensApply=apply;
+    document.querySelectorAll('#persona-chips [data-persona]').forEach(function(btn){btn.addEventListener('click',function(){apply(btn.getAttribute('data-persona'));});});
+    var init=(new URL(location.href)).searchParams.get('persona')|| (function(){try{return localStorage.getItem('hub-persona')||'all';}catch{return 'all'}})();
+    if(!['all','owner','player','brand','dfs'].includes(init)) init='all';
+    apply(init);
+  })();
+  </script>
+
   <section class="landing-section" id="games" aria-labelledby="games-label">
     <h2 class="landing-section__label" id="games-label">The roster &middot; five daily games</h2>
     <p class="landing-section__intro">One puzzle a day per game. Each runs a real model on real public data &mdash; no staged scores, no decorative math. Three sports + one market + one joint cross-sport chimera. One more model &mdash; <a href="/models/tennis.html">tennis</a> &mdash; still ships as a model card with a playable probe and no daily puzzle yet. <a href="/models/unified.html">Unified</a> is now live as the fifth daily: 20,719 player-seasons in 64-d, deterministic dailySeed LCG.</p>
     <div class="mode-grid" data-vx-stagger>
 
-      <a class="vh-card mode-card mode-card--orange" href="https://hoops.dumbmodel.com/">
+      <a class="vh-card mode-card mode-card--orange" href="https://hoops.dumbmodel.com/" data-persona-fit="owner player brand dfs" data-persona-primary="owner">
         <div class="mode-card__glyph" aria-hidden="true">
           <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="14" cy="11" r="5" stroke="#eb6834" stroke-width="2.5"/>
@@ -373,7 +430,7 @@
         <p class="mode-card__meta"><span class="pill">NBA 64-d</span> &middot; 64-d embedding &middot; 18 towers &middot; daily &middot; 12966 player-seasons</p>
       </a>
 
-      <a class="vh-card mode-card mode-card--blue" href="https://gridiron.dumbmodel.com/">
+      <a class="vh-card mode-card mode-card--blue" href="https://gridiron.dumbmodel.com/" data-persona-fit="player dfs" data-persona-primary="player">
         <div class="mode-card__glyph" aria-hidden="true">
           <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M8 30 L16 22 L22 26 L34 10" stroke="#2a78d6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -389,7 +446,7 @@
         <p class="mode-card__meta"><span class="pill">NFL 32-d</span> &middot; 32-d trunk &middot; weekly &middot; gridiron</p>
       </a>
 
-      <a class="vh-card mode-card mode-card--purple" href="https://pitch.dumbmodel.com/">
+      <a class="vh-card mode-card mode-card--purple" href="https://pitch.dumbmodel.com/" data-persona-fit="player brand dfs" data-persona-primary="player">
         <div class="mode-card__glyph" aria-hidden="true">
           <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M8 32 L8 8 M8 32 L34 32" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/>
@@ -407,7 +464,7 @@
         <p class="mode-card__meta"><span class="pill">World Cup 24-d</span> &middot; 24-d MTNN &middot; daily &middot; pitch 2430 rows</p>
       </a>
 
-      <a class="vh-card mode-card mode-card--green" href="https://equities.dumbmodel.com/">
+      <a class="vh-card mode-card mode-card--green" href="https://equities.dumbmodel.com/" data-persona-fit="owner brand" data-persona-primary="owner">
         <div class="mode-card__glyph" aria-hidden="true">
           <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="9" y="11" width="4.5" height="13" rx="1" stroke="#009E73" stroke-width="2"/>
@@ -425,7 +482,7 @@
         <p class="mode-card__meta"><span class="pill">Equities 64-d</span> &middot; 500 tickers · 4,831 company-years · 17 towers · 64-d</p>
       </a>
 
-      <a class="vh-card mode-card mode-card--chimera" href="https://unified.dumbmodel.com/" aria-label="Daily Chimera — 20,719×64-d joint, provenance 7/7, Procrustes drift, glass-box">
+      <a class="vh-card mode-card mode-card--chimera" href="https://unified.dumbmodel.com/" aria-label="Daily Chimera — 20,719×64-d joint, provenance 7/7, Procrustes drift, glass-box" data-persona-fit="owner brand dfs" data-persona-primary="brand">
         <div class="mode-card__glyph" aria-hidden="true">
           <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="13" cy="13" r="5.5" stroke="#eb6834" stroke-width="2.3"/>
