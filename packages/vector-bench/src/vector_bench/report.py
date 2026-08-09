@@ -133,6 +133,7 @@ def write_domain_report(dsc: DomainScorecard, path: str | Path) -> Path:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
-        json.dumps(domain_report_to_dict(dsc), indent=2) + "\n", encoding="utf-8"
+        json.dumps(domain_report_to_dict(dsc), indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
     )
     return path
