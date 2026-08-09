@@ -1,0 +1,45 @@
+name: vector-bench
+
+# Scoped CI: runs ONLY when the vector-bench harness changes.
+# The static site and the vector-core library have their own scopes; site
+# changes never trigger this workflow.
+on:
+  push:
+    paths:
+      - "packages/vector-bench/**"
+      - ".github/workflows/vector-bench.yml"
+  pull_request:
+    paths:
+      - "packages/vector-bench/**"
+      - ".github/workflows/vector-bench.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/vector-bench
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install package with dev extras
+        # dev pulls pytest + ruff + scikit-learn (the prediction ladder). torch is
+        # NOT installed: the harness imports it lazily and the test suite +
+        # synthetic example are baseline-only (no MTNN training).
+        run: pip install -e ".[dev]"
+
+      - name: Run tests
+        run: pytest -q
+
+      - name: Lint (ruff)
+        # Pin the same concrete ruff the vector-core scope pins, for deterministic
+        # CI. pyproject declares ruff>=0.4 (unpinned); the harness is clean under
+        # 0.16.2 (exit 0).
+        run: |
+          pip install "ruff==0.16.2"
+          ruff check .
