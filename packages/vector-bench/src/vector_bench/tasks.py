@@ -25,15 +25,27 @@ import numpy as np
 
 __all__ = [
     "BenchmarkTask",
+    "PredictionTarget",
+    "DomainSpec",
     "Split",
     "random_split",
     "temporal_split",
     "group_split",
     "build_adjacent_period_pairs",
+    "build_task_for_target",
+    "REGRESSION_METRICS",
+    "BINARY_METRICS",
 ]
 
 TaskType = str  # "retrieval" | "prediction"
 SplitKind = str  # "random" | "temporal" | "group"
+PredictionKind = str  # "regression" | "binary_classification"
+
+# Metric families each target kind is allowed to report. A binary target scores a
+# real-valued *score* (the regressor's output), so a rank metric (spearman_ic) is
+# still meaningful alongside roc_auc; a regression target never reports roc_auc.
+REGRESSION_METRICS = ("spearman_ic", "mae", "rmse", "r2")
+BINARY_METRICS = ("roc_auc", "spearman_ic")
 
 
 @dataclass(frozen=True)
@@ -231,3 +243,178 @@ class BenchmarkTask:
         if self.split == "temporal":
             return temporal_split(self.time_key, self.time_cut, self.test_frac)
         return group_split(self.group_key, self.test_frac, self.seed)
+
+
+# --------------------------------------------------------------------------- #
+# Multi-target task specs
+# --------------------------------------------------------------------------- #
+# A domain is rarely one prediction. A player has a next-season PER *and* a
+# next-season win-share; a ticker has a forward return *and* a forward volatility
+# *and* a drawdown flag. Each of those is its own supervised problem with its own
+# leakage-safe construction and its own honest verdict — collapsing them into one
+# "does the MTNN win?" number hides exactly the target-by-target story the thesis
+# lives or dies on. A ``PredictionTarget`` is the declarative unit for one such
+# problem; a ``DomainSpec`` carries the *set* a domain declares. Neither holds
+# data: they are specs the runner turns into per-target :class:`BenchmarkTask`s.
+
+
+@dataclass(frozen=True)
+class PredictionTarget:
+    """One supervised target within a domain, scored independently.
+
+    Parameters
+    ----------
+    name :
+        Target id, unique within its domain (e.g. ``"next_season_per"``).
+    kind :
+        ``"regression"`` or ``"binary_classification"``. Binary targets are scored
+        by roc_auc over the regressor's real-valued output (score-based AUC), so
+        the same prediction ladder applies to both kinds — no separate classifier
+        rung is needed to get an honest ranking.
+    horizon :
+        Human label for the forecast horizon (``"next_season"``, ``"1y"``,
+        ``"3y"``, ``"next_game"``, ...). Documentation only; the leakage guarantee
+        is enforced by the split, not this string.
+    metrics :
+        Metric families to report for this target. Must be a subset of
+        :data:`REGRESSION_METRICS` / :data:`BINARY_METRICS` for the kind.
+    split :
+        Leakage-safe split policy for this target — usually ``"temporal"`` for a
+        forward-looking target so no future row is visible at fit time.
+    primary_metric :
+        The single metric the domain-level aggregate reads to decide, per target,
+        whether the MTNN beat the best baseline. Defaults to ``metrics[0]``.
+    status :
+        ``"data-wired"`` if a builder exists to produce ``(X, y)`` for this target,
+        else ``"spec-only"`` — declared but not yet computable. ``"spec-only"``
+        targets are carried through honestly and never fabricate a result.
+    description, construction :
+        Prose. ``construction`` documents exactly how ``y`` is derived from the
+        future without leaking it (the discipline a data-wiring pass must honor).
+    """
+
+    name: str
+    kind: PredictionKind
+    horizon: str
+    metrics: tuple[str, ...]
+    split: SplitKind = "temporal"
+    primary_metric: str | None = None
+    status: str = "spec-only"
+    description: str = ""
+    construction: str = ""
+
+    def __post_init__(self) -> None:
+        if self.kind not in ("regression", "binary_classification"):
+            raise ValueError(
+                f"kind must be regression|binary_classification, got {self.kind!r}"
+            )
+        if self.split not in ("random", "temporal", "group"):
+            raise ValueError(f"split must be random|temporal|group, got {self.split!r}")
+        if self.status not in ("spec-only", "data-wired"):
+            raise ValueError(f"status must be spec-only|data-wired, got {self.status!r}")
+        if not self.metrics:
+            raise ValueError(f"target {self.name!r} needs at least one metric")
+        allowed = REGRESSION_METRICS if self.kind == "regression" else BINARY_METRICS
+        bad = [m for m in self.metrics if m not in allowed]
+        if bad:
+            raise ValueError(f"target {self.name!r} ({self.kind}) cannot report {bad}")
+        if self.kind == "binary_classification" and "roc_auc" not in self.metrics:
+            raise ValueError(f"binary target {self.name!r} must report roc_auc")
+        pm = self.primary_metric or self.metrics[0]
+        if pm not in self.metrics:
+            raise ValueError(f"primary_metric {pm!r} not in metrics for {self.name!r}")
+        object.__setattr__(self, "primary_metric", pm)
+
+
+@dataclass(frozen=True)
+class DomainSpec:
+    """The set of prediction targets a domain declares, plus its primary mode.
+
+    ``primary_task_type`` records whether the domain's headline task is
+    ``"retrieval"`` (e.g. realty / pitch, whose retrieval path is untouched) or
+    ``"prediction"``. Either way the domain may carry a list of prediction
+    ``targets``, each scored independently. ``transfer_probe`` documents a
+    cross-domain transfer evaluation where relevant (unified).
+    """
+
+    domain: str
+    primary_task_type: TaskType
+    targets: tuple[PredictionTarget, ...]
+    description: str = ""
+    transfer_probe: str = ""
+
+    def __post_init__(self) -> None:
+        if self.primary_task_type not in ("retrieval", "prediction"):
+            raise ValueError(
+                f"primary_task_type must be retrieval|prediction, got {self.primary_task_type!r}"
+            )
+        names = [t.name for t in self.targets]
+        if len(names) != len(set(names)):
+            raise ValueError(f"duplicate target names in domain {self.domain!r}: {names}")
+
+    def target(self, name: str) -> PredictionTarget:
+        """Look up a target by name (raises if absent)."""
+        for t in self.targets:
+            if t.name == name:
+                return t
+        raise KeyError(f"domain {self.domain!r} has no target {name!r}")
+
+    @property
+    def spec_only(self) -> tuple[PredictionTarget, ...]:
+        """Targets declared but not yet data-wired."""
+        return tuple(t for t in self.targets if t.status == "spec-only")
+
+    @property
+    def data_wired(self) -> tuple[PredictionTarget, ...]:
+        """Targets a builder can produce ``(X, y)`` for."""
+        return tuple(t for t in self.targets if t.status == "data-wired")
+
+
+def build_task_for_target(
+    target: PredictionTarget,
+    domain: str,
+    X: np.ndarray,
+    y: np.ndarray,
+    *,
+    embeddings: np.ndarray | None = None,
+    group_key: np.ndarray | None = None,
+    time_key: np.ndarray | None = None,
+    time_cut: float | int | None = None,
+    test_frac: float = 0.3,
+    seed: int = 0,
+    extra_notes: dict[str, str] | None = None,
+) -> BenchmarkTask:
+    """Turn a declarative :class:`PredictionTarget` + data into a concrete task.
+
+    This is the bridge from the *spec* layer (what a domain declares) to the
+    *runner* layer (what actually gets trained): it carries the target's split
+    policy and metric set onto a :class:`BenchmarkTask` so the runner stays
+    generic and the targets stay declarative. The leakage-safety guarantee is the
+    task's split — a ``"temporal"`` target gets a strict past/future cut here,
+    identical to every other temporal task in the harness.
+    """
+    notes = {
+        "target": target.name,
+        "kind": target.kind,
+        "horizon": target.horizon,
+        "primary_metric": target.primary_metric or "",
+        "construction": target.construction,
+    }
+    if extra_notes:
+        notes.update(extra_notes)
+    return BenchmarkTask(
+        name=f"{domain}::{target.name}",
+        domain=domain,
+        X=X,
+        y=y,
+        task_type="prediction",
+        metrics=list(target.metrics),
+        split=target.split,
+        embeddings=embeddings,
+        group_key=group_key,
+        time_key=time_key,
+        time_cut=time_cut,
+        test_frac=test_frac,
+        seed=seed,
+        notes=notes,
+    )
