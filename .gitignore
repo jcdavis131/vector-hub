@@ -1,3 +1,4 @@
 
 # Vercel project linkage — machine-local, holds project/org ids
 .vercel
+apps/\nbundles/\ndottie/\ncandidate.json
