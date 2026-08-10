@@ -8,18 +8,32 @@ is an edit *here*, not in the runner.
 
 Every target below is honest about its state:
 
-- ``status="data-wired"`` — a builder can produce ``(X, y)`` for it today.
+- ``status="data-wired"`` — a real-data build was benchmarked for this target and
+  the run is trustworthy: the code comment next to ``status`` links the MERGED
+  domain-repo PR. ``data-wired`` does NOT mean the MTNN won — it means the number
+  is real.
 - ``status="spec-only"`` — declared, with a leakage-safe construction written
-  down, but no data plumbed yet. A spec-only target is carried through the runner
-  and the report as ``spec-only`` and NEVER fabricates a number.
+  down, but NOT currently certified as a trustworthy real-data result. This
+  covers two different situations, and the code comment next to each target says
+  which: (a) no data has been plumbed yet, or (b) a real-data run WAS computed
+  but is being held back — its underlying data has a known, disclosed quality
+  issue pending a fix, or its domain-repo PR has not yet merged. Either way, a
+  spec-only target is carried through the runner and the report as
+  ``spec-only`` and NEVER fabricates a number.
 
-Real-data benchmark runs have since validated data-wiring for hoops, gridiron,
-equities, pitch, and unified: those targets are now ``data-wired``, each with a
-code comment linking the domain-repo PR where the real feature/label build and
-the benchmark run landed. realty's real-data run still refutes the
-outperformance thesis — consistent with its retrieval task (see
-``examples/realty/``) — so its targets remain ``spec-only``; see the comment on
-each realty target for the PR. The synthetic example
+Real-data benchmark runs have validated data-wiring for hoops, gridiron, equities,
+and pitch: those targets are ``data-wired``, each with a code comment linking the
+MERGED domain-repo PR where the real feature/label build and the benchmark run
+landed. realty's real-data run still refutes the outperformance thesis —
+consistent with its retrieval task (see ``examples/realty/``) — so its targets
+remain ``spec-only``; see the comment on each realty target for the PR. unified's
+cross-domain transfer probe was also computed on real data (see
+https://github.com/jcdavis131/vector-unified/pull/5) but stays ``spec-only`` for
+now: that PR is still open/unmerged, and its shared embedding was trained partly
+on realty's pre-fix exchange dataset (the same XM/XW aggregate contamination
+realty's own open fix, https://github.com/jcdavis131/vector-realty/pull/4,
+addresses) — re-flip once both PRs merge and the transfer probe is rerun against
+the corrected realty data. The synthetic example
 (``examples/multitarget_synthetic/``) remains the only place a full per-target
 report is computed from data generated in-repo.
 """
@@ -202,43 +216,47 @@ _EQUITIES = DomainSpec(
         PredictionTarget(
             name="forward_return",
             kind="regression",
-            horizon="1m",
+            horizon="6m",
             metrics=_R,
             split="temporal",
             primary_metric="spearman_ic",
             status="data-wired",  # verified on real data: https://github.com/jcdavis131/vector-equities/pull/5
             description="Forward (next-window) total return.",
             construction=(
-                "y = return over (t, t+H]; features use only information available "
-                "at t. Temporal split at a date cut: train dates <= cut, test after. "
-                "spearman_ic is the headline (rank-IC of the signal)."
+                "y = return over (t, t+H] where H=126 trading days (~6 months, the "
+                "wired run's actual window per vector-equities#5); features use "
+                "only information available at t. Temporal split at a date cut: "
+                "train dates <= cut, test after. spearman_ic is the headline "
+                "(rank-IC of the signal)."
             ),
         ),
         PredictionTarget(
             name="forward_realized_vol",
             kind="regression",
-            horizon="1m",
+            horizon="6m",
             metrics=_R,
             split="temporal",
             primary_metric="spearman_ic",
             status="data-wired",  # verified on real data: https://github.com/jcdavis131/vector-equities/pull/5
             description="Forward realized volatility over the next window.",
             construction=(
-                "y = realized vol of returns over (t, t+H]; features known at t. "
+                "y = realized vol of returns over (t, t+H] where H=126 trading "
+                "days (~6 months, per vector-equities#5); features known at t. "
                 "Temporal split at a date cut."
             ),
         ),
         PredictionTarget(
             name="drawdown_exceedance",
             kind="binary_classification",
-            horizon="1m",
+            horizon="6m",
             metrics=_B,
             split="temporal",
             primary_metric="roc_auc",
             status="data-wired",  # verified on real data: https://github.com/jcdavis131/vector-equities/pull/5
             description="Whether forward max drawdown exceeds a threshold (1) or not (0).",
             construction=(
-                "y = 1 if the max peak-to-trough drawdown over (t, t+H] exceeds a "
+                "y = 1 if the max peak-to-trough drawdown over (t, t+H] where "
+                "H=126 trading days (~6 months, per vector-equities#5) exceeds a "
                 "fixed threshold else 0; features known at t. Temporal split at a "
                 "date cut. Scored by roc_auc over the regressor's score output."
             ),
@@ -379,20 +397,23 @@ _UNIFIED = DomainSpec(
         PredictionTarget(
             name="transfer_forward_return",
             kind="regression",
-            horizon="1m",
+            horizon="6m",
             metrics=_R,
             split="temporal",
             primary_metric="spearman_ic",
-            status="data-wired",  # verified on real data: https://github.com/jcdavis131/vector-unified/pull/5
+            # computed on real data but PR unmerged + trained on realty's
+            # pre-fix data; see module docstring. PR: vector-unified#5
+            status="spec-only",
             description=(
                 "equities forward_return predicted from a frozen embedding "
                 "trained WITHOUT equities."
             ),
             construction=(
                 "Target identical to equities.forward_return (same leakage-safe "
-                "temporal construction). Features = frozen unified embedding whose "
-                "heads never saw equities. Probe = linear head fit on train rows "
-                "only. This is the held-out-domain transfer measurement."
+                "temporal construction, H=126 trading days). Features = frozen "
+                "unified embedding whose heads never saw equities. Probe = linear "
+                "head fit on train rows only. This is the held-out-domain "
+                "transfer measurement."
             ),
         ),
         PredictionTarget(
@@ -402,7 +423,9 @@ _UNIFIED = DomainSpec(
             metrics=_R,
             split="temporal",
             primary_metric="spearman_ic",
-            status="data-wired",  # verified on real data: https://github.com/jcdavis131/vector-unified/pull/5
+            # computed on real data but PR unmerged + trained on realty's
+            # pre-fix data; see module docstring. PR: vector-unified#5
+            status="spec-only",
             description=(
                 "hoops next_season_per predicted from a frozen embedding trained WITHOUT hoops."
             ),
