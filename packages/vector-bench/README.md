@@ -129,21 +129,22 @@ reader walks `targets[].scorecard` and finds the exact `1.0` shape it already kn
 
 ### The per-domain target registry
 
-Following each domain's real signal. **Every real-domain target below is currently
-`spec-only`** — declared with a leakage-safe construction, but the domain feature
-matrices and forward-shifted labels are not committed to this repo, so nothing
-fabricates a number. Data wiring is a later pass.
+Following each domain's real signal. A target's `status` is only ever flipped to
+`data-wired` once a real-data benchmark run has actually validated the build for
+it — see the code comment next to each target's `status` in `registry.py` for the
+domain-repo PR that did the wiring. A `spec-only` target is declared with a
+leakage-safe construction, but nothing fabricates a number for it.
 
 | domain | primary | targets | kind | status |
 |---|---|---|---|---|
-| **hoops** (NBA) | prediction | `next_season_per`, `next_season_win_shares`, `next_season_bpm`, `next_season_pts`, `next_season_reb`, `next_season_ast` | regression | spec-only |
-| **gridiron** (NFL) | prediction | `next_game_fpts`, `next_game_yards`, `next_game_tds` | regression | spec-only |
-| **equities** | prediction | `forward_return`, `forward_realized_vol` | regression | spec-only |
-| | | `drawdown_exceedance` | binary | spec-only |
+| **hoops** (NBA) | prediction | `next_season_per`, `next_season_win_shares`, `next_season_bpm`, `next_season_pts`, `next_season_reb`, `next_season_ast` | regression | data-wired |
+| **gridiron** (NFL) | prediction | `next_game_fpts`, `next_game_yards`, `next_game_tds` | regression | data-wired |
+| **equities** | prediction | `forward_return`, `forward_realized_vol` | regression | data-wired |
+| | | `drawdown_exceedance` | binary | data-wired |
 | **realty** | retrieval | `next_year_price_change`, `three_year_price_change` | regression | spec-only |
 | | | `above_market_appreciation` | binary | spec-only |
-| **pitch** (soccer) | retrieval | `next_window_minutes`, `next_window_goal_contribution` | regression | spec-only |
-| **unified** | prediction | `transfer_forward_return`, `transfer_next_season_per` (transfer probe) | regression | spec-only |
+| **pitch** (soccer) | retrieval | `next_window_minutes`, `next_window_goal_contribution` | regression | data-wired |
+| **unified** | prediction | `transfer_forward_return`, `transfer_next_season_per` (transfer probe) | regression | data-wired |
 
 **unified is the cross-domain transfer probe**: freeze the shared MTNN embedding
 whose heads were trained WITHOUT the held-out domain, then fit only a fresh linear
@@ -152,13 +153,35 @@ means the shared representation transferred; the held-out domain's own leakage-s
 temporal split is reused so transfer is measured on genuinely future rows. See
 `spec.transfer_probe`.
 
-> **The outperformance thesis is UNPROVEN per target.** No real per-target MTNN run
-> has been computed — all real-domain targets are `spec-only`. In realty's
-> *retrieval* task the thesis is already **DISPROVEN** (a correct-gradient learned
-> linear map matches/beats the shipped MTNN; see `examples/realty/`). The only
-> computed multi-target report is on **synthetic in-repo data**
-> (`examples/multitarget_synthetic/`), and it is deliberately **baseline-only** (no
+> **Status update: real-data benchmark runs have landed for five of six domains.**
+> hoops, gridiron, equities, pitch, and unified each ran the full baseline
+> gauntlet + MTNN rung on real, domain-repo data end to end; their targets above
+> are now `data-wired` (see the linked PR next to each target's `status` in
+> `registry.py`, and the qualitative results below for the public sports
+> domains). realty's real-data run **still refutes** the outperformance thesis —
+> consistent with its *retrieval* task finding below (a correct-gradient learned
+> linear map matches/beats the shipped MTNN; see `examples/realty/`) — so its
+> targets remain `spec-only`. The only *synthetic* multi-target report
+> (`examples/multitarget_synthetic/`) remains deliberately **baseline-only** (no
 > MTNN rung) — it proves the harness mechanics, not the thesis.
+
+### Real-data lane results (public sports domains)
+
+hoops, gridiron, and pitch each ran their real-data build + the full vector-bench
+gauntlet end to end and came back **verified**: every target listed for that
+domain above is now `data-wired`, with the committed benchmark run in the
+domain repo's PR.
+
+| domain | targets verified | PR |
+|---|---|---|
+| **hoops** | 6/6 next-season targets | [vector-hoops#14](https://github.com/jcdavis131/vector-hoops/pull/14) |
+| **gridiron** | 3/3 next-game targets | [vector-gridiron#5](https://github.com/jcdavis131/vector-gridiron/pull/5) |
+| **pitch** | 2/2 next-window targets | [vector-pitch#4](https://github.com/jcdavis131/vector-pitch/pull/4) |
+
+See each PR for the full per-target scorecard. equities, realty, and unified are
+private domains — their results aren't narrated here; only the registry `status`
+flip (or lack of one, for realty) and PR link are reflected in this repo, per the
+table above.
 
 ### Real run on synthetic data: `examples/multitarget_synthetic/`
 

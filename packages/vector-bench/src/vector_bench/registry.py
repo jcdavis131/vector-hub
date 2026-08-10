@@ -13,12 +13,15 @@ Every target below is honest about its state:
   down, but no data plumbed yet. A spec-only target is carried through the runner
   and the report as ``spec-only`` and NEVER fabricates a number.
 
-As of this change every real-domain target is ``spec-only``: the domain feature
-matrices and forward-shifted labels are not committed to this repo. The synthetic
-example (``examples/multitarget_synthetic/``) is the only place a real per-target
-report is computed, from data generated in-repo. The outperformance thesis is
-therefore UNPROVEN per target pending a data-wiring pass — and in realty's
-retrieval task it is already DISPROVEN (see ``examples/realty/``).
+Real-data benchmark runs have since validated data-wiring for hoops, gridiron,
+equities, pitch, and unified: those targets are now ``data-wired``, each with a
+code comment linking the domain-repo PR where the real feature/label build and
+the benchmark run landed. realty's real-data run still refutes the
+outperformance thesis — consistent with its retrieval task (see
+``examples/realty/``) — so its targets remain ``spec-only``; see the comment on
+each realty target for the PR. The synthetic example
+(``examples/multitarget_synthetic/``) remains the only place a full per-target
+report is computed from data generated in-repo.
 """
 
 from __future__ import annotations
@@ -55,7 +58,7 @@ _HOOPS = DomainSpec(
             metrics=_R,
             split="temporal",
             primary_metric="spearman_ic",
-            status="spec-only",
+            status="data-wired",  # verified on real data: https://github.com/jcdavis131/vector-hoops/pull/14
             description="Next-season Player Efficiency Rating.",
             construction=(
                 "y = PER of the same player in season t+1; features from season t "
@@ -71,7 +74,7 @@ _HOOPS = DomainSpec(
             metrics=_R,
             split="temporal",
             primary_metric="spearman_ic",
-            status="spec-only",
+            status="data-wired",  # verified on real data: https://github.com/jcdavis131/vector-hoops/pull/14
             description="Next-season Win Shares.",
             construction=(
                 "y = Win Shares of the same player in season t+1; features from "
@@ -85,7 +88,7 @@ _HOOPS = DomainSpec(
             metrics=_R,
             split="temporal",
             primary_metric="spearman_ic",
-            status="spec-only",
+            status="data-wired",  # verified on real data: https://github.com/jcdavis131/vector-hoops/pull/14
             description="Next-season Box Plus/Minus.",
             construction=(
                 "y = BPM of the same player in season t+1; features from season t. "
@@ -99,7 +102,7 @@ _HOOPS = DomainSpec(
             metrics=_R,
             split="temporal",
             primary_metric="spearman_ic",
-            status="spec-only",
+            status="data-wired",  # verified on real data: https://github.com/jcdavis131/vector-hoops/pull/14
             description="Next-season points per game (counting line component).",
             construction="y = PTS/G in season t+1; features from season t. Temporal split.",
         ),
@@ -110,7 +113,7 @@ _HOOPS = DomainSpec(
             metrics=_R,
             split="temporal",
             primary_metric="spearman_ic",
-            status="spec-only",
+            status="data-wired",  # verified on real data: https://github.com/jcdavis131/vector-hoops/pull/14
             description="Next-season rebounds per game (counting line component).",
             construction="y = REB/G in season t+1; features from season t. Temporal split.",
         ),
@@ -121,7 +124,7 @@ _HOOPS = DomainSpec(
             metrics=_R,
             split="temporal",
             primary_metric="spearman_ic",
-            status="spec-only",
+            status="data-wired",  # verified on real data: https://github.com/jcdavis131/vector-hoops/pull/14
             description="Next-season assists per game (counting line component).",
             construction="y = AST/G in season t+1; features from season t. Temporal split.",
         ),
@@ -147,7 +150,7 @@ _GRIDIRON = DomainSpec(
             metrics=_R,
             split="temporal",
             primary_metric="spearman_ic",
-            status="spec-only",
+            status="data-wired",  # verified on real data: https://github.com/jcdavis131/vector-gridiron/pull/5
             description="Next-game fantasy points (PPR).",
             construction=(
                 "y = fantasy points scored in the player's next game; features from "
@@ -162,7 +165,7 @@ _GRIDIRON = DomainSpec(
             metrics=_R,
             split="temporal",
             primary_metric="spearman_ic",
-            status="spec-only",
+            status="data-wired",  # verified on real data: https://github.com/jcdavis131/vector-gridiron/pull/5
             description="Next-game total yards (rush + rec + pass).",
             construction=(
                 "y = total yards in the next game; features from prior games. Temporal split."
@@ -175,7 +178,7 @@ _GRIDIRON = DomainSpec(
             metrics=_R,
             split="temporal",
             primary_metric="spearman_ic",
-            status="spec-only",
+            status="data-wired",  # verified on real data: https://github.com/jcdavis131/vector-gridiron/pull/5
             description="Next-game total touchdowns.",
             construction=(
                 "y = total TDs in the next game; features from prior games. Temporal split."
@@ -203,7 +206,7 @@ _EQUITIES = DomainSpec(
             metrics=_R,
             split="temporal",
             primary_metric="spearman_ic",
-            status="spec-only",
+            status="data-wired",  # verified on real data: https://github.com/jcdavis131/vector-equities/pull/5
             description="Forward (next-window) total return.",
             construction=(
                 "y = return over (t, t+H]; features use only information available "
@@ -218,7 +221,7 @@ _EQUITIES = DomainSpec(
             metrics=_R,
             split="temporal",
             primary_metric="spearman_ic",
-            status="spec-only",
+            status="data-wired",  # verified on real data: https://github.com/jcdavis131/vector-equities/pull/5
             description="Forward realized volatility over the next window.",
             construction=(
                 "y = realized vol of returns over (t, t+H]; features known at t. "
@@ -232,7 +235,7 @@ _EQUITIES = DomainSpec(
             metrics=_B,
             split="temporal",
             primary_metric="roc_auc",
-            status="spec-only",
+            status="data-wired",  # verified on real data: https://github.com/jcdavis131/vector-equities/pull/5
             description="Whether forward max drawdown exceeds a threshold (1) or not (0).",
             construction=(
                 "y = 1 if the max peak-to-trough drawdown over (t, t+H] exceeds a "
@@ -263,7 +266,7 @@ _REALTY = DomainSpec(
             metrics=_R,
             split="temporal",
             primary_metric="spearman_ic",
-            status="spec-only",
+            status="spec-only",  # real-data run still refutes the thesis: https://github.com/jcdavis131/vector-realty/pull/4
             description="Next-year real property price change.",
             construction=(
                 "y = price change from year t to t+1 for the same economy; features "
@@ -278,7 +281,7 @@ _REALTY = DomainSpec(
             metrics=_R,
             split="temporal",
             primary_metric="spearman_ic",
-            status="spec-only",
+            status="spec-only",  # real-data run still refutes the thesis: https://github.com/jcdavis131/vector-realty/pull/4
             description="Three-year-ahead cumulative real price change.",
             construction=(
                 "y = cumulative price change from year t to t+3; features from year "
@@ -293,7 +296,7 @@ _REALTY = DomainSpec(
             metrics=_B,
             split="temporal",
             primary_metric="roc_auc",
-            status="spec-only",
+            status="spec-only",  # real-data run still refutes the thesis: https://github.com/jcdavis131/vector-realty/pull/4
             description="Whether an economy beats the cross-sectional median 1y appreciation.",
             construction=(
                 "y = 1 if year-t+1 price change exceeds the *train-set* median for "
@@ -325,7 +328,7 @@ _PITCH = DomainSpec(
             metrics=_R,
             split="temporal",
             primary_metric="spearman_ic",
-            status="spec-only",
+            status="data-wired",  # verified on real data: https://github.com/jcdavis131/vector-pitch/pull/4
             description="Minutes played in the next match window.",
             construction=(
                 "y = minutes in the player's next window; features from prior "
@@ -340,7 +343,7 @@ _PITCH = DomainSpec(
             metrics=_R,
             split="temporal",
             primary_metric="spearman_ic",
-            status="spec-only",
+            status="data-wired",  # verified on real data: https://github.com/jcdavis131/vector-pitch/pull/4
             description="Goal-contribution rate (goals+assists per 90) next window.",
             construction=(
                 "y = (goals + assists) per 90 in the next window; features from "
@@ -380,7 +383,7 @@ _UNIFIED = DomainSpec(
             metrics=_R,
             split="temporal",
             primary_metric="spearman_ic",
-            status="spec-only",
+            status="data-wired",  # verified on real data: https://github.com/jcdavis131/vector-unified/pull/5
             description=(
                 "equities forward_return predicted from a frozen embedding "
                 "trained WITHOUT equities."
@@ -399,7 +402,7 @@ _UNIFIED = DomainSpec(
             metrics=_R,
             split="temporal",
             primary_metric="spearman_ic",
-            status="spec-only",
+            status="data-wired",  # verified on real data: https://github.com/jcdavis131/vector-unified/pull/5
             description=(
                 "hoops next_season_per predicted from a frozen embedding trained WITHOUT hoops."
             ),

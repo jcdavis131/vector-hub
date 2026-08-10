@@ -105,13 +105,22 @@ def test_registry_has_all_fleet_domains():
     assert get_domain_spec("unified").transfer_probe
 
 
-def test_registry_targets_are_all_spec_only_and_honest():
-    # No real-domain data is committed, so every registry target must be spec-only
-    # (nothing pretends to have a result). The synthetic example is the only place
-    # a real per-target report is computed.
+def test_registry_targets_reflect_real_data_benchmark_status():
+    # Real-data benchmark runs have validated data-wiring for hoops, gridiron,
+    # equities, pitch, and unified (each target's status line links the
+    # domain-repo PR). realty's real-data run still refutes the outperformance
+    # thesis, so its targets must stay spec-only. Every target, wired or not,
+    # must document its leakage-safe construction — status is never trusted
+    # without one.
+    data_wired_domains = {"hoops", "gridiron", "equities", "pitch", "unified"}
+    spec_only_domains = {"realty"}
+    assert data_wired_domains | spec_only_domains == set(list_domains())
+
     for domain, target in all_targets():
-        assert target.status == "spec-only", (domain, target.name)
+        assert target.status in ("spec-only", "data-wired"), (domain, target.name)
         assert target.construction, f"{domain}.{target.name} missing leakage construction"
+        expected = "spec-only" if domain in spec_only_domains else "data-wired"
+        assert target.status == expected, (domain, target.name, target.status)
 
 
 # --------------------------------------------------------------------------- #
