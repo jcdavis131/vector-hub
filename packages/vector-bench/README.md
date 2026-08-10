@@ -131,9 +131,11 @@ reader walks `targets[].scorecard` and finds the exact `1.0` shape it already kn
 
 Following each domain's real signal. A target's `status` is only ever flipped to
 `data-wired` once a real-data benchmark run has actually validated the build for
-it — see the code comment next to each target's `status` in `registry.py` for the
-domain-repo PR that did the wiring. A `spec-only` target is declared with a
-leakage-safe construction, but nothing fabricates a number for it.
+it **and its domain-repo PR has merged** — see the code comment next to each
+target's `status` in `registry.py`. A `spec-only` target is declared with a
+leakage-safe construction; it may mean no data has been plumbed yet, or it may
+mean a real-data run was computed but is being held back pending a disclosed
+data-quality fix or an unmerged PR — the code comment says which.
 
 | domain | primary | targets | kind | status |
 |---|---|---|---|---|
@@ -144,7 +146,7 @@ leakage-safe construction, but nothing fabricates a number for it.
 | **realty** | retrieval | `next_year_price_change`, `three_year_price_change` | regression | spec-only |
 | | | `above_market_appreciation` | binary | spec-only |
 | **pitch** (soccer) | retrieval | `next_window_minutes`, `next_window_goal_contribution` | regression | data-wired |
-| **unified** | prediction | `transfer_forward_return`, `transfer_next_season_per` (transfer probe) | regression | data-wired |
+| **unified** | prediction | `transfer_forward_return`, `transfer_next_season_per` (transfer probe) | regression | spec-only |
 
 **unified is the cross-domain transfer probe**: freeze the shared MTNN embedding
 whose heads were trained WITHOUT the held-out domain, then fit only a fresh linear
@@ -153,17 +155,26 @@ means the shared representation transferred; the held-out domain's own leakage-s
 temporal split is reused so transfer is measured on genuinely future rows. See
 `spec.transfer_probe`.
 
-> **Status update: real-data benchmark runs have landed for five of six domains.**
-> hoops, gridiron, equities, pitch, and unified each ran the full baseline
-> gauntlet + MTNN rung on real, domain-repo data end to end; their targets above
-> are now `data-wired` (see the linked PR next to each target's `status` in
-> `registry.py`, and the qualitative results below for the public sports
-> domains). realty's real-data run **still refutes** the outperformance thesis —
-> consistent with its *retrieval* task finding below (a correct-gradient learned
-> linear map matches/beats the shipped MTNN; see `examples/realty/`) — so its
-> targets remain `spec-only`. The only *synthetic* multi-target report
-> (`examples/multitarget_synthetic/`) remains deliberately **baseline-only** (no
-> MTNN rung) — it proves the harness mechanics, not the thesis.
+> **Status update: real-data benchmark runs have landed and merged for four of
+> six domains.** hoops, gridiron, equities, and pitch each ran the full baseline
+> gauntlet + MTNN rung on real, domain-repo data end to end, and their PRs
+> merged; their targets above are now `data-wired` (see the linked PR next to
+> each target's `status` in `registry.py`, and the qualitative results below for
+> the public sports domains). realty's real-data run **still refutes** the
+> outperformance thesis — consistent with its *retrieval* task finding below (a
+> correct-gradient learned linear map matches/beats the shipped MTNN; see
+> `examples/realty/`) — so its targets remain `spec-only`. unified's transfer
+> probe was also computed on real data, but stays `spec-only` for now: its PR
+> ([vector-unified#5](https://github.com/jcdavis131/vector-unified/pull/5)) is
+> still open/unmerged, and the shared embedding it reports on was trained partly
+> on realty's **pre-fix** exchange dataset — the same aggregate-code
+> contamination realty's own open fix
+> ([vector-realty#4](https://github.com/jcdavis131/vector-realty/pull/4))
+> addresses. unified will be re-flipped once both PRs merge and the transfer
+> probe is rerun against the corrected realty data. The only *synthetic*
+> multi-target report (`examples/multitarget_synthetic/`) remains deliberately
+> **baseline-only** (no MTNN rung) — it proves the harness mechanics, not the
+> thesis.
 
 ### Real-data lane results (public sports domains)
 
@@ -180,8 +191,8 @@ domain repo's PR.
 
 See each PR for the full per-target scorecard. equities, realty, and unified are
 private domains — their results aren't narrated here; only the registry `status`
-flip (or lack of one, for realty) and PR link are reflected in this repo, per the
-table above.
+flip (or lack of one, for realty and unified) and PR link are reflected in this
+repo, per the table above.
 
 ### Real run on synthetic data: `examples/multitarget_synthetic/`
 

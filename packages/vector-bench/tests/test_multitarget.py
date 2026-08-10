@@ -107,13 +107,16 @@ def test_registry_has_all_fleet_domains():
 
 def test_registry_targets_reflect_real_data_benchmark_status():
     # Real-data benchmark runs have validated data-wiring for hoops, gridiron,
-    # equities, pitch, and unified (each target's status line links the
+    # equities, and pitch (each target's status line links the MERGED
     # domain-repo PR). realty's real-data run still refutes the outperformance
-    # thesis, so its targets must stay spec-only. Every target, wired or not,
-    # must document its leakage-safe construction — status is never trusted
-    # without one.
-    data_wired_domains = {"hoops", "gridiron", "equities", "pitch", "unified"}
-    spec_only_domains = {"realty"}
+    # thesis, so its targets stay spec-only. unified's transfer probe was also
+    # computed on real data, but its PR (vector-unified#5) is still unmerged and
+    # trained partly on realty's pre-fix (XM/XW-contaminated) data, so it stays
+    # spec-only too pending both fixes landing. Every target, wired or not, must
+    # document its leakage-safe construction — status is never trusted without
+    # one.
+    data_wired_domains = {"hoops", "gridiron", "equities", "pitch"}
+    spec_only_domains = {"realty", "unified"}
     assert data_wired_domains | spec_only_domains == set(list_domains())
 
     for domain, target in all_targets():
