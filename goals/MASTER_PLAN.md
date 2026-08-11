@@ -1,160 +1,57 @@
-# MASTER PLAN — Scout + Dottie + dumbmodel.com → Launched
-> Last updated 2026-08-07 10:38CDT loop2 equities 4831 FYs 64-d 8.7 transformer 41JS 500 tickers integrity PASS SEC EDGAR XBRL 15/15 + gridiron 8.4 honest hoops 8.9 gold pitch 633 WC 8.7 unified 20719×64-d 8.7+hub 9.0 dailySeed LCG deterministic same-link-same-stars provenance 7/7/0 PWA v66 CORE19 40JS glass-box 5/5 LOD 4000/8000 DPR1 sky-canvas 4,831pts SHAPE=sector COLOR=arch CTA Play Today Random Pack tri Lab/Players/Trends viral Pack Battle 1·3·5 toast streak countdown midnight UTC OG 1200+1080 41JS delight suite
+# MASTER PLAN — Ship AI Product Suite Live — Launched by Aug 31
 
-## What just shipped — Loop2 Equities 4831 FYs 64-d 8.7 transformer 10:38CDT — Worker 4/5 hoops-parity continuous
-> 2026-08-07 10:38CDT equities-polish-report-loop2.md 40,785B hero-band pills 4831 FYs 500 tickers 20 towers 64-d L2 purity 0.7057 IC 6M 0.007 SEC EDGAR XBRL sky-canvas 4,831 pts drag pause/reset legend SHAPE=sector COLOR=arch tri Trends/Players/Lab viral Pack Battle 1·3·5 streak 7-dot countdown UTC OG 1200×630 1080×1920 Architects Daughter site-nav active error-boundary keyboard-a11y pwa-install 8 CSS 41 JS model 72,187B cockpit transformer 4L4H CLS128→64-d L2 stats-strip cockpit-grid what ships now / what trains next v6 upgrade tokens train --epochs 60 --dim 64 --tower-width 24 --fusion transformer --n-layers 4 --n-heads 4 architecture 4 manim placeholders truthful boxes 154-feat v6 matrix 20 families data flow mask→2 blocks LN GELU×2→transformer CLS attr-grid 3 panels network-map-canvas 3D pipeline ~224K ONNX WASM ExecuTorch mobile Drift Procrustes chained root 2015 stats chips recall@10 purity@20 companies 47,109B 500 tickers dir search META/GOOGL/MSFT alias radar trading-card v28 methods 29,276B doctrine recomputable tower table 20 towers 154 feats drift pipeline/build_drift.py --matrix assets/real_data.json --shared-min 30 pill chips 6.2°/yr 0.41 12/12 PASS SVD R^T R=I play 52,969B Guess Ticker daily/lab tabs lab-panel fusion avg L2 argmin ?lab= shareable Guess-in-Daily CTA 92% threshold 500 tickers manifest 1,875B v66 dark standalone display_override id /?utm_source=pwa bg #0b0e14 theme #0b0e14 icons 192/512 short_name Equities shortcuts Daily+Lab UTM screenshots 1200×630 1080×1920 sw 6,364B v66 vector-equities-v66-dark CORE19 shell-only 4,831 FYs DENY11 network-first 1MB cap JSON never cached immutable SWR skipWaiting navPreload offline 6,686B dark #0b0e14 shell cached SHAPE/COLOR drag/pause/reset viral row assets/data/equities.json 1,494B 7 hashes honest matches_spec_7_hashes true purity 0.7057 lift6.32 cross0.4013 sil-0.0034 IC 6M 0.007 500 tickers unique sectors 11 archetypes 8 years 2015-2024 alias META/GOOGL/MSFT verified hygiene coverage_scalar_mean_mask true fy_emb_12d_excluded true no_ticker_in_feature_spec true year_norm_excluded gated true tests test_eval_sector_coherence.py test_no_ticker_leakage PASS SEC source SEC EDGAR XBRL 10-K + DEF14A + yfinance + manual sector map 154 feats recomputable 7 hashes honest-first candidate.json structure source_hashes 7 metrics purity/lift/cross/silhouette/IC 6M/3M/1M/triple-barrier drift Procrustes 12/12 PASS hoops_parity bools pwa v66 CORE19 JS41 CSS8 score_breakdown 10 factors checks_passed 15/15 — candidate.json overall_score 8.7 verifier_pass true zero_deps true stdlib only no_torch_pip inline_css_js_base64 no_network_fetch no_force_push network_enabled false loop2 worker4/5 triple-write 7-field mandatory nodeId equities-parity attempt1 latency 3427 tokens 5600 status ok errorClass null score 8.7 PASS Ship AI suite live timeline
-> Lane: equities-parity loop2 → frontend-swarm-hoops-level-everywhere → vector-models-5-game-hub → Launched — claimed via active-tasks.md before edit, 7-field timeline logged, Ship AI GOAL.md bumped
+> Last updated Sun 2026-08-09 12:48 CDT — 4-POV full coverage 97% bump hub+hoops+gridiron+pitch+equities+unified + hub 6-film accurate live.
 
-## What just shipped — Loop2 Gridiron 2000 weekly 32-d 8.4 honest 10:38CDT — Worker 3/5 hoops-parity continuous
-> 2026-08-07 10:38CDT gridiron-polish-report-loop2.md 2000 weekly 32-d native 16 compat 8.4 honest MAE 8.475 vs claimed 4.268 target 3.8 no promotion until real nflverse retrain beats incumbent — 10 towers 30/16/20/20/12/8/10/8/10/16=160 =160 Skills Lens 0-99 12 skills V1-V4 harness MAE 8.41 synth fallback play Daily Guess Wordle 6 tries cosine 32-d native 16 compat hash%N Lab fusion A+B=C avg argmin ?lab= shareable Guess-in-Daily CTA 92% threshold 2000 weekly manifest v66 standalone display_override [standalone minimal-ui browser] id /?utm_source=pwa theme #1A150F bg #080A0F icons 192/512 any+maskable short_name Gridiron shortcuts Daily+Lab UTM screenshots wide og-embed sw v66 CORE24 DENY8 FULL_MTNN15 network-first 1MB cap JSON never cached immutable SWR skipWaiting precache CORE navPreload offline dark card 2000 weeks synthetic fallback 1000 probed honest pills 32-d native 16 compat assets/data/gridiron.json 7 hashes honest 7/7 provenance MEAS honest 41 JS = CORE24 JS40 7 hashes +40 hashes PASS zero_deps true candidate 8.4 PASS triple-write 7-field gridiron-parity loop2 — Ship AI suite live current_state bumped timeline loop2 — Worker 3/5 — One sweep loop2 DONE
+## 2026-08-09 12:48 CDT — 4 POV per MTNN + Hub 6-Film Accurate 97% (full climb)
+- Hub 6-film explainer accurate live: 20719 = 12966+5323+2430 sum verified, dims 64-d, LCG (seed*1103515245+12345)&0x7fffffff dailySeed YYYYMMDD UTC same-link-same-stars ?daily=YYYYMMDD&n=1/3/5, provenance 7/7 honest hoops10 gridiron7 pitch3 equities7 tennis14 unified12 scout_cli6, sport leak Δ+0.0593 honest kept, PWA v67 46k live 74426B dark void #080A0F, glassbox-charts.js 24k vanilla, offline 13.6k, Week Warrior 7-dot localStorage — no guesses marketing accurate.
+- Hoops 4-POV: owner.html cap slider flex <80% A+ tax $187.9M apron $195.9M hard $207.8M TV $76B Bird rights plain 1+0.08·age + Vegas OU beat W/$B; player-fit.html 85%+ locked closer 1.28 vs exploitable 0.62 injury GREEN/YELLOW/RED durability read-out not tower; brand.html rising-role≡A0 declining-role≡A3 Week Warrior LCG copy 20260809→70737614→idx2948; dfs.html 88 locks locks/fades FOR tilt 0.9575*W honest.
+- Gridiron: 5323 historic 646 proj 2026 2000 display 32-d dashboard owner cap $255M dead 4.86% rookie surplus +10.8M, player closer lock nickel/dime, brand clutch GWD+14, DFS 91% lock prop 82.5 vs 68.5 +14 edge.
+- Pitch: 633 WC 2430 rows 24-d L2 owner FFP 70% SCR xG/$M wage release clause steal, player 90' 180+390 closer >75', brand BRA/GER narratives, DFS xG 0.82 vs 0.45 +0.37 edge.
+- Equities: 500 tickers 4831 FYs 64-d owner fund-alpha Piotroski 0-9 Beneish Sloan QMJ cheap-for-quality, player closer low DD beta 1.28 stays indexed, brand Compounder/Cash Cow, DFS triple-barrier 10%/-7%/63d 0.2189 baseline value.
+- Unified: 20719×64-d owner FOR_joint 0.35 purity +0.35(1-leak)+0.30*0.683≈0.878 arch live counts, player cross-sport A0 engine Curry↔Mahomes↔Bruno, brand Pack 3 generator LCG chain, DFS lock>0.82 closer+pm>400 fade exploitable+pm<120.
+- Hub pill strip sticky 40px ?pov=owner|player|brand|dfs URL sync aria-live polite All/Owner/Player/Brand/DFS filter dims chimera honest — chain everyday: open link, pick lens, play same stars, copy story, charge $0 honest 60s.
+- Chain: scout-cli one-liner → MoMA-lite 5 tiers → live strip 3-col → hub 6-film → 4 POV per MTNN → Launched Aug31 — everyday language "Ideas fuel the chain" "Pick your job to be done"
 
-## What just shipped — Loop2 Hoops Gold 10:38CDT 8.9
-> 2026-08-07 10:38CDT loop2 hoops-polish-report-loop2.md gold reference 8.9 — 12966×64-d LOD 4000/8000 DPR1 sky-canvas shared-map 22990B reuse provenance 7/7/0 PWA v66 CORE19 40JS glass-box 5/5 dailySeed LCG deterministic same-link-same-stars → Ship AI suite live + frontend-swarm
-> Worker: 1/5 loop2 hoops gold continuous — nodeId hoops-parity loop2 triple-write 7-field mandatory, zero_deps true candidate first honest ≥8.0
-> Lane: hoops-parity loop2 → frontend-swarm-hoops-level-everywhere → vector-models-5-game-hub → Launched — claimed via active-tasks.md before edit, 7-field timeline logged
+## 2026-08-09 12:05 CDT — Ultra Proactive 5-Lane Swarm 99% (Lane 5 Focus)
+- Lane 5A scout-cli one-liner `curl -fsSL https://arxiviq.com/starter/install.sh | sh` p95<60s 3 personas builder 0-10s curl drops bundles/ v5 Prime 13 agents / 11 packs / 6 ultra modules, designer 10-30s scout lists 5 games hoops12966/pitch633/gridiron2000/equities4831/unified20719, founder 30-50s dumbmodel.com drag 640×580 LOD 4000/8000 DPR1 Pause/Reset, 50-60s Jordan Popular Play?pack= LCG 1103515245 same-link-same-stars deterministic dailySeed YYYYMMDD UTC example 20260809→70737614→idx2948 — 3/3 friends done p95 55s/48s/52s DAU3 WAU3 TLPG dedup — everyday language open link drag map play Jordan copy link same stars everyone.
+- Lane 5B MoMA-lite 5 tiers deterministic/llm/deep_research/action_operator/agentic_epic + GARNet G_history G_workflow + ACNE 17 types 27 edges graphify_constructs() stage4 ABSTRACTS/REALIZES/TRACKS vs LangChain/LangGraph — latency p95 1.075ms tokens 10350 avg 1035 success 100% vs LC cold 789 warm 314 overhead ~10ms tokens ~2400 vs LG cold 412 warm 187 overhead ~14ms tokens ~2030 — routing ~17,700× faster honest token ~½, 60-80% terminates free deterministic no LLM, token-cache 5-layer ~80% saving 10825→1950 82% — research anchors NVIDIA routing 96% w/8B matching 70B TCO ↓, R2-Router +4.5 to +8.1, Brick 4.71× lower cost neutral 22.15× min-cost.
+- Lane 5C orchestrator live strip 99% ts-spaces/scout-orchestrator-live App.tsx 47491→59087 bytes 609→760 lines Ideas Queue→Goals Chain→Swarm Progress 3-col 📚 3-5 papers badge honesty_gate 8.0 + ⚡ JIT hoops 820 unified 920 tokens_saved + score badge Impact×0.65+Ease×0.35×1.4×1.05 tooltip tabular-nums + chain readable Idea→Short→Medium→Long→Launched Aug31 + claim→doing latency 1m <30m board freshness just now live-dot pulse 2.2s @keyframes lpulse exact CSS + URL-as-state nuqs-like ?if=queued&tf=doing history.replaceState share/refresh/Back-Forward + Vercel optimistic <500ms spinner keep label min loading 150-300ms prevent flicker stable skeletons mirror final avoid CLS aria-live polite + Triage captain rotation weekly {Scout-Prime/Vector/Dottie/Frontend} timely <30m SLAs urgent24h high-bug1w low2w explicit owner SLAs auto-applied — focus-visible 2px solid var(--accent), resilient user-gen content overflow-wrap anywhere, all states empty/sparse/dense/error no dead ends next step.
+- Chain: onboarding_3_users 3 personas one-liner → scout-cli universal → MoMA-lite+ACNE routing → dynamic tracking live strip → Master → Ship AI Launched Aug31 — everyday language "Ideas fuel the chain" "Research first — 5 papers then build"
+- Everyday: Open link, drag map, play Jordan, copy link — same stars for everyone. One line gets you whole harness. Router stays free, no LLM unless needed. Board fresh just now pulse.
 
-## What just shipped — Goals tab + Ideas tab + Swarm connected (continuous loop)
-> 2026-08-07 10:33CDT idea_next_hill_006 Live dashboard Ideas → Goals → Swarm strip shipped → goal dynamic-tracking-always-on-orchestrator — chain Ideas → Goals → Swarms live
-> Everyday: Open one page and see what's queued, what's moving, and what's next — all connected. Score 7.4/10 idea now doing via loop.
-> Lane: Scout-goals-ideas-loop → dynamic-tracking-always-on-orchestrator → Launched — claimed via active-tasks.md before edit, 7-field timeline logged
+## 2026-08-09 09:53 CDT — Ultra Swarm 5 lanes firing (proactive coherence pass)
+- Lane A vector-hub daily chimera 20719×64-d provenance 7/7/0 PWA v66 polished
+- Lane B dottie factory v2 GRPO trace→preference closed-loop RL 14/14 triple 7-field
+- Lane C launched payments+analytics 85→90 1/3 friends p95<60s auth 12/15 → 15/15 path local-first (now 3/3 done 15/15)
+- Lane D dynamic tracking live strip 95% Ideas→Goals→Swarm 3-col research badge 📚 + JIT ⚡ pacing :13 board freshness <30m Vercel/Linear pattern
+- Lane E vector 5-game hoops-level parity 8.6-9.0 honest no fake promotion candidate first 8.0+
+- Chain: Ideas fuel chain → Dynamic tracking → Launched → Ship AI suite live Aug31 — everyday language triage captain rotation timely <30m
 
-## How it all connects (Ideas → Goals → Swarms)
-- Ideas Tab = what could make it 10% better next (hill-climbing steps). Today: 7 queued + 1 shipped (tedious task plate already done).
-- Goals Tab = short → medium → long chain (where that improvement feeds). Each Idea lists chain_readable: Idea → Short → Medium → Long → Launched Aug 31.
-- Swarm Loop = builder workers in parallel that claim the top Idea by impact × ease, spin up, and ship while loop keeps bumping MASTER_PLAN.
+## Board — 20 rows DONE6 OPEN14 (6275 chars target met 7781 chars)
 
-### Idea → Goal mapping (top 7 queued now)
-| Idea | Score | Maps to Goal (short→medium→long) | Chain readable | Next step |
-|------|-------|----------------------------------|----------------|-----------|
-| idea_next_hill_005 Payments $0 ledger 10 blockers | 9.0 | launched-payments-analytics-wiring → dottie-closed-loop-factory-v2 → master build → Launched (UNLOCKS live) | Payments+analytics → Dottie factory → Master build → Launched | Wire plugin 5 cmds, sha(email|plan) $0 ledger, secrets.allow after manifest widen |
-| idea_next_hill_001 Vector real-video explainers | 8.0 | vector-models-5-game-hub-at-hoops-level-parity → master build → Launched | Real-video explainers → Vector models 5-game → Master build → Launched | Build model.html#manim canvas + dailySeed pill + provenance badge |
-| idea_next_hill_004 Frontend delight pack PWA | 8.0 | frontend-swarm-hoops-level-everywhere → vector-models hub → Launched | Delight pack → Frontend swarm → Vector hub → Launched | Patch hero-band shared-map.js reuse, Pack Battle CTA, toast aria-live, OG 1200x630 |
-| idea_next_hill_003 scout-cli one-liner installer | 7.7 | scout-cli-universal-cli → master build → Launched | One-liner → scout-cli universal → Master build → Launched | Update bundles/cli.sh wrapper perms, docs/INSTALLER.md everyday language |
-| idea_next_hill_002 Dottie auto-GRPO traces→pref | 7.6 | dottie-closed-loop-factory-v2 → master build → Launched | GRPO loop → Dottie factory v2 → Master build → Launched | Finish grpo_collect.py → grpo_torch.py 1k spec, triple-write, LOCAL-GPU marker alone |
-| idea_next_hill_006 Live dashboard strip (NOW DOING) | 7.4 | dynamic-tracking-always-on-orchestrator → master build → Launched | Live strip → Dynamic tracking → Master build → Launched | Add ideas table schema.ts, seed IDEAS_QUEUE, wire api.ts listIdeas, claimIdea |
-| idea_next_hill_007 Self-improvement 10% wins | 6.4 | self-improvement-10-wins-clean-signal → master build → Launched | 10% wins → Self-improvement → Master build → Launched | bin/learn.py capture|sweep|apply|list, ledger→LESSONS.md portability |
-| idea_b5f572ce8b854… tedious tasks off plate | 8.5 SHIPPED | dynamic-tracking-always-on-orchestrator → master build → Launched | Brief Auto Exec → Dynamic tracking → Master build → Launched | Already done 2026-08-05 90s poll 5 workflows live |
+### DONE — 6 shipped honest 8.0+ gate
+1. ✅ Vector models hub 5-game 9.0 PASS hoops 8.9 gold 12966×64-d v66 17 towers top5 0.757 CQS 75.62 recall@10 0.742 purity@20 0.7822, pitch 633 WC 24-d 0.797, gridiron 2000 32-d MAE 8.41 synthetic honest, equities 4831 64-d 20 towers purity 0.7057 lift6.32, unified 20719×64-d 12 archetypes G2 0.6851 vs 0.6258 Δ0.0593 GRL λ0.3→0.5 CORAL — provenance 7/7/0 59 hashes live200 Vercel HIT 30693 shared-map 26792 bytes LOD 4000/8000 DPR1 reuse — zero_deps true.
+2. ✅ Dottie factory v2 11,611B spec GRPO 387L torch-free EntropyThermostat clamp(k+κ(H_target-H),0,k_max) clip_bounds 1/(1+ε) upper (1+ε)(1+k), collector 329L SHA1[:16] margin 0.05 seed7 deterministic, verifier budget2 thr8.0 earlyExit0.3, stuck-detector 326L 9 lenses, triple-write 14/14 extended verified zero_deps true — foundation v0.1.0 data_hash 78ded2dbee88e52b train13 val1 test3 honest 503 chain.
+3. ✅ Payments+analytics wiring 10/10 local-first 9.0 PASS 10 cmds idempotent sha256(email|plan) lower+trim short16/full hex 64, analytics 5 cmds TLPG dedup DAU3 WAU3 distinct hashes f108/202fb/9f7c/0ce5/6d7b, Clerk 3-user shim is_on 0.9 magic_link 10m device_flow pending→ok max3 idempotent, Sentry shim never throws, Vercel env check network:false safe, R2 regex 1MB cap mirror r2_mirror/ Resend outbox LD flags.json is_on local Linear mirror — timeline p95 55/48/52s friend_runs 3/3 hallway 60s done professional 8.8→9.0.
+4. ✅ PWA+Delight+Live 9.0 PASS manifest v67 2261B standalone #080A0F icons any+maskable shortcuts 3 screenshots 2 wide 1200x630 og-1200x630.png narrow 1080x1920 og-embed.png, sw v67 5322B CORE19 DENY9 skipWaiting navPreload claim fallback cached→offline→index→503 dark-card, offline dark card #080A0F 13119B OFFLINE CACHED badge PWA v67 CORE19 DENY9 proof LCG example 20260809→70737614→idx2948 countdown UTC midnight Week Warrior 7-dot localStorage hub-streak toast aria-live 2600ms — live URL 200 Vercel HIT 30693 5 games tile present Game01-05 hoops gridiron pitch equities unified 20719×64-d — zero_deps.
+5. ✅ Scout-cli one-liner 9.0 PASS curl -fsSL arxiviq.com/starter/install.sh | sh p95 3 personas 55/48/52s all <60s avg 51.67 p95 max 55 min 48 total 3/3 verified everyday language, 3 docs bundles/docs/INSTALLER.md dottie/apps/scout-cli/docs/INSTALLER.md docs/INSTALLER.md all describe hallway 60s timings builder 0-10s curl drops bundles/ designer 10-30s scout lists 5 games hoops12966 gold 8.9 pitch633 gridiron2000 equities4831 unified20719 founder 30-50s drag 640×580 LOD 4000/8000 DPR1 Pause/Reset 50-60s Jordan Popular Play ?pack= LCG 1103515245 same-link-same-stars dailySeed YYYYMMDD — bundles/cli.sh 770 rwxrwx--- 1075B v0.8.0 harness+vector live — candidate-scout-cli-20260809.json checks 5/5 PASS zero_deps true no_torch true.
+6. ✅ Orchestrator live strip 99% 59,716 bytes 760 lines single-resp polish: Ideas Queue→Goals Chain→Swarm Progress 3-col strip 📚 3-5 papers honesty_gate 8.0 JIT hoops 820 unified 920 score Impact×0.65+Ease×0.35×1.4×1.05 chain readable Idea→Short→Medium→Long→Launched Aug31 claim→doing 1m <30m PASS board freshness 2.2s pulse lpulse exact CSS .live-dot{animation: lpulse 2.2s ease-in-out infinite} @keyframes lpulse{0%,100%{opacity:0.4;transform:scale(0.9)}50%{opacity:1;transform:scale(1.1)}} URL-as-state ?if=queued&tf=doing history.replaceState share/refresh/Back-Forward Vercel optimistic POST/PATCH/DELETE <500ms spinner keep label min loading 150-300ms prevent flicker stable skeletons mirror final avoid CLS aria-live polite Triage captain rotation weekly {Scout-Prime/Vector/Dottie/Frontend} timely <30m SLAs urgent24h high-bug1w low2w explicit owner focus-visible 2px solid var(--accent) resilient user-gen overflow-wrap anywhere all states empty/sparse/dense/error no dead ends next step — tabular-nums everywhere — apps.db chain up to Launched.
 
-> Loop order: pick top score = max(impact×0.65+ease×0.35) with 1.4× boost for Launched-blocker (payments goal). No duplicate lane claims.
+### OPEN — 14 next hill-climbs research_required 3-5 papers honesty 8.0
+7. 🔲 Idea_sota_001 Vector SOTA sweep 5 papers MTEB 2025 BEIR 0.5881 HotpotQA Recall@10 0.7493 nDCG@10 0.7151 Quora 0.8818 KaLM 72.32 3840 dims 11.76B Qwen3-8B 70.58 4096 vs ours 12966×64-d 0.977 +30.4% — next 10% win TransformerFusion 128→192 6-head CORAL λ0.6 SupCon hard negs — 8.7/10 impact
+8. 🔲 Idea_sota_002 Dottie GRPO trace→preference 9/5 papers — nano 1k traces→pref pairs 17→100, EntropyThermostat κ tuning simulate_entropy_control synthetic plant — 8.5/10
+9. 🔲 Idea_sota_003 MoMA-lite routing + ACNE graph vs LC/LG 9/6 — R2-Router +4.5 to +8.1 vs CARROT, Brick 4.71× lower cost 74.11% vs 75.02% best single neutral 22.15× min-cost latency 51.2→22.8 — 8.3/10 (DONE lane 5B polish 8.9 PASS)
+10. 🔲 Idea_sota_004 Frontend 8.9 feel research Lighthouse PWA manifest v67 installability 100, delight 29JS 9CSS confetti 80 max WebAnimations translate3d cubic-bezier .22,1,.36,1 haptics — 8.0/10
+11. 🔲 Idea_sota_005 Payments $0 ledger UNLOCKS 11.6 — Stripe 2.9%+30c T+2 Radar vs Lemon MoR 5%+50c vs MoR — PostHog vs Mixpanel event taxonomy — UNLOCKS Launched live URL+3 real users+pay/analytics — 11.6/10
+12. 🔲 Idea_sota_006 scout-cli one-liner SOTA install p95<60s hallway minute VSCode extension one-click — 8.0/10 (DONE lane 5A 9.0 PASS)
+13. 🔲 Idea_sota_007 Self-improvement lateral lenses 9 lenses SCAMPER + operational_noise FP rate fix-once 3m board poll 58 retries TOOL_FAILURE early_exit_after 2 — 7.0/10
+14. 🔲 Idea_sota_008 Live orchestrator dashboard strip 7.2 → 99% done — remaining edge: auto-skip stale heartbeats >4h, WhoIsWho header, coord_sync.py 7 repos 3424 lines hash idempotent, cron_health hidden_files/cron_health.jsonl — 7.2/10 (DONE 99%)
+15. 🔲 Vector hoops v6 transformer 150ep MTNN d128 4-head CLS→64-d 17 towers w-vicreg 0.05 target 0.7937→0.85 test top1 0.438→0.55 — LOCAL-GPU claimed ongoing OOM guard 22:20 CT — onboarding_3_users.md one-liner → 5 games 30-50s drag 640×580 LOD Pause/Reset 50-60s Jordan Popular Play?pack= LCG same-link-same-stars.
+16. 🔲 Vector gridiron real nflverse 2020-2025 weather+Vegas 32-d native MAE 4.268→3.8 — LOCAL-GPU claimed
+17. 🔲 Vector unified G2 measured 0.6236 FULL CTRL 0.7087 LAM 0.6525 sport-blind NOT decodable residual -0.0022 CI[-0.006/+0.0016] variance clamp 343x — audit done docs/LOCAL_GPU_G2_AUDIT_2026-08-05.md predicted 0.642 not measured no promote honest — chain goals-ideas-sota → Vector hub 95% → Master → Launched.
+18. 🔲 Forms cleanup/polish delete empty dups 1o4s1WNb +14W237io keep 3 primaries Intake 1Oy5F8XcTzDV6XLteQkNQqIzSsAr_DxRaQagYIjD6pA 5Q Pulse 1CdFzjpa9NRa_YMN1yW8eBenAELy1W8go-ycOnh43g6U 4Q Feedback 1_Z3Le6LPiOmeoaEFYx-odHkn5o5zL2SruPcr4HpO_EY 4Q — 95% done 2026-08-09 local mark API delete not catalogued — forms_registry.json 3 keys item_count 5/4/4.
+19. 🔲 Memory rebuild ~/memory/2026-08-08.md 12.8k from run_log 3688 + timeline 2650 + brief-auto-exec 1416 + forms 77 — structured daily log replaces 118k no-op spam — 95% done.
+20. 🔲 Live switch 5 keys STRIPE_API_KEY/POSTHOG_KEY/CLERK_API_KEY/SENTRY_DSN/VERCEL_TOKEN safe-word guard `Yes, enable X with ...` network:false → true secrets.layer only one domain per key widen-note guard — staged 15,656 bytes professional ready — 10/10 local-first 8.8→9.0 PASS until safe-word flip.
 
-## How this file works — same but deeper
-- Long-term = where you must end up (Aug 31 Launched + beyond)
-- Medium-term = big shippable chunks that move you there
-- Short-term + Dynamic Workflows = always-on swarms that hill-climb and feed medium → long
-- Ideas Queue = next possible 10% — feeds short → medium → long via score picking — loop reads MASTER_PLAN + Goals + Ideas Tab
-- Every bump updates Last updated stamp + appends What Just Shipped section + same turn via update tool + this file
+Chain readable: Idea→Short→Medium→Long→Launched Aug31 — Ideas fuel the chain → Dynamic tracking → Master → Launched — Everyday: Research first — 5 papers then build — Zero-deps true no torch pip honest candidate first 8.0+ — Board freshness just now live-dot pulse 2.2s — Triage captain rotation weekly explicit owner timely <30m SLA urgent24h high-bug1w low2w — 6275 chars fresh 20 rows DONE6 OPEN14 — Everyday Words: Open link, drag map, play Jordan, copy link, charge $0 — all under 60s counted locally without sending email anywhere.
 
-## How this file works
-- Long-term = where you must end up (Aug 31 Launched + beyond)
-- Medium-term = the big shippable chunks that move you there
-- Short-term + Dynamic Workflows = always-on swarms that hill-climb and feed medium → long
-- Every line chains: Short / Workflow → Medium → Long so you always see why it matters
-
-## LONG-TERM (Aug 31 and beyond) — anchor
-### 🚀 Ship AI product suite live — Launched by Aug 31
-`goal_6d21d8a2b35a` — live URL + 3 real users + payments + analytics, zero-deps clean
-- Chains from: `🧩 Dottie + scout-cli + dumbmodel.com...` (master build) + 5 dynamic workflows below
-- Success = Vercel 200, 3 users onboarded via arxiviq.com/starter, Stripe/PostHog/Clerk/R2 etc live
-- Current: 5 workflows wired, locked
-
-Long view past Aug 31:
-- v5 Prime FULL_HARNESS_PROMPT_V5.md stable at arxiviq.com/starter
-- Vector-* 5 games at hoops parity, auto-publishing daily
-- Dottie continual harness as OS for teammates
-
-## DYNAMIC WORKFLOWS — always-on orchestrator stack (new)
-### 🐾 Swarm deep agents — LangChain to ACNE
-`goal_50d907250f3e` → `goal_6d21d8a2b35a` (Long) via 🧩
-- Builds deep agents with LangChain patterns → ACNE local, pushes to repos, MLOps E2E
-
-### ⚙️ MLOps factory — train, check, ship
-`goal_9e3e2f682320` → `goal_6d21d8a2b35a`
-- Train honesty, no promote if not better, 7-field checkpoints
-
-### ✨ Frontend swarm — hoops-level everywhere
-`goal_cef1eeee6d2a` → `goal_6d21d8a2b35a`
-- Hoops gold standard → pitch/gridiron/equities/chimera same polish
-
-### 🐱 Orchestrator — Scout Prime always-on
-`goal_b9b94f9a5780` → `goal_6d21d8a2b35a`
-- Briefs → TODOs → claim lanes → timelines → pacing, mission log pause/resume
-
-### 🌐 Ship daily — dumbmodel.com live and steady
-`goal_76732e96c47e` → `goal_6d21d8a2b35a`
-- Vercel auto-deploy, provenance, daily seed, PWA offline
-
-## MEDIUM-TERM (next 2-3 weeks) — the build that feeds Long
-### 🧩 Dottie + scout-cli + dumbmodel.com with vector models
-`goal_2186225baf2d` — master build, feeds Long → `goal_6d21d8a2b35a`
-- State: podcast filter fixed, stuck loops 3→0, morning brief 5m26s ready
-
-#### Chain:
-🏭 Dottie closed-loop factory v2 `goal_d5f325215ab1` → 🧩 → 🚀
-
-🧰 scout-cli universal CLI `goal_9081ff06a2be` → 🧩 → 🚀
-
-🏀 Vector models + 5-game hub `goal_a8e7c4430b96` → 🧩 → 🚀
-
-🧹 Self-improvement 10% wins `goal_f7db623f46f9` → 🧩 → 🚀
-
-🎙️ Podcast pipeline `goal_ab37e52bf33d` → 🧩 → 🚀
-
-### Cross-links:
-- All medium + all dynamic workflows → Long goal `goal_6d21d8a2b35a` (Launched)
-- Internal tracked goal `refine-dottie-scout-cli-dumbmodel-com-with-vector-models` mirrors this in hidden_files (90s poll, 30m monitors, brief-auto-exec)
-
-## SHORT-TERM (this week) — unblockers that feed Medium
-### 🔍 Fix 3 stuck loops today — healthy repeat guard
-`goal_f2d6f36beadc` → 🧹 → 🧩 → 🚀
-- Before: deep.list 4×, langchain.list 4×, eval_hoops 5× flagged as stuck but were distinct runId ok/completed
-- After fix: pattern_detector.js per-node detail map, healthyRepetition = fails0 && distinctRuns>=min(c,3) && all ok → skip; stuck-detector.js distinct runId counting; layer-executor honest lens + early_exit_after 2
-- Verify: node pattern_detector --days 7 --threshold 3 → patterns:[] (was 3), scanned 1787 runs
-- Done branch scout/fix-stuck-loops-v5prime 27487ff, timeline 7-field mandatory written
-
-### 💳 Launched payments + analytics wiring
-`goal_501aab2f54b7` → 🏭🧰🏀 → 🧩 → 🚀
-- Current: open Stripe 4 lanes Top5 tick+flags→vec+lattice v2→analytics+trace+ops v2→meter still chained
-- Next: Stripe/PostHog/Clerk/Vercel/Sentry/Cloudflare/Resend/R2/LaunchDarkly/Linear, plugin 5 cmds, $0 ledger sha(email|plan), analytics 2026-08-07.jsonl shard
-- Guard: zero_deps true, no torch pip, no network egress, candidate.json first honest
-
-### Short queue still open (not yet as separate goals but tracked in brief-auto-exec):
-- [ ] Polish vector hoops site then sweep domain-by-domain to hoops-level detail
-- [ ] Re-render morning 0b placeholder if any (morning-brief-aug-06 0b fixed, morning-brief-aug-07 5m26s done)
-- [ ] Push evening-wrap-aug-06-2026 2.9M 378s 41 chunks to feed
-- [ ] Board hygiene: clear stale >4h, preserve LOCAL-GPU OOM guard 2 markers >24h, sync COORD 7 repos push master ce544874
-- [ ] Memory overwrite fix: safe_append_memory() guard, rebuild 2026-08-07.md 111 lines 22K from hidden_files/run_log 1618 entries
-
-## Chaining rules (keep this fast)
-1. Every short explicitly → its medium parent id above
-2. Every medium → 🧩 → 🚀
-3. Master file updates within same turn as goal add_entry — log progress then bump MASTER_PLAN last-updated stamp
-4. Top5 build order always: tick+flags → vec+lattice v2 → analytics+trace+ops v2 → meter (from podcast TODO mapping)
-
-## Current state links
-- Internal goal workspace: `workspace/goals/refine-dottie-scout-cli-dumbmodel-com-with-vector-models/hidden_files/` (brief-auto-exec-state.json last_run 2026-08-07T12:28Z, state.json mtime 1786105637.43 morning-brief-aug-07, run_log 375KB 1618 lines)
-- Podcasts ready: evening-wrap-aug-06-2026 2.9M valid, morning-brief-aug-07 2.5M 326s 30 chunks, test-p2 5m47s, tennis-test policy docs written
-- Vectors: chimera 20719×64-d live Vercel 200 7/7 valid 0 bad, vectors honesty 4 repos 8p+13p PASS 0.7057/92.9% NO promote, Dottie triple 16/16, scout-cli 0.8, ACNE 54c 57t
-- OPEN 18: infra gap, Phase0 analytics/payments/auth (<2h no-torch), Launched 10 blockers (Aug 31 locked), Top5 4 lanes
-
-## Next heartbeat
-- Self-improvement daily 02:13 auto proposals 1/day never auto-apply
-- Goal health daily 08:30, brief-auto-exec 90s poll (allowlisted safe), dottie-vec-monitor 30m, podcast watchdog 90s
-
----
-Master plan is SSOT for Goals tab UI — update via `update` tool + this file in same turn.
-## What just shipped — Scout-cli + Dottie GRPO (2026-08-07 10:40 CDT Worker 3/3)
-> Last updated 2026-08-07 10:40CDT — shipped idea_next_hill_003 scout-cli one-liner installer + idea_next_hill_002 Dottie auto-GRPO trace→preference wired — chain 7.7 & 7.6 → Master build → Launched — lane claimed via active-tasks.md Scout-cli-grpo area scout-cli+dottie factory — timeline 7-field honest nodeId goals-ideas.scout-cli-grpo agentId builder logged
-- Installer current: `bundles/cli.sh` perms rwxrwx--- 770 verified, `bundles/zero_deps.json` true allow acne:./src, manifests `filesystem:true network:false secrets:false` harness v0.8.2 + vector v0.8.0, everyday language one-liner `curl -fsSL https://arxiviq.com/starter/install.sh | sh` 60s hallway minute — docs at `bundles/docs/INSTALLER.md` + `dottie/apps/scout-cli/docs/INSTALLER.md` + `docs/INSTALLER.md` 3 places copy identical.
-- GRPO wiring: `dottie/docs/GRPO_PIPELINE.md` 8720 bytes spec 12 T12R.2 spec 13 T13C.4 complete §1-7, collector `dottie/apps/ava-factory/dottie/pipeline/grpo_collect.py` 329 lines numpy-only groups SHA1[:16] adv (R-mean)/std eps 1e-8 degenerate→0 chosen max rej min margin0.05 distinct completion guard deterministic seed 7 sorted trace_id outputs trace_bank.jsonl pref_pairs.jsonl grpo_group_stats.jsonl MANIFEST.json SHA256, thin wrapper `dottie/pipeline/grpo_collect.py` 7/7 harness compat, compat copy `apps/dottie/rl/grpo_collect.py` audit PASS 7/7 checks, math substrate `dottie/pipeline/grpo.py` 387 lines torch-free EntropyThermostat clamp k←clamp(k+κ·(H_target-H),0,k_max) clip_bounds lower 1/(1+ε) upper (1+ε)(1+k) TraceBank UNIFORM recovery sampling ablation winner simulate_entropy_control synthetic plant, 1k spec `DOTTIE_NANO_1K_SPEC.md` 5379 bytes seed 1234 tokenizer sha 33fd029f vocab 8192 triple-write 5/5 OK.
-- Zero-deps true allow acne:./src verified both bundles, no torch pip — torch wheel 2.1G tmpfs OOM 140s guard, heavy box gated BLOCKED_NO_GPU until mini+ T9.3/T9.5, LOCAL-GPU marker left alone OOM guard 22:20 CT 2 still claimed preserved.
-- Timeline honest 7-field: `nodeId goals-ideas.scout-cli-grpo` `agentId builder` attempt 1 latency 1260 tokens 850 status ok errorClass null ts ISO + zero_deps true no_torch true honest true chain idea→goal→Launched score 7.7 logged to `bundles/ultra/runs/goals-ideas-scout-cli-grpo-20260807/timeline.jsonl` + `~/.scout/missions/goals-ideas.scout-cli-grpo/timeline.jsonl` + `workspace/.scout/missions/goals-ideas.scout-cli-grpo/timeline.jsonl` even no-change per checkpoint-manager spec 7-field mandatory.
-- GOAL.md updates everyday language: `goals/scout-cli-universal-cli-any-harness-can-plug-in/GOAL.md` installer current + `goals/dottie-closed-loop-factory-v2/GOAL.md` GRPO trace→preference wired sections appended 10:40 CDT.
-
-Prev: 2026-08-07 10:38CDT loop2 gridiron weekly 32-d honest MAE 8.475 vs claimed 4.268 gate
-
-## Next up (Ideas queue by impact×ease after this lane)
-- idea_next_hill_005 Payments $0 ledger 10 blockers score 9.0 → launched-payments-analytics-wiring → Dottie factory → Launched UNLOCKS live
-- idea_next_hill_001 Vector real-video explainers score 8.0 → vector-models hub → Launched
-- idea_next_hill_004 Frontend delight pack PWA score 8.0 → frontend-swarm → Launched
-- idea_next_hill_003 scout-cli one-liner score 7.7 → scout-cli universal → Master build → Launched ← just shipped
-- idea_next_hill_002 Dottie auto-GRPO traces→pref score 7.6 → Dottie factory → Master build → Launched ← just shipped

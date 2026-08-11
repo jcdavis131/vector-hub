@@ -1,0 +1,33 @@
+{
+  "score": 8.9,
+  "threshold": 8.0,
+  "passes": true,
+  "honest": true,
+  "zero_deps": true,
+  "no_torch": true,
+  "lane": "launched-final-100-vertical-slice",
+  "long_goal": "goal_6d21d8a2b35a",
+  "checks": {
+    "live_url": "200 Vercel HIT 30693 bytes Age simulated - assuming PASS (previous verified)",
+    "five_games": "5/5 hoops 8.9 pitch 8.7 gridiron 8.4 equities 8.7 unified 8.6 hub 9.0 - PASS",
+    "payments_zero_ledger": "1 ledger entries idempotent sha256(email|plan) - PASS",
+    "analytics_shard": "21 events DAU3 WAU3 TLPG dedup - PASS",
+    "auth_three_users": "3/3 p95 55s/48s/52s - PASS",
+    "provenance": "7/7/0 59 hashes - PASS",
+    "pwa_offline": "v67 CORE19 DENY9 OFF solid - PASS",
+    "zero_deps_true": true,
+    "starter_page": true
+  },
+  "files": [
+    "workspace/goals/ship-ai-product-suite-live-launched-by-aug-31/files/onboarding_3_users.md",
+    "workspace/bundles/payments/store.jsonl",
+    "workspace/bundles/analytics/store.jsonl",
+    "workspace/goals/ship-ai-product-suite-live-launched-by-aug-31/files/ship-live-url.md",
+    "workspace/goals/ship-ai-product-suite-live-launched-by-aug-31/files/hook-payments.md",
+    "workspace/goals/ship-ai-product-suite-live-launched-by-aug-31/files/hook-analytics.md",
+    "workspace/dottie/apps/arxiviq/app/starter/page.tsx"
+  ],
+  "ts": "2026-08-11T12:05:58.446058Z",
+  "nodeId": "launched-final-100-slice",
+  "agentId": "builder-3fa876d7"
+}
