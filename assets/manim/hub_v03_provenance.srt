@@ -1,0 +1,23 @@
+1
+00:00:00,000 --> 00:00:03,500
+Every number recomputable from public data. No vibes.
+
+2
+00:00:03,500 --> 00:00:08,000
+Provenance: 7 files verified source_hashes honest — hoops 10, gridiron 7, pitch 3, equities 7, tennis 14, unified 12, scout_cli 6.
+
+3
+00:00:08,000 --> 00:00:13,000
+Measured now: hoops actually 10 files, gridiron 7, pitch 3, equities 7, tennis 14, unified 12.
+
+4
+00:00:13,000 --> 00:00:17,000
+Scout-cli footer says 6 but its JSON lists 11 source_files — we note both.
+
+5
+00:00:17,000 --> 00:00:22,000
+Check cited_fields.py does MECHANICAL verification — stronger than review for numbers, weaker for prose.
+
+6
+00:00:22,000 --> 00:00:26,000
+You can open DM_PROVENANCE in devtools yourself.

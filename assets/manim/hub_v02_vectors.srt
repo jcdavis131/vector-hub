@@ -1,0 +1,27 @@
+1
+00:00:00,000 --> 00:00:04,000
+20,719 stars. 64 dimensions. One shared space.
+
+2
+00:00:04,000 --> 00:00:09,000
+12,966 hoops plus 5,323 gridiron plus 2,430 pitch equals 20,719.
+
+3
+00:00:09,000 --> 00:00:14,000
+Native widths: 64-d hoops, 32-d gridiron, 24-d pitch — all folded into 64-d joint.
+
+4
+00:00:14,000 --> 00:00:19,000
+Three encoders, CORAL plus contrastive plus adversarial GRL to keep roles aligned.
+
+5
+00:00:19,000 --> 00:00:24,000
+Shared-map.js is 26,792 bytes — LOD 4000 mobile, 8000 desktop, DPR1, fillRect, no arc().
+
+6
+00:00:24,000 --> 00:00:29,000
+Equities is 500 tickers by 10 years, its own 64-d puzzle — not in the joint.
+
+7
+00:00:29,000 --> 00:00:33,000
+Tennis is separate too — 4,022 rows, playable probe only.

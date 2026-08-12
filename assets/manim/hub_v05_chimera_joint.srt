@@ -1,0 +1,31 @@
+1
+00:00:00,000 --> 00:00:04,000
+Joint but not blind yet — we keep this in the marketing.
+
+2
+00:00:04,000 --> 00:00:09,000
+Sport classifier gets 0.6851 on the joint vector versus 0.6258 always hoops — delta plus 0.0593.
+
+3
+00:00:09,000 --> 00:00:13,500
+Legacy target 0.4333 assumed balanced classes and was impossible — fixed to ceiling 0.7258.
+
+4
+00:00:13,500 --> 00:00:18,000
+Cross-sport nearest neighbor hits same archetype 98.28 percent, random baseline 17.12 percent.
+
+5
+00:00:18,000 --> 00:00:22,500
+Silhouette 0.683, honest lift, top-10 on 40 hand-curated cross-sport pairs hits zero — informational.
+
+6
+00:00:22,500 --> 00:00:27,500
+12 archetypes declared A0 to A11, six live A0, A1, A2, A3, A5, A11 — six deferred.
+
+7
+00:00:27,500 --> 00:00:32,000
+A4 was pitch-only 81 percent defenders, folded into A3. Pedigree and career-arc split off to T0-T3, zero members in v0.
+
+8
+00:00:32,000 --> 00:00:36,000
+Market has different physics, no free market prior equites sev, draft corr hoops 0.2611 gridiron 0.4175.
