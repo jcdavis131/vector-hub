@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>dumbmodel — the vector arcade</title>
 <meta name="description" content="Six model cards, five daily vector puzzles — NBA, NFL, World Cup, tennis, public companies, and one joint cross-sport embedding. Every number recomputable from public data.">
-<meta name="theme-color" content="#fafaf8">
+<meta name="theme-color" content="#080A0F">
+<meta name="color-scheme" content="dark light">
 <link rel="canonical" href="https://dumbmodel.com/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://dumbmodel.com/">
@@ -13,9 +14,10 @@
 <meta property="og:description" content="Six models, five daily vector puzzles — NBA, NFL, World Cup, tennis, equities, and a joint cross-sport embedding. Beat the model.">
 <meta property="og:image" content="/assets/og-1200x630.png"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/>
 <meta name="twitter:card" content="summary_large_image"/><meta name="twitter:image" content="/assets/og-1200x630.png"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%226%22%20fill%3D%22%23111111%22%2F%3E%3Ccircle%20cx%3D%2211%22%20cy%3D%2212%22%20r%3D%223%22%20fill%3D%22%23eb6834%22%2F%3E%3Ccircle%20cx%3D%2221%22%20cy%3D%2219%22%20r%3D%223%22%20fill%3D%22%232a78d6%22%2F%3E%3Cpath%20d%3D%22M11%2012%20L21%2019%22%20stroke%3D%22%23fafaf8%22%20stroke-width%3D%221.6%22%2F%3E%3C%2Fsvg%3E">
+<style>/* self-contained fallback: Architects Daughter -> system handwriting stack, no external fetch at render */
+@font-face{font-family:'Architects Daughter';src:local('Architects Daughter'),local('Comic Sans MS'),local('Segoe Print');font-display:swap}
+:root{--font-hand:'Architects Daughter', 'Segoe Print','Comic Sans MS',cursive}</style>
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/assets/icon-192.png">
 <link rel="stylesheet" href="/assets/hub.css">
@@ -197,7 +199,7 @@
         </video>
         <div style="padding:12px 14px;background:#FFFEF7;color:#111;line-height:1.6;font-size:14px;border-top:1.5px solid var(--ink)">
           <code style="font-family:var(--mono);font-size:11px;background:#fff;border:1.5px solid var(--ink);border-radius:6px;padding:2px 6px">(seed*1103515245+12345)&amp;0x7fffffff</code>
-          <p style="margin:8px 0 0">glibc rand LCG, seed = <code>YYYYMMDD</code> UTC. Example today <span id="hub-example-seed">20260809→70737614→idx2948/20719</span>. <b>same-link-same-stars</b> <code>?daily=YYYYMMDD&amp;n=1/3/5</code>. Exposed via <code>window.DAILY_SEED</code> + <code>UNIFIED_CHIMERA_DAILY</code> + console <code>[hub-daily]</code>. deterministic, reproducible, no server dice.</p>
+          <p style="margin:8px 0 0">glibc rand LCG, seed = <code>YYYYMMDD</code> UTC. Example today <span id="hub-example-seed">20260812→1233799701→idx3970/20719</span> (validated same-link-same-stars). <b>same-link-same-stars</b> <code>?daily=YYYYMMDD&amp;n=1/3/5</code> — try <code>?daily=20260812&n=1</code> / <code>3</code> / <code>5</code> triple-checked <code>1233799701</code> <code>idx3970</code> <code>k4582</code>. Exposed via <code>window.DAILY_SEED</code> + <code>UNIFIED_CHIMERA_DAILY</code> + console <code>[hub-daily]</code>. deterministic, reproducible, no server dice.</p>
         </div>
       </article>
 
@@ -684,15 +686,21 @@ if ('serviceWorker' in navigator) {
 <script src="/assets/delight.js"></script>
 
 <script id="hub-delight-wiring">
-// hub delight pack — PWA v66 prompt, Copy daily link clipboard, countdown midnight UTC, streak Week Warrior dots, Pack Battle 1/3/5 share, OG 1200x630, hero-band map-overlay shared-map.js reuse
+// hub delight pack — PWA v67 prompt, Copy daily link clipboard, countdown midnight UTC, streak Week Warrior dots, Pack Battle 1/3/5 share, OG 1200x630, hero-band map-overlay shared-map.js reuse — dailySeed wiring tick LCG 20260812→1233799701 idx3970 same-link-same-stars ?daily=20260812&n=1/3/5 PWA v67
 (function(){
   function hubDailySeed(d){ var dt=d instanceof Date?d:new Date(); return dt.getUTCFullYear()*10000+(dt.getUTCMonth()+1)*100+dt.getUTCDate(); }
   function hubLcg(seed){ return typeof Math.imul==='function' ? ((Math.imul(seed,1103515245)+12345)>>>0 & 0x7fffffff) : (seed*1103515245+12345 & 0x7fffffff); }
-  var DAILY=hubDailySeed();
+  function parseDailyParam(){ try{ var sp=new URLSearchParams(location.search); var v=sp.get('daily')||sp.get('seed'); if(v){ var n=parseInt(v,10); if(!isNaN(n)&&n>=20000101&&n<=20991231) return n; } }catch(_e){} return null; }
+  function parseNParam(){ try{ var sp=new URLSearchParams(location.search); var v=sp.get('n')||sp.get('pack'); if(v){ var n=parseInt(v,10); if([1,3,5].indexOf(n)>-1) return n; } }catch(_e){} return null; }
+  var urlSeed=parseDailyParam(); var nParam=parseNParam();
+  var DAILY=urlSeed!==null?urlSeed:hubDailySeed();
   var LCG_A=hubLcg(DAILY); var LCG_B=hubLcg(LCG_A); var LCG_C=hubLcg(LCG_B);
   var ENTITY=20719;
   var idx=LCG_A%ENTITY; var j=LCG_B%ENTITY; if(j===idx) j=(j+1)%ENTITY; var k=LCG_C%ENTITY; if(k===idx||k===j) k=(k+2)%ENTITY;
-  window.DAILY_SEED=DAILY; window.UNIFIED_CHIMERA_DAILY={seed:DAILY,dateISO:String(DAILY).slice(0,4)+'-'+String(DAILY).slice(4,6)+'-'+String(DAILY).slice(6,8),entityCount:ENTITY,dims:64,index:idx,pair:[idx,j],triple:[idx,j,k],lcg:{a:LCG_A,b:LCG_B,c:LCG_C}};
+  // same-link-same-stars ?daily=20260812&n=1/3/5 validation — 20260812→1233799701 idx3970
+  if(DAILY===20260812){ try{ console.assert(LCG_A===1233799701,'[hub-delight] EXPECT 20260812 LCG 1233799701 got '+LCG_A); console.assert(idx===3970,'[hub-delight] EXPECT idx3970 got '+idx); }catch(_a){} }
+  window.DAILY_SEED=DAILY; window.DAILY_SEED_URL_OVERRIDE=urlSeed!==null; window.DAILY_N=nParam;
+  window.UNIFIED_CHIMERA_DAILY={seed:DAILY,dateISO:String(DAILY).slice(0,4)+'-'+String(DAILY).slice(4,6)+'-'+String(DAILY).slice(6,8),entityCount:ENTITY,dims:64,index:idx,pair:[idx,j],triple:[idx,j,k],lcg:{a:LCG_A,b:LCG_B,c:LCG_C},n:nParam};
   function $(id){return document.getElementById(id);}
   var pill=$('hub-daily-seed-pill'); if(pill) pill.textContent='dailySeed '+DAILY+' (YYYYMMDD UTC)';
   var lcgPill=$('hub-lcg-pill'); if(lcgPill) lcgPill.textContent='LCG a='+LCG_A+' b='+LCG_B+' &0x7fffffff deterministic';
@@ -707,12 +715,14 @@ if ('serviceWorker' in navigator) {
   function showToast(msg,ms){ var t=$('hub-toast'); if(!t) return; t.textContent=msg; t.style.display='block'; clearTimeout(t._tm); t._tm=setTimeout(function(){t.style.display='none'},ms||2600); }
   // Copy daily link
   var bCopy=$('btn-copy-daily-hub'); if(bCopy){ bCopy.addEventListener('click', async function(){
+    try{ if(navigator.vibrate) navigator.vibrate(10); }catch(_v){}
     var url=location.origin+'/models/unified.html?daily='+DAILY;
-    try{ if(navigator.clipboard) await navigator.clipboard.writeText(url); bCopy.textContent='Copied!'; showToast('Daily link copied — same seed = same stars'); setTimeout(function(){bCopy.textContent='Copy daily link'},1500); if(window.VHDelight) VHDelight.spawnConfetti('#D8452A'); }catch{}
+    try{ if(navigator.clipboard) await navigator.clipboard.writeText(url); bCopy.textContent='Copied!'; showToast('Daily link copied — same seed = same stars'); setTimeout(function(){bCopy.textContent='Copy daily link'},1500); if(window.VHDelight) VHDelight.spawnConfetti('#D8452A'); try{ if(navigator.vibrate) navigator.vibrate(10); }catch(_v2){} }catch{}
   });}
   // Pack Battle 1/3/5
   document.querySelectorAll('[data-hub-pack]').forEach(function(btn){
     btn.addEventListener('click', function(){
+      try{ if(navigator.vibrate) navigator.vibrate(10); }catch(_v){}
       var n=parseInt(btn.getAttribute('data-hub-pack'),10)||3;
       var url=location.origin+'/models/unified.html?daily='+DAILY+'&n='+n+'&a='+LCG_A+'&b='+LCG_B;
       location.href=url;
@@ -732,8 +742,9 @@ if ('serviceWorker' in navigator) {
   }
   renderStreak();
   var bShare=$('hub-share-streak'); if(bShare){ bShare.addEventListener('click', async function(){
+    try{ if(navigator.vibrate) navigator.vibrate(10); }catch(_v){}
     var txt='I\'m on a '+streak+' day streak — 20,719 joint stars dailySeed '+DAILY+' — Can you beat me? '+location.origin+'/models/unified.html?daily='+DAILY;
-    try{ await navigator.clipboard.writeText(txt); showToast('Streak link copied — dailySeed LCG'); }catch{}
+    try{ await navigator.clipboard.writeText(txt); showToast('Streak link copied — dailySeed LCG'); try{ if(navigator.vibrate) navigator.vibrate(10); }catch(_v2){} }catch{}
   });}
   // shared-map.js reuse — hero-band map-overlay 20,719 stars void dark true DPR1 LOD 4000/8000 Pause/Reset
   (async function(){
@@ -754,5 +765,7 @@ if ('serviceWorker' in navigator) {
 
 <script src="/assets/hub-pov.js"></script>
 <script src="/assets/js/glassbox-charts.js"></script>
+<script src="/assets/meter_billing.js?v=1233799701"></script>
+<script src="/assets/pack_battle.js?v=1233799701"></script>
 </body>
 </html>

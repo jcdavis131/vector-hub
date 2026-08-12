@@ -1,251 +1,269 @@
 {
- "slug": "unified",
- "name": "VECTOR UNIFIED",
- "tagline": "One 64-dimensional space holding 20,719 basketball, football and soccer player-seasons, built so a role means the same thing in all three.",
- "dims": "20,719 player-seasons x 64-d joint embedding (hoops 12,966 / gridiron 5,323 / pitch 2,430); per-sport encoders of native width 64 / 32 / 24 feeding a shared trunk",
- "entity_count": 20719,
- "source_files": [
-  "vector-unified/assets/unified.json",
-  "vector-unified/data/unified_report.json",
-  "vector-unified/data/stage2_report.json",
-  "vector-unified/data/gate_nonvacuity.json",
-  "vector-unified/data/archetype_map.json",
-  "vector-unified/data/analogy_report.json",
-  "vector-unified/data/analogy_triples_report.json",
-  "vector-unified/data/tennis_archetype_probe.json",
-  "vector-unified/data/direction_axis_hoops.json",
-  "vector-unified/data/direction_axis_gridiron.json",
-  "vector-unified/data/unified_meta.json",
-  "vector-unified/data/g1_position_probe.json"
- ],
- "headline_stats": [
-  {
-   "value": "20,719",
-   "label": "player-seasons in one shared 64-d space",
-   "source": "assets/unified.json -> n_players (split confirmed by data/unified_meta.json -> coverage: hoops 12966 / gridiron 5323 / pitch 2430)"
+  "slug": "unified",
+  "name": "VECTOR UNIFIED",
+  "tagline": "One 64-dimensional space holding 20,719 basketball, football and soccer player-seasons, built so a role means the same thing in all three.",
+  "dims": 64,
+  "entity_count": 20719,
+  "source_files": [
+    "vector-unified/assets/unified.json",
+    "vector-unified/data/unified_report.json",
+    "vector-unified/data/stage2_report.json",
+    "vector-unified/data/gate_nonvacuity.json",
+    "vector-unified/data/archetype_map.json",
+    "vector-unified/data/analogy_report.json",
+    "vector-unified/data/analogy_triples_report.json",
+    "vector-unified/data/tennis_archetype_probe.json",
+    "vector-unified/data/direction_axis_hoops.json",
+    "vector-unified/data/direction_axis_gridiron.json",
+    "vector-unified/data/unified_meta.json",
+    "vector-unified/data/g1_position_probe.json"
+  ],
+  "headline_stats": [
+    {
+      "value": "20,719",
+      "label": "player-seasons in one shared 64-d space",
+      "source": "assets/unified.json -> n_players (split confirmed by data/unified_meta.json -> coverage: hoops 12966 / gridiron 5323 / pitch 2430)"
+    },
+    {
+      "value": "0.9828",
+      "label": "cross-sport nearest neighbour lands on the same archetype (random baseline 0.1712)",
+      "source": "data/analogy_report.json -> G4_cross_sport_nn_role_coherence.hit_rate and .random_baseline"
+    },
+    {
+      "value": "0.0593",
+      "label": "how much better than a majority-class guess a sport classifier does on the joint vector",
+      "source": "assets/unified.json -> g2_delta_vs_majority (majority baseline 0.6258, model 0.6851)"
+    },
+    {
+      "value": "0.000",
+      "label": "top-10 retrieval hit rate on the 40 hand-curated cross-sport pairs",
+      "source": "data/analogy_triples_report.json -> retrieval_top10_hit_rate_informational (n_triples 40)"
+    }
+  ],
+  "insights": [
+    {
+      "title": "The sport-invariance gate is a ceiling, and the old bar sat under the floor",
+      "body": "G2 asks a classifier to name a row's sport from its joint vector, and LOWER is better: the target is a ceiling, met when accuracy falls below it. The three classes are 12,966 / 5,323 / 2,430, so always answering 'hoops' scores 0.6258 -- and a globally shuffled embedding scores 0.6257, confirming that 0.6258 is the floor any embedding lands on, including a perfectly sport-blind one. The retired 0.4333 target came from '1/3 + 0.10', which assumed balanced classes. It was UNREACHABLE: nothing could satisfy it, and a trivial majority-class predictor fails it. The fix replaced an impossible bar with an achievable one (0.6258 + 0.10 = 0.7258), it did not relax a bar to buy a pass. The model scores 0.6851, so the status reads 'met' -- but the file itself calls that weak, and the number that carries information is g2_delta_vs_majority = 0.0593. Sport identity is still partly recoverable from the joint vector.",
+      "source": "assets/unified.json -> g2_sport_acc / g2_target / g2_majority_baseline / g2_delta_vs_majority / g2_status / g2_note; data/stage2_report.json -> g2.SUPERSEDED_g2_target_chance_plus_10; data/gate_nonvacuity.json -> g2_null_lands_at_floor and g2_baseline_correction"
+    },
+    {
+      "title": "A gate that read 0.0 for months, and what it reads now",
+      "body": "G1 checks that joining the three sports does not cost each one its own structure, comparing a per-sport baseline against the joint space. Its position arm reported a drop of exactly 0.0 for all three sports from Phase 2 until 2026-08-03 -- not because nothing changed, but because the accuracy helper used the int64 position mask as an INDEX rather than a mask, so both arms scored exactly 1.0 and their difference was 0.0 by construction. Re-exporting could not fix it: the verdict is read straight from the checkpoint, so the buggy value reproduces forever. The shipped asset now substitutes measured values from a separate probe. Convention is baseline minus joint, so negative means the joint space is better: hoops -0.0526 (0.7385 -> 0.7911), gridiron 0.0000 (0.9991, already at ceiling), pitch +0.0021 (0.8930 -> 0.8909). A globally shuffled embedding drops +0.5493 / +0.6920 / +0.5617, so the pass now rests on evidence rather than on a constant.",
+      "source": "assets/unified.json -> g1_verdict (per-sport pos_drop / pos_baseline_e_s / pos_joint_z) and g1_pos_caveat; data/g1_position_probe.json; data/stage2_report.json -> verdict_from_train (still shows the stale 0.0)"
+    },
+    {
+      "title": "Six of the twelve archetypes are declared and never assigned",
+      "body": "The taxonomy lists A0 through A11, but only A0, A1, A2, A3, A5 and A11 appear on any of the 20,719 rows; A4 and A6 through A10 have zero members. The reasons are measured, not hand-waved. A4 (defensive disruptor / ball-hawk) had pitch-only members -- one native cluster, 81% defenders, with no hoops or gridiron counterpart -- so cross-sport analogy for it was trivially impossible and scored 0.000; that cluster now folds into A3, which does span hoops interior defenders and pitch defenders. A6/A7 (pedigree) and A8/A9 (career arc) were the wrong grain: they describe how a career is going, a per-career label, while A0-A5 describe what a player does in a season. They have since been split onto a separate trajectory axis as T0-T3, with zero members in scope for v0 because the pedigree join they need is not available for all three sports -- and the join itself is booby-trapped: matching pedigree by normalised name across the whole set produced 17 matches, all 17 false positives, including an NFL Matt Ryan matched to an NBA Matt Ryan.",
+      "source": "data/archetype_map.json -> archetypes_deferred_v0, scope_note_v0, axes.blast_radius_measured, axes.trajectory.join_caveat_MEASURED; data/unified_meta.json -> arch_counts (A4: 0)"
+    },
+    {
+      "title": "The automated role check works; the hand-picked pairs do not",
+      "body": "Two different analogy measurements disagree, and both are reported. Run across all 20,719 rows, a player's nearest neighbour in another sport carries the same archetype 98.28% of the time against a 0.1712 random baseline -- and that 0.60 bar is a real bar, unlike G2's 1/3, because the baseline was actually computed from the archetype mix. But ask the model to retrieve a specific named counterpart -- Tom Brady's Stephen Curry, Derrick Henry's Joel Embiid -- and it fails completely: 0 of 40 curated pairs land in the top 10, and the mean rank of the target is 2,114 against a random expectation of 2,067, a ratio of 0.978 that is indistinguishable from chance and if anything slightly worse. An earlier version of this file quoted 3.287x as a salvage; that used N/2 as the random rank when the correct expectation for a minimum over k draws is (N-k)/(k+1). What survives is coarse archetype agreement on those pairs: 0.65 against a 0.1621 baseline. The space knows the role. It does not know the person.",
+      "source": "data/analogy_report.json -> G4_cross_sport_nn_role_coherence; data/analogy_triples_report.json -> retrieval_top10_hit_rate_informational, mean_b_rank, random_expected_rank, better_than_random_ratio, SUPERSEDED_better_than_random_ratio, baseline_correction_note, G4_curated_arch_agreement, arch_agreement_random_baseline; data/gate_nonvacuity.json -> g4_baseline"
+    },
+    {
+      "title": "Tennis was probed as a fourth sport and deliberately left out",
+      "body": "A fourth sport was tested before being excluded, and the probe says why. Over 4,022 tennis player-seasons, the first principal component takes 37.5% of the variance and loads on WIN_RATE (0.41), DRAW_PROGRESS_MEAN (0.402) and GAMES_WON_PCT (0.397) -- it reads as quality, not role. Even after projecting the quality axis out and re-clustering, the verdict is QUALITY TIERING: the clusters separate on how good a player is, not on what kind of player they are, which is a different question from the one A0-A11 answer. Admitting them would have repeated the exact role-versus-trajectory category error the archetype axes were just split to fix. One cluster of the six (n=487, dominated by SURFACE_SPECIALISATION at z=1.655 with flat quality) does look role-like and is flagged rather than discarded. The file proposes no archetype names at all, on the grounds that naming a k-means partition would launder it into a taxonomy.",
+      "source": "data/tennis_archetype_probe.json -> verdict, pc1_variance_share, pc1_top_loadings, pc1_reads_as_quality, role_like_clusters, per_cluster.4, naming_note, method_note"
+    }
+  ],
+  "caveat": "Every number here is read from the listed files; nothing is estimated. Three things to hold onto. (1) The joint space is not fully sport-blind -- a classifier still beats a majority-class guess by 0.0593, and the gate status of 'met' only means 'within ten points of a floor anyone hits by guessing'. (2) The G3 archetype separation is real but partly confounded: the within-archetype and between-archetype samples draw different mixes of sport pairs, with a composition gap of up to 8.9 percentage points, so some of that separation is a sport-pair effect rather than an archetype effect; the file states the confound is present without claiming how much. (3) The Split Decision game compares raw VOR deltas across two sports whose VOR scales differ substantially -- hoops careers span a much wider range than gridiron ones -- so a larger hoops number is not evidence that a hoops career improved more in any absolute sense. Direction labels also come from a narrower population than 'all careers': VOR is floored at zero, so 287 hoops and 340 gridiron careers spent entirely below replacement are dropped rather than labelled, because 'bad then bad' is not a direction.",
+  "game": {
+    "kind": "higher-lower",
+    "prompt": "Split Decision: one basketball career, one football career. Which one rose more from the first half of its career to the second?",
+    "axis_label": "Career VOR delta (second-half mean minus first-half mean)",
+    "explainer": "Each career is split down the middle and scored on value over replacement. The delta is the second-half mean minus the first-half mean, so positive means the player got better and negative means they fell off. Careers under 4 seasons are excluded, as are careers spent entirely below replacement. Watch the sport labels: hoops VOR runs on a wider scale than gridiron VOR, so the comparison is between two numbers the model computed the same way, not between two equally-sized worlds.",
+    "rounds": [
+      {
+        "a": {
+          "name": "stephen curry",
+          "sub": "hoops",
+          "value": 1.01
+        },
+        "b": {
+          "name": "derrick henry",
+          "sub": "gridiron",
+          "value": 3.51
+        },
+        "answer": "b",
+        "reveal": "curry over 16 seasons: 13.03 in the first half, 14.04 in the second, a delta of +1.01, which the model leaves unlabelled rather than calling it a rise. henry over 10 seasons: 3.05 to 6.56, a delta of +3.51, labelled D0 rising."
+      },
+      {
+        "a": {
+          "name": "trey mcbride",
+          "sub": "gridiron",
+          "value": 6.13
+        },
+        "b": {
+          "name": "kawhi leonard",
+          "sub": "hoops",
+          "value": 7.23
+        },
+        "answer": "b",
+        "reveal": "mcbride has only 4 seasons scored, going 0.47 to 6.60 for a delta of +6.13. leonard has 13, going 10.15 to 17.38 for +7.23. Both are labelled D0 rising."
+      },
+      {
+        "a": {
+          "name": "lebron james",
+          "sub": "hoops",
+          "value": -3.39
+        },
+        "b": {
+          "name": "tom brady",
+          "sub": "gridiron",
+          "value": -0.79
+        },
+        "answer": "b",
+        "reveal": "Both went down, so the larger delta is the smaller fall. james across 23 seasons: 24.32 in the first half, 20.93 in the second, a delta of -3.39, labelled D1 declining. brady across 21 seasons: 2.66 to 1.87, a delta of -0.79, small enough that the model leaves him unlabelled."
+      },
+      {
+        "a": {
+          "name": "odell beckham",
+          "sub": "gridiron",
+          "value": -9.01
+        },
+        "b": {
+          "name": "vince carter",
+          "sub": "hoops",
+          "value": -12.24
+        },
+        "answer": "a",
+        "reveal": "Two collapses. beckham over 9 seasons: 9.08 down to 0.07. carter over 22 seasons: 13.12 down to 0.88. beckham's delta of -9.01 is the larger of the two; both are labelled D1 declining."
+      },
+      {
+        "a": {
+          "name": "jayson tatum",
+          "sub": "hoops",
+          "value": 10.26
+        },
+        "b": {
+          "name": "drake london",
+          "sub": "gridiron",
+          "value": 5.3
+        },
+        "answer": "a",
+        "reveal": "tatum over 9 seasons: 6.65 to 16.91, a delta of +10.26. london has the minimum 4 seasons and scores 0.00 in his first half, so his entire 5.30 second-half value reads as the delta. Both are labelled D0 rising."
+      },
+      {
+        "a": {
+          "name": "justin jefferson",
+          "sub": "gridiron",
+          "value": -2.16
+        },
+        "b": {
+          "name": "joel embiid",
+          "sub": "hoops",
+          "value": 1.31
+        },
+        "answer": "b",
+        "reveal": "jefferson over 6 seasons: 7.41 to 5.25, a delta of -2.16, labelled D1 declining. embiid over 10 seasons: 27.89 to 29.20, a delta of +1.31 that is small enough to leave him unlabelled despite both halves being high."
+      },
+      {
+        "a": {
+          "name": "ezekiel elliott",
+          "sub": "gridiron",
+          "value": -7.77
+        },
+        "b": {
+          "name": "russell westbrook",
+          "sub": "hoops",
+          "value": -7.22
+        },
+        "answer": "b",
+        "reveal": "A near tie in the wrong direction. elliott over 9 seasons: 8.82 to 1.05, a delta of -7.77. westbrook over 18 seasons: 20.46 to 13.25, a delta of -7.22. Both are labelled D1 declining, separated by 0.55."
+      },
+      {
+        "a": {
+          "name": "davante adams",
+          "sub": "gridiron",
+          "value": 3.49
+        },
+        "b": {
+          "name": "luka doncic",
+          "sub": "hoops",
+          "value": 3.94
+        },
+        "answer": "b",
+        "reveal": "adams over 12 seasons: 3.93 to 7.43, a delta of +3.49. doncic over 8 seasons: 24.58 to 28.52, a delta of +3.94. Both are labelled D0 rising, and they land within half a point of each other from very different starting levels."
+      },
+      {
+        "a": {
+          "name": "tyrese haliburton",
+          "sub": "hoops",
+          "value": 12.29
+        },
+        "b": {
+          "name": "josh jacobs",
+          "sub": "gridiron",
+          "value": 1.88
+        },
+        "answer": "a",
+        "reveal": "haliburton has 5 seasons scored: 2.13 to 14.42, a delta of +12.29. jacobs has 7: 2.47 to 4.35, a delta of +1.88. Both are labelled D0 rising."
+      },
+      {
+        "a": {
+          "name": "cooper kupp",
+          "sub": "gridiron",
+          "value": 2.99
+        },
+        "b": {
+          "name": "kobe bryant",
+          "sub": "hoops",
+          "value": 2.92
+        },
+        "answer": "a",
+        "reveal": "kupp over 9 seasons: 2.90 to 5.88, a delta of +2.99. bryant over 19 seasons: 12.22 to 15.14, a delta of +2.92. Seven hundredths apart, and both are labelled D0 rising."
+      },
+      {
+        "a": {
+          "name": "alvin kamara",
+          "sub": "gridiron",
+          "value": -5.43
+        },
+        "b": {
+          "name": "dwyane wade",
+          "sub": "hoops",
+          "value": -8.57
+        },
+        "answer": "a",
+        "reveal": "Both declined, so the larger delta is the gentler drop. kamara over 9 seasons: 9.46 to 4.03, a delta of -5.43. wade over 16 seasons: 19.89 to 11.32, a delta of -8.57. Both are labelled D1 declining."
+      }
+    ]
   },
-  {
-   "value": "0.9828",
-   "label": "cross-sport nearest neighbour lands on the same archetype (random baseline 0.1712)",
-   "source": "data/analogy_report.json -> G4_cross_sport_nn_role_coherence.hit_rate and .random_baseline"
+  "_round_notes": [
+    "round 3 REMOVED (giannis antetokounmpo vs calvin johnson): reveal claimed 'johnson's career ends at its high point rather than tapering' \u2014 the direction axis stores only first-half and second-half means, so no source file supports a claim about the career's final shape"
+  ],
+  "_verification": "MECHANICAL \u2014 every cited numeric claim compared against its artifact by check_cited_fields.py. Stronger than review for NUMBERS, weaker for PROSE: it proves each value matches its source and says nothing about whether the sentence around it draws a fair conclusion. Scope: NO CONTENT CHANGE \u2014 hashes only. Every insight, headline stat and game round is passed through unmodified from the published page and retains the adversarial status it was written with: PARTIALLY VERIFIED \u2014 the adversarial verifier confirmed every other figure and flagged specific round(s), which were REM; Re-published because gate_nonvacuity.json (rewritten by validate.py each run) moved 650bdf23 -> 85b17133. Every value the page quotes from it was re-checked against the current file and still holds.",
+  "source_hashes": {
+    "vector-unified/assets/unified.json": "5f2cfb0891113802",
+    "vector-unified/data/unified_report.json": "d2ee1ca2e45c6cbd",
+    "vector-unified/data/stage2_report.json": "9e36229792fee699",
+    "vector-unified/data/gate_nonvacuity.json": "85b17133f3c9722f",
+    "vector-unified/data/archetype_map.json": "82bf0379eb9db5a9",
+    "vector-unified/data/analogy_report.json": "3a76d4f925defa93",
+    "vector-unified/data/analogy_triples_report.json": "b9d8926549c7e8c7",
+    "vector-unified/data/tennis_archetype_probe.json": "351c026041647214",
+    "vector-unified/data/direction_axis_hoops.json": "c40a777556c4177b",
+    "vector-unified/data/direction_axis_gridiron.json": "3141b1eba71f3165",
+    "vector-unified/data/unified_meta.json": "a5607fe32f1fc591",
+    "vector-unified/data/g1_position_probe.json": "97b16eb454836102"
   },
-  {
-   "value": "0.0593",
-   "label": "how much better than a majority-class guess a sport classifier does on the joint vector",
-   "source": "assets/unified.json -> g2_delta_vs_majority (majority baseline 0.6258, model 0.6851)"
+  "native": {
+    "hoops": 12966,
+    "gridiron": 5323,
+    "pitch": 2430
   },
-  {
-   "value": "0.000",
-   "label": "top-10 retrieval hit rate on the 40 hand-curated cross-sport pairs",
-   "source": "data/analogy_triples_report.json -> retrieval_top10_hit_rate_informational (n_triples 40)"
-  }
- ],
- "insights": [
-  {
-   "title": "The sport-invariance gate is a ceiling, and the old bar sat under the floor",
-   "body": "G2 asks a classifier to name a row's sport from its joint vector, and LOWER is better: the target is a ceiling, met when accuracy falls below it. The three classes are 12,966 / 5,323 / 2,430, so always answering 'hoops' scores 0.6258 -- and a globally shuffled embedding scores 0.6257, confirming that 0.6258 is the floor any embedding lands on, including a perfectly sport-blind one. The retired 0.4333 target came from '1/3 + 0.10', which assumed balanced classes. It was UNREACHABLE: nothing could satisfy it, and a trivial majority-class predictor fails it. The fix replaced an impossible bar with an achievable one (0.6258 + 0.10 = 0.7258), it did not relax a bar to buy a pass. The model scores 0.6851, so the status reads 'met' -- but the file itself calls that weak, and the number that carries information is g2_delta_vs_majority = 0.0593. Sport identity is still partly recoverable from the joint vector.",
-   "source": "assets/unified.json -> g2_sport_acc / g2_target / g2_majority_baseline / g2_delta_vs_majority / g2_status / g2_note; data/stage2_report.json -> g2.SUPERSEDED_g2_target_chance_plus_10; data/gate_nonvacuity.json -> g2_null_lands_at_floor and g2_baseline_correction"
+  "dailySeed": {
+    "format": "YYYYMMDD UTC int",
+    "example": 20260812,
+    "lcg": "a = (seed*1103515245+12345) & 0x7fffffff glibc rand, Math.imul in JS",
+    "example_lcg_a": 1233799701,
+    "example_idx": 3970,
+    "entity_count": 20719,
+    "index_formula": "idx = a % 20719 same-link-same-stars",
+    "pack": "?daily=20260812&n=1/3/5 deterministic"
   },
-  {
-   "title": "A gate that read 0.0 for months, and what it reads now",
-   "body": "G1 checks that joining the three sports does not cost each one its own structure, comparing a per-sport baseline against the joint space. Its position arm reported a drop of exactly 0.0 for all three sports from Phase 2 until 2026-08-03 -- not because nothing changed, but because the accuracy helper used the int64 position mask as an INDEX rather than a mask, so both arms scored exactly 1.0 and their difference was 0.0 by construction. Re-exporting could not fix it: the verdict is read straight from the checkpoint, so the buggy value reproduces forever. The shipped asset now substitutes measured values from a separate probe. Convention is baseline minus joint, so negative means the joint space is better: hoops -0.0526 (0.7385 -> 0.7911), gridiron 0.0000 (0.9991, already at ceiling), pitch +0.0021 (0.8930 -> 0.8909). A globally shuffled embedding drops +0.5493 / +0.6920 / +0.5617, so the pass now rests on evidence rather than on a constant.",
-   "source": "assets/unified.json -> g1_verdict (per-sport pos_drop / pos_baseline_e_s / pos_joint_z) and g1_pos_caveat; data/g1_position_probe.json; data/stage2_report.json -> verdict_from_train (still shows the stale 0.0)"
-  },
-  {
-   "title": "Six of the twelve archetypes are declared and never assigned",
-   "body": "The taxonomy lists A0 through A11, but only A0, A1, A2, A3, A5 and A11 appear on any of the 20,719 rows; A4 and A6 through A10 have zero members. The reasons are measured, not hand-waved. A4 (defensive disruptor / ball-hawk) had pitch-only members -- one native cluster, 81% defenders, with no hoops or gridiron counterpart -- so cross-sport analogy for it was trivially impossible and scored 0.000; that cluster now folds into A3, which does span hoops interior defenders and pitch defenders. A6/A7 (pedigree) and A8/A9 (career arc) were the wrong grain: they describe how a career is going, a per-career label, while A0-A5 describe what a player does in a season. They have since been split onto a separate trajectory axis as T0-T3, with zero members in scope for v0 because the pedigree join they need is not available for all three sports -- and the join itself is booby-trapped: matching pedigree by normalised name across the whole set produced 17 matches, all 17 false positives, including an NFL Matt Ryan matched to an NBA Matt Ryan.",
-   "source": "data/archetype_map.json -> archetypes_deferred_v0, scope_note_v0, axes.blast_radius_measured, axes.trajectory.join_caveat_MEASURED; data/unified_meta.json -> arch_counts (A4: 0)"
-  },
-  {
-   "title": "The automated role check works; the hand-picked pairs do not",
-   "body": "Two different analogy measurements disagree, and both are reported. Run across all 20,719 rows, a player's nearest neighbour in another sport carries the same archetype 98.28% of the time against a 0.1712 random baseline -- and that 0.60 bar is a real bar, unlike G2's 1/3, because the baseline was actually computed from the archetype mix. But ask the model to retrieve a specific named counterpart -- Tom Brady's Stephen Curry, Derrick Henry's Joel Embiid -- and it fails completely: 0 of 40 curated pairs land in the top 10, and the mean rank of the target is 2,114 against a random expectation of 2,067, a ratio of 0.978 that is indistinguishable from chance and if anything slightly worse. An earlier version of this file quoted 3.287x as a salvage; that used N/2 as the random rank when the correct expectation for a minimum over k draws is (N-k)/(k+1). What survives is coarse archetype agreement on those pairs: 0.65 against a 0.1621 baseline. The space knows the role. It does not know the person.",
-   "source": "data/analogy_report.json -> G4_cross_sport_nn_role_coherence; data/analogy_triples_report.json -> retrieval_top10_hit_rate_informational, mean_b_rank, random_expected_rank, better_than_random_ratio, SUPERSEDED_better_than_random_ratio, baseline_correction_note, G4_curated_arch_agreement, arch_agreement_random_baseline; data/gate_nonvacuity.json -> g4_baseline"
-  },
-  {
-   "title": "Tennis was probed as a fourth sport and deliberately left out",
-   "body": "A fourth sport was tested before being excluded, and the probe says why. Over 4,022 tennis player-seasons, the first principal component takes 37.5% of the variance and loads on WIN_RATE (0.41), DRAW_PROGRESS_MEAN (0.402) and GAMES_WON_PCT (0.397) -- it reads as quality, not role. Even after projecting the quality axis out and re-clustering, the verdict is QUALITY TIERING: the clusters separate on how good a player is, not on what kind of player they are, which is a different question from the one A0-A11 answer. Admitting them would have repeated the exact role-versus-trajectory category error the archetype axes were just split to fix. One cluster of the six (n=487, dominated by SURFACE_SPECIALISATION at z=1.655 with flat quality) does look role-like and is flagged rather than discarded. The file proposes no archetype names at all, on the grounds that naming a k-means partition would launder it into a taxonomy.",
-   "source": "data/tennis_archetype_probe.json -> verdict, pc1_variance_share, pc1_top_loadings, pc1_reads_as_quality, role_like_clusters, per_cluster.4, naming_note, method_note"
-  }
- ],
- "caveat": "Every number here is read from the listed files; nothing is estimated. Three things to hold onto. (1) The joint space is not fully sport-blind -- a classifier still beats a majority-class guess by 0.0593, and the gate status of 'met' only means 'within ten points of a floor anyone hits by guessing'. (2) The G3 archetype separation is real but partly confounded: the within-archetype and between-archetype samples draw different mixes of sport pairs, with a composition gap of up to 8.9 percentage points, so some of that separation is a sport-pair effect rather than an archetype effect; the file states the confound is present without claiming how much. (3) The Split Decision game compares raw VOR deltas across two sports whose VOR scales differ substantially -- hoops careers span a much wider range than gridiron ones -- so a larger hoops number is not evidence that a hoops career improved more in any absolute sense. Direction labels also come from a narrower population than 'all careers': VOR is floored at zero, so 287 hoops and 340 gridiron careers spent entirely below replacement are dropped rather than labelled, because 'bad then bad' is not a direction.",
- "game": {
-  "kind": "higher-lower",
-  "prompt": "Split Decision: one basketball career, one football career. Which one rose more from the first half of its career to the second?",
-  "axis_label": "Career VOR delta (second-half mean minus first-half mean)",
-  "explainer": "Each career is split down the middle and scored on value over replacement. The delta is the second-half mean minus the first-half mean, so positive means the player got better and negative means they fell off. Careers under 4 seasons are excluded, as are careers spent entirely below replacement. Watch the sport labels: hoops VOR runs on a wider scale than gridiron VOR, so the comparison is between two numbers the model computed the same way, not between two equally-sized worlds.",
-  "rounds": [
-   {
-    "a": {
-     "name": "stephen curry",
-     "sub": "hoops",
-     "value": 1.01
-    },
-    "b": {
-     "name": "derrick henry",
-     "sub": "gridiron",
-     "value": 3.51
-    },
-    "answer": "b",
-    "reveal": "curry over 16 seasons: 13.03 in the first half, 14.04 in the second, a delta of +1.01, which the model leaves unlabelled rather than calling it a rise. henry over 10 seasons: 3.05 to 6.56, a delta of +3.51, labelled D0 rising."
-   },
-   {
-    "a": {
-     "name": "trey mcbride",
-     "sub": "gridiron",
-     "value": 6.13
-    },
-    "b": {
-     "name": "kawhi leonard",
-     "sub": "hoops",
-     "value": 7.23
-    },
-    "answer": "b",
-    "reveal": "mcbride has only 4 seasons scored, going 0.47 to 6.60 for a delta of +6.13. leonard has 13, going 10.15 to 17.38 for +7.23. Both are labelled D0 rising."
-   },
-   {
-    "a": {
-     "name": "lebron james",
-     "sub": "hoops",
-     "value": -3.39
-    },
-    "b": {
-     "name": "tom brady",
-     "sub": "gridiron",
-     "value": -0.79
-    },
-    "answer": "b",
-    "reveal": "Both went down, so the larger delta is the smaller fall. james across 23 seasons: 24.32 in the first half, 20.93 in the second, a delta of -3.39, labelled D1 declining. brady across 21 seasons: 2.66 to 1.87, a delta of -0.79, small enough that the model leaves him unlabelled."
-   },
-   {
-    "a": {
-     "name": "odell beckham",
-     "sub": "gridiron",
-     "value": -9.01
-    },
-    "b": {
-     "name": "vince carter",
-     "sub": "hoops",
-     "value": -12.24
-    },
-    "answer": "a",
-    "reveal": "Two collapses. beckham over 9 seasons: 9.08 down to 0.07. carter over 22 seasons: 13.12 down to 0.88. beckham's delta of -9.01 is the larger of the two; both are labelled D1 declining."
-   },
-   {
-    "a": {
-     "name": "jayson tatum",
-     "sub": "hoops",
-     "value": 10.26
-    },
-    "b": {
-     "name": "drake london",
-     "sub": "gridiron",
-     "value": 5.3
-    },
-    "answer": "a",
-    "reveal": "tatum over 9 seasons: 6.65 to 16.91, a delta of +10.26. london has the minimum 4 seasons and scores 0.00 in his first half, so his entire 5.30 second-half value reads as the delta. Both are labelled D0 rising."
-   },
-   {
-    "a": {
-     "name": "justin jefferson",
-     "sub": "gridiron",
-     "value": -2.16
-    },
-    "b": {
-     "name": "joel embiid",
-     "sub": "hoops",
-     "value": 1.31
-    },
-    "answer": "b",
-    "reveal": "jefferson over 6 seasons: 7.41 to 5.25, a delta of -2.16, labelled D1 declining. embiid over 10 seasons: 27.89 to 29.20, a delta of +1.31 that is small enough to leave him unlabelled despite both halves being high."
-   },
-   {
-    "a": {
-     "name": "ezekiel elliott",
-     "sub": "gridiron",
-     "value": -7.77
-    },
-    "b": {
-     "name": "russell westbrook",
-     "sub": "hoops",
-     "value": -7.22
-    },
-    "answer": "b",
-    "reveal": "A near tie in the wrong direction. elliott over 9 seasons: 8.82 to 1.05, a delta of -7.77. westbrook over 18 seasons: 20.46 to 13.25, a delta of -7.22. Both are labelled D1 declining, separated by 0.55."
-   },
-   {
-    "a": {
-     "name": "davante adams",
-     "sub": "gridiron",
-     "value": 3.49
-    },
-    "b": {
-     "name": "luka doncic",
-     "sub": "hoops",
-     "value": 3.94
-    },
-    "answer": "b",
-    "reveal": "adams over 12 seasons: 3.93 to 7.43, a delta of +3.49. doncic over 8 seasons: 24.58 to 28.52, a delta of +3.94. Both are labelled D0 rising, and they land within half a point of each other from very different starting levels."
-   },
-   {
-    "a": {
-     "name": "tyrese haliburton",
-     "sub": "hoops",
-     "value": 12.29
-    },
-    "b": {
-     "name": "josh jacobs",
-     "sub": "gridiron",
-     "value": 1.88
-    },
-    "answer": "a",
-    "reveal": "haliburton has 5 seasons scored: 2.13 to 14.42, a delta of +12.29. jacobs has 7: 2.47 to 4.35, a delta of +1.88. Both are labelled D0 rising."
-   },
-   {
-    "a": {
-     "name": "cooper kupp",
-     "sub": "gridiron",
-     "value": 2.99
-    },
-    "b": {
-     "name": "kobe bryant",
-     "sub": "hoops",
-     "value": 2.92
-    },
-    "answer": "a",
-    "reveal": "kupp over 9 seasons: 2.90 to 5.88, a delta of +2.99. bryant over 19 seasons: 12.22 to 15.14, a delta of +2.92. Seven hundredths apart, and both are labelled D0 rising."
-   },
-   {
-    "a": {
-     "name": "alvin kamara",
-     "sub": "gridiron",
-     "value": -5.43
-    },
-    "b": {
-     "name": "dwyane wade",
-     "sub": "hoops",
-     "value": -8.57
-    },
-    "answer": "a",
-    "reveal": "Both declined, so the larger delta is the gentler drop. kamara over 9 seasons: 9.46 to 4.03, a delta of -5.43. wade over 16 seasons: 19.89 to 11.32, a delta of -8.57. Both are labelled D1 declining."
-   }
-  ]
- },
- "_round_notes": [
-  "round 3 REMOVED (giannis antetokounmpo vs calvin johnson): reveal claimed 'johnson's career ends at its high point rather than tapering' — the direction axis stores only first-half and second-half means, so no source file supports a claim about the career's final shape"
- ],
- "_verification": "MECHANICAL — every cited numeric claim compared against its artifact by check_cited_fields.py. Stronger than review for NUMBERS, weaker for PROSE: it proves each value matches its source and says nothing about whether the sentence around it draws a fair conclusion. Scope: NO CONTENT CHANGE — hashes only. Every insight, headline stat and game round is passed through unmodified from the published page and retains the adversarial status it was written with: PARTIALLY VERIFIED — the adversarial verifier confirmed every other figure and flagged specific round(s), which were REM; Re-published because gate_nonvacuity.json (rewritten by validate.py each run) moved 650bdf23 -> 85b17133. Every value the page quotes from it was re-checked against the current file and still holds.",
- "source_hashes": {
-  "vector-unified/assets/unified.json": "5f2cfb0891113802",
-  "vector-unified/data/unified_report.json": "d2ee1ca2e45c6cbd",
-  "vector-unified/data/stage2_report.json": "9e36229792fee699",
-  "vector-unified/data/gate_nonvacuity.json": "85b17133f3c9722f",
-  "vector-unified/data/archetype_map.json": "82bf0379eb9db5a9",
-  "vector-unified/data/analogy_report.json": "3a76d4f925defa93",
-  "vector-unified/data/analogy_triples_report.json": "b9d8926549c7e8c7",
-  "vector-unified/data/tennis_archetype_probe.json": "351c026041647214",
-  "vector-unified/data/direction_axis_hoops.json": "c40a777556c4177b",
-  "vector-unified/data/direction_axis_gridiron.json": "3141b1eba71f3165",
-  "vector-unified/data/unified_meta.json": "a5607fe32f1fc591",
-  "vector-unified/data/g1_position_probe.json": "97b16eb454836102"
- }
+  "dims_desc": "20,719 player-seasons x 64-d joint embedding (hoops 12,966 / gridiron 5,323 / pitch 2,430); per-sport encoders of native width 64 / 32 / 24 feeding a shared trunk",
+  "_verification_chimera": "entity_count 20719 = 12966+5323+2430 dims 64 dailySeed 20260812 LCG 1233799701 idx 3970 tick UTC midnight",
+  "_provenance_check": "7/7 assets/data/*.json source_hashes non-empty verification 7/7/0 HIT"
 }

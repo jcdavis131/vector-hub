@@ -2,6 +2,8 @@
    - Fast lite 4322 first paint
    - Full progressive filtered: only players with 3+ player-seasons, plus any player whose max season is in last 3 seasons window (rookies)
    - Cache API + session reuse, pending focus queue, injection always works even if filtered out
+   - PWA v67 reuse 22990 bytes baseline (actual 27k with comments) — LOD 4000 mobile 8000 desktop DPR1 fillRect void dark #080A0F
+   - DPR1 enforced: canvas.width=W, canvas.height=H, no devicePixelRatio scaling — fillRect #080A0F void dark true
 */
 export async function mountSharedMap(canvas, opts={}){
   if(!canvas) return null;

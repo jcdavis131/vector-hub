@@ -113,17 +113,63 @@
     };
   }
 
-  // expose globals
+  function parseDailyParam(){
+    try{
+      var sp = new URLSearchParams(location.search);
+      var v = sp.get('daily') || sp.get('seed');
+      if(v){
+        var n = parseInt(v,10);
+        if(!isNaN(n) && n>=20000101 && n<=20991231) return n;
+      }
+    }catch(_e){}
+    return null;
+  }
+  function parseNParam(){
+    try{
+      var sp = new URLSearchParams(location.search);
+      var v = sp.get('n') || sp.get('pack');
+      if(v){ var n=parseInt(v,10); if([1,3,5].indexOf(n)>-1) return n; }
+    }catch(_e){}
+    return null;
+  }
+  // ---- tick helper for countdown UTC ----
+  function msUntilMidnightUTC(){
+    var now=new Date();
+    var next=new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate()+1));
+    return next-now;
+  }
+
+  // expose globals — spec requires these names for ?daily=20260812&n=1/3/5
   window.hubDailySeed = hubDailySeed;
   window.hubLcg = hubLcg;
   window.unifiedChimeraDaily = unifiedChimeraDaily;
+  // canonical + alias names required by chimera provenance spec
+  window.parseDailyParam = parseDailyParam;
+  window.parseNParam = parseNParam;
+  window.msUntilMidnight = msUntilMidnightUTC;
+  // backwards-compat aliases used by earlier hub-v66 / existing pages
+  window.hubDailySeedFromUrl = parseDailyParam;
+  window.hubParseN = parseNParam;
+  window.hubMsUntilMidnight = msUntilMidnightUTC;
+  // also expose dailySeed/lcg aliases for model.js parity
+  window.dailySeed = hubDailySeed;
+  window.lcg = hubLcg;
 
   try {
-    var today = hubDailySeed();
+    var urlSeed = parseDailyParam();
+    var today = urlSeed !== null ? urlSeed : hubDailySeed();
+    var nParam = parseNParam();
     window.DAILY_SEED = today;
+    window.DAILY_SEED_URL_OVERRIDE = urlSeed !== null;
+    window.DAILY_N = nParam; // 1/3/5 same-link-same-stars — null means default solo
     window.UNIFIED_CHIMERA_DAILY = unifiedChimeraDaily(today);
     // also DATE string for templates
     window.DAILY_ISO = dateISOFromSeed(today);
+    // tick wiring for same-link-same-stars validation 20260812→1233799701 idx3970
+    if(today===20260812){
+      try{ console.assert(window.UNIFIED_CHIMERA_DAILY.lcg.a===1233799701,'[hub-daily] EXPECT 20260812 LCG a=1233799701 got '+window.UNIFIED_CHIMERA_DAILY.lcg.a);
+        console.assert(window.UNIFIED_CHIMERA_DAILY.index===3970,'[hub-daily] EXPECT idx3970 got '+window.UNIFIED_CHIMERA_DAILY.index); }catch(_a){}
+    }
   } catch (e) {
     // console only, never break page
     console.warn('[hub-daily] seed init failed', e);

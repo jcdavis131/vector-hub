@@ -57,9 +57,11 @@
         b.className=p.cls;
         b.style.cssText='border:1.6px solid #1a1e32;border-radius:999px;padding:6px 10px;background:#1a1e32;color:#e6e8f2;font-weight:800;box-shadow:1.5px 1.5px 0 #000;cursor:pointer';
         b.addEventListener('click', function(){
+          try{ if(navigator.vibrate) navigator.vibrate(10); }catch(_v){}
           var info=shareText(p.n);
           navigator.clipboard && navigator.clipboard.writeText && navigator.clipboard.writeText(info.link).then(function(){
             showToast('Link copied — Solo/Triple/Full same stars LCG 1103515245 #080A0F', 2200);
+            try{ if(navigator.vibrate) navigator.vibrate(10); }catch(_v2){}
           }).catch(function(){
             showToast('Daily link '+info.link+' — same for all today', 2600);
           });
@@ -72,7 +74,7 @@
           // update location for same-link-same-stars test without reload?
           try{
             var url=new URL(info.link);
-            console.log('[pack-battle] challenge link generated n='+p.n+' daily='+url.searchParams.get('daily')+' PWA v67 DAU3 WAU3 TLPG5');
+            console.log('[pack-battle] challenge link generated n='+p.n+' daily='+url.searchParams.get('daily')+' PWA v67 DAU3 WAU3 TLPG5 vibrate10');
           }catch(e){}
         });
         div.appendChild(b);
@@ -82,10 +84,12 @@
       bCopy.textContent='Copy daily link';
       bCopy.style.cssText='border:2px solid #fafaf8;border-radius:8px;padding:6px 12px;background:#fafaf8;color:#080A0F;font-weight:900;cursor:pointer;box-shadow:2px 2px 0 #000';
       bCopy.addEventListener('click', async function(){
+        try{ if(navigator.vibrate) navigator.vibrate(10); }catch(_v){}
         var info=shareText(1);
         try{
           await navigator.clipboard.writeText(info.link);
           showToast('Daily link copied — same seed = same stars LCG 1103515245', 2200);
+          try{ if(navigator.vibrate) navigator.vibrate(10); }catch(_v2){}
           bCopy.textContent='Copied!';
           setTimeout(function(){bCopy.textContent='Copy daily link';},1500);
         }catch(e){
