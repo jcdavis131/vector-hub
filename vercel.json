@@ -95,7 +95,7 @@
         },
         {
           "key": "Referrer-Policy",
-          "value": "strict-origin"
+          "value": "same-origin"
         },
         {
           "key": "Access-Control-Allow-Methods",
@@ -178,17 +178,6 @@
   ],
   "rewrites": [
     {
-      "destination": "/api/$1",
-      "has": [
-        {
-          "key": "Origin",
-          "type": "header",
-          "value": "(?<origin>https://([a-z0-9-]+\\.)*dumbmodel\\.com|http://localhost(:\\d+)?|https://([a-z0-9-]+\\.)*vercel\\.app)"
-        }
-      ],
-      "source": "/api/(.*)"
-    },
-    {
       "destination": "/api/v1/roster.js",
       "source": "/api/v1/roster"
     },
@@ -229,5 +218,6 @@
       "source": "/models/unified.html"
     }
   ],
-  "trailingSlash": false
+  "trailingSlash": false,
+  "version": 2
 }
