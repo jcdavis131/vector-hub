@@ -65,6 +65,7 @@
   }
 
   function hubLcg(seed) {
+    // LCG glibc Math.imul(seed*1103515245+12345)>>>0 & 0x7fffffff — actual JS Math.imul(seed,1103515245) for 32-bit overflow parity
     // glibc-style LCG masked to 31-bit, same as model.js shuffled()
     // Use Math.imul for low-32 truncation to match C overflow and avoid 53-bit float rounding drift.
     // Falls back to float mult if imul unavailable (very old JS) — deterministic within JS anyway.
@@ -247,13 +248,22 @@
 
   window.verifyProvenance = verifyProvenance;
 
-  // auto-run on load (defer safe, console-only, never blocks rendering)
+  // auto-run on load (defer safe, console-only, never blocks rendering) + 8s idle (spec: auto-run DOMContentLoaded + 8s idle)
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () { verifyProvenance(); });
   } else {
     // tiny delay so other scripts that set __hubDailyInit can still guard
     setTimeout(function () { verifyProvenance(); }, 0);
   }
+  // 8s idle re-check — requestIdleCallback fallback to setTimeout 8000
+  try{
+    if (typeof window.requestIdleCallback === 'function'){
+      window.requestIdleCallback(function(){ verifyProvenance(); }, {timeout:8000});
+      setTimeout(function(){ verifyProvenance(); }, 8000);
+    } else {
+      setTimeout(function(){ verifyProvenance(); }, 8000);
+    }
+  }catch(e){ setTimeout(function(){ verifyProvenance(); }, 8000); }
 
   // dev helper: log daily chimera on load for debugging deploy
   try {

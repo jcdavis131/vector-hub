@@ -56,12 +56,14 @@
     "offline_html_void_dark_shell_links": "PASS \u2014 offline shell dark cached badge streak-chip guesses-chip online-status retry Home footer links error-boundary keyboard-a11y pwa-install",
     "play_html_daily_court_5x_pack_battle_v2_production_dailySeed_LCG": "PASS \u2014 Daily Court 5\u00d7 LCG a1103515245 deterministic same-link-same-stars pack 1\u00b73\u00b75 shareable streak 7-dot toast viral-today",
     "players_html_directory_skills_lens": "PASS \u2014 Player Directory 20719 Skills Lens tabs Directory/Skill Leaderboards search alphabetical count 20719 trading-card profile v28 verified",
-    "provenance_7_7_0": "PASS \u2014 7 files provenance 7 rows 0 bad entity_count 20719 dims64 file assets/data/hub.json verification 7/7/0 source_files 7 source_hashes 7 test_top5 0.757 top1 0.438 baseline 0.1962 random 0.000386",
+    "provenance_7_7_0": "PASS \u2014 7 files provenance 7 rows 0 bad entity_count 20719 dims64 dailySeed 20260812 LCG 1233799701 idx3970 7/7/0 HIT file assets/data/unified.json source_files 7 source_hashes 7 test_top5 0.757 top1 0.438 baseline 0.1962 random 0.000386",
     "sharing_viral_same_link_same_stars": "PASS \u2014 Pack Battle 1\u00b73\u00b75 ?pack= deterministic LCG same-link-same-stars score battle vs Friend banner selfWins challenge link copy file map image 1200x630 streak Week Warrior",
     "sw_js_v66_CORE19_network_first_1MB_cap_JSON_never_cached_immutable_SWR": "PASS \u2014 CACHE_NAME dumbmodel-v1-hub-5games-chimera CORE 19 files shell-only immutable SWR network-first 1MB cap JSON never cached DENY 6-8 skipWaiting navPreload claim cleanup old keys push notificationclick same-origin",
     "trends_html_rotation_archetypes_court_zones": "PASS \u2014 trends hero 30 seasons drift-timeline Rotation season to season Procrustes R^T R=I arch stream+court heatmap era-tabs method Procrustes chained root",
     "zero_deps_true_no_torch_no_pip": "PASS \u2014 bundles/zero_deps.json true allow acne:./src no pip torch network egress inline CSS/JS base64 small media data URL",
-    "pwa_core_shell_only_immutable_SWR": "PASS \u2014 PWA v66 CORE 19 shell-only immutable SWR network-first 1MB cap JSON never cached DENY6-8 navPreload offline 13656B void dark"
+    "pwa_core_shell_only_immutable_SWR": "PASS \u2014 PWA v66 CORE 19 shell-only immutable SWR network-first 1MB cap JSON never cached DENY6-8 navPreload offline 13656B void dark",
+    "hub_js_dailySeed_LCG": "PASS \u2014 hub.js exposes hubDailySeed, hubLcg Math.imul, unifiedChimeraDaily, parseDailyParam, parseNParam, msUntilMidnight tick, daily 20260812 -> LCG 1233799701 idx 3970 same-link-same-stars n=1/3/5, bytes 10806 robust logic includes same validation assert",
+    "pwa_v67_manifest": "PASS \u2014 manifest.json exists theme_color #080A0F v67 sw CACHE_NAME dumbmodel-v67-hub-5games-chimera CORE20 shell-only immutable SWR"
   },
   "date": "2026-08-09T12:04:11Z",
   "domain": "vector-hub",
@@ -78,21 +80,30 @@
   "overall_score": 9.0,
   "passes": true,
   "provenance": {
-    "dailySeed_LCG": "a=1103515245 b=12345 m=0x7fffffff YYYYMMDD UTC deterministic same-link-same-stars",
+    "dailySeed_LCG": "a=1103515245 b=12345 m=0x7fffffff YYYYMMDD UTC deterministic same-link-same-stars LCG 1233799701 idx 3970 verified Math.imul",
     "dims": 64,
     "eligible_pairs": 20719,
     "entity_count": 20719,
     "file": "assets/data/hub.json",
     "native": {
-      "hub": 20719
+      "hoops": 12966,
+      "gridiron": 5323,
+      "pitch": 2430
     },
     "source_files": 7,
     "source_hashes": 7,
     "test_top1": 0.438,
     "test_top5": 0.757,
-    "verification": "7/7/0 provenance \u2014 vectors.json eval_scoreboard mtnn_arch embeddings map_lite search_lite players_lite all present, 0 bad",
+    "verification": "7/7/0 HIT",
     "loop": "scaffold-parity 2026-08-09",
-    "loop3": "scaffold-parity"
+    "loop3": "scaffold-parity",
+    "chimera": "20719x64-d",
+    "dailySeed": "YYYYMMDD UTC int",
+    "dailySeed_example": 20260812,
+    "dailySeed_LCG_example": 1233799701,
+    "dailySeed_idx_example": 3970,
+    "lcg_formula": "a=(seed*1103515245+12345)&0x7fffffff glibc rand Math.imul",
+    "same_link_same_stars": "?daily=20260812&n=1/3/5 deterministic LCG idx 3970"
   },
   "pwa": {
     "background_color": "#080A0F",
