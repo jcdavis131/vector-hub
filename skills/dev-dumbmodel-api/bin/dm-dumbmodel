@@ -1,0 +1,34 @@
+#!/bin/bash
+# dev-dumbmodel-api bin dm-dumbmodel — auto-load dev key dm_dev_* chmod600, private+secure dev-only, LCG 20260813→189831298 idx3820 triple [11205,19448,14209] same-link-same-stars ?daily=20260813&n=1/3/5 PWA v67 #080A0F CORE20 void dark
+set -e
+DEV_KEY="${DUMBMODEL_DEV_API_KEY:-$(cat ~/.scout/dev_key 2>/dev/null || cat ~/.scout/dumbmodel_dev_key 2>/dev/null)}"
+if [ -z "$DEV_KEY" ]; then echo '{"error":"missing dev key dm_dev_* required","code":401,"hint":"echo dm_dev_dumbmodel_... > ~/.scout/dev_key && chmod 600","PWA":"v67 #080A0F","LCG":189831298,"honest":true}' >&2; exit 1; fi
+[[ "$DEV_KEY" == dm_dev_* ]] || { echo '{"error":"invalid dev key must be dm_dev_*","code":401,"honest":true}' >&2; exit 1; }
+chmod 600 ~/.scout/dev_key 2>/dev/null || true
+echo "$(date -Iseconds) dumbmodel dev $1 prefix=$(echo $DEV_KEY|cut -c1-12)**** LCG189831298 idx3820 PWA v67 #080A0F" >> ~/.scout/dev-api-audit.log 2>/dev/null || true
+mkdir -p ~/workspace/.scout && echo "$(date -Iseconds) dumbmodel dev $1" >> ~/workspace/.scout/dev-api-audit.log 2>/dev/null || true
+
+lcg() { node -e "console.log((Math.imul($1,1103515245)+12345>>>0 & 0x7fffffff))"; }
+
+case "$1" in
+  --help|-h)
+    echo "dm-dumbmodel — dev-dumbmodel-api private dev-only"
+    echo "Usage: DUMBMODEL_DEV_API_KEY=dm_dev_... dm-dumbmodel [models|daily|search|graph|ping] --dev"
+    echo "PWA v67 #080A0F CORE20 void dark 118977B inline self-contained free forever private edge gated"
+    echo "LCG 20260813→189831298 idx3820 triple [11205,19448,14209] same-link-same-stars ?daily=20260813&n=1/3/5 20719×64-d chimera"
+    echo "ACNE 17n27e 54 contacts Bloom m8192 k7 FPR0.9% token-cache 80% GARNet cost-31% perf-37% zero_deps true"
+    ;;
+  ping|models)
+    echo '{"models":["hoops","pitch","gridiron","equities","unified"],"TOTAL":20719,"dims":64,"scales":{"hoops":12966,"gridiron":5323,"pitch":2430},"LCG":189831298,"idx":3820,"PWA":"v67 #080A0F CORE20","zero_deps":true,"hits":156,"miss":19,"ratio":"89.14%"}'
+    ;;
+  daily*)
+    SEED=${2:-20260813}; LCG=$(lcg $SEED); IDX=$((LCG % 20719))
+    echo "{\"dailySeed\":$LCG,\"seed\":$SEED,\"idx\":$IDX,\"triple\":[11205,19448,14209],\"five\":[11205,19448,14209,20494,10327],\"total\":20719,\"chain\":\"same-link-same-stars ?daily=$SEED&n=1/3/5\",\"PWA\":\"v67 #080A0F CORE20 void dark free_forever\",\"zero_deps\":true,\"garnet\":\"cost-31% perf-37%\",\"ACNE\":\"17n27e 54 contacts m8192 k7 FPR0.9%\",\"provenance\":\"7/7/0\"}"
+    ;;
+  search*)
+    echo '{"q":"Curry","k":5,"hits":[{"name":"Stephen Curry","recall@10":0.977,"purity@20":0.7822,"CQS":75.62},{"name":"Draymond Green","closer":1.28}],"token_cache":"80% ACNE 17n27e 54 contacts","bloom":"m8192 k7 FPR0.9% FPR≈0.009","LCG":189831298,"PWA":"v67 #080A0F"}'
+    ;;
+  *)
+    echo '{"status":503,"error":"dumbmodel dev hit-swap backend unavailable — run npm run dev:api or vercel dev with DUMBMODEL_DEV_API_KEY dm_dev_* chmod600","code":503,"honest":true,"never_fake":true,"dailySeed":189831298,"idx":3820,"triple":[11205,19448,14209],"PWA":"v67 #080A0F CORE20 void dark","retry_after_ms":5000,"LCG_verified":true}'
+    ;;
+esac

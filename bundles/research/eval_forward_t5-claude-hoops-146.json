@@ -1,0 +1,14 @@
+{
+  "nodeId": "t5-claude-hoops-146",
+  "candidate": "mtnn_v6_130_full",
+  "composite": 0.85,
+  "top1": 0.55,
+  "purity": 0.72,
+  "PASS": "5/5",
+  "pending": "full 150ep LOCAL-GPU",
+  "smoke_MAE": 0.2313,
+  "SOTA": 0.2085,
+  "gap": 0.0228,
+  "promo": false,
+  "timestamp": "2026-08-13 01:49:21 CDT"
+}

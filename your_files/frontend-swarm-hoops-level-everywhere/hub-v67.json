@@ -1,0 +1,66 @@
+{
+  "version": "v67",
+  "bg": "#080A0F",
+  "core": "CORE20",
+  "dpr": 1,
+  "lod": [
+    4000,
+    8000
+  ],
+  "lcg": {
+    "seed": 20260813,
+    "expected": 189831298,
+    "formula": "Math.imul(seed,1103515245)+12345>>>0 &0x7fffffff",
+    "dailyParam": "20260813",
+    "idx3820": 1267982662
+  },
+  "triple": [
+    11205,
+    19448,
+    14209
+  ],
+  "five": [
+    11205,
+    19448,
+    14209,
+    11701,
+    18524
+  ],
+  "daily_links": {
+    "solo1": "?daily=20260813&n=1",
+    "triple3": "?daily=20260813&n=3",
+    "full5": "?daily=20260813&n=5",
+    "same_link_same_stars": true
+  },
+  "features": {
+    "five_games": [
+      "hoops12966",
+      "gridiron5323",
+      "pitch2430",
+      "equities",
+      "unified20719x64-d"
+    ],
+    "hoops_level_everywhere": true,
+    "pwa_v67": true,
+    "void_dark": "#080A0F CORE20",
+    "offline_ready_HIT": true,
+    "dpr1_canvas_width_W": true,
+    "manifest_inline_data_uri": true,
+    "sw_blob_inline": true,
+    "core20_13_4K_inline": true,
+    "lod4000_mobile_8000_desktop": true,
+    "everyday_chain_open_link_drag-map-Jordan_copy-link_same-stars": true,
+    "four_povs": [
+      "Owner",
+      "Player",
+      "Brand",
+      "DFS"
+    ],
+    "sparkle_delivery": true,
+    "zero_deps": true,
+    "dev_apis_localhost_only": "http://127.0.0.1:8787",
+    "agent_token_broker_90s_hmac_single_use_256_LRU_rate_20_min_agent": true
+  },
+  "file": "hub-v67.html",
+  "size_bytes": 25325
+}

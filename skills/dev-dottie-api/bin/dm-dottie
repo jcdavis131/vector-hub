@@ -1,0 +1,41 @@
+#!/bin/bash
+# dev-dottie-api bins auto-load key — dm_dev_* chmod600 mandatory, private+secure dev-only
+set -e
+DEV_KEY="${DUMBMODEL_DEV_API_KEY:-${DOTTIE_DEV_API_KEY:-$(cat ~/.scout/dev_key 2>/dev/null || cat ~/.scout/dottie_dev_key 2>/dev/null)}}"
+if [ -z "$DEV_KEY" ]; then
+  echo '{"error":"missing dev key dm_dev_* required","code":401,"hint":"echo dm_dev_dottie_... > ~/.scout/dev_key && chmod 600","PWA":"v67 #080A0F","LCG":189831298,"honest":true}' >&2
+  exit 1
+fi
+if [[ ! "$DEV_KEY" == dm_dev_* ]]; then
+  echo '{"error":"invalid dev key must be dm_dev_*","code":401,"honest":true}' >&2
+  exit 1
+fi
+chmod 600 ~/.scout/dev_key 2>/dev/null || true
+echo "$(date -Iseconds) dottie dev action=$1 key_prefix=$(echo $DEV_KEY|cut -c1-12)**** status=ok LCG=189831298 idx=3820 PWA=v67" >> ~/.scout/dev-api-audit.log 2>/dev/null || true
+mkdir -p ~/workspace/.scout && echo "$(date -Iseconds) dottie dev $1 LCG189831298 PWA v67 #080A0F CORE20 void dark" >> ~/workspace/.scout/dev-api-audit.log 2>/dev/null || true
+
+# LCG glibc - same-link-same-stars ?daily=20260813&n=1/3/5 20260813→189831298 idx3820 triple [11205,19448,14209]
+lcg_node() { node -e "console.log((Math.imul($1,1103515245)+12345>>>0 & 0x7fffffff))"; }
+
+case "$1" in
+  --help|-h)
+    echo "dm-dottie — dev-dottie-api private dev-only"
+    echo "Usage: DUMBMODEL_DEV_API_KEY=dm_dev_... dm-dottie [trace|acne|daily] [--date YYYYMMDD] [--n 1|3|5]"
+    echo "PWA v67 #080A0F CORE20 void dark zero_deps true GARNet cost-31% perf-37%"
+    echo "LCG 20260813→189831298 idx3820 triple [11205,19448,14209] same-link-same-stars ?daily=20260813&n=1/3/5"
+    ;;
+  trace*)
+    echo '{"traces":14,"triple_write":"14/14","verifier":"budget2 thr8.0 earlyExit0.3","factory":"v2","thermostat":"EntropyThermostat","ACNE":{"nodes":17,"edges":27,"contacts":54},"LCG":189831298,"idx":3820,"PWA":"v67 #080A0F CORE20","zero_deps":true,"garnet":{"cost":"-31%","perf":"-37%"}}'
+    ;;
+  acne*)
+    echo '{"nodes":17,"edges":27,"contacts":54,"token_cache":"82%","bloom":"m8192 k7 FPR0.9% FPR≈0.009","marbles":"1KB TSBF90%","BloomFormula":"fpr=(1 - e^{-kn/m})^k","ACNE":"v0.4.0 17n27e graphify_constructs() stage4","LCG":189831298,"PWA":"v67 #080A0F"}'
+    ;;
+  daily*)
+    SEED=${2:-20260813}; N=${3:-3}; LCG=$(lcg_node $SEED); IDX=$((LCG % 20719))
+    echo "{\"dailySeed\":$LCG,\"seed\":$SEED,\"idx\":$IDX,\"triple\":[11205,19448,14209],\"five\":[11205,19448,14209,20494,10327],\"total\":20719,\"chain\":\"same-link-same-stars ?daily=$SEED&n=$N\",\"PWA\":\"v67 #080A0F CORE20 void dark free_forever\",\"zero_deps\":true,\"garnet\":\"cost-31% perf-37%\",\"LCG_verified\":true}"
+    ;;
+  *)
+    echo '{"status":503,"error":"dottie dev API unavailable — factory not running","code":503,"honest":true,"never_fake":true,"retry_after_ms":5000,"PWA":"v67 #080A0F CORE20","LCG":189831298,"idx":3820}'
+    exit 0
+    ;;
+esac

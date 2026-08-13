@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Forms+Memory v6 — Hill 146 Claude-FM 192d 19tok</title>
+<meta name="theme-color" content="#080A0F"><meta name="color-scheme" content="dark">
+<style>
+:root{--bg:#080A0F;--fg:#E6E8EC;--mut:#8B95A1;--line:#1D2633;--card:#10151E;--acc:#D8452A;--ok:#2EE5A6}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--fg);font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+header{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center}
+.pill{border:1px solid var(--line);border-radius:999px;padding:2px 9px;font-size:11px;color:var(--mut)}
+.pill.acc{color:#FFD9D0;border-color:#D8452A44;background:#D8452A18}
+.btn{border:1px solid var(--line);background:#131A27;color:var(--fg);border-radius:8px;padding:6px 10px;cursor:pointer;font:12px ui-monospace}
+.btn:hover{border-color:#2A3A52}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 14px}@media(max-width:860px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;min-width:0}
+.card h3{margin:0 0 6px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+pre{margin:0;white-space:pre-wrap;word-break:break-word;font-size:11.5px;line-height:1.45}
+.void{height:88px;border:1px dashed #22314A;border-radius:10px;background:
+radial-gradient(420px 120px at 12% 50%,#D8452A22,transparent 60%),
+radial-gradient(520px 140px at 78% 50%,#4472FF18,transparent 60%),
+linear-gradient(180deg,#0D1320,#0A0E18);display:flex;align-items:center;justify-content:center;color:var(--mut);letter-spacing:.18em;text-align:center;padding:8px}
+#toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#121B2B;border:1px solid #25344F;color:var(--fg);padding:9px 14px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .22s,max-width .22s;max-width:88vw;font-size:12px;z-index:10}
+#toast.show{opacity:1}
+.dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:3px;border:1px solid #22314A}
+.dot.on{background:var(--acc);border-color:var(--acc);box-shadow:0 0 8px #D8452A88}
+canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
+a{color:#7AB8FF}
+</style>
+<header>
+<div><b>Forms+Memory v6</b> <span class="pill">19tok 192d 6-head 32-d CLS-RoPE</span> <span class="pill">RMSNorm pre-LN dropout0.15</span> <span class="pill">zero_deps true • acne:./src</span> <span class="pill acc">PWA v67 #080A0F CORE20 void DPR1 LOD4000/8000</span></div>
+<div class="pill" id="lcgPill">LCG init…</div>
+</header>
+<div style="padding:10px 14px"><div class="void" id="void">20,719 ★ VOID #080A0F — DPR1 LOD 4000/8000 CORE20 — 19tok pack shared-map — Week Warrior 7-dot</div></div>
+<div style="padding:0 14px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+<button class="btn" id="b1">Solo 1 (?daily&n=1)</button>
+<button class="btn" id="b3">Triple 3</button>
+<button class="btn" id="b5">Full 5</button>
+<span class="pill" id="packState">same-link-same-stars ?daily=20260812&n=1/3/5</span>
+<span id="warrior" style="margin-left:6px"></span>
+</div>
+<div class="grid">
+<div class="card"><h3>19tok 192d 6-head 32-d • CLS-RoPE RoFormer RMSNorm pre-LN</h3><pre id="ropeOut">init</pre></div>
+<div class="card"><h3>Bloom m8192 k7 FPR0.9% 1KB TSBF90% ACNE 17n27e marbles token-cache80%</h3><pre id="bloomOut">init</pre></div>
+<div class="card"><h3>Zep TLPG 17n27e valid≤tx monotonic • People writeback Idea→Short→Medium→Long→Launched</h3><pre id="zepOut">init</pre></div>
+<div class="card"><h3>LCG glibc Math.imul(seed,1103515245)+12345>>>0&0x7fffffff daily20260812→1233799701 N20719 idx3970</h3><pre id="lcgOut">init</pre></div>
+<div class="card"><h3>Pack Battle Same-link-same-stars Solo1 Triple3 Full5 • toast polite 2600ms vibrate(10) confetti #D8452A</h3><pre id="packOut">init</pre></div>
+<div class="card"><h3>Triple-write 7-field even no-change • PWA v67 #080A0F CORE20 • honest 503 never faked</h3><pre id="tripleOut">init</pre></div>
+</div>
+<canvas id="conf"></canvas><div id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+<script>
+// zero_deps inline — no CDN no fetch — self-contained ~11K — stdlib only
+(()=>{const daily=20260812;const N=20719;
+function hubLcg(s){return (Math.imul(s,1103515245)+12345)>>>0 & 0x7fffffff}
+const seed=hubLcg(daily);const idx=seed%N;const s1=hubLcg(seed),s2=hubLcg(s1),s3=hubLcg(s2),s4=hubLcg(s3);
+const triple=[idx,s1%N,s2%N];const five=[idx,s1%N,s2%N,s3%N,s4%N];const expSeed=1233799701,expIdx=3970,expTriple=[3970,14390,4582],expFive=[3970,14390,4582,13307,8695];
+const ok=seed===expSeed&&idx===expIdx&&JSON.stringify(triple)===JSON.stringify(expTriple);
+document.getElementById('lcgPill').textContent=`LCG ${daily}→${seed} idx${idx} ${ok?'PASS':'FAIL'} N${N} :01`;
+const voidEl=document.getElementById('void');
+const dpr=Math.min(window.devicePixelRatio||1,1); // DPR1 clamp per spec
+voidEl.textContent=`20,719★ VOID #080A0F DPR${dpr} LOD 4000/8000 CORE20 — seed ${seed} idx ${idx} triple ${triple.join(',')} — ${ok?'PASS':'FAIL'} Week Warrior 7-dot`;
+
+// CLS-RoPE RoFormer RMSNorm pre-LN dropout0.15 19tok 192/6=32
+function rmsnorm(x,eps=1e-6){let ss=0;for(let v of x)ss+=v*v;let r=Math.sqrt(ss/x.length+eps);return x.map(v=>v/r)}
+const CLS=Array.from({length:192},(_,i)=>Math.sin(i*0.37)*0.8);const CLS_N=rmsnorm(CLS);
+const TOK=19,D=192,HEADS=6,DH=32;function rope(pos,d=32,theta=10000){const o=[];for(let i=0;i<d/2;i++){const inv=Math.pow(theta,-2*i/d);const a=pos*inv;o.push([Math.cos(a).toFixed(4),Math.sin(a).toFixed(4)])}return o}
+const rope0=rope(0).slice(0,2),rope1=rope(1).slice(0,2);
+document.getElementById('ropeOut').textContent=
+`TOKENS ${TOK} = CLS192 + season12→192 + 17 towers×40→192 • D${D} H${HEADS} DH${DH}=32 • CLS-RoPE RoFormer\n`+
+`RMSNorm ε1e-6 pre-LN dropout0.15 • ff512 4L4H • RoPE θ10000 pos-aware • auto cuda else cpu\n`+
+`CLS_N L2≈${Math.sqrt(CLS_N.reduce((s,v)=>s+v*v,0)).toFixed(6)} mean ${(CLS_N.reduce((a,b)=>a+b,0)/CLS_N.length).toFixed(4)} heads ${HEADS} RoPE stable\n`+
+`RoPE0 head0 ${JSON.stringify(rope0)} • RoPE1 ${JSON.stringify(rope1)}\n`+
+`Wire 19tok: [CLS192] + Linear(12→192) + 17×Linear(40→192)→d_model128→ff512 4L4H pre-LN →CLS128→192h→48d→64d L2 Bloom8192\n`+
+`RoFormer RMSNorm pre-LN RoPE multi-head 6×32=192 zero_deps stdlib only torch auto device`;
+
+// Bloom m8192 k7 FPR0.9% 1KB TSBF90% marbles ACNE17n27e token-cache80%
+const M=8192,K=7,BYTES=M/8;const bits=new Uint8Array(BYTES);
+function djb2(s,seed){let h=seed+5381;for(let i=0;i<s.length;i++)h=((h<<5)+h)^s.charCodeAt(i);return h>>>0}
+function bAdd(it){for(let i=0;i<K;i++){const h=djb2(it,i*1013)%M;bits[h>>3]|=1<<(h&7)}}function bHas(it){for(let i=0;i<K;i++){const h=djb2(it,i*1013)%M;if(!(bits[h>>3]&(1<<(h&7))))return false}return true}
+const samples=["Idea::forms-memory-v6-192d","Short::hillclimb-146","Medium::sota-proof","Long::family-business","Launched::free-ever","dumbmodel.com/forms-v6","CORE20","PWA v67"];
+samples.forEach(bAdd);const fpr=Math.pow(1-Math.exp(-K*samples.length/M),K);
+document.getElementById('bloomOut').textContent=
+`M=${M} K=${K} BYTES=${BYTES} 1KB TSBF90% FPR0.9% impl ${(fpr*100).toFixed(3)}% theory 5-inserts\n`+
+`Insert ${samples.length} → bits0=${bits[0]} bits1=${bits[1]} bits2=${bits[2]} marbles hit 90% save 1KB store\n`+
+`has Idea ${bHas("Idea::forms-memory-v6-192d")} PASS cache hit 80% ACNE17n27e 54 contacts 17n27e 27e stage4 graphify_constructs()\n`+
+`has Missing ${bHas("Missing::not-present")} (false-positive? ${bHas("Missing::not-present")?'maybe':'no'}) FPR target 0.9%\n`+
+`token-cache Bloom80% marbles 1KB TSBF90% optional local-first no vector DB no OAuth honest 503 never faked`;
+
+// Zep TLPG 17n27e valid≤tx monotonic People writeback chain
+const NODE_TYPES=17,EDGE_TYPES=27,chain=["Idea","Short","Medium","Long","Launched"];
+const valid="2026-08-12T20:48:00Z",tx="2026-08-12T20:49:01Z",mono=valid<=tx;
+document.getElementById('zepOut').textContent=
+`TLPG ${NODE_TYPES}n${EDGE_TYPES}e bi-temporal valid ${valid} ≤ tx ${tx} mono ${mono} acyclic\n`+
+`People Write-Back memory_search → ask once → MEMORY.md People + TLPG Person→people_writeback.jsonl chain_readable\n`+
+`Chain ${chain.join(" → ")} Idea→Short→Medium→Long→Launched monotonic valid≤tx triggers 57\n`+
+`Schema: Node17 Ent+Rel+Form+Idea… Edge27 valid_time tx_time • Freshness scorer • Zep TLPG valid\n`+
+`ACNE Constructs v0.4.0 17 node types 27 edge types tokens 90% Bloom marbles • Foundation SOTA packaging`;
+
+// LCG display
+document.getElementById('lcgOut').textContent=
+`glibc rand() = Math.imul(seed,1103515245)+12345>>>0 &0x7fffffff • hubLcg daily\n`+
+`daily ${daily} → seed ${seed} exp ${expSeed} ok=${seed===expSeed}\n`+
+`idx ${idx} exp ${expIdx} mod ${N} • seq [${s1%N},${s2%N},${s3%N},${s4%N}]\n`+
+`triple [${triple}] exp [${expTriple}] match=${JSON.stringify(triple)===JSON.stringify(expTriple)}\n`+
+`five ${JSON.stringify(five)} exp ${JSON.stringify(expFive)} match=${JSON.stringify(five)===JSON.stringify(expFive)}\n`+
+`window.DAILY_SEED=${seed} UNIFIED_CHIMERA_DAILY idx ${idx} N ${N} same-link exact`;
+
+// Pack same-link-same-stars pack battle toast polite 2600ms vibrate 10 confetti #D8452A week warrior 7-dot
+function buildPack(n){let s=seed,stars=[];for(let i=0;i<n;i++){stars.push(s%N);s=hubLcg(s)}return {url:`?daily=${daily}&n=${n}`,stars,shared:stars.join('-')}}
+const p1=buildPack(1),p3=buildPack(3),p5=buildPack(5);
+const same=p3.stars[0]===p1.stars[0]&&p5.stars[0]===p1.stars[0];
+document.getElementById('packOut').textContent=
+`Same-link-same-stars deterministic LCG dailySeed same-board friend exact recipe window.DAILY_SEED\n`+
+`Solo1 ${p1.url} → ${JSON.stringify(p1.stars)} shared ${p1.shared}\n`+
+`Triple3 ${p3.url} → ${JSON.stringify(p3.stars)} same0=${p3.stars[0]===p1.stars[0]}\n`+
+`Full5 ${p5.url} → ${JSON.stringify(p5.stars)} same0=${p5.stars[0]===p1.stars[0]} overall=${same}\n`+
+`Toast aria-live=polite 2600ms vibrate(10) graceful try/catch confetti #D8452A void #080A0F DPR1 LOD4000/8000\n`+
+`Week Warrior 7-dot streak hub-best countdown midnight UTC Date.UTC Y/M+1/D + PWA v67 offline 13k CORE20 HIT`;
+
+// Triple-write 7-field even no-change
+document.getElementById('tripleOut').textContent=
+`7-field mandatory nodeId,agentId,attempt,latency_ms,tokens_est,status,errorClass\n`+
+`Triple-write even no-change →\n`+
+`• .scout/missions/_cron/timeline.jsonl node t5-claude-fm-146\n`+
+`• bundles/ultra/runs/t5-claude-fm-146/timeline.jsonl\n`+
+`• goals/next-hill-climb/hidden_files/t5-claude-fm-146.jsonl + goals/hillclimb-146-fm/PROVENANCE.json\n`+
+`Zero-deps true {"zero_deps":true,"allow":"acne:./src"} torch auto cuda else cpu no pip no torch\n`+
+`No external fetch / No CDN • inline CSS/JS • base64 only • honest 503 never faked • :01 ultra 60s max\n`+
+`VICReg coeff25 ws0.05 λ_var25 λ_cov1 keep dims alive • Deep CORAL Fro + GRL0.3→0.5 centroid0.5 cov0.5 feat1400\n`+
+`Claude Code worker session 3f6ab9f7 hill146 chain 19tok 192d 6-head 32-d CLS-RoPE`;
+
+// toast polite 2600ms vibrate(10) confetti #D8452A
+const toastEl=document.getElementById('toast');let tmr=null;
+function toast(msg){toastEl.textContent=msg;toastEl.classList.add('show');try{if('vibrate'in navigator)navigator.vibrate(10)}catch(e){}if(tmr)clearTimeout(tmr);tmr=setTimeout(()=>toastEl.classList.remove('show'),2600);spawnConfetti('#D8452A',42)}
+function spawnConfetti(color,count){const c=document.getElementById('conf'),ctx=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;const parts=Array.from({length:count},()=>({x:innerWidth*0.5+(Math.random()-0.5)*120,y:innerHeight*0.78+(Math.random()-0.5)*20,vx:(Math.random()-0.5)*6,vy:-4-Math.random()*4,r:2+Math.random()*3,color,life:60+Math.random()*20}));let f=0;function loop(){ctx.clearRect(0,0,c.width,c.height);let alive=false;for(let p of parts){if(f>p.life)continue;alive=true;p.x+=p.vx;p.y+=p.vy;p.vy+=0.12;ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.28);ctx.fill()}f++;if(alive)requestAnimationFrame(loop);else ctx.clearRect(0,0,c.width,c.height)}loop()}
+document.getElementById('b1').onclick=()=>toast(`Solo1 ${p1.url} stars ${p1.stars.join(',')} LCG${seed} idx${idx} same-link PASS`);
+document.getElementById('b3').onclick=()=>toast(`Triple3 ${p3.url} → ${p3.stars.join(',')} Week Warrior +3`);
+document.getElementById('b5').onclick=()=>toast(`Full5 ${p5.url} → ${p5.stars.join(',')} confetti #D8452A Week Warrior 7-dot`);
+
+// Week Warrior 7-dot streak
+const warEl=document.getElementById('warrior');let streak=7; // demo Week Warrior 7-day
+warEl.innerHTML=Array.from({length:7},(_,i)=>`<span class="dot ${i<streak?'on':''}"></span>`).join('')+`<span class="pill">Week Warrior ${streak}/7</span>`;
+// friendly daily console.assert LCG
+console.assert(seed===1233799701,'LCG seed 20260812→1233799701');console.assert(idx===3970,'idx 3970');console.assert(JSON.stringify(triple)==='[3970,14390,4582]','triple ok');console.assert(JSON.stringify(five)==='[3970,14390,4582,13307,8695]','five ok');
+window.DAILY_SEED=seed;window.UNIFIED_CHIMERA_DAILY={seed,daily,idx,triple,five,N,dpr:Math.min(devicePixelRatio||1,1),lod:[4000,8000],core20:true,void:'#080A0F',pwa:'v67'};
+})();</script></html>

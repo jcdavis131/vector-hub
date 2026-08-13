@@ -1,0 +1,450 @@
+openapi: 3.0.3
+info:
+  title: "Dumbmodel Dev API private"
+  version: v0.1-dev
+  description: |
+    PRIVATE dev-only API. Never expose publicly. Localhost + *.dumbmodel.local allowlist only.
+    All endpoints require bearerAuth with dm_dev_ prefix. Scoped to dev.
+    zero_deps=true, torch auto cuda else cpu.
+
+servers:
+  - url: http://localhost:3000
+    description: localhost dev
+  - url: http://127.0.0.1:3000
+    description: loopback dev
+  - url: https://api.dumbmodel.local
+    description: local TLS proxy
+
+security:
+  - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: dm_dev_
+      description: |
+        Bearer token MUST start with dm_dev_ prefix.
+        Scope: dev only. Example: dm_dev_LOCAL_ONLY_REPLACE_ME
+        Validate with timingSafeEqual. Never log raw key. Never commit.
+
+  headers:
+    RateLimit-Limit:
+      description: Rate limit ceiling per window
+      schema:
+        type: integer
+        example: 60
+    RateLimit-Remaining:
+      description: Remaining requests in window
+      schema:
+        type: integer
+        example: 59
+    RateLimit-Reset:
+      description: Seconds until window reset
+      schema:
+        type: integer
+        example: 60
+    Retry-After:
+      description: Retry after seconds when throttled
+      schema:
+        type: integer
+        example: 60
+
+  schemas:
+    Error:
+      type: object
+      required: [error, code]
+      properties:
+        error:
+          type: string
+        code:
+          type: string
+          example: unauthorized
+        details:
+          type: object
+
+    InferRequest:
+      type: object
+      required: [prompt]
+      properties:
+        prompt:
+          type: string
+          description: User prompt for inference
+          minLength: 1
+          maxLength: 4096
+        max_new_tokens:
+          type: integer
+          minimum: 1
+          maximum: 512
+          default: 128
+          description: Max tokens to generate
+
+    InferResponse:
+      type: object
+      required: [final, turn, model]
+      properties:
+        final:
+          type: string
+          description: Final turn text (complete generation)
+        turn:
+          type: integer
+          description: Turn index (final turn)
+          example: 1
+        model:
+          type: string
+          example: dumbmodel-dev
+        tokens:
+          type: integer
+          description: Tokens generated
+        latency_ms:
+          type: integer
+
+    DispatchRequest:
+      type: object
+      required: [intent]
+      properties:
+        intent:
+          type: string
+          description: Routing intent
+          example: research
+        complexity:
+          type: string
+          enum: [low, medium, high, epic]
+          default: medium
+        payload:
+          type: object
+          description: Arbitrary payload forwarded to agents
+          additionalProperties: true
+
+    DispatchResponse:
+      type: object
+      required: [relevantAgents, envelopeId, routed]
+      properties:
+        relevantAgents:
+          type: array
+          items:
+            type: string
+          example: ["researcher", "synthesist"]
+          description: Deterministic/LLM router selected agents (MoMA-lite 5 tiers)
+        envelopeId:
+          type: string
+          format: uuid
+          description: HandoffEnvelope id (7 required fields)
+        routed:
+          type: boolean
+        intent:
+          type: string
+        complexity:
+          type: string
+
+    DailyTriple:
+      type: object
+      required: [idx, lcg, triple, five]
+      properties:
+        idx:
+          type: integer
+          description: Index into daily shard
+        lcg:
+          type: integer
+          description: LCG value from dailySeed
+          example: 1233799701
+        triple:
+          type: array
+          items:
+            type: integer
+          minItems: 3
+          maxItems: 3
+          description: Triple derived from lcg
+        five:
+          type: array
+          items:
+            type: object
+          description: Same-link-same-stars five
+        date:
+          type: string
+          format: date
+          example: "2026-08-12"
+        dailySeed:
+          type: integer
+          example: 20260812
+
+    DailyResponse:
+      type: object
+      required: [daily, n, lcg, idx, triple, five, sameLinkSameStars]
+      properties:
+        daily:
+          type: string
+          format: date
+        n:
+          type: integer
+          description: Number of entries requested
+        lcg:
+          type: integer
+        idx:
+          type: integer
+        triple:
+          type: array
+          items:
+            type: integer
+        five:
+          type: array
+          items:
+            type: object
+        sameLinkSameStars:
+          type: boolean
+          example: true
+          description: Invariant — same link → same stars
+        seedMap:
+          type: object
+          description: Reference mapping for verification
+          properties:
+            dailySeed:
+              type: integer
+              example: 20260812
+            lcgValue:
+              type: integer
+              example: 1233799701
+            mapping:
+              type: string
+              example: "20260812→1233799701"
+
+    ProvenanceResponse:
+      type: object
+      required: [provenance, ok, bad, total, hashes]
+      properties:
+        provenance:
+          type: string
+          example: "7/7/0"
+          description: ok/total/bad — must be 7/7/0 for healthy
+        ok:
+          type: integer
+          example: 7
+        total:
+          type: integer
+          example: 7
+        bad:
+          type: integer
+          example: 0
+        hashes:
+          type: array
+          items:
+            type: string
+          description: SHA256 hashes of 7 required shards
+        verified:
+          type: boolean
+        timestamp:
+          type: string
+          format: date-time
+
+paths:
+  /dev/infer:
+    post:
+      summary: Dev inference — prompt to final turn
+      description: Local-only inference. Requires dm_dev_ bearer. 60/min per key, 20/min per IP.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InferRequest'
+      responses:
+        '200':
+          description: Final turn result
+          headers:
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+            Cache-Control:
+              schema:
+                type: string
+              example: "no-store"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InferResponse'
+        '401':
+          description: Unauthorized — missing/invalid dm_dev_ token
+          headers:
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          headers:
+            Retry-After:
+              $ref: '#/components/headers/Retry-After'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-rateLimit: "60/min per key, 20/min per IP"
+      x-cors-allowlist: ["http://localhost:3000", "http://127.0.0.1:3000", "https://*.dumbmodel.local"]
+
+  /dev/dispatch:
+    post:
+      summary: Route intent to relevantAgents — envelope handoff
+      description: Deterministic router → relevantAgents + envelopeId.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DispatchRequest'
+      responses:
+        '200':
+          description: Relevant agents + envelope
+          headers:
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+            Cache-Control:
+              schema:
+                type: string
+              example: "no-store"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DispatchResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          headers:
+            Retry-After:
+              $ref: '#/components/headers/Retry-After'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-rateLimit: "60/min per key, 20/min per IP"
+
+  /dev/daily:
+    get:
+      summary: Daily LCG triple + same-link-same-stars proof
+      description: |
+        Returns daily n entries with LCG derivation.
+        dailySeed = YYYYMMDD int. LCG deterministic.
+        20260812→1233799701 is canonical test vector.
+        Same-link-same-stars invariant enforced.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: daily
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+            example: "2026-08-12"
+          description: Date YYYY-MM-DD, defaults to today
+        - name: n
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 5
+          description: Number of triples requested
+      responses:
+        '200':
+          description: Daily LCG triple + five
+          headers:
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+            Cache-Control:
+              schema:
+                type: string
+              example: "no-store"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DailyResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          headers:
+            Retry-After:
+              $ref: '#/components/headers/Retry-After'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-lcg: "dailySeed 20260812→1233799701"
+      x-invariant: "same-link-same-stars"
+
+  /dev/provenance:
+    get:
+      summary: Provenance 7/7/0 + hashes
+      description: Verifies 7 shards all ok, 0 bad. Hashes required.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Provenance verified 7/7/0
+          headers:
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+            Cache-Control:
+              schema:
+                type: string
+              example: "no-store"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProvenanceResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Provenance broken — bad >0
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-provenance: "7/7/0 mandatory"
+
+x-security-notes: |
+  - timingSafeEqual for token compare (Node crypto.timingSafeEqual)
+  - CORS allowlist only: localhost, 127.0.0.1, *.dumbmodel.local
+  - Rate: 60/min per key, 20/min per IP, Retry-After on 429
+  - Headers: no-store, nosniff, DENY, no raw key logs
+  - zero_deps=true torch auto cuda else cpu

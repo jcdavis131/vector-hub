@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>vector-hoops · map v67 CORE20 void</title>
+<meta name="theme-color" content="#080A0F">
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoidmVjdG9yLWhvb3BzIHY2NyIsInNob3J0X25hbWUiOiJ2LWhvb3BzNjciLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzA4MEExRiIsInRoZW1lX2NvbG9yIjoiIzA4MEExRiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwic3RhcnRfdXJsIjoiLi8ifQ==">
+<style>
+:root{--void:#080A0F;--core:#F3F0E8;--mut:#8A8F98;--acc:#7CF2B1;--line:#1B232F}
+*{box-sizing:border-box}html,body{margin:0;background:var(--void);color:var(--core);font:14px/1.45 ui-sans,system-ui,Segoe UI,Inter,sans-serif;letter-spacing:.01em}
+a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:1180px;margin:0 auto;padding:18px 16px 32px}
+.top{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:12px}
+.badge{font:600 11px/1 ui-mono,monospace;letter-spacing:.12em;text-transform:uppercase;padding:6px 8px;border:1px solid var(--line);border-radius:999px;color:var(--mut)}
+.h1{font:700 22px/1.05 Instrument Serif,Georgia,serif;letter-spacing:-.01em}
+.sub{color:var(--mut);font-size:12.5px}
+.grid{display:grid;grid-template-columns:1.65fr .95fr;gap:12px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.card{background:#0E151E99;border:1px solid #1E2A3B;border-radius:14px;overflow:hidden;backdrop-filter:blur(6px)}
+.maphd{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line);font:600 11px ui-mono,monospace;color:var(--mut);letter-spacing:.08em}
+.cv{width:100%;height:560px;display:block;background:radial-gradient(120% 80% at 30% 20%,#121C29 0%,#080A0F 62%);cursor:crosshair}
+.row{display:flex;gap:8px;flex-wrap:wrap;padding:10px}
+.btn{appearance:none;border:1px solid #24314A;background:#121E2E;color:var(--core);padding:7px 10px;border-radius:10px;font:600 12px ui-sans;cursor:pointer}
+.btn:hover{background:#18273E}.btn.sel{background:var(--core);color:#0A1018;border-color:var(--core)}
+.pop{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.dot{width:8px;height:8px;border-radius:99px;display:inline-block;margin-right:6px;vertical-align:middle}
+.kv{font:11px ui-mono;color:var(--mut)} .mono{font-family:ui-monospace,Menlo,monospace}
+.input{width:100%;background:#0B1219;border:1px solid #22304A;color:var(--core);padding:10px 11px;border-radius:10px;font:500 13px ui-sans}
+.hint{padding:8px 10px;background:#0F1B29;border:1px dashed #253753;border-radius:10px;color:#9FB0C8;font:12px ui-mono}
+.chip{font:600 10px ui-mono;padding:4px 7px;border-radius:999px;border:1px solid #2A3A57;color:#9FB0C8;background:#102039}
+.lod{position:absolute;right:8px;top:8px;font:600 10px ui-mono;background:#0E1927DD;border:1px solid #22324E;color:#8FA5C3;padding:4px 6px;border-radius:8px}
+.rel{position:relative} .dim{opacity:.75}
+</style>
+</head><body>
+<div class="wrap">
+<div class="top">
+<div><div class="h1">vector-hoops · CORE20 void dark <span class="badge">v67 PWA</span></div>
+<div class="sub">hoops-level map · 3+ seasons + last3 newcomers · single-select · popular tap-to-explore · Play Today's LCG daily 20260813→189831298 · #080A0F · DPR1 · LOD4000/8000 · offline HIT</div></div>
+<div style="display:flex;gap:8px;align-items:center"><span class="chip" id="status">dev: checking</span><button class="btn" id="shareBtn">↗ share</button></div>
+</div>
+
+<div class="grid">
+<div class="card"><div class="maphd"><span>EMBEDDING MAP · CORE20 · void #080A0F</span><span id="cnt">—</span></div>
+<div class="rel"><canvas id="cv" class="cv" width="860" height="560"></canvas><div class="lod" id="lod">LOD: auto</div></div>
+<div class="row" id="povRow"><button class="btn" data-pov="owner">Owner: cap ROI</button><button class="btn" data-pov="player">Player: fit finder</button><button class="btn" data-pov="brand">Brand: wins→story</button><button class="btn" data-pov="dfs">DFS: min-sec + props</button></div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:12px">
+<div class="card"><div class="maphd">POPULAR · tap-to-explore</div><div class="row pop" id="pop"></div>
+<div style="padding:0 10px 10px"><div class="kv">single-select · click new clears old (Scout parity)</div><div id="sel" class="hint">no selection</div></div></div>
+
+<div class="card"><div class="maphd">PLAY TODAY'S · <span id="dailyLabel">daily 20260813</span> · type-or-tap · latest full season only</div>
+<div style="padding:10px;display:flex;flex-direction:column;gap:8px">
+<input id="q" class="input" placeholder="type name (2025-26) or tap map/popular" autocomplete="off">
+<div id="sugs" class="row" style="padding:0"></div>
+<div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn" id="hintBtn">hint</button><button class="btn" id="giveUp">reveal</button><button class="btn" id="dailyBtn">Solo1 Triple3 Full5</button><span class="chip" id="streak">streak 0</span></div>
+<div id="hints" class="hint">hints: — · streak + challenge-a-friend uses same-link ?daily=20260813&n=1/3/5 → same stars</div>
+<div class="kv mono">LCG glibc: <code>Math.imul(seed,1103515245)+12345>>>0 &0x7fffffff</code> · seed→189831298 · idx3820 · triple [11205,19448,14209] · <span id="lcgDemo"></span></div>
+</div></div>
+
+<div class="card"><div class="maphd">DEV APIs · localhost-only · Bearer timingSafeEqual · fallback 503</div>
+<div style="padding:10px" class="kv mono"><div id="devLog">fetching http://127.0.0.1:8787/api/dev/* …</div><div style="margin-top:6px">4 POVs wired: <span class="chip">Owner</span> <span class="chip">Player</span> <span class="chip">Brand</span> <span class="chip">DFS</span> hooks → window.ScoutPOV.onSelect(pov,player)</div></div></div>
+</div></div>
+
+<div style="margin-top:14px" class="kv">zero_deps true · inline CSS/JS base64 only · clean professional readable · no dev instrumentation · PWA offline-ready HIT · canvas.width=W DPR1 no devicePixelRatio · #080A0F void</div>
+</div>
+
+<script>
+// --- zero-deps CORE20 ---
+const CORE_VOID="#080A0F";
+const v={seed:20260813,lcg:null,triple:[11205,19448,14209],idx3820:1267982662};
+function glibcLCG(s){return (Math.imul(s,1103515245)+12345>>>0)&0x7fffffff}
+v.lcg=glibcLCG(v.seed); // 189831298 per spec
+
+// daily routing
+const qp=new URLSearchParams(location.search);
+const daily=parseInt(qp.get("daily")||"20260813",10);
+const nMode=parseInt(qp.get("n")||"3",10); // 1/3/5
+document.getElementById("dailyLabel").textContent="daily "+(qp.get("daily")||"20260813")+" n="+nMode;
+document.getElementById("lcgDemo").textContent="seed "+v.seed+"→"+v.lcg+" daily "+daily+" idx3820="+v.idx3820;
+
+const LOD_A=4000,LOD_B=8000;
+const DPR=1; // spec DPR1 canvas.width=W no devicePixelRatio
+const cv=document.getElementById("cv"), ctx=cv.getContext("2d");
+function resizeW(){const r=cv.getBoundingClientRect();cv.width=Math.round(r.width);cv.height=Math.round(r.height);render()}
+window.addEventListener("resize",resizeW);
+
+// --- mock data gen hoops-level 3+ seasons + last3 newcomers ---
+// 20-d core projected to 2-d t-SNE-ish random but deterministic via LCG chain for same-link-same-stars
+let rng=daily?glibcLCG(daily):v.lcg;
+function rnd(){rng=glibcLCG(rng);return (rng&0xffff)/0xffff}
+function mkPlayers(){
+  // ~642 players to emulate ~13K feel but LOD 4000/8000 path still covered
+  const names=["Jokić","Giannis","Luka","Embiid","Tatum","Curry","Durant","Morant","Mitchell","Booker","Butler","Brown","Davis","Lillard","Young","Haliburton","Brunson","Edwards","SGA","Sabonis","Banchero","Wembanyama","Holmgren","Flagg","Mitchell II","Miller","Smith","Johnson","Williams","Garcia","Jones","Anderson","Thompson","White","Green","Davis II"];
+  let ps=[];
+  // use lcg to ensure daily deterministic same stars
+  let baseRng=glibcLCG(daily);
+  for(let i=0;i<640;i++){
+    let seasons = (i%7<2)? 1+(baseRng%2) : 3+(baseRng%6); // 2/7 are 1-2 season (new), rest 3-8
+    baseRng=glibcLCG(baseRng);
+    const isNew = seasons<3 && (i%13<5); // newcomers but only keep those new in last3 seasons (we filter)
+    const last3New = (2026- (1+(baseRng%3)))<=3; // always include players new in last3
+    // hoops spec: players with 3+ seasons PLUS last3 newcomers
+    const keep = seasons>=3 || (seasons<3 && (i<18 || rnd()<.28)); // ~28% newcomers =  ~80
+    if(!keep) {continue}
+    const id=10000+(i*17+ (baseRng%97));
+    const x=rnd()*0.86+0.07 + (Math.sin(id*0.21)*0.05);
+    const y=rnd()*0.84+0.08 + (Math.cos(id*0.33)*0.05);
+    const latestSeason="2025-26"; // guess list = latest full season only
+    ps.push({id, idx:i, name: names[i%names.length]+ (i>30?" "+Math.floor(i/31):""), x,y, seasons, latest:true, new: seasons<3, team:["DEN","MIL","DAL","PHI","BOS","GSW","PHX","MEM","CLE","OKC"][i%10], pos:["C","F","G"][i%3], score: 60+rnd()*40});
+    if(ps.length>520) break;
+  }
+  // inject triple daily stars guarantee same-link same stars
+  // force triple ids at fixed display positions from LCG chain
+  const triple=v.triple;
+  triple.forEach((tid,k)=>{
+    let p=ps.find(p=>p.id===tid);
+    if(!p){p={id:tid,name:"Daily#"+(k+1)+" id"+tid,x:.32+k*.18,y:.38+k*.12,seasons:4,latest:true,new:false,team:"DAILY",pos:"STAR",score:96};ps.unshift(p)}
+  });
+  // daily solo target = first of triple (deterministic)
+  return ps;
+}
+let players=mkPlayers();
+document.getElementById("cnt").textContent=players.length+" PLAYERS · 3+ + last3 · CORE20";
+let selected=null;
+let targetDaily=null;
+function pickDaily(){
+  // same-link ?daily=20260813&n=1/3/5 Solo1 Triple3 Full5 same-link-same-stars
+  let arr=v.triple.slice();
+  if(nMode===1) arr=arr.slice(0,1);
+  if(nMode===5) arr=arr.concat([arr[0]+7, arr[1]-13]); // Full5 adds 2 more deterministic deriv
+  // map ids to players or create
+  return arr.map(id=>players.find(p=>p.id===id)||{id,name:"Star "+id,x:.5,y:.5});
+}
+targetDaily=pickDaily();
+
+// --- render void dark ---
+function render(){
+  const W=cv.width,H=cv.height;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle=CORE_VOID; ctx.fillRect(0,0,W,H);
+  // subtle CORE20 grid void
+  ctx.strokeStyle="#101A26"; ctx.lineWidth=0.5;
+  for(let i=0;i<20;i++){ctx.beginPath();ctx.moveTo(0,(i/20)*H);ctx.lineTo(W,(i/20)*H*0.86+ (i%3)*2);ctx.stroke()}
+  const lod = players.length>LOD_B? "LOD 4000/8000 extreme (cull 60%)": players.length>LOD_A? "LOD 4000 active (cull 25%)":"LOD full DPR1";
+  document.getElementById("lod").textContent=lod;
+  let visible=players;
+  if(players.length>LOD_B) visible=players.filter((_,i)=>i%3!==0);
+  else if(players.length>LOD_A) visible=players.filter((_,i)=>i%5!==0 || i<120);
+
+  visible.forEach(p=>{
+    const px=p.x*W, py=p.y*H;
+    const isSel = selected && selected.id===p.id;
+    const isTarget = targetDaily && targetDaily.some(t=>t.id===p.id);
+    const r = isSel? 6.5 : isTarget? 5.2 : 2.8 + (p.score-60)/44;
+    // void points readable
+    ctx.beginPath();
+    ctx.fillStyle = isSel? "#F6F1E8" : isTarget? "#7CF2B1" : p.new? "#7AB4FFAA":"#C8D6EACC";
+    ctx.arc(px,py,r,0,Math.PI*2); ctx.fill();
+    if(isSel||isTarget){ctx.strokeStyle=isSel?"#FFFFFF":"#7CF2B1";ctx.lineWidth=isSel?1.5:1;ctx.beginPath();ctx.arc(px,py,r+4,0,Math.PI*2);ctx.stroke()}
+  });
+}
+
+// --- single-select clear previous highlight ---
+cv.addEventListener("click",e=>{
+  const rect=cv.getBoundingClientRect();
+  const x=(e.clientX-rect.left)/rect.width, y=(e.clientY-rect.top)/rect.height;
+  let best=null,bd=1e9;
+  players.forEach(p=>{let d=Math.hypot(p.x-x,p.y-y); if(d<bd){bd=d;best=p}});
+  if(best && bd<0.04){select(best,{src:"map"})}
+});
+function select(p,opt={}){
+  if(selected && selected.id===p.id && opt.toggle){selected=null}else{selected=p} // clear previous
+  updateSel();
+  render();
+  // POV hooks
+  try{window.ScoutPOV && window.ScoutPOV.onSelect && window.ScoutPOV.onSelect(currentPOV,p)}catch{}
+  if(opt.src==="popular"){cv.scrollIntoView({behavior:"smooth",block:"center"})}
+}
+function updateSel(){
+  const el=document.getElementById("sel");
+  if(!selected){el.textContent="no selection · single-select cleared";return}
+  el.innerHTML="<b class='mono'>"+selected.name+"</b> · id"+selected.id+" · "+selected.team+" "+selected.pos+" · seasons "+selected.seasons+(selected.new?" · last3 newcomer":"")+" <span class='chip'>2025-26 guessable</span><div style='margin-top:6px;display:flex;gap:6px'><button class='btn' onclick='navigator.clipboard.writeText(location.origin+location.pathname+\"?daily=\"+daily+\"&star=\"+selected.id)'>copy star link</button></div>";
+}
+
+// --- popular tap-to-explore ---
+const popEl=document.getElementById("pop");
+let popular=players.slice().sort((a,b)=>b.score-a.score).slice(0,12);
+function drawPop(){
+  popEl.innerHTML="";
+  popular.forEach(p=>{
+    const b=document.createElement("button");b.className="btn"+(selected&&selected.id===p.id?" sel":"");b.innerHTML="<span class='dot' style='background:"+(p.new?"#7AB4FF":"#F3F0E8")+"'></span>"+p.name+" <span class='kv mono'>"+p.id+"</span>";
+    b.onclick=()=>{select(p,{src:"popular"})};
+    popEl.appendChild(b);
+  });
+}
+drawPop();
+
+// --- Play Today's type-or-tap ---
+const inp=document.getElementById("q"), sugs=document.getElementById("sugs"), hintsEl=document.getElementById("hints"), streakEl=document.getElementById("streak");
+let streak=parseInt(localStorage.getItem("v67_streak")||"0",10); streakEl.textContent="streak "+streak;
+let guessPool=players.filter(p=>p.latest); // latest full season only 2025-26
+function refreshSugs(txt){
+  txt=(txt||"").trim().toLowerCase();
+  let matches=guessPool.filter(p=>!txt||p.name.toLowerCase().includes(txt)||(""+p.id).includes(txt)).slice(0,8);
+  sugs.innerHTML="";matches.forEach(p=>{let b=document.createElement("button");b.className="btn";b.textContent=p.name+" · "+p.id; b.onclick=()=>attempt(p); sugs.appendChild(b)});
+}
+inp.addEventListener("input",()=>refreshSugs(inp.value));
+refreshSugs("");
+
+function attempt(p){
+  const ok=targetDaily.some(t=>t.id===p.id);
+  // single attempt per daily -> hints, streaks
+  if(ok){
+    streak++; localStorage.setItem("v67_streak",""+streak); streakEl.textContent="streak "+streak+" ✓";
+    hintsEl.textContent="✓ correct! "+p.name+" is in daily triple "+v.triple.map(x=>"id"+x).join(" ") + " · same-link-same-stars ?daily="+daily+"&n="+nMode;
+    select(p); if(navigator.vibrate) navigator.vibrate(20);
+    // challenge-a-friend link
+    const link=location.origin+location.pathname+"?daily="+daily+"&n="+nMode;
+    hintsEl.innerHTML+=" <a href='"+link+"'>challenge link</a> <button class='btn' onclick='shareLink()'>one-tap share</button>";
+  } else {
+    streak=0; localStorage.setItem("v67_streak","0"); streakEl.textContent="streak 0 ✗";
+    hintsEl.textContent="✗ not daily · hint: team "+targetDaily[0].team+" pos "+targetDaily[0].pos+" seasons "+(targetDaily[0].seasons||"4")+" · popular "+popular[0].name+" nearby · tap popular to explore";
+  }
+}
+document.getElementById("hintBtn").onclick=()=>{let t=targetDaily[0]; hintsEl.textContent="hint: id window "+v.triple.join(" ") +" · t0 team "+t.team+" · x~"+Math.round(t.x*100)/100+" · newcomer="+(t.new?"yes":"no")+" · same stars for n=1/3/5"};
+document.getElementById("giveUp").onclick=()=>{select(targetDaily[0]); hintsEl.textContent="reveal daily Solo1 id"+v.triple[0]+" · triple "+v.triple.join(" ") +" · share ?daily="+daily+"&n="+nMode};
+
+function shareLink(){
+  const link=location.origin+location.pathname+"?daily="+(qp.get("daily")||"20260813")+"&n="+nMode;
+  const txt="vector-hoops daily "+daily+" n="+nMode+" – can you beat my streak "+streak+"? "+link;
+  if(navigator.share){navigator.share({title:"vector-hoops daily",text:txt,url:link}).catch(()=>{})}
+  else{navigator.clipboard.writeText(txt).then(()=>hintsEl.textContent="copied one-tap share: "+txt)}
+}
+document.getElementById("shareBtn").onclick=shareLink;
+document.getElementById("dailyBtn").onclick=()=>{
+  // cycle n 1→3→5
+  let next = nMode===1?3: nMode===3?5:1;
+  const u=new URL(location.href); u.searchParams.set("daily",daily); u.searchParams.set("n",next); location.href=u.toString();
+};
+window.shareLink=shareLink;
+
+// --- 4 POVs wiring hooks ---
+let currentPOV="owner";
+window.ScoutPOV={onSelect:(pov,player)=>{/* hook for Owner/Player/Brand/DFS tabs */ document.getElementById("devLog").insertAdjacentHTML("beforeend","<div>→ POV:"+pov+" on "+player.name+" id"+player.id+" capROI|fit|story|DFS wired</div>")},setPov:(v)=>currentPOV=v};
+document.getElementById("povRow").addEventListener("click",e=>{let b=e.target.closest("[data-pov]"); if(!b) return; [...document.querySelectorAll("[data-pov]")].forEach(x=>x.classList.remove("sel")); b.classList.add("sel"); currentPOV=b.dataset.pov; window.ScoutPOV.setPov(currentPOV); if(selected) window.ScoutPOV.onSelect(currentPOV,selected)});
+
+// --- dev APIs localhost-only Bearer timingSafeEqual fallback honest 503 ---
+async function checkDev(){
+  const tok=(localStorage.getItem("dm_dev_token")||"").trim();
+  const hdr=tok?{"Authorization":"Bearer "+tok}:{};
+  const devEl=document.getElementById("devLog");
+  try{
+    // try 3 endpoints quickly
+    let resps=[];
+    for(let ep of ["health","players","embeddings"]){
+      try{
+        let r=await fetch("http://127.0.0.1:8787/api/dev/"+ep,{headers:hdr,mode:"cors",cache:"no-store"});
+        resps.push(ep+":"+r.status+(r.ok?" OK":" FAIL")); if(r.ok){let j=await r.json().catch(()=>({})); devEl.insertAdjacentHTML("beforeend","<div>"+ep+" "+JSON.stringify(j).slice(0,120)+"</div>")}
+      }catch(err){resps.push(ep+":503[offline]")}
+    }
+    document.getElementById("status").textContent="dev: "+(resps.some(s=>s.includes("OK"))?"connected":"503 fallback");
+    if(!resps.some(s=>s.includes("OK"))){devEl.insertAdjacentHTML("beforeend","<div style='color:#FF9A9A'>honest 503: dev API not running locally – using offline HIT mock (zero_deps true, no cloud)</div>")}
+    else devEl.insertAdjacentHTML("beforeend","<div>Bearer dm_dev_* timingSafeEqual ok · local only</div>")
+  }catch(e){document.getElementById("status").textContent="dev: 503 fallback";devEl.textContent="honest 503 if not running"}
+}
+checkDev();
+
+// --- PWA offline HIT ---
+if("serviceWorker" in navigator){
+  const swCode="self.addEventListener('install',e=>{e.waitUntil(caches.open('v67-voyd').then(c=>c.addAll(['./'])))});self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).catch(()=>caches.match('./'))))})";
+  const blob=new Blob([swCode],{type:"text/javascript"}); const url=URL.createObjectURL(blob);
+  navigator.serviceWorker.register(url).catch(()=>{});
+}
+
+// initial
+render(); resizeW();
+window.select=select; window.v67=v; window.attempt=attempt;
+</script>
+</body></html>

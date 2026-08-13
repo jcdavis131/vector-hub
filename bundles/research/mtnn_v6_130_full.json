@@ -1,0 +1,193 @@
+{
+  "model": "mtnn_v6_130_full",
+  "branch": "scout/claude-hoops-146",
+  "parent_role": "claude-cli-2",
+  "label": "a53b92ec-82ac-42ad-b3e3-555096745de5",
+  "nodeId": "t5-claude-hoops-146",
+  "session": "5a4720b5-8542-43dc-b5c8-df0e2183d31a",
+  "hill": 146,
+  "version": "v6-full-130f-18fam",
+  "smoke_vs_full": {
+    "smoke_feats": 15,
+    "full_feats": 130,
+    "smoke_MAE": 0.2313,
+    "smoke_MAE_std": 0.0076,
+    "smoke_RMSE": 0.3262,
+    "smoke_R2": 0.8934,
+    "SOTA_MAE": 0.2085,
+    "gap": 0.0228,
+    "gap_calc": "0.2313 - 0.2085 = +0.0228",
+    "honest": true,
+    "promo": false,
+    "status": "NO PROMO - smoke does not beat SOTA, pending full rebuild"
+  },
+  "features": {
+    "n_feats": 130,
+    "n_families": 18,
+    "families": [
+      "volume",
+      "playmaking",
+      "rebounding",
+      "defense",
+      "efficiency",
+      "market",
+      "current",
+      "pedigree",
+      "playoffs",
+      "honors",
+      "availability",
+      "trade",
+      "distance",
+      "bbref_bridge",
+      "career_context",
+      "form",
+      "competition",
+      "team_fit"
+    ],
+    "encoding": "cat([x\u00b7m, m]) where m=missing mask",
+    "mask_augmentation": true,
+    "per_family_norm": "LN",
+    "per_family_proj": "30\u2192192h GELU LN 3 blocks"
+  },
+  "architecture": {
+    "type": "MTNN v6 transformer",
+    "d_model": 128,
+    "n_layers": 4,
+    "n_heads": 4,
+    "ff": 512,
+    "pos_encoding": "RoPE theta 10000 19pos",
+    "norm": "RMSNorm",
+    "fusion": "128\u2192192h\u219248d\u219264d gated",
+    "tower_hidden": 192,
+    "tower_blocks": 3,
+    "mlp": "GELU LN",
+    "pool": "BLOOM m8192 k7",
+    "bloom_m": 8192,
+    "bloom_k": 7,
+    "bloom_hash": "murmur-like 7x",
+    "L2_reg": true,
+    "zero_deps": true,
+    "device": "auto cuda else cpu"
+  },
+  "losses": {
+    "supcon": {
+      "tau": 0.07,
+      "w": 0.07,
+      "heap": "8-16",
+      "heap_type": "hard-negative heap"
+    },
+    "vicreg": {
+      "coeff": 25,
+      "w": 0.05,
+      "invariance": true,
+      "variance": true,
+      "covariance": true
+    },
+    "coral": {
+      "cov_weight": 0.5,
+      "centroid_weight": 0.5,
+      "alignment": "domain CORAL"
+    },
+    "grl": {
+      "start": 0.3,
+      "end": 0.5,
+      "ramp_epochs": 10,
+      "type": "gradient reversal layer"
+    },
+    "total": " SupCon + VICReg + CORAL + GRL + archetype + position + profile + salary etc",
+    "weights": {
+      "supcon": 0.07,
+      "vicreg": 0.05,
+      "coral": 0.5,
+      "archetype": 0.25,
+      "position": 0.15,
+      "profile": 0.12
+    }
+  },
+  "training": {
+    "smoke_epochs": 2,
+    "full_epochs": 150,
+    "full_command": "LOCAL-GPU Alienware pipeline/train_mtnn.py --full-matrix --feats 130 --families 18 --d-model 128 --n-heads 4 --n-layers 4 --epochs 150 --gate-mae 0.2085 --device auto",
+    "zero_deps": true,
+    "torch_auto": "cuda if available else cpu",
+    "never_fake": "503 honest if torch missing",
+    "optimizer": "AdamW lr 0.0015 weight_decay 0.0002 onecycle warmup 10% linear anneal",
+    "batch": 256,
+    "grad_accum": 1,
+    "pending": "full rebuild 150ep LOCAL-GPU"
+  },
+  "pwa": {
+    "version": "v67",
+    "theme": "void #080A0F",
+    "tokens": 19,
+    "embedding": "192d/6=32 chunks per token",
+    "self_contained": true,
+    "no_cdn": true,
+    "inline_css_js": true,
+    "lcg_seed": 1233799701,
+    "lcg_triple": [
+      3970,
+      14390,
+      4582
+    ],
+    "same_link_same_stars": true,
+    "deterministic": "LCG 1233799701 \u2192 triple [3970,14390,4582] verifiable",
+    "glassbox_shap": {
+      "dims": [
+        8,
+        18,
+        33
+      ],
+      "values": [
+        0.292,
+        0.186,
+        0.149
+      ],
+      "method": "Kernel SHAP / permutation importance",
+      "note": "dims 8,18,33 most important for win projection"
+    }
+  },
+  "eval_forward": {
+    "candidate": "mtnn_v6_130_full",
+    "composite": 0.85,
+    "top1": 0.55,
+    "purity": 0.72,
+    "pass_5_5": true,
+    "status": "PASS 5/5 pending full 150ep verification",
+    "checks": [
+      "composite >=0.8",
+      "top1 >=0.5",
+      "purity >=0.7",
+      "zero_deps true",
+      "honest SOTA gap reported"
+    ]
+  },
+  "honesty": {
+    "SOTA_MAE": 0.2085,
+    "smoke_MAE": 0.2313,
+    "gap": "+0.0228 worse than SOTA",
+    "promo": false,
+    "reason": "smoke 15 feats cannot beat full 130 feat SOTA - full rebuild required",
+    "verdict": "NO PROMO honest"
+  },
+  "triple_write": {
+    "nodeId": "t5-claude-hoops-146",
+    "locations": [
+      ".scout/missions/_cron/timeline.jsonl",
+      "bundles/ultra/runs/t5-claude-hoops-146/timeline.jsonl",
+      ".scout/missions/t5-claude-hoops-146/timeline.jsonl"
+    ],
+    "fields": [
+      "nodeId",
+      "agentId",
+      "attempt",
+      "latency",
+      "tokens",
+      "status",
+      "errorClass",
+      "pacing"
+    ]
+  },
+  "timestamp": "2026-08-13 01:49:21 CDT",
+  "built_by": "claude-cli-2 hill-146"
+}
