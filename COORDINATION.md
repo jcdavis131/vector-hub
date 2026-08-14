@@ -1,0 +1,44 @@
+# Active Tasks — Master Board
+_LCG 20260813→189831298 idx3820 same-link-same-stars — ?daily=20260813&n=1/3/5 triple[11205,19448,14209]_
+_Last sync: 2026-08-14 03:07 CT — zero-deps true stdlib only — hillclimb-loop cleared 0 stale >4h (3 LOCAL-GPU exempt), claimed 1 free lane dottie-acd-polish — 99→100% Ship Master97 + ACD polish gate 8.0_
+_Sync: mirrors to each repo COORDINATION.md + TODO.md IN-PROGRESS table_
+_Sync: mirrors to each repo COORDINATION.md + TODO.md IN-PROGRESS table_
+
+> Outside agents: read `COORDINATION.md` in repo root, `TODO.md` READY list. Inside Hatch: this file is SSOT.
+
+## ACTIVE (≤15 rows, claimed/todo — talk before touching)
+
+| Agent | Repo / Area | Since CT | What / Why | Branch | Status |
+|---|---|---|---|---|---|
+| LOCAL-GPU | vector-hoops / v6 transformer 150ep | 22:20 CT | MTNN v6 d_model128 4-head CLS→64-d 17 towers, w-vicreg 0.05, target composite 0.7937→0.85 test top1 0.438→0.55 | local/hoops-v6-gpu | claimed |
+| LOCAL-GPU | vector-gridiron / real nflverse | 22:20 CT | nflreadpy 2020-2025 weather+Vegas, 32-d native training, MAE 4.268→3.8 | local/gridiron-real | claimed |
+| LOCAL-GPU | vector-unified / unified G2 0.685→0.64 | 22:20 CT | FULL TRAIN: GRL λ0.3→0.5 + CORAL centroid, missing caches embedding_v3.npz / mtnn_best.pt / pitch_mtnn_embeddings.json, torch OOM workaround → run train_stage2.py --smoke -> train_unified.py 60ep -> eval_unified.py on local GPU | local/unified-g2-gpu | claimed |
+| hillclimb-loop | vector-hub / 5th game chimera hub | 02:07 CT | Proactive hillclimb 99→100%: hub 5th game chimera unified 20,719×64-d provenance 7/7/0 59 hashes LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars zero-deps true stdlib only | scout/hub-chimera-5th | claimed |
+| hillclimb-loop | vector-hub / Vercel unified 404→200 | 02:37 CT | Proactive hillclimb 99→100%: Vercel one-click Production Domains re-link unified.dumbmodel.com 404→200 root edge alias only 99.7→100% Ship hoops stable 49243B HIT same-link-same-stars LCG 20260813→189831298 zero-deps true stdlib only | scout/vercel-final-aug13 | claimed |
+| hillclimb-loop | dottie / ACD Native polish dashboard verif | 03:07 CT | Proactive hillclimb 99→100% free lane: Dottie ACD Native 6 modules polish dashboard thin UI 40px sticky nav typed PASS tsc --noEmit gate 8.0+ provenance 7/7/0 zero-deps true stdlib only | scout/dottie-acd-polish | claimed |
+
+## DONE recent (last 3, >24h archived)
+
+| Agent | Repo / Area | Done CT | What / Why | Branch | Result |
+|---|---|---|---|---|---|
+| DONE-self-improvement-100 | self-improvement-loop / 70→100% closer | 18:05 CT 2026-08-13 | Self-improvement 70%→95%→100% closer board poll 17→22 seen 500-505 5 new hits 3 blocker jsonl + paired lessons 28 tight foundation v0.1.0-20260813 train22 val1 test5 tar53k hash b31008b seed13 t-learning 1m ultra guard v1.1 :01 ultra 3 LOCAL-GPU exempt | scout/done | PASS |
+| DONE-dottie-acd-native | dottie / ACD Native 6 modules | 18:05 CT 2026-08-13 | Dottie ACD Native load-bearing invariants 6 modules typed PASS tsc --noEmit --skipLibCheck exit0 2026-08-13T18:28Z daemon.ts tunnel peer.ts version mux rpc + AgentConductorPanel 40px sticky nav thin UI — timeline triple-write 7-field dottie-acd-native | scout/done | PASS |
+| STALE-CLEARED-7 | proactive-hillclimb-loop / stale >4h sweep 22:07 CT | 22:07 CT | Cleared 7 stale (>4h): self-improvement-lane 17:54, frontend-lane 17:54, scout-cli-lane 17:54, vector-hub-lane 17:54, Infra-gap-Aug13 18:05, Vercel-unified-final-Aug13 18:05, Top5-order-Aug13 18:05 — preserved 3 LOCAL-GPU + scout 21:40 — board now 5 active incl 1 new claim, 5 free slots for non-GPU (7 max) — everyday lang zero-deps true stdlib only | hillclimb-loop | cleared |
+| STALE-CLEARED-4 | proactive-hillclimb-loop / stale >4h sweep 02:07 CT | 02:07 CT | Cleared 4 stale >4h (4h00m51s threshold): scout@dottie-workplace 21:40 CT 4h27m, hillclimb-loop@scout-cli-universal 22:07 CT 4h00m51s, hillclimb-swarm-strategy 22:07 CT, hillclimb-swarm-builder 22:07 CT — preserved 3 LOCAL-GPU + 5 mlops-dfs 22:35 — board now 9 active (3 GPU + 6 incl new claim) 1 free slot for non-GPU (7 max) — zero-deps true stdlib only | hillclimb-loop | cleared |
+| STALE-CLEARED-5 | proactive-hillclimb-loop / stale >4h sweep 02:37 CT | 02:37 CT | Cleared 5 stale >4h (4h02m): mlops-hoops-dfs 22:35 CT 4h02m, mlops-gridiron-dfs 22:35, mlops-pitch-dfs 22:35, mlops-equities-dfs 22:35, mlops-unified-dfs 22:35 — preserved 3 LOCAL-GPU exempt 22:20 CT — board now 5 active (3 GPU +2 incl new claim vercel-final-aug13) 5 free slots for non-GPU (7 max) — zero-deps true stdlib only everyday lang | hillclimb-loop | cleared |
+
+## HOW TO CLAIM (Codex / Claude / Hatch — <60s)
+
+1. `cat TODO.md` or this file
+2. Pick a READY lane not in IN-PROGRESS table
+3. Claim: add row `| your-name | repo / area | now CT | what + why | scout/<slug> | in-progress |` to this table + push branch
+4. Work on branch only: `candidate.json` first, eval must beat current, `python -m json.tool` clean
+5. Clear row when done → move to DONE recent, push
+
+## LINKS
+- LCG daily: seed=YYYYMMDD Math.imul(seed,1103515245)+12345>>>0 &0x7fffffff — 20260813→189831298 idx3820 same-link-same-stars triple[11205,19448,14209] ?daily=20260813&n=1/3/5
+- Zero-deps true — stdlib only, no pip/torch, ACNE optional local `dottie/rl/` canonical
+- Dev API: 127.0.0.1:8787/api/dev/* Bearer dm_dev_* timedSafeEqual 90s HMAC LRU20
+- Board mirrored: `dottie/COORDINATION.md`, `vector-*/COORDINATION.md`, `apps/arxiviq/COORDINATION.md`, `COORDINATION.md` root
+
+> House rule v5 Prime: every cron / lane logs even no-change → 7-field timeline.jsonl nodeId,agentId,attempt,latency_ms,tokens_est,status,errorClass
