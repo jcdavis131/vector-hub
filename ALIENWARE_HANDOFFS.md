@@ -1,5 +1,5 @@
 # Alienware — ALL TRAINING HANDOFFS (single file)
-# DFS v7 per-domain MTNN independent-first + unified last phase — generated 2026-08-14T12:39:57.127984Z
+# DFS v7 per-domain MTNN independent-first + unified last phase — generated 2026-08-14T12:40:44.455178Z
 > Machine-only SSOT raw https://raw.githubusercontent.com/jcdavis131/vector-hub/main/ALIENWARE_HANDOFFS.md
 > Point your other session here. This is SSOT mirror of every repo's LOCAL_GPU_HANDOFF.md — CPU Hatch cannot run these, your Alienware GPU can.
 > Raw outbound forever machine-only, inbound https://raw.githubusercontent.com/jcdavis131/vector-hub/scout/alienware-results/ALIENWARE_RESULTS.md branch scout/alienware-results no main edits
@@ -977,7 +977,7 @@ Every cron needs owner + logged entry even no-change → timeline.jsonl mandator
 
 
 
-## Active-Tasks SSOT ≤15 rows preserve 3 LOCAL-GPU exempt snapshot 2026-08-14T12:39:57.350591Z
+## Active-Tasks SSOT ≤15 rows preserve 3 LOCAL-GPU exempt snapshot 2026-08-14T12:40:44.561876Z
 
 ```
 # Active Tasks — Master Board
@@ -1072,3 +1072,9 @@ python3 pipeline/eval_unified.py --ckpt pipeline/data/unified_stage2_best.pt
 Torch auto cuda else cpu honest 503 Hatch VM CPU vs Alienware GPU.
 
 When measured G2<0.64 overwrite data/unified_report.json experimental block with measured, write ALIENWARE_RESULTS.md branch scout/alienware-results inbound machine-only.
+
+
+## Hoops v7 exp 47e405d 2026-08-14T12:40:45Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
