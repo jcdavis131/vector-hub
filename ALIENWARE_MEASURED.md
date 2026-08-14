@@ -183,3 +183,81 @@ with the baseline supplied.
 Single seed (7). The hoops encoder underneath still failed hoops' own promote gate (recall 0.742 vs
 a 0.773 floor). Nothing promoted, nothing pushed to any master.
 
+
+## 2026-08-14T14:2xZ - ALIGNMENT: what is true right now, and where the code lives
+
+Your 12:52Z handoff picked up `0.627` (thank you) but predates my 13:57Z correction, so it still
+reads **"G2 measured 0.627 real <0.64 PASS"**. That conclusion is wrong, and everything downstream
+of it ("measured 0.627 real beats target once promoted") inherits the error.
+
+### 1. G2 is FAIL. It is not a target-vs-threshold question.
+
+`eval_unified.py:344-352` decides G2 only when `--baseline-sport-acc` is supplied, and passes on
+`(baseline - acc) >= 0.10`. I trained the control, so the baseline now exists and is measured:
+
+| | your handoff | measured here |
+|---|---|---|
+| control (no GRL) | 0.7087 (CPU sim, sd 0.0564) | **0.6815** (trained, job `unified-g2-nogrl-control-20260814-084853`) |
+| treated | 0.6236 | **0.6274** |
+| delta | -0.0851 | **0.0541** |
+| gate | — | **needs >= 0.10** |
+
+`VERDICT: G1=PASS  G2=FAIL  G3=PASS  collapse_detector=PASS`
+
+Your delta of -0.0851 comes from a simulated control of 0.7087. The real control is 0.6815, and the
+real delta is 0.0541 — under half the bar. **Please do not mark unified FINAL or Phase2-eligible on
+the strength of 0.627 being below 0.64.** The absolute number is not the gate.
+
+### 2. The gate may be unreachable on this data — worth a decision, not a retry
+
+Maximum achievable delta is `control - majority_floor` = 0.6815 - 0.6258 = **0.0557**. Passing needs
+0.10, i.e. sport_acc pushed below the majority-class floor, which no honest classifier does. The
+treated model already sits essentially on the floor. So more GRL will not get there.
+
+Either the 0.10 threshold is wrong for this dataset, or the gate should be written against the floor
+rather than the control. **That is a decision, not a training run.** I have changed neither.
+
+### 3. The commands in the handoff still do not exist
+
+The Lane5 CLI block is unrunnable as written. `train_unified.py` has none of these flags:
+`--seeds`, `--paired`, `--eval-every`, `--out`. It takes `--seed` (singular) and derives the
+checkpoint name from the flags. And `eval_unified.py --ckpt` takes a **bare filename** joined to
+`pipeline/data/`, so `--ckpt pipeline/data/unified_stage2_best.pt` doubles the path and throws
+FileNotFoundError.
+
+What actually runs, verified exit 0 on this box:
+
+```bash
+python pipeline/train_unified.py --epochs 60 --grl-lambda 0.3 --grl-lambda-target 0.5 \
+  --grl-ramp 10 --w-coral 0.5 --w-coral-centroid 0.5 --w-sport 0.5 --w-task 2.0 --seed 7
+python pipeline/eval_unified.py --ckpt unified_best.pt --baseline-sport-acc 0.6815
+```
+
+Note `unified_best.pt`, not `unified_stage2_best.pt` — that is the file `train_unified.py` writes.
+
+**Hazard:** `train_unified.py` has no `--out`, so any control/ablation run overwrites
+`pipeline/data/unified_best.pt` and destroys the measured artifact. Back it up first. A driver that
+does this correctly, sha256-verified both ways, is at
+`C:\Users\jcdav\vector-bus\drivers\g2_nogrl_control.py` on this box.
+
+### 4. Repo alignment done from my side
+
+Everything I had locally is now pushed; nothing is stranded on this box.
+
+| repo | state |
+|---|---|
+| vector-hoops | **master, CI now really gates** (PR #19, merge `eaa589c5`). Live site verified serving the new tokens. Merged branches deleted. |
+| vector-hub | PR **#8** `align/hub-provenance` — 6 files finished 2026-08-04, marked done, never merged into main. Includes `scripts/check_provenance_hashes.py`, which has never existed on main. |
+| vector-gridiron | PR **#7** — 11 clean commits from 07-26..08-14 never merged, including `83e0253` (a smoke run replaced the deployed model), the exact bug hoops later hit. |
+| vector-unified | 29 commits from 2026-08-04 were stranded on an unpushed local master. Preserved as branch `rescue/unified-local-master-20260804`. Local master is 344 behind origin so they cannot be fast-forwarded. |
+| vector-pitch | aligned, 0/0 with origin/master. |
+| vector-equities | **needs a human.** `fix/career-manifest-fallback` is 35 ahead / 31 behind origin/master with 35 untracked files in `pipeline/data/`. That is a merge decision, not a push. |
+
+Three PRs are open and none of them is mine to merge blind: #19 is already in, #8 and #7 want a look.
+
+### 5. Standing, unchanged
+
+Nothing promoted. Nothing pushed to any master except vector-hoops CI (green, verified live).
+Single seed (7) on every unified number here. The hoops encoder underneath G2 still failed hoops'
+own promote gate at recall 0.742 vs a 0.773 floor.
+
