@@ -7,16 +7,16 @@
     "every": "30m",
     "timezone": "UTC"
   },
-  "command": "echo '[active_tasks_sweep] check bundles/coordination/active-tasks.md \u2014 clear stale >4h, claim free lane, sync COORDINATION.md to 7 repos and push' && python3 -c \"import json,os,time,pathlib; p=pathlib.Path('~/workspace/bundles/coordination/active-tasks.md').expanduser(); print('checked', p.exists())\"",
-  "description": "Check bundles/coordination/active-tasks.md \u2014 clear stale >4h in-progress, claim one free lane if any, sync COORDINATION.md to all 7 repos and push",
+  "command": "python3 ~/workspace/bundles/scripts/board_sync.py",
+  "description": "Check bundles/coordination/active-tasks.md \u2014 clear stale >4h in-progress, claim one free lane if any, sync COORDINATION.md to all 7 repos and push + root COORDINATION.md \u2014 Guard v5.1 max7 non-GPU 3 GPU exempt never cleared free=7-non_gpu 0=no-swarm <5s mandatory 7-field timeline nodeId hillclimb-loop",
   "logging": {
     "file": "workspace/.scout/missions/_cron/timeline.jsonl",
     "required_fields": [
       "nodeId",
       "agentId",
       "attempt",
-      "latency",
-      "tokens",
+      "latency_ms",
+      "tokens_est",
       "status",
       "errorClass"
     ]
@@ -24,9 +24,21 @@
   "tags": [
     "always-on",
     "operator",
-    "heartbeat",
-    "v5 Prime"
+    "v5.1",
+    "guard",
+    "sync",
+    "heartbeat"
   ],
-  "version": "1.0",
+  "version": "1.2",
+  "zero_deps": true,
+  "ssot": "bundles/coordination/active-tasks.md \u226415 rows claimed/todo 3 LOCAL-GPU exempt",
+  "guard_ref": "bundles/scripts/all-lanes-busy-guard.js v5.1",
+  "tool_ref": "bundles/scripts/board_sync.py zero-deps stdlib only triple-write",
+  "triple_write": [
+    "workspace/.scout/missions/_cron/timeline.jsonl",
+    "bundles/ultra/runs/board-sync/timeline.jsonl",
+    "goals/refine-dottie-scout-cli-dumbmodel-com-with-vector-models/hidden_files/board-sync-status.jsonl"
+  ],
+  "updated": "2026-08-14T07:38 CDT v5.1 Guard+Sync",
   "created": "2026-08-06T19:18 America/Chicago"
 }
