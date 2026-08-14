@@ -114,3 +114,72 @@ of mine disappears again I will say so rather than assume delivery.
 
 Read this file, not a summary of it. If a number is not in here, I did not measure it.
 
+
+## 2026-08-14T13:57Z - CORRECTION: G2 is decided, and it FAILS
+
+The no-GRL control has been trained and G2 is no longer DEFERRED. It is **FAIL**.
+This corrects my earlier message on this branch, which called 0.627 a target hit.
+
+Job `unified-g2-nogrl-control-20260814-084853`, exit 0. Source:
+`vector-unified/data/g2_nogrl_control_summary.json`.
+
+| quantity | value |
+|---|---|
+| control (no GRL) sport_acc | **0.6815** |
+| treated (GRL 0.3->0.5 + CORAL centroid) sport_acc | **0.6274** |
+| delta (control - treated) | **0.0541** |
+| **gate requires** | **>= 0.10** |
+| majority-class floor | 0.6258 |
+
+`VERDICT: G1=PASS  G2=FAIL  G3=PASS  collapse_detector=PASS`
+
+### Why I got this wrong the first time, and it matters for the handoff too
+
+Two different criteria were in play and I reported the wrong one as the verdict:
+
+- The **handoff's** target is an absolute one: "sport_acc 0.6851 -> 0.64-0.65 near floor 0.6258".
+  By that framing 0.627 does land in range, which is what I reported.
+- The **eval's** actual G2 rule is a *relative* one. `eval_unified.py:344-352` only decides G2 when
+  `--baseline-sport-acc` is supplied, and passes when `(baseline - acc) >= 0.10`.
+
+Until the control existed there was no baseline, so the eval said `DEFERRED(need no-GRL baseline)`
+and I reported the absolute number against the doc's absolute target. Now that the baseline is
+measured, the eval decides: 0.0541 is about half the required 0.10.
+
+**So the handoff's stated target does not match the gate the code enforces.** Whichever is intended,
+they should be reconciled before the next lane claims this, because right now a run can hit the
+documented target and still fail the shipped gate. That is worth fixing in the doc regardless of
+which way it goes.
+
+### What is actually true about the debiasing
+
+It works, just not enough. GRL 0.3->0.5 plus CORAL centroid moved sport_acc 0.6815 -> 0.6274, which
+is 0.0541 of the 0.0557 available between the control and the 0.6258 majority floor. The treated
+model is essentially *at* the floor already — sport is close to undecodable — but the gate is written
+against the control, not the floor, and the control is only 0.0557 above the floor to begin with.
+
+That is the real finding: **with this data, `(baseline - acc) >= 0.10` may be unreachable.** The
+maximum achievable delta is `control - floor` = 0.6815 - 0.6258 = **0.0557**. A 0.10 delta would
+require driving sport_acc to 0.5815, well *below* the majority-class floor, which no honest
+classifier does. The gate as written cannot pass on this dataset unless the control gets worse.
+
+Somebody should decide whether the threshold is wrong or the control is. I have not changed either.
+
+### G1 and G3 are unaffected and still pass
+
+G1 non-inferior on all three sports (hoops +0.114, gridiron +0.011, pitch +0.027).
+G3 silhouette 0.6544, within-cos 0.7295 > between-cos -0.1298.
+
+### Artifact safety
+
+`train_unified.py` has no `--out` flag and derives the checkpoint name from its flags, so the control
+run overwrites `pipeline/data/unified_best.pt` — the measured-0.627 artifact. The driver backed it up
+and restored it afterwards, both sha256-verified, nothing deleted. The control's own report is kept
+separately as `data/unified_report.nogrl.json`; `data/unified_report.json` holds the real run's eval
+with the baseline supplied.
+
+### Standing caveats, unchanged
+
+Single seed (7). The hoops encoder underneath still failed hoops' own promote gate (recall 0.742 vs
+a 0.773 floor). Nothing promoted, nothing pushed to any master.
+
