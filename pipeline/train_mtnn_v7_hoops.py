@@ -1,3 +1,7 @@
+"""exp travel km"""
+# d_model 64 d_model=64 dropout 17 towers salary fantasy CLS travel
+# travel km Blazers 54k high fatigue, MIN_PER_GP reduced 0.8 on 3-in-4
+
 """
 MTNN v7 Hoops DFS minimal — radical deletion keep bonuses
 d_model 64
