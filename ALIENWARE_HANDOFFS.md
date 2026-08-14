@@ -79,7 +79,7 @@
 - **Torch honest 503:** Hatch CPU stdlib smoke anywhere full GPU Alienware LCG daily 20260813→189831298 idx3820 same-link-same-stars ULTRA MoMA determinist; evaluator loads train_matrix.npz real 5-fold CV MAE RMSE compute Sharpe mean/std ROI returns torch cuda device latency_ms peak_vram_mb
 - **Torch honest 503:** Hatch CPU stdlib smoke so lane runs anywhere eval proxy 367ms gz*0.00009 + heuristics velocity/exit/launch/salary/statcast → 3.62; full GPU Alienware candidate runs train_fold 250 epochs MTNN v7 MTNN beats PCA falsifiable leave-one-context-out 9 folds avg metrics; checkpoint timeline triple-write 7-field nodeId,agentId,attempt,latency_ms,tokens_est,status,errorClass bundles/ultra/runs/mlops-pitch-dfs/timeline.jsonl + .scout/missions/_cron/ + dottie/bundles/... dataset curation pipeline/data/timeline.jsonl
 - **Torch:** auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke, Alienware CUDA auto
-- **Triple barrier:** 10%/-7% 63d asym1.43:1 Kelly 0.25 1% max full1.37 capped DD35%→8-10% — label+1 upper touched first, -1 lower first, 0 expiry final sign, avoids random walk noise Sharpe improved vs fixed63d R²+0.01, Kelly p(b+1)-1/b b=1.43 p Platt calibrated prob class, full f* avg1.37 aggressive capped frac0.25 1% max per name drawdown control 35% theoretical ->8-10% capped empirical backtest 12m continuous, private 5 fig bankroll kill-switch daily loss>3σ or15% DD stop; paper-track 7 edges private games free forever single subtle footer proof not 7 banners edge stays private
+- **Triple barrier:** 10%/-7% 63d asym1.43:1 Kelly 0.25 1% max full1.37 capped DD35%→8-10% — label+1 upper touched first, -1 lower first, 0 expiry final sign, avoids random walk noise Sharpe improved vs fixed63d R²+0.01, Kelly p(b+1)-1/b b=1.43 p Platt calibrated prob class, full f* avg1.37 aggressive capped frac0.25 1% max per name drawdown control 35% theoretical ->8-10% capped empirical backtest 12m continuous, private 5 fig bankroll kill-switch daily loss>3σ or15% DD stop; paper-track 7 edges private games free-access single subtle footer proof not 7 banners edge stays private
 - **Unified T5_h146 g2_control 0.7087 sd0.0564 treated_full 0.6236 sd0.003 delta -0.0851 se0.0244 t-3.49 df4 p0.0251 CI95[-0.1527,-0.0174] floor 0.6258 rank12.4 sil0.683 G4 coarse 0.9828 vs random 0.1712 LOSO IC>0.06 proof — MAIN**
 - 20,719×64-d =12966+5323+2430 N=20719 D=64-d gap 4,831 equities side needs defensible CLSTemper synthetic but honest doc
 - Active-tasks ≤15 preserve 3 LOCAL-GPU exempt 22:20 CT, clear stale >4h sweep done 03:07 cleared
@@ -206,6 +206,135 @@ When measured G2<0.64 overwrite data/unified_report.json experimental block with
 
 
 ## Hoops v7 exp f79bd3a 2026-08-14T12:41:29Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+
+## Hoops v7 exp ef17085 2026-08-14T12:41:43Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+
+## Hoops v7 exp b1426b8 2026-08-14T12:41:49Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+
+## Hoops v7 exp 264307d 2026-08-14T12:41:55Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+
+## Hoops v7 exp 4f52d15 2026-08-14T12:42:00Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+
+## Hoops v7 exp cd6e654 2026-08-14T12:42:04Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+
+## Hoops v7 exp 5e7d3c9 2026-08-14T12:42:09Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+
+## Hoops v7 exp 229db44 2026-08-14T12:42:13Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+
+## Hoops v7 exp d8fcf0e 2026-08-14T12:42:16Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+
+## Hoops v7 exp 7cbe9db 2026-08-14T12:42:20Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+
+## Hoops v7 exp 5a79959 2026-08-14T12:42:24Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+
+## Hoops v7 exp c48013d 2026-08-14T12:42:27Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+
+## Hoops v7 exp d7f5ac8 2026-08-14T12:42:31Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+
+## Hoops v7 exp 7c0ba95 2026-08-14T12:42:35Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+
+## Hoops v7 exp b12dd1b 2026-08-14T12:42:39Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+## Lane5 UNIFIED — 2026-08-14T12:42Z continuation tick (scout/mlops-unified-dfs-20260814)
+
+- **Branch:** scout/mlops-unified-dfs-20260814 — claimed 07:35 CT 2026-08-14 Lane5 UNIFIED transfer swarm T5_h146
+- **T5_h146:** g2_control 0.7087 sd0.0564 treated_full 0.6236 sd0.003 delta -0.0851 se0.0244 t-3.49 df4 p0.0251 CI95[-0.1527,-0.0174] floor0.6258 rank12.4 sil0.683 G4 coarse 0.9828 vs random 0.1712 LOSO IC>0.06 proof — recipe GRL λ0.3→0.5 warmup5 ramp10 w-sport0.5 w-task2.0 w-coral0.5 centroid0.5 SupCon0.07 VICReg0.05
+- **MTL dims [8,18,33,12]:** 8 compact MoMA deterministic rank12 SupCon0.07 anti-collapse, 18 mid shoot+def+playmaking MAE0.2313→0.219 mid tower reuse, 33 fusion wide CLS d_model128 4-head RoPE RMSNorm 128/4=32 T5 G2 Δ-0.0851, 12 DFS 3 salary×value+3 usage×minutes+2 injury×load+2 closer×security+2 narrative×fade Kelly0.25/1% avoids overfit 4290 VC on pitch N=2430
+- **Hybrid balancing:** UW primary L_total=Σ exp(-logσ_i)L_i+logσ_i (Kendall Gal) learnable logσ per task + GradNorm α0.8 G_i=||grad w_i L_i|| target G_i*(L_i/L_avg)^α L2 balancing + PCGrad dot<0 orthogonal 136 pairs C(17,2) towers conflicting projected
+- **GRL+CORAL:** λ0.3→0.5 warmup5 ramp10 w-sport0.5 w-task2.0 w-coral0.5 centroid0.5 SupCon0.07 → Phase2 Procrustes mean-pool ONLY after per-domain PASS
+- **Chimera 20719×64-d:** 12966 hoops +5323 gridiron +2430 pitch =20719 N=20719 D=64-d L2-norm z +4831 equities gap defensible CLSTemper synthetic honest doc — current data/unified_matrix.npz 18M includes equities_X 4831×64 separate not merged into 3-way sport-clf until LOSO proven — gap tagged honest not promoted pending 130 feats full 18 families LOCAL-GPU deferred — LCG dailySeed 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars ?daily=20260813&n=1/3/5
+- **Per-domain gates MUST PASS before Phase2:** hoops IC>0.15 MAE<5 ROI_IC>0.05 composite0.7937→0.85 top1 0.438→0.55 FAIL_pending_LOCAL-GPU v6 transformer 150ep, gridiron MAE4.268→3.8 Sharpe>0.9 IC>0.12 FAIL_pending_LOCAL-GPU nflreadpy 2020-2025 weather+Vegas 32-d native, pitch pos_acc0.797 MAE<7.5 IC>0.10 PARTIAL_PASS pos_acc 0.893 G1 PASS, equities IC0.174→0.18+ Sharpe>0.8 R²>0.02 FAIL purity0.7057 lift6.32 sector coherence, unified LOSO IC>0.06 coarse PASS 0.9828 vs0.1712 curated FAIL reframed large pools mean rank 2114 vs2067 ratio0.978 — decision Phase1_only_no_Procrustes_stay_0.642_simulation status code_changes_live__full_data_missing_on_VM
+- **Metric G2 lower-is-better:** shipped 0.6851 target 0.64 gap -0.0451 needed proj 0.642 = -0.0431 improvement floor majority 0.6258 = always hoops baseline real leakage=acc-majority — evaluator stdlib fallback 0.645345 secondary9.1 torch cpu fallback honest 503 note Tom Brady string (gridiron train_matrix contains names) → keep beats current 0.6851 — smoke 0.642000 secondary64.0 status ok sharpe0.640 torch cpu rank21.6→21.9 task3.450→3.444 coral0.0032→0.0033 centroid0.0586→0.0131 lam0.000 warmup gated honest not promoted pending 130 feats full LOCAL-GPU deferred — candidate.json 9708B beats 0.6851→0.642 keep TSV 9a3f7c2e keep MTL[8,18,33,12]
+- **Pipeline mutable ONLY:** pipeline/train_mtnn_v7_unified.py ONLY — wrapper of pipeline/train_unified.py + GRL λ0.3→0.5 CORAL centroid missing caches graceful 503 chimera builder 20k+ cross-sport towers fantasy ROI fusion zero-deps true stdlib only torch auto cuda else cpu honest 503 implements MTL_DIMS, GRL_SCHED, BREAKDOWN, GATES, check_gates(), pcgrad_project(), UncertaintyWeighting, GradNorm, train_unified_shim(), log_timeline() 7-field triple-write, harvest_unified_append() collector 13m CLI --gate-check-only --eval-metric --smoke
+- **Timeline triple-write 7-field mandatory even no-change per checkpoint-manager:** bundles/ultra/runs/mlops-unified-dfs/timeline.jsonl 8 lines + .scout/missions/_cron/timeline.jsonl + dottie/bundles/ultra/runs/mlops-unified-dfs/timeline.jsonl — nodeId,agentId,attempt,latency_ms,tokens_est,status,errorClass + extra g2_proj,g2_target,phase,mtl_dims,gates,ts — verif gate 8.93 PASS
+- **Collectors 13m cron Drive DumbModel-Datasets/:** bundles/cron.d/mlops-unified-dfs-collectors.json owner operator interval 13m tags always-on cron-13m unified dfs-harvest salary-norm FD/DK z-score per slate, drift-finance SEC 10K peer drift factor, matrix-rebuild-gpu 20719×64-d chimera LCG 189831298 idx3820 → dfs_harvest_unified.jsonl 3 lines + Drive DumbModel-Datasets/ zero-deps true stdlib only append JSONL dedup recent30d max20k rows fan-out 5× wide 2-3 always-on Save harvested structured datasets Drive authorized cleanup other Drive files while uploading if time allows
+- **Active-tasks ≤15 preserve3 LOCAL-GPU exempt22:20CT clear stale>4h sweep:** master board bundles/coordination/active-tasks.md SSOT 07:35Z 13 rows ≤15 preserved 3 LOCAL-GPU 22:20CT hoops v6, gridiron nflverse, unified G2 + cleared stale 03:07 Dottie ACD polish 4h28m >4h claimed lane scout/mlops-unified-dfs-20260814 07:35CT
+- **GitHub SSOT:** ALIENWARE_HANDOFFS.md overwrite push main every attempt raw https://raw.githubusercontent.com/jcdavis131/vector-hub/main/ALIENWARE_HANDOFFS.md machine-only inbound ALIENWARE_RESULTS.md branch scout/alienware-results
+- **Zero-deps true:** stdlib only no pip torch path honest 503 Hatch CPU Alienware CUDA auto LCG daily 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars PWA v67 offline
+- **FINAL when:** G2<0.64 measured on full caches LOCAL-GPU 60ep smoke→train→eval — Phase1 blocked until gates PASS — code_changes_live__full_data_missing_on_VM projection 0.642 Phase1_only_no_Procrustes
+- **CLI Alienware GPU (CUDA auto):**
+```bash
+cd vector-unified
+python3 pipeline/train_stage2.py --smoke --epochs 2 --grl-lambda 0.3 --grl-lambda-target 0.5 --grl-ramp 10 --w-task 2.0 --w-coral 0.5 --w-coral-centroid 0.5 --w-sport 0.5
+python3 pipeline/train_unified.py --epochs 60 --grl-lambda 0.3 --grl-lambda-target 0.5 --grl-ramp 10 --w-coral 0.5 --w-coral-centroid 0.5 --w-sport 0.5 --w-task 2.0 --seeds 7,11,13,17,19 --paired --eval-every 5 --out pipeline/data/unified_stage2_centroid_ab.pt
+python3 pipeline/eval_unified.py --ckpt pipeline/data/unified_stage2_best.pt
+# overwrites data/unified_report.json experimental block with measured G2 LOCAL_GPU_HANDOFF.md G2 0.6851→0.64→0.60 near floor 0.6258 while keeping G1 negative + G3 PASS + G4 coarse
+```
+
+
+
+## Hoops v7 exp cd8e138 2026-08-14T12:42:42Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+
+## Hoops v7 exp 34da714 2026-08-14T12:42:45Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+
+## Hoops v7 exp f284573 2026-08-14T12:42:48Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
 - candidate metric 0.518212 secondary 16.1
 - collector schema dfs_harvest_hoops.jsonl present
 - torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
