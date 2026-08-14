@@ -191,3 +191,21 @@ When measured G2<0.64 overwrite data/unified_report.json experimental block with
 - collector schema dfs_harvest_hoops.jsonl present
 - torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
 >>>>>>> Stashed changes
+
+
+## Hoops v7 exp 7a88617 2026-08-14T12:41:19Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+
+## Hoops v7 exp 6052509 2026-08-14T12:41:24Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+
+## Hoops v7 exp f79bd3a 2026-08-14T12:41:29Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
