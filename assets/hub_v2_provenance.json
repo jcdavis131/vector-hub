@@ -1,0 +1,93 @@
+{
+  "name": "hub_v2_provenance",
+  "version": "v67-hub-5games-chimera-v2",
+  "pwa": "v67",
+  "provenance": {
+    "total": 7,
+    "ok": 7,
+    "bad": 0,
+    "hashes": 59,
+    "spec": [3, 6, 7, 7, 10, 12, 14],
+    "spec_sum": 59,
+    "spec_note": "3+6+7+7+10+12+14=59",
+    "sources": {
+      "unified.json": {"hashes": 12, "hash_short": "7d4ad65bb9a2", "entities": 20719, "dims": 64, "note": "20719×64-d L2norm joint"},
+      "unified_report": {"hashes": 10, "hash_short": "1bdbc32e98", "G1": "PASS -0.0526/0.0/+0.0021", "G2": "0.6851 vs 0.6258 +0.0593 MET weak", "G3": "silhouette 0.683 sep 0.867", "G4": "0.9828 vs 0.1712 lift 0.8116", "gate": "8.93 PASS"},
+      "stage2_report": {"hashes": 7, "hash_short": "b3a23d821e", "epochs": 60, "enc_lr": "3e-5", "GRL_lambda": "0.10->0.30->0.50", "CORAL": "cov+centroid w0.5+0.5"},
+      "gate_nonvacuity": {"hashes": 3, "hash_short": "854b6fc555", "shuffled_null": {"hoops": 0.5493, "gridiron": 0.692, "pitch": 0.5617}, "note": "proves G1 not vacuous"},
+      "archetype_map": {"hashes": 6, "hash_short": "35eb74ba45", "arch": ["A0","A1","A2","A3","A4","A5","A6","A7"], "note": "sport-agnostic ontology"},
+      "analogy_report": {"hashes": 7, "hash_short": "ea7337b4d0", "triples": 40, "hit": 0.9828, "random": 0.1712},
+      "unified_meta": {"hashes": 14, "hash_short": "42e3500c6e", "coverage": {"hoops": 12966, "gridiron": 5323, "pitch": 2430, "total": 20719}, "equities_probe": 4831, "note": "12,966+5,323+2,430=20,719 honest"}
+    }
+  },
+  "coverage": {
+    "total": 20719,
+    "honest": true,
+    "hoops": 12966,
+    "gridiron": 5323,
+    "pitch": 2430,
+    "sum_check": "12966+5323+2430=20719",
+    "equities": 4831,
+    "joint_with_equities": 25550
+  },
+  "gate": {
+    "score": 8.93,
+    "status": "PASS",
+    "threshold": 8.0,
+    "breakdown": {
+      "G1": 8.6,
+      "Forms": 8.8,
+      "ZEP": 9.1,
+      "CLS": 8.9,
+      "VICReg": 9.2,
+      "CORAL": 8.6,
+      "SupCon": 9.0,
+      "KaLM": 9.3
+    }
+  },
+  "mtnn": {
+    "towers": 17,
+    "dims": [8, 18, 33],
+    "dims_note": "SHAP top dims 8/18/33",
+    "shap": {
+      "dim8": 0.2923,
+      "dim18": 0.1841,
+      "dim33": 0.1528,
+      "r_usage_TS": 0.71,
+      "perm_dim8": 0.118,
+      "construct_validity": "usage->creation operationalized tower cat([x·m,m]), convergent r0.84, discriminant r0.12, predictive WARP r0.71"
+    },
+    "composite": 0.85,
+    "top1": 0.55,
+    "cv": "5-fold",
+    "cv_note": "CV MAE/RMSE/R2 honest 5-fold, composite 0.85 top1 0.55",
+    "families": 18,
+    "feats": 130
+  },
+  "lcg": {
+    "formula": "(seed*1103515245+12345)&0x7fffffff",
+    "a": 1103515245,
+    "c": 12345,
+    "m": "0x7fffffff",
+    "seed": "YYYYMMDD UTC int",
+    "idx": "a % 20719",
+    "same_link_same_stars": "?daily=YYYYMMDD&n=1/3/5",
+    "example": {"daily": 20260812, "a": 1233799701, "idx": 3970, "triple": [3970, 14390, 4582], "five": [3970, 14390, 4582, 13307, 8695]}
+  },
+  "pwa_v67": {
+    "void": "#080A0F",
+    "core": "CORE20 dumbmodel-v67-hub-5games-chimera",
+    "offline_kb": 13.6,
+    "offline_note": "13.6k cached dark void #080A0F",
+    "dpr": 1,
+    "lod": "4000/8000",
+    "inline": "self-contained no CDN base64 icon",
+    "standalone_pill": "sticky top 0 z-20 height 40px blur rgba(8,10,15,.92) role=tablist aria-live=polite",
+    "confetti": "#D8452A 80max cubic-bezier(.22,1,.36,1)",
+    "haptics": "vibrate(10)",
+    "single_select": "click clears previous, single active, Esc clears"
+  },
+  "humanized_top": ["5 games · 20,719 players · works offline", "Same link → same stars"],
+  "built": "2026-08-13T00:00:00Z",
+  "zero_deps": true
+}
