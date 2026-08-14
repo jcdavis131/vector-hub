@@ -411,3 +411,43 @@ every asset they loaded has other referencers, and master's own `pwa-install.js:
 measured "0 of 18"). That is as far as static evidence goes, and it is still 831 lines of frontend on
 a deploy-on-merge repo. Operator's call, not mine and not yours.
 
+
+## 2026-08-14T22:xxZ - hoops: the live site serves v5. The repo has shipped v6 since 08-13.
+
+Found while resolving #8. Not caused by any of today's merges, and not fixed by them.
+
+### Vercel serves `public/`, not the repo root
+
+The obvious test does not distinguish them - `index.html` is byte-identical in both trees. Two probes
+that do:
+
+  - `assets/data/eval_forward.json` and `assets/data/mtnn_v6_glassbox.json` exist ONLY at the root.
+    Both return **404** on hoops.dumbmodel.com.
+  - `assets/mtnn_meta.json` fetched live hashes to the **`public/`** copy, not the root copy.
+
+### The consequence
+
+`git diff --name-status origin/master:public origin/master` - only **2** files exist in both trees
+and differ, and they are the two that matter:
+
+| file | root | public/ (SERVED) |
+|---|---|---|
+| `assets/mtnn_meta.json` | `mtnn_v6_192d_6head_rope_rmsnorm_6L_ff768_cls64_17towers_...` (`2dc6ad78`, 08-13) | `mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256`, `"built": "2026-07-25"` (`28e5fc47`, 08-10) |
+| `assets/mtnn_embeddings.f32` | v6 bytes | v5 bytes (same 3,319,296 length) |
+
+So the v6 192d promotion landed in `assets/` on 08-13 and was never mirrored. Visitors are scoring
+against v5 embeddings and reading v5 metadata. `scripts/sync_public.py` is the intended fix.
+
+Also note the "`public/` is ~2300 files behind" line that has been in circulation is wrong. It is 2.
+
+### And the cache-token gate does not see this
+
+`scripts/stamp_assets.py` walks `ROOT.glob("assets/**/*.js")` and `ROOT.glob("*.html")` - the repo
+root. So `stamp_assets.py --check`, which #19 wired into CI today, is a **source-tree** gate, not a
+deploy gate. It is green right now while the served tree is a model version behind. Any future
+"verified live" claim has to fetch from hoops.dumbmodel.com and compare against `public/`, not
+against root.
+
+**Not fixed here on purpose.** Mirroring v6 into `public/` swaps the model under every live visitor,
+which is an operator decision, not a merge.
+
