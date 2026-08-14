@@ -1,0 +1,24 @@
+{
+    "domain": "hoops",
+    "model": "mtnn_v7_hoops_dfs_17tower",
+    "d_model": 128,
+    "d_emb": 64,
+    "n_heads": 4,
+    "n_towers": 17,
+    "dfs_tower_dim": 12,
+    "salary_embed_dim": 8,
+    "w_vicreg": 0.05,
+    "dropout": 0.15,
+    "token_dropout": 0.1,
+    "metric_current": 0.555326,
+    "metric_target": 0.38,
+    "secondary": 58.7,
+    "status": "keep",
+    "zero_deps": true,
+    "torch": "auto cuda else cpu honest 503",
+    "gate": {
+        "IC": 0.15,
+        "MAE": 5.0,
+        "ROI_IC": 0.05
+    }
+}

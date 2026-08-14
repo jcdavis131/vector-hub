@@ -1,0 +1,15 @@
+{
+    "hoops_dfs_v7": {
+        "metric": 0.555326,
+        "target": 0.38,
+        "d_model": 64,
+        "towers": 17,
+        "salary_embed": 8,
+        "fantasy_head": true,
+        "cls": true,
+        "vicreg": 0.05,
+        "dropout": 0.15,
+        "rest_home_opp": true,
+        "zero_deps": true
+    }
+}
