@@ -1,5 +1,5 @@
 {
-  "cleanUrls": true,
+  "cleanUrls": false,
   "headers": [
     {
       "headers": [
@@ -214,8 +214,16 @@
       "source": "/models/tennis"
     },
     {
-      "destination": "/models/unified.html",
-      "source": "/models/unified.html"
+      "source": "/unified.html",
+      "destination": "/models/unified.html"
+    },
+    {
+      "source": "/owner",
+      "destination": "/owner/index.html"
+    },
+    {
+      "source": "/owner/",
+      "destination": "/owner/index.html"
     }
   ],
   "trailingSlash": false,
