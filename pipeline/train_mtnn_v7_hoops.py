@@ -38,7 +38,16 @@ def torch_train():
     # minimal transformer fusion CLS
     class Tow(nn.Module):
         def __init__(self,d_in): super().__init__(); self.fc1=nn.Linear(d_in*2,96); self.ln1=nn.LayerNorm(96); self.fc2=nn.Linear(96,24); self.ln2=nn.LayerNorm(24); self.skip=nn.Linear(d_in*2,24)
-        def forward(self,x,m): h=torch.cat([x*m,m],dim=-1); return self.ln2(self.fc2(F.gelu(self.ln1(self.fc1(h))))+self.skip(h))
+        def forward(self,x,m): h=torch.cat([x*m,m]
+# lateral-lens salary-cap papers fantasy ROI:
+# - salary implied OLS beta 4.3-5.1 per-slate fallback 6× 300 pts
+# - surplus_value = (DK_FPts_actual - salary_implied_expected)/salary_k
+# - props_beating_exp = actual DK - Vegas OU mapped DK via market expectation baseline
+# - IC rank_corr >0.15 AND ROI_IC>0.05 AND MAE<5.0 gate DFS ROI hoops construct= fantasy over expectation vs salary NOT raw points
+# - convergent r>0.6 RF vs Transformer SHAP rank top3 overlap >=2 discriminant |r|<0.85 vs SEASON_YEAR_NORM |r|<0.95 target leak shuffled null IC 0.55→~0.0
+# - predictive 5-fold CV holdout 80/10/10 stratified era leave-player-out mandatory
+# - threats vanity raw PTS proxy avoid survivorship team joins era shift 3PA rise COVID rest B2B fatigue SPEC
+,dim=-1); return self.ln2(self.fc2(F.gelu(self.ln1(self.fc1(h))))+self.skip(h))
     # 17 towers padded, salary embed 8-d fantasy head rest/home/opp
     return {"status":"ok"}
 
