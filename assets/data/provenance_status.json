@@ -1,0 +1,74 @@
+{
+  "generated_by": "scripts/check_provenance_hashes.py",
+  "note": "Recomputed hashes of every cited source. A page listed here cites at least one artifact that has changed since its numbers were verified; those figures may describe a superseded file.",
+  "totals": {
+    "mismatched": 22,
+    "malformed": 6,
+    "uncovered": 5
+  },
+  "pages": {
+    "equities.json": {
+      "mismatched": 3,
+      "malformed": 0,
+      "files": [
+        "vector-equities/assets/eval_sector_coherence.json",
+        "vector-equities/assets/forward_calibration_isotonic.json",
+        "vector-equities/assets/manifest_v6_real.json"
+      ]
+    },
+    "gridiron.json": {
+      "mismatched": 4,
+      "malformed": 0,
+      "files": [
+        "vector-gridiron/assets/projections.json",
+        "vector-gridiron/assets/eval_backtest.json",
+        "vector-unified/data/gridiron_name_collisions.json",
+        "vector-unified/data/gridiron_forward_report.json"
+      ]
+    },
+    "hoops.json": {
+      "mismatched": 2,
+      "malformed": 0,
+      "files": [
+        "vector-unified/data/hoops_name_collisions.json",
+        "vector-hoops/assets/mtnn_training/live.json"
+      ]
+    },
+    "pitch.json": {
+      "mismatched": 2,
+      "malformed": 0,
+      "files": [
+        "vector-unified/data/pitch_age_axis.json",
+        "vector-unified/data/pitch_expectation_sources.json"
+      ]
+    },
+    "tennis.json": {
+      "mismatched": 9,
+      "malformed": 0,
+      "files": [
+        "vector-unified/data/tennis_matrix_report.json",
+        "vector-unified/data/tennis_archetype_probe.json",
+        "vector-unified/data/tennis_sponsors.json",
+        "vector-unified/data/tennis_coverage.json",
+        "vector-unified/pipeline/data/tennis_matrix.npz",
+        "vector-unified/data/tennis_mtnn_report.json",
+        "vector-unified/data/tennis_candidate_features.json",
+        "vector-unified/data/tennis_forward_enriched.json",
+        "vector-unified/data/tennis_feature_identity.json"
+      ]
+    },
+    "unified.json": {
+      "mismatched": 2,
+      "malformed": 0,
+      "files": [
+        "vector-unified/data/gate_nonvacuity.json",
+        "vector-unified/data/tennis_archetype_probe.json"
+      ]
+    },
+    "scout_cli.json": {
+      "mismatched": 0,
+      "malformed": 6,
+      "files": []
+    }
+  }
+}

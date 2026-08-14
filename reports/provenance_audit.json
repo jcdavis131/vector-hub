@@ -1,0 +1,262 @@
+{
+ "question": "Does every page's source_hashes contain actual hashes, covering every source_files entry, matching the files they name?",
+ "arms": {
+  "COVERAGE": "every source_files entry has a source_hashes entry",
+  "SHAPE": "every value is hex and >= 8 chars",
+  "TRUTH": "for resolvable files, the recorded hash matches"
+ },
+ "pages": {
+  "equities.json": {
+   "source_files": 7,
+   "source_hashes": 7,
+   "verified_true": 4,
+   "malformed": 0,
+   "unresolvable_here": 0,
+   "uncovered": 0
+  },
+  "gridiron.json": {
+   "source_files": 7,
+   "source_hashes": 7,
+   "verified_true": 3,
+   "malformed": 0,
+   "unresolvable_here": 0,
+   "uncovered": 0
+  },
+  "hoops.json": {
+   "source_files": 10,
+   "source_hashes": 10,
+   "verified_true": 8,
+   "malformed": 0,
+   "unresolvable_here": 0,
+   "uncovered": 0
+  },
+  "pitch.json": {
+   "source_files": 3,
+   "source_hashes": 3,
+   "verified_true": 1,
+   "malformed": 0,
+   "unresolvable_here": 0,
+   "uncovered": 0
+  },
+  "scout_cli.json": {
+   "source_files": 11,
+   "source_hashes": 6,
+   "verified_true": 0,
+   "malformed": 6,
+   "unresolvable_here": 0,
+   "uncovered": 5
+  },
+  "tennis.json": {
+   "source_files": 14,
+   "source_hashes": 14,
+   "verified_true": 5,
+   "malformed": 0,
+   "unresolvable_here": 0,
+   "uncovered": 0
+  },
+  "unified.json": {
+   "source_files": 12,
+   "source_hashes": 12,
+   "verified_true": 10,
+   "malformed": 0,
+   "unresolvable_here": 0,
+   "uncovered": 0
+  }
+ },
+ "uncovered_source_files": [
+  {
+   "page": "scout_cli.json",
+   "source_file": "bundles/agents/scout-prime.md"
+  },
+  {
+   "page": "scout_cli.json",
+   "source_file": "vector-unified/pipeline/train_unified.py"
+  },
+  {
+   "page": "scout_cli.json",
+   "source_file": "vector-unified/pipeline/eval_unified.py"
+  },
+  {
+   "page": "scout_cli.json",
+   "source_file": "vector-unified/pipeline/export_unified.py"
+  },
+  {
+   "page": "scout_cli.json",
+   "source_file": "vector-unified/pipeline/ablation.py"
+  }
+ ],
+ "malformed_hashes": [
+  {
+   "page": "scout_cli.json",
+   "source_file": "bundles/router/router.ultra.js",
+   "value": "10746b v3.3",
+   "why": "not hex, or shorter than 8 chars — a size or version string, not a checksum"
+  },
+  {
+   "page": "scout_cli.json",
+   "source_file": "bundles/ultra/checkpoint-manager.js",
+   "value": "4.6K",
+   "why": "not hex, or shorter than 8 chars — a size or version string, not a checksum"
+  },
+  {
+   "page": "scout_cli.json",
+   "source_file": "bundles/ultra/recovery-ladder.js",
+   "value": "5.7K",
+   "why": "not hex, or shorter than 8 chars — a size or version string, not a checksum"
+  },
+  {
+   "page": "scout_cli.json",
+   "source_file": "bundles/ultra/communication-pacing.js",
+   "value": "5.1K",
+   "why": "not hex, or shorter than 8 chars — a size or version string, not a checksum"
+  },
+  {
+   "page": "scout_cli.json",
+   "source_file": "bundles/ultra/verification-economics.js",
+   "value": "5.3K",
+   "why": "not hex, or shorter than 8 chars — a size or version string, not a checksum"
+  },
+  {
+   "page": "scout_cli.json",
+   "source_file": "bundles/manifest.json",
+   "value": "v3.3-OODA-Agentic-MoMA-Graph-Checkpoint 13 9",
+   "why": "not hex, or shorter than 8 chars — a size or version string, not a checksum"
+  }
+ ],
+ "mismatched_hashes": [
+  {
+   "page": "equities.json",
+   "source_file": "vector-equities/assets/eval_sector_coherence.json",
+   "recorded": "67dfa196cadecb56",
+   "actual": "3b749de2d24b7446"
+  },
+  {
+   "page": "equities.json",
+   "source_file": "vector-equities/assets/forward_calibration_isotonic.json",
+   "recorded": "7de9ed1055d76982",
+   "actual": "6da2856ade3eaf4f"
+  },
+  {
+   "page": "equities.json",
+   "source_file": "vector-equities/assets/manifest_v6_real.json",
+   "recorded": "1ada86aaf64498c0",
+   "actual": "48db35f6b2fe415b"
+  },
+  {
+   "page": "gridiron.json",
+   "source_file": "vector-gridiron/assets/projections.json",
+   "recorded": "938f001dadd3239f",
+   "actual": "63f5948a84c621df"
+  },
+  {
+   "page": "gridiron.json",
+   "source_file": "vector-gridiron/assets/eval_backtest.json",
+   "recorded": "40ecb428d28d4a70",
+   "actual": "687af17bfac3a081"
+  },
+  {
+   "page": "gridiron.json",
+   "source_file": "vector-unified/data/gridiron_name_collisions.json",
+   "recorded": "6cf24e61f932059c",
+   "actual": "526681f1933140e5"
+  },
+  {
+   "page": "gridiron.json",
+   "source_file": "vector-unified/data/gridiron_forward_report.json",
+   "recorded": "d3501a0d282c2724",
+   "actual": "da904433a4a6f535"
+  },
+  {
+   "page": "hoops.json",
+   "source_file": "vector-unified/data/hoops_name_collisions.json",
+   "recorded": "6f0082319c1e3e0c",
+   "actual": "ca6ec22f5399b7a9"
+  },
+  {
+   "page": "hoops.json",
+   "source_file": "vector-hoops/assets/mtnn_training/live.json",
+   "recorded": "7734136b38b690a9",
+   "actual": "0d1e0cc7bd9015ba"
+  },
+  {
+   "page": "pitch.json",
+   "source_file": "vector-unified/data/pitch_age_axis.json",
+   "recorded": "e8bd8dd193d097ae",
+   "actual": "e70e71e7459b68fa"
+  },
+  {
+   "page": "pitch.json",
+   "source_file": "vector-unified/data/pitch_expectation_sources.json",
+   "recorded": "7cae71e300fd116d",
+   "actual": "5942857569b73ff7"
+  },
+  {
+   "page": "tennis.json",
+   "source_file": "vector-unified/data/tennis_matrix_report.json",
+   "recorded": "06d097fa996f4ff3",
+   "actual": "0dffa0e464996521"
+  },
+  {
+   "page": "tennis.json",
+   "source_file": "vector-unified/data/tennis_archetype_probe.json",
+   "recorded": "351c026041647214",
+   "actual": "7a036fe767336efb"
+  },
+  {
+   "page": "tennis.json",
+   "source_file": "vector-unified/data/tennis_sponsors.json",
+   "recorded": "788e0b61b4b36c84",
+   "actual": "f5872ea6ac3d4283"
+  },
+  {
+   "page": "tennis.json",
+   "source_file": "vector-unified/data/tennis_coverage.json",
+   "recorded": "2cf6f911e0d9fdd7",
+   "actual": "e9fc2051a8f5b8b8"
+  },
+  {
+   "page": "tennis.json",
+   "source_file": "vector-unified/pipeline/data/tennis_matrix.npz",
+   "recorded": "ccfc7e4a6f2eb7e0",
+   "actual": "83d9ddcf9017092a"
+  },
+  {
+   "page": "tennis.json",
+   "source_file": "vector-unified/data/tennis_mtnn_report.json",
+   "recorded": "bff00370e9d36675",
+   "actual": "bb0e789b9eda2999"
+  },
+  {
+   "page": "tennis.json",
+   "source_file": "vector-unified/data/tennis_candidate_features.json",
+   "recorded": "10fded11945ddeb9",
+   "actual": "f85ded0a1ca2f704"
+  },
+  {
+   "page": "tennis.json",
+   "source_file": "vector-unified/data/tennis_forward_enriched.json",
+   "recorded": "eead8f5216f2dab3",
+   "actual": "87c945863bc1ba0a"
+  },
+  {
+   "page": "tennis.json",
+   "source_file": "vector-unified/data/tennis_feature_identity.json",
+   "recorded": "b5298bfc9b022ec7",
+   "actual": "3c70b93a0a58eb8d"
+  },
+  {
+   "page": "unified.json",
+   "source_file": "vector-unified/data/gate_nonvacuity.json",
+   "recorded": "85b17133f3c9722f",
+   "actual": "3a8914e288facffd"
+  },
+  {
+   "page": "unified.json",
+   "source_file": "vector-unified/data/tennis_archetype_probe.json",
+   "recorded": "351c026041647214",
+   "actual": "7a036fe767336efb"
+  }
+ ],
+ "unresolvable_from_this_box": [],
+ "what_this_box_cannot_verify": "bundles/* live on the Hatch VM. Their values can be checked for SHAPE but never for TRUTH from here. They are reported UNRESOLVABLE, never passed — a checker that counts an unreadable file as OK is worse than no checker."
+}
