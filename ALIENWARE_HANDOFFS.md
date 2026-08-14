@@ -2,7 +2,36 @@
 
 > Point your other session here. This is SSOT mirror of every repo's LOCAL_GPU_HANDOFF.md — CPU Hatch can't run these, your Alienware GPU can.
 > Raw: https://raw.githubusercontent.com/jcdavis131/vector-hub/main/ALIENWARE_HANDOFFS.md machine-only inbound ALIENWARE_RESULTS.md branch scout/alienware-results
-> Last sync: 2026-08-14T12:52Z Board v5.1 FINAL restored + Vercel 2937B HIT fallback + Brief Auto Exec v1.1 restored + 5 evals 0.009/3.48/0.627 Board 3GPU+4nonGPU free3 SSOT_ok
+> Last sync: 2026-08-14T19:05Z DFS collector factory built on Alienware — all 4 sport lanes LIVE 238,787 rows / 536.6 MB. Prior line: 2026-08-14T12:52Z Board v5.1 FINAL restored + Vercel 2937B HIT fallback + Brief Auto Exec v1.1 restored + 5 evals 0.009/3.48/0.627 Board 3GPU+4nonGPU free3 SSOT_ok
+
+---
+
+## INDEX — 2026-08-14T19:05Z DFS COLLECTOR FACTORY — all 4 sport lanes LIVE on Alienware
+
+- **The factory described in `bundles/collectors/AGENT_PROMPT_LOOP.md` did NOT exist on the Alienware.** `~/workspace` held only `bundles/ultra`. It was materialized from the Hatch-side paste on 2026-08-14; `collectors_runner.py` was authored from scratch (no upstream source existed). Hatch has the code and no data; the Alienware has the data. That asymmetry is now resolved on the Alienware side.
+- Rows landed, `~/workspace/exports/dfs/dfs_harvest_<sport>.jsonl`, one 85-key schema identical across every file, every `row_hash` unique, novel-only sha256(date|player_id|slate|season|source):
+
+| lane | rows | source | offline? |
+|---|---|---|---|
+| hoops 05m | 189,327 | stats.nba.com league game log, 1 request per season | no (14 requests) |
+| gridiron 07m | 26,786 | `~/vector-gridiron/pipeline/cache` 551 MB nflverse | YES |
+| equities 11m | 20,055 | `~/vector-equities/pipeline/cache` SEC Form 3/4/5 + prices + 992 DEF14A | YES |
+| pitch 09m | 2,619 | FPL public API | no (2 requests steady) |
+| **total** | **238,787** | | |
+
+- **Three of four lanes needed NO network fetch** — the raw material was already in the repos' own caches. The `~/vector-equities/pipeline/cache` alone holds 446 MB of SEC Form 3/4/5 quarterly bulk zips (2015q1-2026q1), 504 tickers of daily prices, 497 submission JSONs, 2.2 GB of DEF14A HTML. Check local caches before assuming a fetch is required. The exception is hoops: its cache is season-grain only, no gamelogs.
+- Gridiron coverage unmask **0.31 → 0.872** measured over 19 DFS features (Vegas spread/total/ITT, weather, dome, age, rest/b2b, snap share, def_vs_pos rolling prior-only). Real remaining gaps: `redzone_share` needs the PBP parquet (no stdlib reader), `injury_status` 0.181 is the true report rate, not a gap.
+- Equities: PIT-safe triple-barrier labels +10%/-7% over 63 trading days (+1 8,169 / -1 7,375 / 0 3,036), CEO/CFO decay-weighted open-market net buy `3.0*exp(-delta/90)`, horizon 2016Q3-**2026Q1**, and the **DEF14A meeting clock now parsed from the 992 local proxies** — 941 rows, 94.9% hit, median 43 days, 99.3% in the 20-90 day regulatory band.
+- **SURVIVORSHIP on every equities row**: universe is the current `market_history` constituent list. Do not read unconditional returns off that file.
+- **Data traps found and handled — worth knowing before extending any lane:**
+  - EDGAR `TRANS_PRICEPERSHARE` is as-filed, `market_history` closes are split-adjusted. A naive "price > 5x market is corrupt" guard flags every post-split filing (GOOG 20.0x = the 20:1, NVDA 39.8x = 4:1 then 10:1, CMG 73.2x = 50:1) and would have dropped **8,935 good records to catch 1 real mis-key** (MSFT 2020-09-01, price 2261327.00 vs a ~$225 close = a fake $189B sale). Bound is [0.005, 200]; unverifiable records are kept.
+  - FPL back-fills `0.0` for metrics that did not exist yet — xG/xA start 2022/23, ICT 2016/17. 802 false zeros nulled. A false zero is worse than a gap.
+  - The mission's FPL endpoint is wrong: there is no `/api/v1/`. Correct base `https://fantasy.premierleague.com/api/`. The wrong path 404s and reads like an outage.
+- **`actual_fp` for hoops follows the mission formula verbatim, which is FanDuel-flavoured** (`PTS + 1.2*REB + 1.5*AST + 3*STL + 3*BLK - 0.5*TOV + 0.5*FG3M + 1.5*DD + 3*TD`). DraftKings NBA actually scores REB 1.25, STL/BLK 2.0. Raw box score is stored per row so either is recomputable without re-harvesting — **operator decision pending on which target trains.**
+- Never fabricated a row: a lane with no real source emits `not_implemented` + zero rows. `salary_k` is null across every lane — **DK slate salary is the one gap with no free source found for any sport**, and bbref *contract* salary was deliberately NOT substituted into a DFS salary field.
+- Unified 13m stays `gated` / `Phase1_only` **by design** — its gates are model metrics (IC/MAE/Sharpe) needing training runs; a collector cannot self-certify them. Phase-1 gathering is structurally complete, so unification is unblocked the moment the four per-domain gates are measured.
+- Timeline 7-field triple-write on every tick including no-change, all 5 lanes, all 3 mirrors. Steady-state full 5-lane tick ~47 s (equities ~40 s dominant, hoops 5 s, gridiron 1 s, pitch 0.5 s).
+- Sole-writer guard respected throughout: `ALIENWARE_RESULTS.md` never written by this session.
 
 ---
 
