@@ -358,3 +358,56 @@ per-sport encoder output, so the adapter and trunk cannot cause it; `--enc-lr 1e
 above are 6 seeds through `train_stage2.py`. Do not quote 0.627, and do not quote the handoff's 0.6851
 either. The rest of the merge note stands unchanged.
 
+
+## 2026-08-14T22:xxZ - DISPOSITION of vector-hoops #8 (chimera): split into three, one held open
+
+Heads-up for whoever pushed `8b4bb25c` to `research/vector-hoops-chimera-worldmodel` this morning -
+that branch is now superseded. Do not keep working it; the work is in three PRs off current master.
+
+`#8` was four unrelated things on one branch and CONFLICTING against master, so it could not be
+merged as a unit:
+
+| commit | what it is | where it went |
+|---|---|---|
+| `49c815a3` + `8b4bb25c` | the Chimera fusion scaffold (the PR's title) | **#20** |
+| `bcce8669` | "GOAT audit v2" - Makefile, deps, sw.js, prune 5 assets | **#21** (the parts that still hold) + **#22** (the prune) |
+| `d3a0368e` | subset MODEL LENS + team logo | already on master as `69c84d2a` |
+| `1da04191` | a merge of master from 2026-07-24 | nothing to land |
+
+### Two of the audit's claims went stale in three weeks - please do not re-apply them
+
+**`scikit-learn` must stay in pyproject.** The audit dropped it as "hand-rolled PCA/k-means on
+np.linalg, 0 imports". That was true on 2026-07-24. On current master **8 files import sklearn**, and
+`pipeline/derive_system_tags.py:40` does it at module scope (`from sklearn.cluster import KMeans`), so
+dropping it breaks that script on a clean `pip install -e .`. Only `scipy` and `tqdm` are genuinely
+unused; those two were dropped in #21.
+
+**`sw.js` needs nothing.** The audit's FULL_MTNN removal is already on master by another path.
+
+### The audit's Makefile fix was right about the problem and would not have run
+
+Every recipe ended in `|| true`, and two of the commands under `make ci` could not succeed:
+
+  - `build_vectors.py --offline --quick` - argparse has no `--quick`, exit 2
+  - `pytest pipeline/tests` - that directory does not exist
+
+So `make ci` had never run the build and had never run a test. The audit removed `|| true` but kept
+`--quick`, which would have made `make offline` fail immediately. #21 drops the flag too, splits the
+asset-rewriting `build_vectors` call into its own `build` target (so checking the repo stops modifying
+it), and makes `ci` mirror `.github/workflows/ci.yml` step for step.
+
+### The chimera tests could not pass on any machine but one
+
+`test_graph_file_exists` and `test_headline_exists` assert `path.exists()` on `~/workspace` files - a
+graphify graph and a news-brief headline, neither in the repo. Since `pytest pipeline tests` is a real
+gate now (#19), merging as written would have gone red. They skip instead, so the evidence is still
+read and validated where it exists. 2 failed -> 32 passed, 2 skipped.
+
+### #22 is a draft on purpose - do not merge it for me
+
+The five-asset prune. Verified unreferenced six ways (no script tag on 19 pages root or public/, no
+dynamic load or sw precache, no sibling-repo reference, `stamp_assets --check` passes after removal,
+every asset they loaded has other referencers, and master's own `pwa-install.js:97` independently
+measured "0 of 18"). That is as far as static evidence goes, and it is still 831 lines of frontend on
+a deploy-on-merge repo. Operator's call, not mine and not yours.
+
