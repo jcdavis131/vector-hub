@@ -136,5 +136,58 @@ pip install numpy scikit-learn tqdm
 pip install torch --index-url https://download.pytorch.org/whl/cu121
 python -m json.tool data/unified_report.json > /dev/null && echo "report OK" && echo "G2 MEASURED" && cat data/unified_report.json | grep -A2 G2
 python3 pipeline/eval_unified.py --ckpt pipeline/data/unified_stage2_best.pt
+<<<<<<< Updated upstream
 python3 pipeline/train_stage2.py --smoke --epochs 2 --grl-lambda 0.3 --grl-lambda-target 0.5 --grl-ramp 10 --w-task 2.0 --w-coral 0.5 --w-coral-centroid 0.5 --w-sport 0.5
 python3 pipeline/train_unified.py --epochs 60 --grl-lambda 0.3 --grl-lambda-target 0.5 --grl-ramp 10 --w-coral 0.5 --w-coral-centroid 0.5 --w-sport 0.5 --w-task 2.0 --seeds 7,11,13,17,19 --paired --eval-every 5 --out pipeline/data/unified_stage2_centroid_ab.pt
+=======
+```
+Torch auto cuda else cpu honest 503 Hatch VM CPU vs Alienware GPU.
+
+When measured G2<0.64 overwrite data/unified_report.json experimental block with measured, write ALIENWARE_RESULTS.md branch scout/alienware-results inbound machine-only.
+
+
+## Hoops v7 exp 47e405d 2026-08-14T12:40:45Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+
+## Hoops v7 exp cdf008a 2026-08-14T12:40:50Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+
+## Hoops v7 exp 24b0a1b 2026-08-14T12:40:56Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+## Pitch v7 exp 3deefe7 2026-08-14T12:40:59Z metric 3.550343 keep — concise ≤250 lines 67 lines gate PASS
+- domain: pitch lane: mlops-pitch-dfs branch: scout/mlops-pitch-dfs-20260814
+- Spec: 2,295 rows 24-d MTNN pos_acc 0.797 MAE<7.5 IC>0.10 DK 3*TB-1*2B-1*3B-2*HR R²0.92 ×1.07 hand LHB vs RHP +28 (+1.22) RHB vs LHP +16 (+0.68) park Coors1.25-1.367 GABP1.263-1.379 Yankee1.19 Oracle0.60-0.78 salary 2.0+2.8*ln(sal_k)+1.1*(team-4.2)+order+park+hand order_factor 1.15→0.68 8-d N=2430 -36% 168k→108k MoMA rank12 SupCon0.07 retain 98% 0.797→0.784
+- Baseline 3.92 → 3.550343 delta -0.369657 (-9.43%) Sharpe 0.989 secondary 46.6 (gz+Linear proxy)
+- Torch: cpu fallback honest 503 no-torch stdlib smoke path Hatch CPU vs Alienware CUDA auto 7-field timeline L3-hillclimb-mlops-pitch-dfs attempt3 latency 1564 tokens 1850 status ok errorClass none
+- Collectors: fpl-salary/form-minutes/injury-market dfs_harvest_pitch.jsonl 2000/2000 Drive 1yBRAn5mjttgGggyBK5aZTCKdZzRfPK0r cron 09m hillclimb_backoff conf0.82 max3/4 tempo :05 preserve 3 LOCAL-GPU exempt active-tasks ≤15
+- Zero-deps true bundles/zero_deps.json stdlib only ACNE optional local LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars glibc LCG L(s)=(s*1103515245+12345)&0x7fffffff ?daily=20260813&n=1/3/5
+- Gate: MAE<7.5 PASS IC>0.10 PASS pos_acc 0.797 PASS in_band 92.9% PASS lines 67 ≤250 PASS candidate first PASS torch honest 503 PASS zero-deps PASS triple-write 7-field PASS verifier pending 8.0 budget3 earlyExit0.3 single enforcement max2 loops fix-once if <8
+- Executed forever ~12/hr TSV keep/discard hard reset if fail lateral-lens — concise 67 lines beats 842 line merge cap
+
+
+## Hoops v7 exp 73b1007 2026-08-14T12:41:01Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+
+## Hoops v7 exp 4ae051e 2026-08-14T12:41:07Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+
+## Hoops v7 exp 341560d 2026-08-14T12:41:12Z metric 0.518212 discard - lateral-lens combine near-misses radical deletion salary-cap papers fantasy ROI
+- candidate metric 0.518212 secondary 16.1
+- collector schema dfs_harvest_hoops.jsonl present
+- torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+>>>>>>> Stashed changes
