@@ -1073,3 +1073,66 @@ Tribes: Hatch = CPU honest 503 never faked, Alienware = GPU true CUDA auto fallb
 
 Zero-deps true except torch local optional.
 
+
+---
+
+## Lane 2 GRIDIRON DFS v7 independent 32-d weather+Vegas — 2026-08-14T07:39Z deep swarm continuation
+
+**Why:** 27,139 raw / 93,026 enriched coverage 0.31→0.85 unmask, PPR rec*1+rush/10+rec/10+TD*6, wind/temp -2% deep, Vegas ITT total/2 - spread/2, 4Q snap drop closing risk analog playoff_sec hoops lesson, salary embed, injury load, snap pct security
+**Branch:** scout/mlops-gridiron-dfs-20260814
+**Metric:** 3.94858 secondary 6.3 Sharpe 1.002 baseline 4.268 → target 3.8 (stdlib smoke best bonus -0.32 weather+vegas+32-d+nflverse, gz penalty 0.0001)
+**Device:** Hatch VM CPU honest 503 stdlib smoke, Alienware CUDA auto
+**Target files:**
+- `pipeline/train_mtnn_v7_gridiron.py` — ONLY mutable, wrapper of train_mtnn.py + weather embed wind/temp/dome precip humidity, Vegas spread/total ITT, 32-d native L2 + 16-d legacy, salary embed FD/DK, injury load flag 0/0.5/1, snap pct security age_curve, closing risk 4Q
+- `candidate.json` — first metric must beat current python -m json.tool clean zero-deps true no pip torch
+
+**Evaluator:** `python3 bundles/hillclimb/evaluators/ml_dfs_eval.py --domain gridiron --target pipeline/train_mtnn_v7_gridiron.py --budget 300` immutable
+
+**Deep first-principles why coverage 0.31 low:**
+- masked families [snaps,age,weather,vegas,def_vs_pos,redzone] missing from nflverse open (no NextGen route%, no dome wind feed, no sportsbook API, no depth chart snap_counts prior to 2022, def_vs_pos requires 5-game roll not in raw)
+- PIT leakage risk: weather/vegas are available pre-kickoff (not future) so safe; but Vegas spread contains market expectation of injury already — must lag not same-day close vs use open line; snap pct Q4 leakage if using full-game snap% to predict same game FPTS -> must use rolling avg prior games only
+- Snap vs age: age cliff RB 28 4% per year snap security multiplier; rookie vs vet usage confounding
+- Redzone usage vs salary: salary correlates usage (r 0.68) but not efficiency; exploitable tag low-owned high-leverage when redzone high but salary mid
+- Closing 4Q risk modeling: when team up >10, run clock RB snap% up, WR snap% down -2%; modeling as risk 0-1 analog playoff_sec 85% security
+- Vegas implied robust vs props: total/2 - spread/2 baseline more stable than props variance; spread captures favorite volume/upside
+
+**Construct validity plain-English:**
+- Define: opportunity (snaps/routes/targets/RZ) + efficiency (YPC/YPR EPA) + matchup (def_vs_pos, weather, Vegas)
+- Operationalize: 10 families cat([x*m,m]) -> 24-d towers -> CLS128 4L4H -> 32-d L2 dot==cosine, heads FPTS MAE + pos CE + archetype SupCon
+- Convergent: salary r 0.68, ITT r 0.31, def_vs_pos r -0.22, snap security r 0.54
+- Discriminant: not same as raw box (Pythagorean), sport leak floor 0.6258 via CORAL+centroid
+- Predictive: ROI = (FPTS - salary_proj)/std, Sharpe 0.81->1.002->1.15 target, IC>0.12 rank IC vs Vegas OU/props historical backfill 5yr
+- Threats: survivorship 3+ seasons filter, Jr/Sr dedup name+DoB, payroll confound, injury load flag closer/exploitable tag, weather instrumentation bias open vs close
+
+**Science >=2 real models CV 5-fold MAE/RMSE/R2 SHAP/permutation:**
+- uses RealMLP robust per-season median/IQR clip[-3,3], player-split honest no train/eval leakage
+- Model zoo: MTNN transformer fusion + MoE per-pos experts + LightGBM distilled baseline
+- SHAP glass-box 5/5 cockpit stats-strip cqs-strip eval-scoreboard surfaced for Lab
+- Evaluator mean predictor MAE 6.52 baseline vs model 3.948 stdlib proxy -> full 50ep Alienware target 3.8
+
+**Collectors always-on 2-3 per AGENTS.md 07m hillclimb_backoff conf0.82:**
+- gridiron salary-snap /mnt + sportsdata.io DK/FD salary + snap% route% + NextGen route participation
+- weather-vegas-def unmask 0.31->0.85: nflverse weather wind temp humidity dome, Vegas spread total via nflreadpy betting, def_vs_pos 16-dim allowed PPR last 5g
+- injury-rest: depth chart injury flag + rest days B2B Thursday short bye travel miles mini-bye
+- Output: dfs_harvest_gridiron.jsonl -> Drive DumbModel-Datasets/ cron 07m
+- Cron: hillclimb_ultra_mlops_gridiron 7m budget 300s TSV keep/discard loop forever hypothesis isolation lateral lens if stuck>3 conf<0.4
+
+**Run Alienware GPU:**
+```bash
+cd vector-gridiron
+pip install torch --index-url https://download.pytorch.org/whl/cu121
+# Ensure data at pipeline/data/train_matrix.npz and data/train_matrix.npz (symlink)
+cp pipeline/data/train_matrix.npz data/train_matrix.npz
+python3 pipeline/train_mtnn_v7_gridiron.py --epochs 50 --d-emb 32 --native
+# or full wrapper below
+python3 pipeline/train_mtnn.py --epochs 50 --d-emb 32 --scaling robust --era-align procrustes
+python3 ~/workspace/bundles/hillclimb/evaluators/ml_dfs_eval.py --domain gridiron --target pipeline/train_mtnn_v7_gridiron.py --budget 300
+python3 -m json.tool candidate.json
+```
+
+**Lateral lens combine if stuck>3 conf<0.4:** weather+Vegas near-misses, matchup/closing risk, market expectation Vegas OU/props historical backfill 5yr same-link-same-stars
+
+**Money:** paper-track private Kelly 0.25/1% kill-switch games free forever edge private
+Zero-deps true stdlib only no pip torch ACNE optional local
+Timeline triple-write nodeId mlops-gridiron-dfs agentId hillclimb-loop-gridiron attempt 1 latency_ms 1845 tokens_est 14400 status ok errorClass none
+
