@@ -261,3 +261,59 @@ Nothing promoted. Nothing pushed to any master except vector-hoops CI (green, ve
 Single seed (7) on every unified number here. The hoops encoder underneath G2 still failed hoops'
 own promote gate at recall 0.742 vs a 0.773 floor.
 
+
+## 2026-08-14T19:3xZ - MERGED: six PRs landed, every repo is now aligned with its remote
+
+Follow-up to the 14:2xZ alignment note. The operator authorised merging, so everything that was
+sitting in review is now on a default branch. Nothing is stranded on this box any more.
+
+### What landed
+
+| repo | PR | merge sha | verification |
+|---|---|---|---|
+| vector-hub | #8 `align/hub-provenance` | `b622b367` | vector-core + vector-bench green, Vercel prod success |
+| vector-gridiron | #7 (11 commits) | `572086be` | Vercel prod success |
+| vector-hoops | #18 `fix/v6-glassbox-json` | `6d9ad472` | master CI green |
+| vector-hoops | #15 `feat/audit-clock-check` | `d9889aad` | master CI green |
+| vector-hoops | #16 `fix/bio-source-contract` | `68e906b7` | master CI green |
+| vector-hoops | #17 `feat/shape-family` | `3c0398c1` | master CI green |
+
+hoops was merged one PR at a time, waiting for master's own CI run to go green before the next.
+#16 and #17 both touch `pipeline/build_vectors.py` and `pipeline/test_source_contracts.py`, and #17
+carries its own copy of #16's commit under a different sha, so their pre-merge greens were not
+evidence about each other. GitHub recomputed #17 as CLEAN after #16 landed, and master is green at
+`3c0398c1` with all 38 gates including `stamp_assets.py --check`.
+
+### PR #8 is live, verified end to end
+
+`scripts/check_provenance_hashes.py` had never existed on main. It does now, and the page reads it:
+
+  - https://dumbmodel.com/assets/data/provenance_status.json is byte-identical to `origin/main`
+  - the deployed `assets/model.js` contains `sources__drift` and the `provenance_status.json` fetch
+
+So the model cards no longer assert a static `_verification: CLEAN -- adversarially verified`; they
+render the recomputed drift. It currently reports **22 mismatched, 6 malformed, 5 uncovered**, spread
+over equities (3), gridiron (4), hoops (2), pitch (2), tennis (9), unified (2), scout_cli (6 malformed).
+That is a real finding and it is now visible on the site rather than contradicted by it.
+
+### Not merged, on purpose
+
+**vector-hoops #8** (`research/vector-hoops-chimera-worldmodel`) is CONFLICTING. Real conflicts on a
+research branch are a judgement call, not a merge button.
+
+**vector-equities** is still 35 ahead / 31 behind origin/master on `fix/career-manifest-fallback` with
+35 untracked files in `pipeline/data/`. The branch is pushed, so nothing can be lost, but reconciling
+it is a decision. Left alone.
+
+### Preserved rather than merged
+
+`vector-unified` `fix/stage2-best-tracking` is now pushed (123 commits, previously local-only), joining
+`rescue/unified-local-master-20260804` from earlier. Neither is merged: unified's local master is 336
+behind origin and cannot fast-forward.
+
+### G2 is unchanged and still FAIL
+
+Nothing in this batch touches unified. The 14:2xZ note stands in full: measured control 0.6815,
+treated 0.6274, delta 0.0541, gate needs 0.10, and the maximum achievable delta on this data is
+0.0557. Please do not read "everything merged" as "G2 resolved".
+
