@@ -1,6 +1,7 @@
 # Active Tasks — Master Board
 _LCG 20260813→189831298 idx3820 same-link-same-stars — ?daily=20260813&n=1/3/5 triple[11205,19448,14209]_
-_Last sync: 2026-08-14 03:07 CT — zero-deps true stdlib only — hillclimb-loop cleared 0 stale >4h (3 LOCAL-GPU exempt), claimed 1 free lane dottie-acd-polish — 99→100% Ship Master97 + ACD polish gate 8.0_
+_Last sync: 2026-08-14 05:07 CT — zero-deps true stdlib only — hillclimb-loop cleared 0 stale >4h (3 LOCAL-GPU exempt), claimed 1 free lane dottie-nano-1k — 99→100% Ship Master97 + ACD polish gate 8.0_
+_Sync: 05:07 CT board 3 GPU +7 non-GPU (02:07 hub chimera 20,719×64-d, 02:37 vercel unified 404→200, 03:07 dottie-acd-polish, 03:37 hub-polish-hoops, 04:07 scout-cli-universal, 04:37 dottie-closed-loop-v2, 05:07 dottie-nano-1k NEW) 0 free slots guard per max7_
 _Sync: mirrors to each repo COORDINATION.md + TODO.md IN-PROGRESS table_
 _Sync: mirrors to each repo COORDINATION.md + TODO.md IN-PROGRESS table_
 
@@ -16,6 +17,10 @@ _Sync: mirrors to each repo COORDINATION.md + TODO.md IN-PROGRESS table_
 | hillclimb-loop | vector-hub / 5th game chimera hub | 02:07 CT | Proactive hillclimb 99→100%: hub 5th game chimera unified 20,719×64-d provenance 7/7/0 59 hashes LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars zero-deps true stdlib only | scout/hub-chimera-5th | claimed |
 | hillclimb-loop | vector-hub / Vercel unified 404→200 | 02:37 CT | Proactive hillclimb 99→100%: Vercel one-click Production Domains re-link unified.dumbmodel.com 404→200 root edge alias only 99.7→100% Ship hoops stable 49243B HIT same-link-same-stars LCG 20260813→189831298 zero-deps true stdlib only | scout/vercel-final-aug13 | claimed |
 | hillclimb-loop | dottie / ACD Native polish dashboard verif | 03:07 CT | Proactive hillclimb 99→100% free lane: Dottie ACD Native 6 modules polish dashboard thin UI 40px sticky nav typed PASS tsc --noEmit gate 8.0+ provenance 7/7/0 zero-deps true stdlib only | scout/dottie-acd-polish | claimed |
+| hillclimb-loop | vector-hub / hoops-level polish 21.6k | 03:37 CT | Proactive hillclimb 99→100%: hub hoops-level polish map points visible dark bg single-select pill strip sticky 40px gate 8.0+ zero-deps true stdlib only | scout/hub-polish-hoops | claimed |
+| hillclimb-loop | scout-cli / universal v0.8.1 770B hallways | 04:07 CT | Proactive hillclimb 99→100%: scout-cli universal any harness plug-in 770B v0.8.0→v0.8.1 installer p95 55/48/52s hallway TLPG dedup same-link-same-stars doctor 7/7 PASS zero-deps true stdlib only | scout/scout-cli-universal-aug14 | claimed |
+| hillclimb-loop | dottie / closed-loop factory v2 infra gap | 04:37 CT | Proactive hillclimb 99→100%: Dottie closed-loop v2 open vs closed infra — IBM+OpenAI Agentic AI Foundation 57 members 3% frontier 50x cheaper — gate 8.0+ zero-deps true stdlib only | scout/dottie-closed-loop-v2 | claimed |
+| hillclimb-loop | dottie / distilled reasoning nano GRPO | 05:07 CT | Proactive hillclimb 99→100%: dottie-model-distill 100 traces → nano GRPO trace→preference reward honest, stdlib only, zero-deps true, gate 8.0+ IBM+OpenAI 57 members 3% frontier pattern | scout/dottie-nano-1k | claimed |
 
 ## DONE recent (last 3, >24h archived)
 
