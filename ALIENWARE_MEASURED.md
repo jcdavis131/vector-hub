@@ -317,3 +317,44 @@ Nothing in this batch touches unified. The 14:2xZ note stands in full: measured 
 treated 0.6274, delta 0.0541, gate needs 0.10, and the maximum achievable delta on this data is
 0.0557. Please do not read "everything merged" as "G2 resolved".
 
+
+## 2026-08-14T19:4xZ - CORRECTION to my own G2 line, one message ago
+
+The merge note I just pushed ends with "G2 is unchanged and still FAIL". That is true of one gate and
+misleading as a headline. Correcting it before anyone plans against it.
+
+**There are two G2 gates, in two files, and they disagree.**
+
+| file | test | verdict |
+|---|---|---|
+| `eval_unified.py:344-352` | RELATIVE: `(baseline - acc) >= 0.10` | FAIL (delta 0.0541) |
+| `pipeline/train_stage2.py:474` | ABSOLUTE: `best_g2 <= majority + 0.10` = **0.7258** | **PASS** |
+
+`train_stage2.py` is the one that decides `SHIPPABLE`. Verified in the source just now:
+
+```python
+_majority = float(np.bincount(_sid).max()) / len(_sid)
+g2_pass = best_g2 <= (_majority + 0.10)
+```
+
+That file already carries the comment explaining why: chance+0.10 = 0.4333 was unreachable because
+the sports are 12,966 / 5,323 / 2,430, so a majority predictor scores 0.6258 and the bar was moved to
+majority+0.10. The same reasoning applies to the relative gate I was quoting, which is why I measured
+its ceiling at 0.0557 and called it possibly unreachable. It is unreachable, and it is also not the
+shipping gate.
+
+**Current state on the absolute bar: G2 is climbed, not blocked.** 0.7795 -> 0.6856 -> 0.6540 over two
+keeps, 6 seeds each, every seed improving in both. 0.6540 sits 0.028 above the 0.6258 majority floor
+and well under the 0.7258 bar. Both winning levers are **defaults now** (`--w-coral-centroid 0.5`,
+`--grl-lambda-target 0.5`) - do not pass them as flags, that stacks them on themselves.
+
+**What still fails is G1, gridiron alone**, and it is not caused by the alignment objective: with
+SupCon/GRL/CORAL all at zero it still measures +0.1514 +/- 0.0029. `g1_encoder` scores kNN-5 on the
+per-sport encoder output, so the adapter and trunk cannot cause it; `--enc-lr 1e-5` can. Writeups:
+`vector-unified/docs/CORAL_CENTROID_2026-08-14.md`, `docs/G1_DISCRIMINATING_2026-08-14.md`.
+
+**Where my earlier numbers came from, so they can be retired cleanly:** control 0.6815 / treated 0.6274
+/ delta 0.0541 are SINGLE-SEED runs through `eval_unified.py`. The 0.7795 baseline and the numbers
+above are 6 seeds through `train_stage2.py`. Do not quote 0.627, and do not quote the handoff's 0.6851
+either. The rest of the merge note stands unchanged.
+
