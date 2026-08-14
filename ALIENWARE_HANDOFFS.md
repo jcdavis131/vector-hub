@@ -2,11 +2,11 @@
 
 > Point your other session here. This is SSOT mirror of every repo's LOCAL_GPU_HANDOFF.md — CPU Hatch can't run these, your Alienware GPU can.
 > Raw: https://raw.githubusercontent.com/jcdavis131/vector-hub/main/ALIENWARE_HANDOFFS.md machine-only inbound ALIENWARE_RESULTS.md branch scout/alienware-results
-> Last sync: 2026-08-14T19:55Z DFS collector factory on Alienware — all 4 sport lanes LIVE 241,620 rows / 543.2 MB (equities now carries DEF14A clock + Altman Z). Prior line: 2026-08-14T12:52Z Board v5.1 FINAL restored + Vercel 2937B HIT fallback + Brief Auto Exec v1.1 restored + 5 evals 0.009/3.48/0.627 Board 3GPU+4nonGPU free3 SSOT_ok
+> Last sync: 2026-08-14T20:40Z DFS collector factory on Alienware — all 4 sport lanes LIVE 241,614 rows / 543.3 MB. Equities identity spine rebuilt time-aware (ticker reuse bug). Prior line: 2026-08-14T12:52Z Board v5.1 FINAL restored + Vercel 2937B HIT fallback + Brief Auto Exec v1.1 restored + 5 evals 0.009/3.48/0.627 Board 3GPU+4nonGPU free3 SSOT_ok
 
 ---
 
-## INDEX — 2026-08-14T19:55Z DFS COLLECTOR FACTORY — all 4 sport lanes LIVE on Alienware
+## INDEX — 2026-08-14T20:40Z DFS COLLECTOR FACTORY — all 4 sport lanes LIVE on Alienware
 
 - **The factory described in `bundles/collectors/AGENT_PROMPT_LOOP.md` did NOT exist on the Alienware.** `~/workspace` held only `bundles/ultra`. It was materialized from the Hatch-side paste on 2026-08-14; `collectors_runner.py` was authored from scratch (no upstream source existed). Hatch has the code and no data; the Alienware has the data. That asymmetry is now resolved on the Alienware side.
 - Rows landed, `~/workspace/exports/dfs/dfs_harvest_<sport>.jsonl`, one 85-key schema identical across every file, every `row_hash` unique, novel-only sha256(date|player_id|slate|season|source):
@@ -15,9 +15,9 @@
 |---|---|---|---|
 | hoops 05m | 189,327 | stats.nba.com league game log, 1 request per season | no (14 requests) |
 | gridiron 07m | 26,786 | `~/vector-gridiron/pipeline/cache` 551 MB nflverse | YES |
-| equities 11m | 22,888 | `~/vector-equities/pipeline/cache` SEC Form 3/4/5 + prices + 992 DEF14A, plus SEC XBRL frames | mostly |
+| equities 11m | 22,882 | `~/vector-equities/pipeline/cache` SEC Form 3/4/5 + prices + 992 DEF14A, plus SEC XBRL frames | mostly |
 | pitch 09m | 2,619 | FPL public API | no (2 requests steady) |
-| **total** | **241,620** | | |
+| **total** | **241,614** | | |
 
 - **Three of four lanes needed NO network fetch** — the raw material was already in the repos' own caches. The `~/vector-equities/pipeline/cache` alone holds 446 MB of SEC Form 3/4/5 quarterly bulk zips (2015q1-2026q1), 504 tickers of daily prices, 497 submission JSONs, 2.2 GB of DEF14A HTML. Check local caches before assuming a fetch is required. The exception is hoops: its cache is season-grain only, no gamelogs.
 - Gridiron coverage unmask **0.31 → 0.872** measured over 19 DFS features (Vegas spread/total/ITT, weather, dome, age, rest/b2b, snap share, def_vs_pos rolling prior-only). Real remaining gaps: `redzone_share` needs the PBP parquet (no stdlib reader), `injury_status` 0.181 is the true report rate, not a gap.
@@ -27,6 +27,9 @@
 - **The obvious XBRL tag is often not the best one — measure coverage before accepting a low row count.** Over the 495 priced tickers: `Liabilities` 0.68 vs `StockholdersEquity` 0.89 (and Assets-Equity IS liabilities, exactly); `CommonStockSharesOutstanding` 0.64 vs `WeightedAverageNumberOfDilutedSharesOutstanding` 0.92; `Revenues` 0.45 unioned with `RevenueFromContractWithCustomerExcludingAssessedTax` 0.59. Those fallbacks took the lane 1,287 rows/160 tickers -> 2,827/320. `dei:EntityCommonStockSharesOutstanding` returns 0.00 — different taxonomy, wrong endpoint.
 - **PIT on the Altman rows: dated 90 days AFTER fiscal period end**, since XBRL is not public until the filing lands; anchoring on period end would be look-ahead. Same spirit as the 13F 45d lag convention.
 - **13F crowding is unblocked**: SEC publishes Form 13F structured data sets, 53 zips at `sec.gov/data-research/sec-markets-data/form-13f-data-sets`. Naming is inconsistent (`2023q4_form13f.zip` vs `01dec2025-28feb2026_form13f.zip`) so scrape the index for hrefs — every guessed URL pattern 404s. Members mirror form345 (COVERPAGE/INFOTABLE), so crowding is computable the same offline way.
+- **TICKER IDENTITY IS TIME-DEPENDENT — spine rebuilt 2026-08-14T20:40Z.** 87 of 496 priced tickers (17.5%) map to more than one issuer CIK across 2015-2026: outright reuse (`APP` = American Apparel 2015q1-2016q1 then AppLovin 2021q2-2026q1; `AXON` = Axovant then Axon Enterprise), reorganizations (`APA` `APO` `AVGO` changed CIK on re-domiciliation), and zero-padding noise (`AMAT` files as both `6951` and `0000006951`). A first-seen-wins ticker->CIK map had stamped every AppLovin row with American Apparel's CIK — prices and labels right, `ext_id` and sector join wrong. Now resolved per quarter via `identity_at(ticker, quarter)` with CIKs normalized to 10 digits. Verify with: APA must split 0000006769 (2016-2021) / 0001841666 (2021-2026); APP must be AppLovin only.
+- **Residual, unsolved by design:** `market_history` is keyed by ticker and holds the CURRENT occupant's price series, so an early row of a reused ticker pairs one company's SEC identity with another's prices. **451 rows (2.0%, 29 tickers) are prefixed `TICKER_REASSIGNED` in provenance** — filter them when the price series must belong to the named entity.
+- **13F crowding is scouted and ready to build.** 53 zips 2013q2-2026q2, ~70 MB each, at `sec.gov/data-research/sec-markets-data/form-13f-data-sets` (scrape the index for hrefs — every guessed URL pattern 404s). INFOTABLE carries NAMEOFISSUER/CUSIP/FIGI/VALUE/SSHPRNAMT, 2.9M rows in 2023q4 alone. **There is no local CUSIP->ticker map**, so the join is normalized NAMEOFISSUER against form345 ISSUERNAME: measured **89.1%** (442/496 priced tickers); most remaining misses are form345's state-of-incorporation suffix (`/DE/`, `/MA/`) surviving normalization.
 - **SURVIVORSHIP on every equities row**: universe is the current `market_history` constituent list. Do not read unconditional returns off that file.
 - **Data traps found and handled — worth knowing before extending any lane:**
   - EDGAR `TRANS_PRICEPERSHARE` is as-filed, `market_history` closes are split-adjusted. A naive "price > 5x market is corrupt" guard flags every post-split filing (GOOG 20.0x = the 20:1, NVDA 39.8x = 4:1 then 10:1, CMG 73.2x = 50:1) and would have dropped **8,935 good records to catch 1 real mis-key** (MSFT 2020-09-01, price 2261327.00 vs a ~$225 close = a fake $189B sale). Bound is [0.005, 200]; unverifiable records are kept.
