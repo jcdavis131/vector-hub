@@ -138,7 +138,10 @@ self.addEventListener('fetch', (e) => {
       const cache = await caches.open(CACHE_NAME);
       const cached = await cache.match(req);
       const fetchPromise = fetch(req).then((resp) => {
-        if (resp.ok) cache.put(req, resp.clone());
+        if (resp.ok) {
+          const cl=resp.headers.get('content-length');
+          if(!cl||Number(cl)<=1048576) cache.put(req, resp.clone());
+        }
         return resp;
       }).catch(() => null);
       return cached || await fetchPromise || new Response('', { status: 504 });
@@ -151,7 +154,10 @@ self.addEventListener('fetch', (e) => {
       const cache = await caches.open(CACHE_NAME);
       try {
         const fresh = await fetch(req);
-        if (fresh.ok) cache.put(req, fresh.clone());
+        if (fresh.ok) {
+          const cl=fresh.headers.get('content-length');
+          if(!cl||Number(cl)<=1048576) cache.put(req, fresh.clone());
+        }
         return fresh;
       } catch {
         const cached = await cache.match(req);
