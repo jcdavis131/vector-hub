@@ -143,3 +143,47 @@ End Lane5 sync 2026-08-14T07:48Z Phase1 blocked gates FAIL hoops+gridiron so sta
 - **Vercel Unified 404→200 FINAL** — `vercel.json` cleanUrls false (was true causing 308 loop), rewrites added `/unified`→`/models/unified.html`, `/unified.html`→`/models/unified.html`, `/models/unified`→`/models/unified.html`, `/owner` & `/owner/`→`/owner/index.html` — root `unified.html` 2937B cloned from `models/unified.html` 2937B HIT fallback — `models/*` 6 files 2919-2982B HIT — `owner/index.html` 19149B — headers cache-control public max-age 0 must-revalidate stale-while-revalidate 600 for `/*.html` and `/`, immutable 31536000 for assets, no-store for `/api/*` CORS `*.dumbmodel.com` + `X-Provenance 7/7/0 honest` + `X-API-Version v67-free-knowledge-edge-money` + `X-Kill-Switch 1% day loss → halt` — trailingSlash false version2 — one-click Production Domains re-link fallback per 2026-08-13T23:01Z alienware_handoffs SSOT raw URL machine-only outbound main sole-writer Hatch — deploy verification `curl -sL https://dumbmodel.com/unified.html` expect 200 2937B HIT `curl -s https://dumbmodel.com/unified` 200 2937B HIT `curl -s https://dumbmodel.com/models/unified.html` 200 2937B HIT `curl -s https://dumbmodel.com/owner/` 200 19149B HIT — owner POV championship economics cap tools TV$76B apron rollover FFP squad cost 70% burn Altman Z 4 POVs 5 games same-link-same-stars
 - **Collectors Rollout 2-3 always-on guards** — 5 dfs_harvest crons 05/07/09/11/13m hillclimb_backoff conf0.82 max3/4 tempo :05 zero-deps true stdlib only Drive DumbModel-Datasets/ authorized clean other Drive files if time — 5 mlops hillclimb crons v7 `mlops-hoops-dfs 5m`, `mlops-gridiron-dfs 7m`, `mlops-pitch-dfs 9m`, `mlops-equities-dfs 11m`, `mlops-unified-dfs 13m` independent-first TSV keep/discard budget 300 torch auto cuda else cpu honest 503 Hatch VM vs Alienware CUDA — eval harness `ml_dfs_eval.py` per domain — 7-field timeline mandatory triple-write even no-change — board SSOT ≤15 preserve 3 LOCAL-GPU exempt never cleared free=7-non_gpu 0=no-swarm <5s hillclimb_backoff max3/4 tempo :05 conf0.82 — LCG chain glibc `L(s)=(s*1103515245+12345)&0x7fffffff` 20260813→189831298 idx3820 triple[11205,19448,14209]?daily=20260813&n=1/3/5 verified 2026-08-13T21:00Z same-link-same-stars everyday chain `?daily=YYYYMMDD&n=1/3/5` Solo1 Triple3 Full5 open→drag-map→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup — PWA v67 13k offline #080A0F CORE20 void dark toast polite 2600ms vibrate10
 - **Hillclimb 5 Independent Lanes Resume** — each `pipeline/train_mtnn_v7_{domain}.py` 300s budget TSV keep/discard torch auto cuda else cpu honest 503 per-domain gates hoops composite 0.7937→0.85 top1 0.438→0.55 IC>0.15 MAE<5 ROI_IC>0.05 gridiron 32-d MAE 4.268→3.8 Sharpe>0.9 pitch pos_acc 0.797 MAE<7.5 IC>0.10 equities IC 0.174→5.827 PASS IC>0.18 Sharpe>0.8 unified G2 0.685→0.64 proj 0.642→0.627 real measured GRL λ0.3→0.5 warmup5 ramp10 Phase2 Procrustes only after PASS — missing caches embedding_v3.npz etc need LOCAL-GPU 60ep smoke wiring `train_stage2.py --smoke -> train_unified.py 60ep -> eval_unified.py` on Alienware CUDA — pipeline/acquire_*.py restore from vector-*/assets/ — candidate.json first eval must beat current lower-better TSV logged results.tsv — gates doc MTNN_v7 per-domain — Vercel fallback owner 200 live footer sweep 0 free — open access subtle only — zero-deps true
+
+---
+
+## QUARRY — Alienware collection agent — CLAIM + BLOCKER FOR TRAINER OWNER — 2026-08-15
+
+`ALIENWARE | collectors/all-5 | 2026-08-15 | 253,665 rows 571MB 85-key uniform | experimental | blocker NO-CONSUMER`
+
+**Who:** Quarry. I own the 5-lane DFS harvest on the Alienware — `collectors_runner.py`, the
+row-hash contract, data integrity. Scout orchestrates on Hatch; I extract and guarantee the raw
+material. I do not touch the GPU training lane and I never write ALIENWARE_RESULTS.md.
+
+**THE ONE THING THAT NEEDS A HUMAN OR A TRAINER OWNER — nothing consumes the harvest.**
+Verified 2026-08-15: `grep -rl dfs_harvest` across vector-hoops / vector-gridiron / vector-pitch /
+vector-equities / vector-unified returns **zero** hits in `pipeline/*.py`. The only references on
+the whole box are my own mission file and my own runner. 253,665 rows / 571 MB are inert. The
+trainers read repo-local `pipeline/data/*.json|.npz` instead. Also note
+`bundles/hillclimb/evaluators/ml_dfs_eval.py` — named in the collector mission and in TODO #2 —
+**does not exist on this box**, so the evaluator smoke step has never been runnable here.
+
+**What I shipped so a trainer owner can wire it without asking me anything:**
+`~/workspace/exports/dfs/HARVEST_CONTRACT.json` (zero-deps, regenerate with
+`python bundles/scripts/build_harvest_contract.py`). Everything in it is MEASURED, not asserted:
+per-lane row counts, per-field coverage across all 85 keys, populated vs always-null field lists,
+join keys, point-in-time rules, and the caveats a consumer must respect.
+
+| lane | rows | populated fields | date range |
+|---|---|---|---|
+| hoops | 189,327 | 32/85 | 2019-10-22 .. 2026-06-13 |
+| equities | 34,933 | 27/85 | 2015-03-05 .. 2026-05-15 |
+| gridiron | 26,786 | 38/85 | 2020-09-10 .. 2025-01-05 |
+| pitch | 2,619 | 32/85 | 2007-05-31 .. 2026-08-21 |
+
+**Three caveats a consumer MUST respect (all in the contract):** every equities row is a
+survivor (current-constituent universe); pitch `fpl_bootstrap` rows are unplayed so `actual_fp`
+is null by construction and must never carry a target; hoops `actual_fp` uses the mission's
+FanDuel-flavoured formula, not DraftKings — the raw box score is stored so either is recomputable.
+
+**Also flagging:** the mission's hoops salary->FP OLS beta of 4.3-5.1 does not reproduce.
+Measured on real 2019-2021 DK NBA data it is 6.0-6.2, robust to both scoring formula and universe
+(n=19,568 / 33,357). Treat 4.3-5.1 as unverified.
+
+**Next from me unless redirected:** 13F backfill 23/~40 quarters and hoops DK-salary backfill
+continue unattended on the loop. I am NOT starting the training runs in TODO #2 — that is the GPU
+lane and the only path to the measured gates unified is waiting on. Say the word and I will move.
