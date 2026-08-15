@@ -262,3 +262,50 @@ Two consecutive ticks, same error class: comparing schemas without checking popu
 **Revised priority:** (1) equities 13F backfill, (2) gridiron DK salary — cleanest join in the
 harvest, a 2022+ archive would raise 17.9% directly, (3) hoops DK salary marginal, (4) **pitch:
 stop** until someone confirms the trainer universe moves to current PL seasons.
+
+---
+
+## QUARRY — END-OF-SESSION SIGNOFF — 2026-08-15
+
+`ALIENWARE | Quarry | collectors/all-5 | 2026-08-15 | 267,282 rows 602.2MB | experimental | blocker NO-CONSUMER`
+
+**Collection mandate is complete.** Integrity gate PASS on all four lanes.
+
+| lane | rows | state |
+|---|---|---|
+| hoops | 189,327 | complete for the available sources |
+| equities | 48,550 | 5 families; **13F backfill COMPLETE**, 52 quarters 2013Q2-2026Q1 |
+| gridiron | 26,786 | complete |
+| pitch | 2,619 | **stopped** — measured 4.7% join to its trainer's universe |
+
+Verified this session: 85-key schema identical across every lane; every `row_hash` unique
+(267,282/267,282) and `sha256:`-prefixed; provenance on every row; equities entity invariant
+`(team,slate)->1 player_id` PASS. RotoGuru page cache complete (451 NBA + 36 NFL, 0 uncached).
+
+**Nothing high-value is left to collect.** Evidenced, not assumed:
+- **13F**: all 53 zips consumed. One (`01jun2025-31aug2025`) nests members in a subdirectory and
+  was being skipped silently, losing 2025Q2 (8,039 filers). Fixed with basename resolution;
+  parse failures now surface as `REVIEW_bad_zips=<name>:<error>` and un-mark the cursor.
+- **DK salary 2022+**: does not exist free. RotoGuru's archive ends at 2021; nflverse has no
+  DFS/salary asset (all 25 release tags enumerated — `contracts` is NFL contract salary, a
+  different quantity, deliberately not substituted).
+- **hoops ownership**: no free source; RotoGuru carries no ownership column in either sport.
+- Everything else either duplicates existing trainer features or fails to join. See
+  `~/workspace/exports/dfs/HARVEST_GAP_ANALYSIS.md`.
+
+**THE BLOCKER IS UNCHANGED AND IS NOT MINE TO CLEAR:** nothing reads `dfs_harvest_*.jsonl`.
+`grep -rl dfs_harvest` over `pipeline/*.py` in all five vector-* repos returns zero.
+`bundles/hillclimb/evaluators/ml_dfs_eval.py`, named in the mission's own validation loop, does
+not exist on this box. The contract a trainer owner needs is
+`~/workspace/exports/dfs/HARVEST_CONTRACT.json` (measured coverage over all 85 keys, join keys,
+PIT rules, consumer caveats; regenerate with `bundles/scripts/build_harvest_contract.py`).
+
+**Two things a consumer must not miss:** every equities row is a survivor (current-constituent
+universe); pitch `fpl_bootstrap` rows are unplayed so `actual_fp` is null by construction and must
+never carry a target. Also, the mission's hoops salary->FP beta of 4.3-5.1 does not reproduce —
+measured 6.0-6.2, robust to scoring formula and universe.
+
+**Handing back:** further collection ticks will return `rows_new=0`. The remaining leverage is
+(a) wiring the harvest into a trainer, or (b) the TODO #2 training runs — the only path to the
+measured gates unified is waiting on. I have not started either; both are outside the collection
+lane and are the operator's call.
