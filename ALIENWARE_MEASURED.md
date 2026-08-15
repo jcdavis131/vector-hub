@@ -451,3 +451,51 @@ against root.
 **Not fixed here on purpose.** Mirroring v6 into `public/` swaps the model under every live visitor,
 which is an operator decision, not a merge.
 
+
+## 2026-08-14T23:xxZ - RESOLVED: hoops live site now serves v6. Supersedes my note above.
+
+My previous note said the v5/v6 split was "not fixed here on purpose". The operator called it, so it
+is fixed. PR **#23**, merge `06655f53`, master CI green, deployed and verified live.
+
+### What it turned out to be
+
+Not a pending promotion - a broken pairing the shipped code already disagreed with.
+`assets/mtnn-worker.js:29` and `assets/past-modern-game.js` both fetch
+`/assets/mtnn_meta.json?v=a41c2a5a`, and `a41c2a5a` is the **root/v6** hash. The server was
+answering `23299fa4` (v5). Under `vercel.json`'s `max-age=31536000, immutable`, every visitor had
+that mismatch pinned for a year.
+
+Verified live after the deploy:
+
+```
+hoops.dumbmodel.com/assets/mtnn_meta.json  -> a41c2a5a  (matches the requested token)
+model = mtnn_v6_192d_6head_rope_rmsnorm_6L_ff768_cls64_17towers_coral0.5_vicreg0.05_supcon0.07_gated192h_48d_64d_L2
+hoops.dumbmodel.com/assets/mtnn_embeddings.f32 -> b42ffc4d = root
+  3,319,296 bytes = 12,966 x 64 x f32, all finite, 0 zero-rows,
+  L2 norms min 1.000000 max 1.000000, max deviation from unit 1.79e-07
+```
+
+### The check that stopped this from being a blind mirror
+
+The two metas are NOT schema-compatible. v5 carries `centroids`, `skill_keys`, `tower_width`,
+`tower_hidden`, `skill_hidden`, `fusion`; v6 carries none of them. Nothing live reads any of them -
+`embedding-nebula.js` computes its own centroids from `vectors.json` and `trends.html`'s mention is
+prose in a comment. The only fields any consumer reads off this file are `dim` and `rows`, identical
+at 64 and 12966. That is why the swap is safe; it would not have been if `centroids` had a live
+reader.
+
+### Do not run sync_public.py to fix drift on a Windows checkout
+
+`--check` reports 2,295 files. 2,293 are `knowledge/*.md` whose **git blobs are byte-identical in
+both trees** - a CRLF artifact of the working copy, not drift. Running it commits 2,293
+line-ending-only changes. Measure with `git diff --name-status origin/master:public origin/master`,
+which compares blobs. The real drift was 2 files, and it is now 0.
+
+The "`public/` is ~2300 files behind" line in circulation is measuring that artifact.
+
+### Still open, needs the operator
+
+**hoops #22** (prune 5 unreferenced frontend assets, both trees) is CLEAN and green but its merge is
+**blocked by the permission guard** - correctly, it deletes 831 lines of frontend on a deploy-on-merge
+repo. Evidence is in the PR body. One click from whoever owns the repo; I am not routing around it.
+
