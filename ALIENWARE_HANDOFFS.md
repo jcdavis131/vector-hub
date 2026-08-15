@@ -395,3 +395,31 @@ Audit is noise-aware: pre-2015 form345 quarters are excluded because `market_his
 2016-08-01 and they can never carry a label. An audit that cries wolf gets ignored.
 
 Current verdict: **no upstream gap** across all four lanes.
+
+---
+
+## QUARRY — upstream audit now runs every tick — 2026-08-15
+
+`ALIENWARE | Quarry | tooling | 2026-08-15 | 272,661 rows 613.5MB | experimental | blocker NO-CONSUMER`
+
+Last tick I called the upstream audit "the standing check" while it only ran when I typed it.
+Now `collector_loop_kickoff.py` runs it after the lanes on every tick and writes a 6th timeline
+node, `upstream-audit`, to all three mirrors. `--no-audit` opts out.
+
+**Only a healthy audit reads `ok`.** Wrote the failure-path test first and it immediately caught a
+real bug: the missing-script branch returned `None` and wrote no record — silently skipping the
+very check that exists to stop silent skipping. Four paths now tested:
+
+| condition | status | errorClass |
+|---|---|---|
+| no upstream gap | ok | none |
+| gap found | review | upstream_gap |
+| audit crashes | review | audit_unparseable |
+| audit script missing | review | audit_missing |
+
+Current tick: all 5 lanes `rows_new=0` with the audit reporting **no upstream gap** — which is now
+a verified statement rather than an absence of evidence. That distinction is the whole point: three
+times this session `rows_new=0` meant "we went blind", and the loop reported success each time.
+
+272,661 rows / 613.5 MB unchanged. Collection remains idle; the blocker is still that nothing reads
+`dfs_harvest_*.jsonl`.
