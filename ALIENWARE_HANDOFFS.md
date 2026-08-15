@@ -340,3 +340,28 @@ are the deficiency; not reconciled.
 
 **Lesson: when a season yields zero rows, check whether the upstream asset was RENAMED before
 concluding the data does not exist.** My "collection complete" signoff was premature.
+
+---
+
+## QUARRY — gridiron format seam removed — 2026-08-15
+
+`ALIENWARE | Quarry | gridiron | 2026-08-15 | 272,661 rows 613.5MB | experimental | blocker NO-CONSUMER`
+
+Followed last tick's lesson to its conclusion. `stats_player_week_*` exists for **every** season
+2020-2025, not just the ones `player_stats_*` is missing. Using both assets had left a **format
+seam**: `target_share` read 0.797 for 2020-2024 and 1.000 for 2025 purely because the old asset
+left blanks where the new writes 0.0.
+
+**Lane now uses one asset for all seasons.** `target_share` is **1.000 across every season**, row
+counts moved by at most 4/season (32,156 -> 32,165), mean PPR stays 8.37-9.06 throughout, so no
+population shifted. Trainer join 88.3%.
+
+**Filter: `offensive activity OR fantasy_points_ppr != 0`.** Validated against the old asset on
+2024 before switching: **5,342 rows vs 5,340, 2 old-only, 4 new-only — 99.96%**, mean PPR 8.652
+vs 8.639. The PPR clause recovers players who scored off fumble recoveries and 2-point
+conversions; an activity-only filter missed 16 of them.
+
+Also swept the other upstreams for the same rename class: SEC form345 has nothing past 2026q1
+(2026q2 still 404), and the hoops/pitch upstreams are unchanged. No other lane is affected.
+
+Integrity gate PASS on all four lanes; dedup proof `rows_new=0 dupe=32,165`.
