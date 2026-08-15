@@ -309,3 +309,34 @@ measured 6.0-6.2, robust to scoring formula and universe.
 (a) wiring the harvest into a trainer, or (b) the TODO #2 training runs — the only path to the
 measured gates unified is waiting on. I have not started either; both are outside the collection
 lane and are the operator's call.
+
+---
+
+## QUARRY — gridiron extended to 2025; nflverse asset rename found — 2026-08-15
+
+`ALIENWARE | Quarry | gridiron/2025 | 2026-08-15 | 272,652 rows 613.5MB | experimental | blocker NO-CONSUMER`
+
+I signed off last tick saying collection was complete. It was not — a **renamed upstream asset**
+had been silently costing a whole season in the strongest-joining lane.
+
+`player_stats_<season>.csv` stops after 2024; the successor is `stats_player_week_<season>.csv`
+under the **`stats_player`** release tag. The gridiron `--seasons` default already listed 2025 and
+had been producing nothing for it, while the trainer's own matrix already had 5,412 rows for 2025.
+**gridiron 26,786 -> 32,156 rows (+5,370, seasons 2020-2025). 89.1% of the new rows land on a
+trainer row** — same join quality as the rest of the lane.
+
+**The new asset is a DIFFERENT POPULATION and will poison the season if taken raw:**
+- old `player_stats_2024`: offence only — WR 2132 / RB 1343 / TE 1088 / QB 664, mean PPR **8.64**
+- new `stats_player_week_2025` raw: every defender, lineman, punter — LB 2859 / CB 1992 /
+  DT 1540 / SAF 1468 ..., mean PPR **2.43**, 3x the rows
+
+I harvested it raw first and caught it on the position histogram. Filtered to players with
+`attempts|carries|targets|receptions` activity: 5,370 rows, WR 2125 / RB 1357 / TE 1125 / QB 662,
+mean PPR 8.38 — matches 2024 within noise. Also maps the renamed `team` -> `recent_team`.
+
+Residual, flagged not hidden: the new format reports `target_share` as `0.0` where the old left it
+blank (2025 coverage 1.000 vs 2024 0.797). The zeros are arguably right and the 2020-2024 nulls
+are the deficiency; not reconciled.
+
+**Lesson: when a season yields zero rows, check whether the upstream asset was RENAMED before
+concluding the data does not exist.** My "collection complete" signoff was premature.
