@@ -2,11 +2,11 @@
 
 > Point your other session here. This is SSOT mirror of every repo's LOCAL_GPU_HANDOFF.md — CPU Hatch can't run these, your Alienware GPU can.
 > Raw: https://raw.githubusercontent.com/jcdavis131/vector-hub/main/ALIENWARE_HANDOFFS.md machine-only inbound ALIENWARE_RESULTS.md branch scout/alienware-results
-> Last sync: 2026-08-14T22:20Z DFS collector factory on Alienware — all 4 sport lanes LIVE 250,109 rows / 562.7 MB. Equities has FIVE families; every mission-named equities feature is now populated. Prior line: 2026-08-14T12:52Z Board v5.1 FINAL restored + Vercel 2937B HIT fallback + Brief Auto Exec v1.1 restored + 5 evals 0.009/3.48/0.627 Board 3GPU+4nonGPU free3 SSOT_ok
+> Last sync: 2026-08-14T23:05Z DFS collector factory on Alienware — all 4 sport lanes LIVE 251,876 rows / 566.8 MB. Gridiron coverage 0.872 -> 0.923 (redzone unblocked); equities has FIVE families. Prior line: 2026-08-14T12:52Z Board v5.1 FINAL restored + Vercel 2937B HIT fallback + Brief Auto Exec v1.1 restored + 5 evals 0.009/3.48/0.627 Board 3GPU+4nonGPU free3 SSOT_ok
 
 ---
 
-## INDEX — 2026-08-14T22:20Z DFS COLLECTOR FACTORY — all 4 sport lanes LIVE on Alienware
+## INDEX — 2026-08-14T23:05Z DFS COLLECTOR FACTORY — all 4 sport lanes LIVE on Alienware
 
 - **The factory described in `bundles/collectors/AGENT_PROMPT_LOOP.md` did NOT exist on the Alienware.** `~/workspace` held only `bundles/ultra`. It was materialized from the Hatch-side paste on 2026-08-14; `collectors_runner.py` was authored from scratch (no upstream source existed). Hatch has the code and no data; the Alienware has the data. That asymmetry is now resolved on the Alienware side.
 - Rows landed, `~/workspace/exports/dfs/dfs_harvest_<sport>.jsonl`, one 85-key schema identical across every file, every `row_hash` unique, novel-only sha256(date|player_id|slate|season|source):
@@ -15,12 +15,13 @@
 |---|---|---|---|
 | hoops 05m | 189,327 | stats.nba.com league game log, 1 request per season | no (14 requests) |
 | gridiron 07m | 26,786 | `~/vector-gridiron/pipeline/cache` 551 MB nflverse | YES |
-| equities 11m | 31,377 | `~/vector-equities/pipeline/cache` SEC Form 3/4/5 + prices + 992 DEF14A, plus SEC XBRL frames | mostly |
+| equities 11m | 33,144 | `~/vector-equities/pipeline/cache` SEC Form 3/4/5 + prices + 992 DEF14A, plus SEC XBRL frames | mostly |
 | pitch 09m | 2,619 | FPL public API | no (2 requests steady) |
-| **total** | **250,109** | | |
+| **total** | **251,876** | | |
 
 - **Three of four lanes needed NO network fetch** — the raw material was already in the repos' own caches. The `~/vector-equities/pipeline/cache` alone holds 446 MB of SEC Form 3/4/5 quarterly bulk zips (2015q1-2026q1), 504 tickers of daily prices, 497 submission JSONs, 2.2 GB of DEF14A HTML. Check local caches before assuming a fetch is required. The exception is hoops: its cache is season-grain only, no gamelogs.
-- Gridiron coverage unmask **0.31 → 0.872** measured over 19 DFS features (Vegas spread/total/ITT, weather, dome, age, rest/b2b, snap share, def_vs_pos rolling prior-only). Real remaining gaps: `redzone_share` needs the PBP parquet (no stdlib reader), `injury_status` 0.181 is the true report rate, not a gap.
+- Gridiron coverage unmask **0.31 → 0.923** measured over 19 DFS features (Vegas spread/total/ITT, weather, dome, age, rest/b2b, snap share, def_vs_pos rolling prior-only). `injury_status` 0.181 is the true report rate, not a gap.
+- **`redzone_share` 0.000 -> 0.966 — and the blocker I had recorded was FALSE.** This handoff previously said it needed the PBP parquet and there is no stdlib parquet reader. nflverse also publishes `play_by_play_<season>.csv.gz` (~18 MB/season) and **gzip + csv are both stdlib**; no parquet reader was ever required, and `pipeline/build_rz.py` in vector-gridiron already listed the exact columns. Red zone = `yardline_100 <= 20`; share = player red-zone touches (targets + carries) / team red-zone plays that week. Position sanity: RB 0.281 > QB 0.162 ~ WR 0.160 > TE 0.147. A player on the field with no red-zone touch gets a genuine **0.0** (snap data is the activity test); null only when the team never reached the red zone — worth 13,399 rows. **Re-test recorded blockers before treating them as permanent**; this one survived several ticks and cost one HEAD request to disprove.
 - Equities: PIT-safe triple-barrier labels +10%/-7% over 63 trading days (+1 8,169 / -1 7,375 / 0 3,036), CEO/CFO decay-weighted open-market net buy `3.0*exp(-delta/90)`, horizon 2016Q3-**2026Q1**, and the **DEF14A meeting clock now parsed from the 992 local proxies** — 941 rows, 94.9% hit, median 43 days, 99.9% in the 20-90 day regulatory band.
 - Equities now has **three families**: `sec_form345_local` 19,120 (quarterly insider + triple-barrier), `sec_def14a_local` 941 (meeting clock, 94.9% of the 992 local proxies parsed, median 43 days, 99.9% inside the 20-90 day regulatory band), `sec_xbrl_altman` 2,827 (Altman Z, 320 tickers, FY2016-2025; median Z 3.30, distress<=1.81 23.2%, AAPL 8.6-10.6, KO 4.0-4.6).
 - **XBRL: use the `frames` endpoint, not `companyfacts`.** `data.sec.gov/api/xbrl/frames/us-gaap/<concept>/<unit>/<period>.json` returns a concept for EVERY filer in one 0.4 s call (~5-6k companies); companyfacts is one big JSON per company, ~500x the requests for the same data. Instants use `CY2024Q4I`, durations `CY2024`.
