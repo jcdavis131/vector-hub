@@ -574,3 +574,67 @@ form345 complete), `audit_rows.py` = `row integrity ok`.
 are wrong. This time: *a fix verified only by the detector that found it cannot distinguish
 "fixed" from "detector is noisy"* — and a detector built on a proxy will keep firing on noise
 until someone stops reading it. Test the invariant, and prove the test fails on the bug.
+
+
+---
+
+## 2026-08-15 (tick 27) — the price floor was an artifact; equities gains 7,912 real rows
+
+Backup of remote SHA before this push: `6fc7c81` (remote moved from 92eb21f since my last push)
+
+Last tick I deleted 5,345 13F rows because their anchors predated the price series. That was
+the right call for the labels, but I treated the price floor as a fact. It was not.
+
+**469 of the 504 tickers in `market_history` start on exactly 2016-08-01.** That is not 469
+simultaneous IPOs — it is a 10-year lookback window frozen at fetch time. Every SEC period
+older than that was unlabellable for an accidental reason.
+
+**Extended the spine back to 2010.** `bundles/scripts/backfill_prices.py` (zero-deps, Yahoo
+chart endpoint, no key — Stooq was tried first and now gates on a proof-of-work bot check).
+504/504 tickers processed, **467 extended, 740,153 bars added**, median series 2,513 -> 4,168.
+
+Two things had to be proven before merging a single bar:
+
+**1. Same adjustment basis.** Yahoo's `quote.close` reproduces the existing cache at a median
+overlap ratio of **1.000000** across the full 2,513-day overlap (A/MSFT/NVDA/KO). Its
+`adjclose` does NOT (0.86-0.99) — the cache is split-adjusted, not dividend-adjusted.
+Prepending a dividend-adjusted tail to a split-adjusted head would have corrupted every
+barrier straddling the seam with nothing downstream to flag it. Seam verified continuous:
+A 48.11 -> 47.87, AAPL 26.05 -> 26.51, KO 43.63 -> 43.45 across 2016-07-29/2016-08-01.
+
+**2. Same company.** 87 of 496 symbols map to more than one CIK over time, so the symbol Yahoo
+serves today can be a different issuer than the cache holds. Every merge is gated on that same
+overlap test, and it was proven to REJECT before being trusted to accept: wrong company
+(A vs KO) 0.5342, wrong basis 0.8625, thin overlap n=0 — all refused; true match 1.0 accepted.
+4 tickers rejected in the real run, all correctly: `EA` was delisted in 2026 so Yahoo serves a
+6-bar stub (the cached 2,513-bar series is the real one), and `FDXF`/`HONA`/`Q` are genuinely
+new listings with no earlier history to fetch. Nothing was lost.
+
+**Result** — re-harvest added rows without dropping any (novel-hash dedup; existing labels are
+untouched because an anchor's forward 63-day window contains only prices AFTER it):
+
+| family | before | after | delta |
+|---|---|---|---|
+| sec_13f_local | 18,833 | 23,959 | **+5,126** |
+| sec_form345_local | 19,082 | 21,866 | **+2,784** |
+| sec_def14a_local | 939 | 941 | +2 |
+| sec_xbrl_altman / beneish | 2,859 / 1,489 | unchanged | XBRL frames only span 10y |
+| **equities lane** | **43,202** | **51,114** | **+7,912** |
+| **harvest total** | **267,313** | **275,225** | 649.8 MB |
+
+Equities coverage now starts **2013** (was 2016-08): 2013 831 rows, 2014 1,694, 2015 3,580.
+Label distribution -1/0/+1 = 21,098 / 9,541 / 19,955 (520 null, incomplete windows).
+
+**The 5,345 rows deleted last tick are back — as real labels rather than fabricated ones.**
+
+Verification that prepending did not restate existing labels: `audit_rows.py` recomputes
+`triple_barrier` from the NOW-EXTENDED series and matches 400/400 labels that were stored
+under the OLD series. Rows anchored on a first trading day: 2, both legitimate (PLTR 2020-09-30
+direct listing, GDDY 2015-03-31 IPO — each genuinely a first session falling on a quarter end).
+
+Both standing audits green: `no upstream gap` (53/53 13F zips), `row integrity ok`,
+anchor-period skew **0 / 50,173**.
+
+**Lesson: a bound you inherited is not a fact.** I deleted 5,345 rows to respect a floor
+without once asking where the floor came from. It came from a fetch flag. Check whether a
+limit is in the world or in your cache before you honor it with data loss.
