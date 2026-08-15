@@ -187,3 +187,52 @@ Measured on real 2019-2021 DK NBA data it is 6.0-6.2, robust to both scoring for
 **Next from me unless redirected:** 13F backfill 23/~40 quarters and hoops DK-salary backfill
 continue unattended on the loop. I am NOT starting the training runs in TODO #2 — that is the GPU
 lane and the only path to the measured gates unified is waiting on. Say the word and I will move.
+
+---
+
+## QUARRY — GAP ANALYSIS: what the harvest actually adds — 2026-08-15
+
+`ALIENWARE | Quarry | gap-analysis | 2026-08-15 | 253,665 rows | experimental | blocker NO-CONSUMER`
+
+Answers Alienware TODO #1 ("what additional data sources towers need") with evidence: read each
+repo's `pipeline/data/feature_manifest*.json` — the trainers' real input contract — and diffed it
+against the populated harvest fields. Full write-up:
+`~/workspace/exports/dfs/HARVEST_GAP_ANALYSIS.md`.
+
+**I have to correct myself.** I ran 14 ticks against the MISSION's stated baselines, not against
+what the pipelines already had. Significant parts of the gridiron and equities harvest duplicate
+features the trainers already compute, over MORE seasons.
+
+**GENUINELY ADDITIVE — worth continuing:**
+- **pitch: the whole FPL family** (`fpl_salary`, `form_last5_*`, `ownership_actual`,
+  `injury_market_prob`). The pitch manifest is **16 features**, all per-90 on-ball stats — no
+  salary, no market, no availability dimension at all. Highest additive ratio of any lane.
+- **equities: `crowding`/`hf_pct`/`n5pct`/`hf_count` (13F), `beneish_m`, `def14a_days_to_meeting`.**
+  Probes for `crowd`/`13f`/`hf_`/`beneish`/`def14a` against the 118 features → NONE.
+- **DK salary in hoops and gridiron.** Neither manifest has any DraftKings feature. hoops'
+  `market` family is `SALARY_LOG/SALARY_CAP_PCT/SALARY_TEAM_PCT/SALARY_RANK_POS` — NBA *contract*
+  salary, a different quantity. gridiron has no salary feature at all.
+- gridiron `snap_drop_4q` — no closing-risk counterpart in the 85.
+
+**DUPLICATIVE — I should stop spending ticks here:**
+- gridiron weather / Vegas / def_vs_pos / snap+target share / injury / age: all already present at
+  coverage **1.0** in the `conditions`, `market`, `defense`, `usage`, `availability` families —
+  and the trainer matrix is 49,860 rows over **2016-2025** vs the harvest's 26,786 over 2020-2024.
+- **gridiron `redzone_share`**: `build_features.py` already emits `o_rz_tgt_share`,
+  `o_rz_carry_share`, `o_inside5_share`. My "redzone unblock, 0.000 → 0.966" was real inside the
+  harvest file but **added no capability** — the blocker I disproved was my own, the feature was
+  never missing from the pipeline. Same caveat applies to my "coverage 0.31 → 0.923" claim: it was
+  measured against the mission's masked baseline, not the trainer's actual 1.0 coverage.
+- **equities `altman_z` duplicates an existing `ALTMAN_Z`.** `form4_net_buy_ceo` overlaps
+  `INSIDER_OWN_PCT`/`INSIDER_NET_12M`. Beneish, 13F and DEF14A do NOT duplicate — those stand.
+- hoops `playoff_sec` overlaps the existing 14-feature `playoffs` family (`PO_MIN`,
+  `PO_MIN_DELTA`, ...). Finer-grained, but same intent.
+
+**Recommended collection order from here:** (1) pitch FPL family, (2) DK salary 2022+ — the only
+cross-sport feature no trainer has, and no free archive found past 2021, (3) equities 13F backfill
+23/~40 quarters. STOP adding gridiron conditions/market/usage/redzone features.
+
+**Caveat:** this compares feature NAMES and families, not values. A same-named feature may be
+constructed differently (the trainer's `dvp_allowed` may not be the prior-5 construction the
+harvest uses). Where construction differs the harvest version may still earn its place — but that
+is a modelling call decided by measuring lift, not a collection call decided by assuming novelty.
