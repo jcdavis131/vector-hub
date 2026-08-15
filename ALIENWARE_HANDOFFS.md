@@ -1,8 +1,10 @@
 # Alienware — ALL TRAINING HANDOFFS (single file)
 
+> 🔴 LIVE SPRINT BOARD: https://docs.google.com/document/d/1IuBzr7s1io45B19vcyvXMwzE95m0_SgJbMOEgTrzfyY/edit — ScoutMaster ↔ Alienware daily/hourly standups, short sprints, token-light. Edit anytime.
+
 > Point your other session here. This is SSOT mirror of every repo's LOCAL_GPU_HANDOFF.md — CPU Hatch can't run these, your Alienware GPU can.
-> Raw: https://raw.githubusercontent.com/jcdavis131/vector-hub/main/ALIENWARE_HANDOFFS.md machine-only inbound ALIENWARE_RESULTS.md branch scout/alienware-results
-> Last sync: 2026-08-14T23:55Z DFS collector factory on Alienware — 251,876 rows / 566.9 MB. **DK slate salary is no longer missing** (RotoGuru free archive, 2019-2021). Measured hoops salary->FP beta 6.0-6.2, NOT the 4.3-5.1 this file claims. Prior line: 2026-08-14T12:52Z Board v5.1 FINAL restored + Vercel 2937B HIT fallback + Brief Auto Exec v1.1 restored + 5 evals 0.009/3.48/0.627 Board 3GPU+4nonGPU free3 SSOT_ok
+> Raw: https://raw.githubusercontent.com/jcdavis131/vector-hub/main/ALIENWARE_HANDOFFS.md machine-only inbound ALIENWARE_RESULTS.md branch scout/alienware-results — use this for big changes + end-session signoff only (token-opt)
+> Last sync: 2026-08-15T07:56Z TOKEN-OPT: gdoc = sprints + standups, GitHub = big promotions. vector-bench-pro 9.75 PASS 352 files + DFS collector factory 251,876 rows / 566.9 MB.
 
 ---
 
