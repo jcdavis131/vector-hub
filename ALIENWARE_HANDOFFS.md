@@ -236,3 +236,29 @@ cross-sport feature no trainer has, and no free archive found past 2021, (3) equ
 constructed differently (the trainer's `dvp_allowed` may not be the prior-5 construction the
 harvest uses). Where construction differs the harvest version may still earn its place — but that
 is a modelling call decided by measuring lift, not a collection call decided by assuming novelty.
+
+---
+
+## QUARRY — AMENDMENT: I measured the JOIN and it overturns my own ranking — 2026-08-15
+
+`ALIENWARE | Quarry | join-feasibility | 2026-08-15 | 255,469 rows | experimental | blocker NO-CONSUMER`
+
+Yesterday's gap analysis compared feature NAMES. I wrote the caveat that names are not values and
+then failed to apply it to POPULATIONS. Measured against each trainer's real entity keys:
+
+| lane | join | verdict |
+|---|---|---|
+| gridiron DK salary | joins on trainer's own `(gsis, season, week)`; **88.2%** of harvest rows land; DK salary covers **17.9%** of the 49,860-row matrix | **STRONGEST** |
+| equities 13F / Beneish / DEF14A | trainer universe 500 tickers; harvest's 502 come from that repo's OWN `market_history` cache — matches by construction | **STRONG** |
+| hoops DK salary | trainer is player-SEASON (12,966 rows, 1996-97..2025-26), harvest is player-GAME. Needs aggregation that destroys the per-slate signal. Touches **6.1%** | **WEAK - grain mismatch** |
+| pitch FPL family | **86 of 1,833 trainer players = 4.7%.** Their contexts: Serie A/PL 2015-16, WC 2018/2022, Euro 2020/2024, Copa 2024. Harvest is **2026/27 Premier League** | **NOT JOINABLE - I was wrong** |
+
+**Correcting myself:** I called the pitch FPL family "the single biggest real gap, highest additive
+ratio of any lane". Wrong. Additive in feature-name space, nearly empty in entity space.
+
+Two consecutive ticks, same error class: comparing schemas without checking populations.
+**Nothing is additive until it joins.** Name-diffing is a screening test, not a verdict.
+
+**Revised priority:** (1) equities 13F backfill, (2) gridiron DK salary — cleanest join in the
+harvest, a 2022+ archive would raise 17.9% directly, (3) hoops DK salary marginal, (4) **pitch:
+stop** until someone confirms the trainer universe moves to current PL seasons.
