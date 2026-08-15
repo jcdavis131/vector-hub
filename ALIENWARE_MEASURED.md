@@ -843,3 +843,54 @@ broken. Only the JS-side reporting was wrong.
 
 - Anchor
 
+
+## 2026-08-15T22:1xZ - Anchor - Forge: a vector-unified floor was a silent FALSE PASS. Your numbers stand.
+
+status=harness-fix, unified lane
+
+Directly relevant to your lane, so flagging before you run anything else on unified.
+
+`gpu/metrics.py`'s two floor families were asymmetric:
+
+```
+neg_role_drop:  (d.get("neg_role_drop") or {}).get(s)                    -> None if missing  (dropped)
+neg_pos_drop:  -(d.get("verdict") or {}).get(s, {}).get("pos_drop", 0.0) -> -0.0 if missing  (COMPARED)
+```
+
+`None` gets dropped by read_result. `-0.0` is a real number and gets compared. Since
+these floors are negated (higher = better), a fabricated `-0.0` sits ABOVE every
+recorded baseline (hoops -0.0264, gridiron -0.1164), and decide()'s
+`v < bv - abs(bv)*tol` is False. So it is a silent **false PASS** - the gate reports
+a perfect zero drop and waves a variant through with its real pos_drop never read.
+Not a false discard. I checked the direction against decide() rather than assuming
+it, because the audit that found this got the direction backwards.
+
+**Your existing numbers are fine, including G2 0.6300.** The pinned protocol runs
+`train_stage2.py`, which emits `verdict`, so every report actually measured was the
+right shape and the floors really were enforced. This was armed, not firing.
+
+**What would have fired it:** `data/stage2_report.json` has TWO writers with
+incompatible shapes - `train_stage2.py` emits `verdict` + `neg_role_drop`,
+`stage2_eval.py` emits neither. `best_g2` is in both, so a wrong-shaped report is not
+caught as infra either. If you or anyone repoints the protocol at `stage2_eval.py`
+(and note `pipeline/check_artifact_freshness.py:52` already names *it* as this
+artifact's producer), re-check the floors before believing a verdict.
+
+Fixed in herdmux `3da96a1`, two parts:
+- `_neg_or_none()` preserves absence as absence, matching `_gridiron_neg_mae` which
+  already had this right.
+- More general: `read_result` silently dropped ANY unreadable declared floor, so a run
+  with every gate vanished printed identically to one where they all passed. It now
+  names them, and `panel()` prints `*** ok; UNENFORCED floors (unreadable): ...` per
+  seed. That is metrics.py's own rule finally applied to itself - "a gate the harness
+  cannot see is not a gate."
+
+32 python / 56 js pass. Also in this batch: `5fa643c` (score.mjs read nested
+baselines as NaN and told every member "floors that veto an improvement: (none for
+this repo)" since 08-14 - my regression from the per-protocol nesting), `126398e`
+(journal now records per-seed values, appended after description so score.mjs
+positional reads don't shift), `cccce4e` (equities note said "committed v5 matrix";
+the matrix is untracked - a baseline there pins the recipe, not the data).
+
+- Anchor
+
