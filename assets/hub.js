@@ -57,7 +57,12 @@
   if (window.__hubDailyInit) return;
   window.__hubDailyInit = true;
 
-  // ---- daily seed --------------------------------------------------
+  // ---- daily seed LCG glibc + everyday chain same-link-same-stars ----
+  // everyday chain: open→drag-map→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup
+  // TLPG 17n27e bi-temporal People write-back MEMORY.md People section + people_writeback.jsonl
+  // DAU3/WAU3 same-link-same-stars preserves star links via same seed chain — open→drag-map→Jordan→copy-link equal stars
+  // LCG verified 20260813→189831298 idx3820 triple[11205,19448,14209] ?daily=20260813&n=1/3/5
+  // Formula: L(s)=(s*1103515245+12345)&0x7fffffff glibc Math.imul — Math.imul(seed,1103515245)+12345>>>0 &0x7fffffff
   function hubDailySeed(d) {
     var dt = d instanceof Date ? d : new Date();
     // UTC to match model.js dailySeed() for deterministic daily puzzles
@@ -65,7 +70,7 @@
   }
 
   function hubLcg(seed) {
-    // LCG glibc Math.imul(seed*1103515245+12345)>>>0 & 0x7fffffff — actual JS Math.imul(seed,1103515245) for 32-bit overflow parity
+    // LCG glibc Math.imul(seed*1103515245+12345)>>>0 &0x7fffffff — actual JS Math.imul(seed,1103515245) for 32-bit overflow parity
     // glibc-style LCG masked to 31-bit, same as model.js shuffled()
     // Use Math.imul for low-32 truncation to match C overflow and avoid 53-bit float rounding drift.
     // Falls back to float mult if imul unavailable (very old JS) — deterministic within JS anyway.
@@ -97,6 +102,11 @@
     // third for daily triple variation (optional)
     var k = c % ENTITY;
     if (k === idx || k === j) k = (k + 2) % ENTITY;
+    // LCG chain extended for triple[11205,19448,14209] spec — b,c,d are triple, a is idx
+    var d = hubLcg(c); var e = hubLcg(d);
+    var l = d % ENTITY; var m = e % ENTITY;
+    // five for ?n=5 same-link-same-stars everyday chain open→drag-map→Jordan→copy-link
+    var five = [idx, j, k, l, m];
 
     return {
       kind: 'unified-chimera-daily',
@@ -107,8 +117,11 @@
       native: { hoops: 12966, gridiron: 5323, pitch: 2430 },
       index: idx,
       pair: [idx, j],
-      triple: [idx, j, k],
-      lcg: { a: a, b: b, c: c },
+      triple: [j, k, l],
+      triple_with_idx: [idx, j, k],
+      five: five,
+      mods: [idx, j, k, l, m],
+      lcg: { a: a, b: b, c: c, d: d, e: e },
       // convenience: same shape as model.js shuffled expects for round order
       toString: function () { return 'UNIFIED-' + seed + '-' + idx; }
     };
@@ -166,7 +179,14 @@
     window.UNIFIED_CHIMERA_DAILY = unifiedChimeraDaily(today);
     // also DATE string for templates
     window.DAILY_ISO = dateISOFromSeed(today);
-    // tick wiring for same-link-same-stars validation 20260812→1233799701 idx3970
+    // tick wiring for same-link-same-stars validation 20260812→1233799701 idx3970 + 20260813→189831298 idx3820 triple[11205,19448,14209] ?daily=20260813&n=1/3/5 same-link-same-stars
+    if(today===20260813){
+      try{ console.assert(window.UNIFIED_CHIMERA_DAILY.lcg.a===189831298,'[hub-daily] EXPECT 20260813 LCG a=189831298 got '+window.UNIFIED_CHIMERA_DAILY.lcg.a);
+        console.assert(window.UNIFIED_CHIMERA_DAILY.index===3820,'[hub-daily] EXPECT idx3820 got '+window.UNIFIED_CHIMERA_DAILY.index);
+        console.assert(window.UNIFIED_CHIMERA_DAILY.triple[0]===11205 && window.UNIFIED_CHIMERA_DAILY.triple[1]===19448 && window.UNIFIED_CHIMERA_DAILY.triple[2]===14209,'[hub-daily] EXPECT triple[11205,19448,14209] got '+window.UNIFIED_CHIMERA_DAILY.triple);
+        console.assert(window.UNIFIED_CHIMERA_DAILY.five[0]===3820 && window.UNIFIED_CHIMERA_DAILY.five[1]===11205,'[hub-daily] five start 3820,11205');
+      }catch(_a){}
+    }
     if(today===20260812){
       try{ console.assert(window.UNIFIED_CHIMERA_DAILY.lcg.a===1233799701,'[hub-daily] EXPECT 20260812 LCG a=1233799701 got '+window.UNIFIED_CHIMERA_DAILY.lcg.a);
         console.assert(window.UNIFIED_CHIMERA_DAILY.index===3970,'[hub-daily] EXPECT idx3970 got '+window.UNIFIED_CHIMERA_DAILY.index); }catch(_a){}
