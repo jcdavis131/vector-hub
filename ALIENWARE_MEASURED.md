@@ -727,3 +727,74 @@ anyone wants it) not a current task.
 
 - Anchor
 
+
+## 2026-08-15T20:3xZ - Anchor - hoops next_profile closed (3/3 discarded), and a problem with the acceptance rule itself
+
+status=measured + methodology-flag
+
+**Part 1 - the arm.** Tail-weighted next_profile loss, gamma=1.0, DISCARD.
+
+```
+seed       5       7      13      21      42      99
+before   77.12   76.30   77.46   77.17   75.97   75.80
+after    77.07   76.24   77.43   77.13   75.90   75.82
+delta    -0.05   -0.06   -0.03   -0.04   -0.07   +0.02
+mean 76.5983 +/- 0.6955   delta -0.0383 vs a 0.7005 bar   recall/purity flat
+```
+
+Reset done, tree verified back at 06655f53. Useful negative: the large-residual
+rows are irreducible, so weighting toward them costs ~0.04 CQS. The follow-up is
+the sign flip (down-weight the tail, fit the predictable mass), not more tail.
+All three next_profile levers now measured - shape inert, weight real +, tail
+real -.
+
+**Part 2 - and this is the part worth your attention.** The acceptance rule
+compares an UNPAIRED difference against the baseline's seed sd, but both arms
+run the same seed list, so the data is paired and seed variance is common-mode.
+The seed sd is 9-22x the paired-delta sd. Same three arms, paired t over per-seed
+deltas:
+
+```
+arm                           mean   unpaired   pairSD       t   paired reading
+shape A/B (2026-08-13)     -0.8117    DISCARD   1.3671   -1.45   indistinguishable
+weight 0.08->0.32          +0.1250    DISCARD   0.0750   +4.08   real +
+tail gamma=1.0             -0.0383    DISCARD   0.0319   -2.94   real -
+t crit (df=5, two-tailed, p=0.05) = +/-2.57
+```
+
+This is NOT a proposal to lower the bar. The paired criterion is strictly more
+discriminating: it agrees with the founding example in programs/vector-hoops.md
+(the shape A/B whose scattered deltas motivated the panel rule - t=-1.45,
+correctly noise), and it separates two arms the current rule cannot tell apart,
+both filed "DISCARD, inside noise", when one is a consistent +0.125 and the
+other a consistent -0.038.
+
+The rationale in my own earlier weight-arm writeup was wrong and I'm correcting
+it: "cannot be distinguished from a lucky draw at deployment" - no. At
+deployment you train with one seed; that +/-0.70 draw happens with or without
+the change, and the delta rides on top of whichever basin you land in. That's
+what five-or-six-of-six consistent per-seed signs mean.
+
+Caveats I'm not hiding: multiplicity is real (t=+4.08 is p~0.010 and survives a
+modest correction, t=-2.94 is p~0.032 and would not survive Bonferroni over ~10
+arms, so a paired rule needs a stricter threshold than p<0.05); statistically
+real is not the same as worth shipping; and pairing assumes the effect isn't
+seed-specific, which the tight bands support here but wouldn't in general.
+
+**Not implemented, on purpose.** Suggested shape if it's wanted: keep the panel
+and both floors exactly as they are, change only the comparison to a paired t at
+a conservative threshold (t >= ~3.5). climb.py already has the variant's per-seed
+vals at verdict time and baselines.json already stores the baseline's, so it's a
+small change. But the acceptance rule is the discipline every number in this
+estate rests on and all of us share it - I'm not touching it unilaterally.
+Operator/Hatch call. Nothing is retroactively kept; the weight arm stays
+discarded and reset unless someone decides otherwise.
+
+Separately, fixed a real harness bug found while this ran: a keep driven by
+--train-extra wrote a baseline row anchored to a commit whose tree doesn't
+reproduce the number (extras are outside the protocol hash by design and were
+never recorded in baselines.json). climb.py now records build_extra/train_extra
+and warns in both directions. herdmux ee1a4b4.
+
+- Anchor
+
