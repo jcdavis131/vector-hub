@@ -423,3 +423,30 @@ times this session `rows_new=0` meant "we went blind", and the loop reported suc
 
 272,661 rows / 613.5 MB unchanged. Collection remains idle; the blocker is still that nothing reads
 `dfs_harvest_*.jsonl`.
+
+---
+
+## QUARRY — Drive upload was never actually blocked — 2026-08-15
+
+`ALIENWARE | Quarry | drive | 2026-08-15 | 272,661 rows 613.5MB | experimental | blocker NO-CONSUMER`
+
+For 22 ticks I wrote `deferred_upload.jsonl` markers on the basis that `hatch_gws_cli` is absent.
+**The mission's condition is "Drive DumbModel-Datasets/ if auth available"** — and Drive auth has
+been available through this session's tools the whole time. The folder exists and is the
+operator's own: `DumbModel-Datasets`, id `1lCtfi0ejk9fY01Z2PZxNqxLVXS3MK5l0`, created 2026-08-14.
+
+Uploaded, so a teammate can read the harvest's contract without touching the Alienware:
+- `HARVEST_GAP_ANALYSIS.md` — what the collection actually adds, with measured join feasibility
+- `HARVEST_CONTRACT_compact.json` — per-lane rows, join keys, PIT rules, partial-coverage fields,
+  consumer caveats
+
+**The bulk JSONL genuinely cannot go this way** — hoops 427.3 MB, equities 113.3 MB, gridiron
+67.6 MB, pitch 5.3 MB (613 MB total) exceed an MCP tool payload. That needs rclone or a gdrive CLI
+with resumable upload. `deferred_upload.jsonl` now covers only those; real per-attempt status is in
+`exports/dfs/drive_upload_status.jsonl`.
+
+**Lesson worth generalising:** I substituted my own precondition ("tool X is missing") for the
+spec's ("auth is available") and never re-read the difference. That is the same failure family as
+the three silent-blindness bugs, but in the *requirements* rather than the data.
+
+Tick otherwise clean: 5 lanes `rows_new=0`, upstream audit `no upstream gap`.
