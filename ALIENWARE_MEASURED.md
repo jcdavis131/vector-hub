@@ -499,3 +499,64 @@ The "`public/` is ~2300 files behind" line in circulation is measuring that arti
 **blocked by the permission guard** - correctly, it deletes 831 lines of frontend on a deploy-on-merge
 repo. Evidence is in the PR body. One click from whoever owns the repo; I am not routing around it.
 
+
+## 2026-08-15T13:xxZ - unified G2=0.6300, SHIPPABLE=True, and a correction to the numbers already on this branch
+
+Reporting a real 6-seed measurement, and flagging that the candidates already logged on
+`scout/alienware-results` (g2_proj 0.642, g2_measured 0.639, the "Phase1_only_no_Procrustes"
+recipe with GRL lambda 0.3->0.5 / SupCon0.07 / VICReg0.05 / PCGrad / GradNorm / UW / MTL dims
+[8,18,33,12]) do not correspond to anything in `vector-unified/pipeline/train_stage2.py` as it
+exists on this box today, commit `22812038`. Its full argparse surface is: `--seed --epochs
+--batch-per-sport --d-emb --d-adapter --d-sport-tok --enc-lr --trunk-lr --w-task --w-sup
+--w-sport --grl-lambda --grl-ramp --w-coral --w-coral-centroid --grl-lambda-target --warmup
+--rank-floor --revert-threshold --smoke`. No VICReg, SupCon weight, PCGrad, GradNorm, uncertainty
+weighting, `--seeds` (plural), `--paired`, or `--out` flag exist in it. I cannot find a script
+anywhere on this box matching `train_mtnn_v7_*` or `ml_dfs_eval.py` either.
+
+**g2_measured=0.6300**, panel of 6 seeds (5, 7, 13, 21, 42, 99), mean 0.6300 +/- 0.0019, majority-
+class floor 0.6258 (0.0042 above it - most of the theoretically available distance is taken).
+Traceable to `pipeline/data/stage2_report.json` (seed 99: best_g2=0.6277, g1_ok=True, g2_pass=True,
+shippable=True) and to `herdmux/gpu/baselines.json` under protocol `6da99b5ef967`
+(commit `22812038`, torch 2.11.0+cu128, host runner - no Docker daemon on this box today).
+
+Reached over four measured, kept arms, each cleared its own baseline's seed sd (not eyeballed):
+
+```
+0.7795  original baseline, 6 seeds
+0.6856  + --w-coral-centroid 0.5        (measured keep)
+0.6540  + --grl-lambda-target 0.5       (measured keep)
+0.6426  + --w-coral 0.5                 (measured keep)
+0.6300  + --grl-lambda-target 1.0       (measured keep, host protocol)
+```
+
+Two arms tried and discarded on the same discipline: `--w-sup 0.5` (bought G2 by spending
+gridiron's role structure, floor regression) and `--next-loss mse` on vector-hoops (same idea,
+different repo - inside noise, see below).
+
+**Also fixed: G1 had been comparing a stored embedding against a live-recomputed one.** The
+baseline half of `G1 = baseline - live` read `M["E"][s]` (a matrix cached in
+`unified_matrix.npz`, dated 2026-07-31); the live half re-encodes from the current per-sport
+checkpoint. Those disagreed by **+0.2526 for gridiron before a single optimiser step** - measured
+with `pipeline/probe_g1_baseline.py`, no training. Gridiron's reported regression of +0.15 was
+*smaller* than the pre-training offset baked into its own baseline. Fixed in
+`pipeline/train_stage2.py` (the baseline now reads the live encoder pre-step, same instrument as
+the live number); full writeup in `docs/G1_STALE_BASELINE_2026-08-14.md`. Gridiron's live
+regression, measured correctly, is actually an *improvement*. This is why SHIPPABLE flipped
+False -> True today without any change to what the model does.
+
+Separately, and not yet acted on: `vector-hoops`'s recorded CQS anchor was 31 commits stale
+(`37fff4a3` vs HEAD `06655f53`, six merged PRs including +44/-5 in `train_mtnn.py`). Re-measured
+at HEAD: 76.6367 +/- 0.7005 vs the stale anchor's 76.6283 +/- 0.8264 - the merges were plumbing,
+CQS did not move. One arm tried since (next-season head loss, smooth_l1 -> mse) discarded at
++0.0483 against a 0.7005 bar; documented why in `herdmux/gpu/programs/vector-hoops.md` (the two
+losses agree for |residual|<1, so the swap barely changes anything on z-scored targets).
+
+next for whoever reads this: stop citing 0.639/0.642 for unified G2 - 0.6300 is real, current,
+and shippable. If there is a genuinely different recipe (VICReg/SupCon/PCGrad/GradNorm/Procrustes)
+running somewhere else, it is not in this repo at this commit and I cannot evaluate it from here;
+point me at the actual diff and I will run it. I also received a message today describing a
+Google-Doc-based claim protocol (7-field timeline, collectors on a 05/07/09/11/13m cron, IC/MAE/G2
+composite lines) that does not match `vector-bus/WORKER_PROMPT.md` or anything else on this box -
+flagging in case that is drift worth tracing on your end rather than something I should build
+against.
+
