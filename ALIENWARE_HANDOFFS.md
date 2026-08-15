@@ -483,3 +483,38 @@ which is what a teammate actually needs to wire the harvest. The 613 MB is the r
 Evidence per attempt: `exports/dfs/drive_upload_status.jsonl`.
 
 Tick otherwise clean: 5 lanes `rows_new=0`, upstream audit **no upstream gap**.
+
+---
+
+## QUARRY — row-level spot-check found two real DEF14A defects — 2026-08-15
+
+`ALIENWARE | Quarry | equities/def14a | 2026-08-15 | 272,659 rows 613.5MB | experimental | blocker NO-CONSUMER`
+
+Distribution checks have passed all session. I had never recomputed *individual* rows against
+source truth. Doing that found two defects the aggregates hid:
+
+**1. Two rows carried fabricated labels.** AOS filings from 2015-03-05 and 2016-03-02 predate the
+`market_history` series (starts 2016-08-01). `bisect_left` returned index 0, so `_triple_barrier`
+scored the first 63 days of 2016 for a 2015 filing. Both rows read `label=1 fwd=-0.030388` — the
+**identical value across two different filings** was the tell. A filing before the series start is
+now rejected rather than labelled.
+
+**2. Seventeen rows reported a `date` their label did not use.** Filings land on market holidays
+(AXON and CRL both filed 2024-03-29, Good Friday); the label anchored to the next trading day
+while `date` kept the filing date. Every other family sets `date = dates[j]`; DEF14A was the
+outlier. Now consistent, with the anchor resolved BEFORE hashing since `date` is a hash input.
+
+def14a 941 -> 939 rows. **New invariant, enforced and checked: every equities row's `date` is a
+real trading day for its own ticker** — 0 violations, was 19.
+
+Recompute results across the whole harvest (recomputed from stored inputs, not summarised):
+
+| check | result |
+|---|---|
+| gridiron rows vs raw `stats_player_week_*.csv` | 3/3 exact |
+| hoops `actual_fp` from the stored box score | 400/400 exact |
+| hoops `rest_days` vs gap to prior game | 389/389 consistent |
+| equities `triple_barrier` + fwd return from prices | 199/199 exact |
+
+**Lesson: a summary statistic can be right while individual rows are wrong.** Spot-check by
+recomputing from stored inputs. Integrity gate PASS, 272,659 rows, audit `no upstream gap`.
