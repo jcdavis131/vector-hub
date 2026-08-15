@@ -450,3 +450,36 @@ spec's ("auth is available") and never re-read the difference. That is the same 
 the three silent-blindness bugs, but in the *requirements* rather than the data.
 
 Tick otherwise clean: 5 lanes `rows_new=0`, upstream audit `no upstream gap`.
+
+---
+
+## QUARRY — bulk Drive upload is impossible here; SPEC CONFLICT for the operator — 2026-08-15
+
+`ALIENWARE | Quarry | drive | 2026-08-15 | 272,661 rows 613.5MB | experimental | blocker NO-CONSUMER`
+
+Last tick I said the 613 MB "needs rclone". Tested that instead of assuming it. **Every path is
+absent** on this box:
+
+    rclone  gdrive  gclone  drive  skicka                     -> not installed
+    googleapiclient  google.oauth2  pydrive  pydrive2  httplib2 -> not importable
+
+My own memory note claimed `datastore/store.py` offloads via "HF/rclone"; `which rclone` says
+otherwise. Note corrected.
+
+**SPEC CONFLICT — operator decision, I am not resolving it unilaterally.** The mission requires
+Drive upload of the harvest AND forbids `pip`. For files too large for the MCP channel those two
+requirements cannot both hold:
+
+| option | cost |
+|---|---|
+| (a) allow `pip` for a Drive client | breaks the zero-deps invariant |
+| (b) install the **rclone binary** | a binary, not a pip package — arguably compatible with "no pip" |
+| (c) accept local-only + the small artifacts already in Drive | harvest stays on the Alienware |
+| (d) publish the JSONL as a HuggingFace dataset / git-LFS | different channel, sidesteps Drive |
+
+Already in `DumbModel-Datasets/`: `HARVEST_GAP_ANALYSIS.md`, `HARVEST_CONTRACT_compact.json` —
+which is what a teammate actually needs to wire the harvest. The 613 MB is the raw data itself.
+
+Evidence per attempt: `exports/dfs/drive_upload_status.jsonl`.
+
+Tick otherwise clean: 5 lanes `rows_new=0`, upstream audit **no upstream gap**.
