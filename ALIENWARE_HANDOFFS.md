@@ -518,3 +518,59 @@ Recompute results across the whole harvest (recomputed from stored inputs, not s
 
 **Lesson: a summary statistic can be right while individual rows are wrong.** Spot-check by
 recomputing from stored inputs. Integrity gate PASS, 272,659 rows, audit `no upstream gap`.
+
+
+---
+
+## 2026-08-15 — the DEF14A label bug was in three more families (5,364 fabricated rows)
+
+Backup of remote SHA before this push: `f2c337a21511a712f872136289f9ec83f663bc78`
+
+Last session fixed a fabricated-label bug in DEF14A and called it closed. It was not closed —
+it was one instance of a class. I turned the hand-typed spot-check into a standing script
+(`bundles/scripts/audit_rows.py`) and its first run found the same bug in three more families.
+
+**The bug.** When a period's anchor date predates the ticker's price series, `bisect_left`
+returns index 0, and the barrier cheerfully scores the first 63 days of the series for an
+unrelated quarter. Every affected row gets a real-looking label computed from the wrong window.
+
+**Scale.** 5,364 rows anchored exactly on their ticker's first trading day —
+`sec_13f_local` 5,362, `sec_form345_local` 1, `sec_xbrl_beneish` 1. 452 tickers affected;
+worst `Q` (49), `EXE` (26), `SNDK` (24). AMCR carried **one identical label across twelve
+consecutive 13F quarters** (2013Q2..2016Q1), all reading the same 2016-08-01 window.
+
+**Fix.** Pre-series guard (`if anchor < dates[0]: continue`) added to `harvest_13f`,
+`harvest_altman`, `harvest_beneish`, matching the one already in `harvest_def14a`. The
+28,527 rows of those three families were dropped and rebuilt from all 53 upstream 13F zips.
+
+| family | before | after | delta |
+|---|---|---|---|
+| sec_13f_local | 24,178 | 18,833 | -5,345 (22% of the family was fabricated) |
+| sec_xbrl_altman | 2,859 | 2,859 | 0 (guard never fired) |
+| sec_xbrl_beneish | 1,490 | 1,489 | -1 |
+| **equities lane** | **48,550** | **43,202** | **-5,348** |
+| **harvest total** | **272,659** | **267,313** | 630.5 MB, 85-key uniform |
+
+**One first-trading-day row survives and is correct**: PLTR `2020Q3` anchored 2020-09-30.
+That was PLTR'''s direct listing, which genuinely is both its first session and the quarter end.
+
+**The detector was testing a proxy, so I hardened it.** It flagged "one forward return repeated
+across dates" — which is how the bug was spotted, but is not what the bug *is*. Four benign
+pairs still collide after the fix, purely from rounding to 6dp: DGX 216.02/195.98 and
+140.78/127.72 both land on 0.102255; AMCR simply traded at 58.55 and again at 53.15 on separate
+occasions (only 604 distinct closes in 2,513 sessions). Four false alarms per 43k rows is enough
+to train a reader to skim the line — which is exactly how this bug held cover for 24 ticks.
+
+The check now tests the invariant directly: **a row'''s anchor must fall inside the period its
+`slate_id` names**, measured from the period START (a fiscal year'''s end is not knowable from
+the label — `FY2018` ends in June for some filers, December for others). Verified to fire on
+both bug shapes (`13F_2013Q2` anchored 2016-08-01, lag +1218; `FY2018` anchored 2016-08-01,
+lag -518) and stay quiet on all four legitimate ones. Real data: **42,263 checked, 0 violations.**
+
+Standing audits both green: `audit_upstreams.py` = `no upstream gap` (53/53 13F zips,
+form345 complete), `audit_rows.py` = `row integrity ok`.
+
+**Lesson, sharper than last session'''s.** Last time: a summary statistic can be right while rows
+are wrong. This time: *a fix verified only by the detector that found it cannot distinguish
+"fixed" from "detector is noisy"* — and a detector built on a proxy will keep firing on noise
+until someone stops reading it. Test the invariant, and prove the test fails on the bug.
