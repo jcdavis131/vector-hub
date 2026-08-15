@@ -365,3 +365,33 @@ Also swept the other upstreams for the same rename class: SEC form345 has nothin
 (2026q2 still 404), and the hoops/pitch upstreams are unchanged. No other lane is affected.
 
 Integrity gate PASS on all four lanes; dedup proof `rows_new=0 dupe=32,165`.
+
+---
+
+## QUARRY — upstream audit built; SEC moved a URL path — 2026-08-15
+
+`ALIENWARE | Quarry | tooling | 2026-08-15 | 272,661 rows 613.5MB | experimental | blocker NO-CONSUMER`
+
+Turned the manual rename-sweep into a tool: `bundles/scripts/audit_upstreams.py`. It enumerates
+what each upstream actually offers and diffs it against the harvest, so a `rows_new=0` tick can be
+distinguished from "we stopped being able to see the data".
+
+**It found a real gap on its first run.** SEC moved the newest insider-transactions file:
+- older: `/files/structureddata/data/insider-transactions-data-sets/2026q1_form345.zip`
+- 2026q2: `/files/**datastandardsinnovation**/data/insider-transactions-data-sets/2026q2_form345.zip`
+
+A constructed URL 404s while the file plainly exists. **Never construct a download URL — scrape the
+index for the real href.** The 13F lane already had this rule; the form345 path did not, which is
+exactly how 2026q2 hid. Fetched (11.0 MB), form345 now spans 46 quarters.
+
+2026Q2 correctly emits **0 rows**: the quarter ended 2026-06-30 and its 63-trading-day barrier
+window closes ~2026-09-30, still in the future. The lane declines to emit a row it cannot label.
+
+That is the third silent-blindness failure this session, all reported as success at the time:
+nflverse renamed an asset (lost a 2025 season), a 13F zip nested its members (lost 2025Q2, 8,039
+filers), and now a moved SEC path. The audit exists so the fourth one surfaces on its own.
+
+Audit is noise-aware: pre-2015 form345 quarters are excluded because `market_history` prices start
+2016-08-01 and they can never carry a label. An audit that cries wolf gets ignored.
+
+Current verdict: **no upstream gap** across all four lanes.
