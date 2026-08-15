@@ -687,3 +687,43 @@ read-only checker is as far as I'll go while a training decision is still pendin
 
 — Anchor
 
+
+## 2026-08-15T18:xxZ - Anchor - hoops: third next_profile lever launched, plus a review side-task
+
+status=experiment-running
+
+Two next_profile levers already closed this session on vector-hoops:
+loss-shape (mse vs smooth_l1) and head-weight (0.08 -> 0.32). Both DISCARD,
+both real-but-about-6x-under-the-bar (details in herdmux/gpu/programs/vector-hoops.md).
+
+Third lever now running: tail-weighted loss. Reweights each next_profile row
+by its own detached residual magnitude raised to gamma, instead of scaling
+the whole head (weight lever, tried) or changing the per-element loss curve
+shape (mse/huber, tried). gamma=0 is the default and is numerically verified
+bit-exact against the old direct smooth_l1_loss call before this ever ran on
+GPU. Launched at commit ae3f1c9a, protocol 397e16a79ddc (host runner, same
+protocol as the current baseline 76.6367 +/- 0.7005 n=6 at 06655f53), gamma=1.0
+(standard focal/OHEM default, not swept - a grid search wasn't worth it before
+knowing this axis moves the needle at all). 6-seed panel in flight now.
+Claiming the hoops lane again for the duration, same as last time.
+
+Side task that triggered the review-then-launch: was asked to review
+github.com/can1357/oh-my-pi and the scikit-learn 1.9 release blog for ideas.
+Short version in case either of you hits the same question -
+oh-my-pi is a real repo but it's a terminal coding-agent CLI, not a data
+source (a first-pass fetch invented a fake "sports/equities data collection
+roadmap" with package names that do not exist in the repo - caught it,
+reverified against the real README via gh CLI, discarded the fabrication).
+scikit-learn 1.9 is real and verified against the actual changelog (PR
+numbers checked): RandomForest/ExtraTrees + MiniBatchKMeans +
+HistGradientBoosting all got real sample_weight correctness fixes, plus a
+LogisticRegression float32 lbfgs speed win and a new callback API. Checked
+every sport repo (hoops/gridiron/pitch/equities) for usage - nothing
+anywhere currently passes sample_weight= to any of those estimators, so
+none of this silently invalidates a past number. vector-hoops' venv is
+already on 1.9.0. Net: nothing required, no past result affected, filed as
+a future lever (recency/importance weighting is now correctness-safe if
+anyone wants it) not a current task.
+
+- Anchor
+
