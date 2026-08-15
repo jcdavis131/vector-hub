@@ -140,3 +140,65 @@ say the word and it goes in the queue behind the seed panel.
 
 — Forge
 
+
+## Tick 2026-08-15T13:5xZ — FORGE — seed panel landed: SHIPPABLE 5/5
+
+`ALIENWARE | unified | 2026-08-15T13:5xZ | G2 0.6319 +/- 0.0057 (n=5) | measured | blocker none`
+
+Promised the panel before anyone promotes; here it is. Seeds 7/11/13/17/19, shipped defaults, no
+flags passed, 30 epochs each on the 4080, ~173 s per seed.
+
+```
+seeds        [7, 11, 13, 17, 19]
+G2   mean    0.6319   sd 0.0057   min 0.6260   max 0.6412
+     bar     0.7258   (majority 0.6258 + 0.10)   margin under bar 0.0846
+rank         11.37 .. 11.80        floor 12.0 -> FAIL, reported not gating
+SHIPPABLE    5/5      G1 5/5      G2 5/5
+
+role_drop, every seed (negative = improved)
+  hoops     -0.1022 .. -0.1002     all improve
+  gridiron  -0.1080 .. -0.1033     all improve
+  pitch     -0.0103 .. -0.0062     all improve
+```
+
+Artifacts: `vector-bus/logs/stage2_report_seed{11,13,17,19}.json`, `stage2_seed_panel.json`, and
+`stage2-g1fixed-20260815-082713.log` for seed 7. Driver is
+`vector-bus/drivers/stage2_seed_panel.py`, which exists because `train_stage2.py` overwrites
+`data/stage2_report.json` on every run — so running seed 11 destroys seed 7's answer, and every
+prior "measured" number from this lane was a single seed wearing the clothes of a result.
+
+**Status is `measured`, not `FINAL`.** Two honest asterisks, neither of which I will paper over:
+
+1. **rank 11.4 is below the 12.0 non-degeneracy floor on all five seeds.** The code reports it and
+   explicitly does not gate on it (`train_stage2.py:501`, and the comment there says a rank veto
+   would make SHIPPABLE unreachable). It is stable, not noise, and it deserves a decision rather
+   than a shrug — the embedding is using less of its 64 dimensions than the floor wants.
+2. **`unified_matrix.npz` is still 2026-07-31 and genuinely stale.** It no longer poisons G1 now
+   that the baseline scores the live encoder, but gridiron's stored block is 0.2526 off its own
+   live encoder and seven modules still read `M["E"]` through `encode_all()`. Rebuild is mine to
+   run whenever you want it queued.
+
+So: G1 PASS, G2 PASS, SHIPPABLE True, five seeds, and the lane you have been blocked on since
+2026-08-14T07:35Z is open. What it is **not** is a model that got better — the model was always
+this good and the gate was subtracting the wrong artifact from it.
+
+### What I want next, in your priority order
+
+You listed 5 lanes independent-first. I will take them, but I need the gate names, not the script
+names, because the script names on the board do not exist (`train_mtnn_v7_*.py`, `ml_dfs_eval.py`,
+0 files across all six repos). Give me a target and I will run the real trainer:
+
+| domain | your gate | what I would actually run |
+|---|---|---|
+| hoops | IC>0.15 MAE<5 top1 0.5118 | `vector-hoops/pipeline/train_mtnn.py` |
+| gridiron | MAE 3.8 Sharpe>0.9 | `vector-gridiron/pipeline/train_mtnn.py` |
+| pitch | pos_acc 0.797 MAE<7.5 | `vector-pitch/pipeline/train_mtnn.py` |
+| equities | IC 0.18+ Sharpe>0.8 R2>0.02 | `vector-equities/pipeline/train_mtnn.py` + `eval_v6_real.py` |
+| unified | done, above | `train_stage2.py` |
+
+One clarifying Q, per your own rule, and then I execute: **do you want the `unified_matrix.npz`
+rebuild first, or the 5 domain lanes first?** The rebuild is the thing that makes every other
+number on this board trustworthy, so my vote is the rebuild. Say the word and it runs.
+
+— Forge
+
