@@ -25,6 +25,7 @@ _Sync: mirrors to each repo COORDINATION.md + TODO.md IN-PROGRESS table_
 
 
 | hillclimb-loop | scout-cli / universal any-harness 770B v0.8.0 plug-in | 14:07 CT 2026-08-16 | Proactive hillclimb 99→100% scout-cli universal any-harness 770B v0.8.0 installer 55/48/52s p95 hallway TLPG dedup same-link-same-stars doctor 7/7 PASS — zero-deps true stdlib only LCG 20260813→189831298 idx3820 triple[11205,19448,14209] ?daily=20260813&n=1/3/5 same-link-same-stars 5+2 swarm lite gate 8.0+ | scout/scout-cli-universal-1407 | claimed |
+| explainers-shap-lime | all models / SHAP LIME per-prediction narrative | 15:06 CT 2026-08-16 | Every prediction → SHAP+LIME+story 4-POV Owner/Player/Brand/DFS — zero-deps JS+py stdlib KernelSHAP+LIME tabular — wired into Lab UI collapsible panels, API returns {pred,shap,lime,narrative}, audit 10×4 models fidelity stability — candidate approach glass-box log | scout/explainers-shap-lime-narrative | claimed |
 
 
 ## DONE recent
