@@ -49,6 +49,28 @@
       "headers": [
         {
           "key": "Cache-Control",
+          "value": "public, max-age=3600, stale-while-revalidate=86400"
+        }
+      ],
+      "source": "/manifest.who-e.json"
+    },
+    {
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate, stale-while-revalidate=600"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ],
+      "source": "/who-e-landing.html"
+    },
+    {
+      "headers": [
+        {
+          "key": "Cache-Control",
           "value": "public, max-age=0, must-revalidate, stale-while-revalidate=600"
         },
         {
@@ -224,6 +246,34 @@
     {
       "source": "/owner/",
       "destination": "/owner/index.html"
+    },
+    {
+      "source": "/investor",
+      "destination": "/investor/index.html"
+    },
+    {
+      "source": "/investor/",
+      "destination": "/investor/index.html"
+    },
+    {
+      "source": "/who-e",
+      "destination": "/who-e-landing.html"
+    },
+    {
+      "source": "/who-e/",
+      "destination": "/who-e-landing.html"
+    },
+    {
+      "source": "/who-e-landing",
+      "destination": "/who-e-landing.html"
+    },
+    {
+      "source": "/who-e.com",
+      "destination": "/who-e-landing.html"
+    },
+    {
+      "source": "/who-e.com/",
+      "destination": "/who-e-landing.html"
     }
   ],
   "trailingSlash": false,

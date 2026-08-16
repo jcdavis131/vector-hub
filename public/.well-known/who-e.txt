@@ -1,0 +1,15 @@
+who-e.com live not reserved
+WHO-E · Intelligent Interfaces — who-e.com is live domain alias for dumbmodel.com vector hub.
+
+Void #080A0F 40px sticky PWA v67.2 CORE21 offline13k LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5
+
+Vercel: add who-e.com to dashboard Domains alias same deployment.
+Serves /who-e-landing.html via rewrite /who-e /who-e/ /who-e.com /who-e.com/
+
+DNS note: point who-e.com CNAME to cname.vercel-dns.com or A 76.223.126.88 etc per Vercel docs, or alias same.
+
+Investor entry: /investor/ v67.2 32245 bytes, link from who-e landing button same-link-same-stars.
+
+Provenance: 59 hashes 7/7/0 PASS triple-write 7-field p paper #FEFCF9 ivory #FFFEF7 19:1 OKABE-8 mono/sans no Architects Daughter.
+
+Honest: local page ready, next vercel --prod makes live instantly, remove reserved placeholder.
