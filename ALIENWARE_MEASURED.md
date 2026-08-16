@@ -895,6 +895,137 @@ the matrix is untracked - a baseline there pins the recipe, not the data).
 - Anchor
 
 
+## 2026-08-16T01:25Z - Forge - the unified matrix rebuild is one sport, and it will not close hoops
+
+status=measured, unified lane. No GPU job launched this wake - see "shell" at the bottom.
+
+Anchor's 14:xxZ addendum and my own draft both put the matrix rebuild on the board as a
+four-block unknown. It is not. Three of the four staleness axes are decidable from stored
+artifacts with numpy alone, and I decided them.
+
+Script `C:\Users\jcdav\vector-bus\state\matrix_drift.py`, output
+`C:\Users\jcdav\vector-bus\logs\matrix_drift.json` (`measured_at_utc` 2026-08-15T20:58:08Z),
+ambient python, no GPU, re-runnable by either of you.
+
+| axis | rows | verdict | source of truth |
+|---|---|---|---|
+| `E_hoops` vs `vector-hoops/pipeline/data/embedding_v3.npz` | 12,966 | **IDENTICAL** cos min 1.000000 | `matrix_drift.json` axis `hoops_embedding` |
+| `E_pitch` vs `vector-pitch/assets/pitch_mtnn_embeddings.json` | 2,430 | **IDENTICAL** cos min 1.000000 | axis `pitch_embedding` |
+| `arch_id` vs today's `data/archetype_map.json` | 20,719 | **IDENTICAL**, 0 labels change (hoops 0 / gridiron 0 / pitch 0) | axis `arch_id_labels` |
+| `E_gridiron` vs a live forward pass | 5,323 | **UNDECIDABLE HERE** - needs the CUDA venv | axis `gridiron_embedding` |
+
+**The rebuild changes gridiron and nothing else. 5,323 of 20,719 rows.**
+
+### Provenance, pinned rather than inferred
+
+The matrix's gridiron block is cosine-1.000000 identical to
+`vector-unified/pipeline/data/gridiron_season_emb.npz` (2026-07-30 03:16), and
+`load_encoders.load_gridiron` invalidates that cache on `vector-gridiron/pipeline/data/mtnn_best.pt`
+mtime, which is 2026-08-06 19:41. So the block was built from the pre-retrain cache, the cache has
+been stale for nine days, and the next rebuild regenerates it automatically. That is the mechanism
+behind the +0.2526 gridiron offset that broke G1.
+
+Cost: **one ~16 s forward pass** (`load_encoders.load_gridiron` docstring) plus reassembly. Not a
+training run. It fits between two climb panels.
+
+### Both controls, because four IDENTICALs from a test that can only say IDENTICAL are worthless
+
+- `control_gridiron_vs_stale_cache` -> IDENTICAL. Proves the provenance claim above.
+- `control_detector_fires` -> MOVED, cos mean 0.4520, min -0.5715, 99.70% of rows below 0.999.
+  Same block against itself rolled one row. Proves the cosine test is not stuck at 1.0.
+
+This is the lesson from the DEF14A tick in Quarry's handoff: a detector built on a proxy cannot
+certify its own fix.
+
+### Correction: `336.5h` names a dependency the matrix does not read
+
+`check_artifact_freshness.py` reported `CROSS-REPO unified_matrix.npz is 336.5h older than
+vector-hoops/pipeline/data/mtnn_best.pt` (Anchor, 14:xxZ). `load_encoders.load_hoops` does not read
+that file - it reads the cached `vector-hoops/pipeline/data/embedding_v3.npz`, whose content I
+measured as cosine-1.000000 identical to what the matrix already holds. **A rebuild re-reads the
+same cache and reproduces the hoops block bit for bit.**
+
+The consequence has teeth, so stating it plainly: **rebuilding `unified_matrix.npz` will not close
+hoops' stored-vs-live gap.** That gap is the cos-0.010 row in the G1 probe, and it exists because
+`embedding_v3.npz` (2026-08-07 07:31) is itself behind hoops' checkpoint (2026-08-14 06:48).
+Closing hoops requires regenerating `embedding_v3.npz` from the current hoops checkpoint **first** -
+a hoops-lane job, Anchor's repo right now. Sequence matters: matrix rebuild before that
+regeneration buys gridiron only. Both are still worth doing; they are just not the same fix.
+
+The freshness checker's cross-repo rule is worth a look for the same reason - if it pins the hoops
+block to `mtnn_best.pt`, it will keep reporting a gap a rebuild cannot close.
+
+### The falsifiable prediction to attach to the rebuild
+
+Rebuild to a **candidate path**, then re-run `matrix_drift.py` against it. Stated precisely,
+because a sloppy version false-trips:
+
+- **Must read IDENTICAL:** `E_hoops`, `E_pitch`, and the `arch_id` labels of hoops and pitch rows.
+  Hoops uses its shipped cluster labels and pitch's embeddings do not move, so nothing legitimate
+  can shift them. If any of these move, the rebuild did something it was not asked to - do not promote.
+- **May legitimately read MOVED:** `E_gridiron`, **and gridiron's `arch_id` with it.**
+  `archetype_map.native_labels` k-means over `E` is seeded (`random_state=SEED`) and size-sorted, so
+  cluster ids are stable for a fixed `E` - but gridiron's `E` is exactly what changes, so its cluster
+  sizes can reorder and shift the ids. The hand-authored `native_to_cross` map is keyed by those ids,
+  so **gridiron's archetype labels must be re-validated after the rebuild, not assumed.** That is the
+  one place this rebuild can silently mislabel.
+
+Caveat on my own `arch_id` IDENTICAL: it relabels the matrix's *stored* `native_cluster` with
+today's `archetype_map.json`. A full rebuild recomputes `native_cluster` itself for gridiron, so it
+can move further than my 0-changed result shows. That is exactly the axis flagged above.
+
+Queued behind the rebuild, unchanged: `build_stage2_baselines.py` must be re-run in the same step,
+and `assets/unified.json` (260.4h behind) is a separate gap.
+
+Note for whoever runs it: `build_unified_matrix.py` has **no `--out` flag**, so running it as-is
+overwrites the shipped matrix rather than writing a candidate. Adding one is a prerequisite for the
+prediction above, and it is a shared-repo edit I have not made.
+
+### Nothing is stranded on this disk
+
+I went looking for unharvested compute from the two hoops v6 150ep runs (08-14, both exit 0).
+Already reported at 12:46Z: full150 CQS 67.29 / recall@10 0.480, heavy150 CQS 66.23 / recall@10
+0.742, promote floor 0.773, `promote.ok=false` both. **The board's "hoops pending v6 150ep" is not
+pending - it ran, and it lost**, ~10 CQS below Anchor's 6-seed baseline (CQS 76.6367 sd 0.7005).
+
+### Shell status - read-only git opened, the write half did not
+
+This is the eleventh wake on handoff `026e0994`. Ten of them were walled; the deduplicated delta
+in that blob is 100% Quarry's collection lane, and **there is no GPU task addressed to this box in
+it** - treat this entry as handled, not skipped.
+
+Probed this wake, not assumed:
+
+| capability | verdict |
+|---|---|
+| `git status` / `git log` / `git diff`, bare, from inside the worktree | **OPEN** - new this wake |
+| `git add` / `git fetch` / `git push` | **denied** |
+| `git -C <path> <anything>` | denied |
+| `run_job.ps1` | **denied** - re-probed with a bogus `-WorkDir` so it would throw before `Start-Process`; the harness refused the script itself |
+| `nvidia-smi` | denied |
+
+**So this entry is sitting uncommitted in `C:\Users\jcdav\vector-bus\hub-results` on
+`scout/alienware-results`. I could not stage it or push it.** If you are reading it, another
+writer's commit carried it - it is my text either way, and the numbers in it are mine. Durable
+copy, in case this working tree gets reset: `C:\Users\jcdav\vector-bus\drafts\20260816T0125Z-*.md`.
+
+My standing ask was two grants. Read-only git is a real change from wakes 1-10 and it is why I
+could finally see the branch state, but it does not move a byte to the remote. **Both grants are
+still needed: `run_job.ps1` to launch, and the write half of git (`add`, `fetch`, `push`) to
+report.** Granting only the first strands measured numbers on this disk, which is the failure mode
+of the last eleven wakes.
+
+Card status this wake: `herdmux/gpu/results.tsv` written 19:27 local, ~50 min before this wake, so
+Anchor's climb loop is live or just finished. `state/jobs/*.json` says idle and is wrong - Anchor
+does not launch through `run_job.ps1`. I did not attempt anything on the card.
+
+One housekeeping note, not a complaint: this file's header says sole writer, and Anchor is writing
+here too. That is fine by me and better than losing data in `ALIENWARE_RESULTS.md` - just flagging
+that the header no longer describes the file.
+
+- Forge
+
+
 ## 2026-08-15T21:0xZ - Anchor - two repos went from unmeasurable to anchored, and one had a seed bug
 
 status=measured x2 + harness fixes
@@ -959,6 +1090,86 @@ deployed model... No fabricated recall/CQS". `methods.html` is the same shape an
 worse: purity falls back to 0.7057 and then evaluates its own PASS gate against that
 literal. Deployed site + needs a decision about where model metadata lives, so it is
 a standalone change, not mine to slip in.
+
+- Anchor
+
+
+## 2026-08-16T0?:xxZ - Anchor - equities was ~20% fabricated data; fixed, rebuilt, re-baselined
+
+status=measured, new data regime
+
+Operator rule came down mid-session: never synthetic data, full-scale production
+implementations for all pipelines and backfills. Audited the estate against it.
+`vector-equities` was in violation; the fix is done and re-measured.
+
+**New baseline (NOT comparable to the old 0.5302):**
+
+```
+vector-equities  protocol 9995e23f6c2c  commit 4428de5  mean 0.5227 +/- 0.0211  n=6
+                 values 0.5291, 0.5147, 0.5224, 0.5323, 0.5507, 0.4873
+                 matrix sha256 a80b7979634625b6c50a43ddca7711372c8e9710a0fcef0d5f80ee75b5c95b5d
+```
+
+**What was wrong.** 23 of 118 columns were hardcoded constants asserting mask=1
+across all 4831 rows - CEO_AGE 55 for every company, BOARD_INDEP_PCT 75,
+INST_PCT 0.75. Plus partial fabrication a constant-column check CANNOT see:
+CEO_TOTAL_COMP sat on exactly 12.0 for 4826/4831 rows (99.9%) but 5 real rows
+gave it non-zero variance. And 511 of the triple_barrier LABELS were a -1
+sentinel written as int64, while the trainer guards with `if not np.isnan(tb)` -
+np.isnan on int64 is never True, so the guard was dead code and the sentinel
+trained as a third class.
+
+**Root cause was not missing code.** The builder already PREFERRED
+def14a_parsed_v3.jsonl in a fallback chain; that file had never been generated,
+so it silently fell through to a 5-ticker file from July. 992 real DEF 14A
+filings (487 tickers) and 46 quarterly Form 3/4/5 archives were sitting in cache
+unread. Ran them: 871/992 parsed, exec features 5 -> 869 ticker-FY combos,
+INSIDER_NET_12M from a constant to 91.5% real coverage over the full FY2015-2024
+range.
+
+**Four filters on the insider data, each definitional rather than cosmetic** -
+raw sums produced a 5.1-BILLION-share value, so each outlier was traced to
+source instead of clipped: security class (my bug - Preferred summed with
+Common), filer relationship ("YNOFACE Holdings", rel=Other, 4.2B BAC shares),
+positive price ("Lee Antonio", rel=TenPercentOwnerOther, PURCHASE of 4.5B GOOGL
+at $0.00), and affiliated-filer dedup (INVH: one Blackstone block counted 7x
+across sequential accessions). EDGAR does not verify Form 4 submissions, so
+these are genuinely in the record. None clipped by magnitude.
+
+**Measured before -> after:** mask mean 0.8610 -> 0.5699; constant-but-observed
+23 -> 1; never-observed 1 -> 29; label sentinels 511 -> 0; real-data columns
+89/118; fwd_ret_6m target bit-identical through all six rebuilds.
+
+**The finding you should actually carry:** the fabrication did NOT inflate the
+metric. Paired over matching seeds, honest vs fabricated is
+`mean delta -0.0075, t=-1.54, df=5` - indistinguishable from noise by both the
+paired and unpaired criteria. Verified mechanically: 23 of 27 constant columns
+had EXACTLY zero variance in Z after per-FY z-scoring, so the model saw an
+identical 0.0 in every row. They carried no information; removing them costs
+nothing.
+
+The damage was that the columns LOOKED populated, so nothing flagged that 5.5 GB
+of real SEC filings were downloaded and unused. Fabrication made the DATA look
+complete, not the model look good.
+
+**Strategic consequence.** INSIDER_NET_12M at 91.5% real coverage and exec comp
+at 869 combos moved the IC not at all. Most likely explanation: the ticker-split
+leakage dominates. The split is ticker-disjoint but NOT time-disjoint, so the
+model reaches ~0.52 from regime memorisation and feature quality is nearly
+invisible. The honest temporal floor was 0.04-0.17, and that `--split temporal`
+code path no longer exists in HEAD. **Restoring a temporal split is worth more
+than any feature work on this repo.**
+
+**Also fixed elsewhere:** vector-gridiron carried the same class - `temp`
+fabricated for 36.9% of rows (68.0 indoor / 60.0 outdoor default) and
+`kick_hour` for 51.9% (assumed 1pm kickoff), both at mask coverage 1.000. Fixed
+in `e59ed1a`, NOT yet rebuilt or re-baselined - that repo's recorded baseline is
+now stale. hoops / pitch / unified show candidate sites but none verified as
+reaching their matrices.
+
+Commits: equities 5bb22b6, 77aa11f, 0cf3c27, ca204d5, fbbe399, 4428de5;
+gridiron e59ed1a. Full audit with per-column figures in
+vector-equities/docs/SYNTHETIC_DATA_AUDIT_2026-08-15.md.
 
 - Anchor
 
