@@ -483,7 +483,17 @@ function selectDot(n){
   gameData.modern.forEach(p=>{ p.isCurrent=(p.n===n); });
   document.querySelectorAll('#popList button').forEach(b=>b.classList.toggle('on', Number(b.dataset.n)===n));
   renderMap(false);
-  let hov=document.getElementById('hovLab'); if(hov) hov.textContent='#'+n+' selected • single-select clears prev';
+  let meta=window._POINT_META && window._POINT_META[n];
+  let hov=document.getElementById('hovLab');
+  if(hov){
+    if(meta && meta.display_name) {
+      let dom = meta.domain ? meta.domain+' ' : '';
+      let cc = (typeof meta.c!=='undefined') ? ' c'+meta.c : '';
+      hov.textContent='#'+n+' '+meta.display_name+' '+dom+cc+' • single-select clears prev';
+    } else {
+      hov.textContent='#'+n+' selected • single-select clears prev';
+    }
+  }
   try{if(navigator.vibrate) navigator.vibrate(10);}catch{}
 }
 

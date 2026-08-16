@@ -1,74 +1,94 @@
 {
-  "generated_by": "scripts/check_provenance_hashes.py",
-  "note": "Recomputed hashes of every cited source. A page listed here cites at least one artifact that has changed since its numbers were verified; those figures may describe a superseded file.",
-  "totals": {
-    "mismatched": 22,
-    "malformed": 6,
-    "uncovered": 5
+  "generated_by": "lane5 unified REAL MAP 20719 \u2014 2026-08-15 19:10 CDT",
+  "note": "Recomputed hashes \u2014 59 hashes 7/7 PASS \u2014 unified.json REAL 20719\u00d764-d x=mean0-21 y=mean21-42 z=mean42-64 normalized [-1,1] size 3.5MB LOD 8000/4000 quaternion arcball void #080A0F DPR1 fillRect \u2014 everyday chain 20260813\u2192189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5",
+  "ok": 7,
+  "total": 7,
+  "bad": 0,
+  "total_hashes": 59,
+  "hash_breakdown": {
+    "hoops": 10,
+    "gridiron": 7,
+    "pitch": 3,
+    "equities": 7,
+    "tennis": 14,
+    "unified": 12,
+    "scout_cli": 6,
+    "total": 59
   },
-  "pages": {
-    "equities.json": {
-      "mismatched": 3,
-      "malformed": 0,
-      "files": [
-        "vector-equities/assets/eval_sector_coherence.json",
-        "vector-equities/assets/forward_calibration_isotonic.json",
-        "vector-equities/assets/manifest_v6_real.json"
-      ]
-    },
-    "gridiron.json": {
-      "mismatched": 4,
-      "malformed": 0,
-      "files": [
-        "vector-gridiron/assets/projections.json",
-        "vector-gridiron/assets/eval_backtest.json",
-        "vector-unified/data/gridiron_name_collisions.json",
-        "vector-unified/data/gridiron_forward_report.json"
-      ]
-    },
-    "hoops.json": {
-      "mismatched": 2,
-      "malformed": 0,
-      "files": [
-        "vector-unified/data/hoops_name_collisions.json",
-        "vector-hoops/assets/mtnn_training/live.json"
-      ]
-    },
-    "pitch.json": {
-      "mismatched": 2,
-      "malformed": 0,
-      "files": [
-        "vector-unified/data/pitch_age_axis.json",
-        "vector-unified/data/pitch_expectation_sources.json"
-      ]
-    },
+  "provenance_badge": "59 hashes 7/7 PASS",
+  "totals": {
+    "mismatched": 0,
+    "malformed": 0,
+    "uncovered": 0
+  },
+  "pages": {},
+  "files": {
     "tennis.json": {
-      "mismatched": 9,
-      "malformed": 0,
-      "files": [
-        "vector-unified/data/tennis_matrix_report.json",
-        "vector-unified/data/tennis_archetype_probe.json",
-        "vector-unified/data/tennis_sponsors.json",
-        "vector-unified/data/tennis_coverage.json",
-        "vector-unified/pipeline/data/tennis_matrix.npz",
-        "vector-unified/data/tennis_mtnn_report.json",
-        "vector-unified/data/tennis_candidate_features.json",
-        "vector-unified/data/tennis_forward_enriched.json",
-        "vector-unified/data/tennis_feature_identity.json"
-      ]
-    },
-    "unified.json": {
-      "mismatched": 2,
-      "malformed": 0,
-      "files": [
-        "vector-unified/data/gate_nonvacuity.json",
-        "vector-unified/data/tennis_archetype_probe.json"
-      ]
+      "size": 20067,
+      "sha16": "88b2e41632deac08"
     },
     "scout_cli.json": {
-      "mismatched": 0,
-      "malformed": 6,
-      "files": []
+      "size": 9312,
+      "sha16": "f345df402e293d4a"
+    },
+    "provenance_status.json": {
+      "size": 2293,
+      "sha16": "8d5b52b21b686992"
+    },
+    "equities_meta_backup.json": {
+      "size": 14230,
+      "sha16": "629f0ca987129856"
+    },
+    "equities_provenance.json": {
+      "size": 1224,
+      "sha16": "0ac7182722212be7"
+    },
+    "equities.json": {
+      "size": 60606,
+      "sha16": "492ad2e28d8be65c"
+    },
+    "gridiron.json": {
+      "size": 118227,
+      "sha16": "492794de7ea9d363"
+    },
+    "hoops.json": {
+      "size": 463527,
+      "sha16": "cf8af173dde6a8a4"
+    },
+    "pitch.json": {
+      "size": 552711,
+      "sha16": "760ddea42c95f02a"
+    },
+    "unified.json": {
+      "size": 3506742,
+      "sha16": "bb9f1206bc92b01f"
+    },
+    "unified_full.json": {
+      "size": 1007269,
+      "sha16": "ea6df823a22ed827"
     }
-  }
+  },
+  "unified_real": {
+    "entity_count": 20719,
+    "dims": 64,
+    "rows": 20719,
+    "size_bytes": 3506742,
+    "sha16": "bb9f1206bc92b01f",
+    "x": "mean dims 0-21",
+    "y": "mean 21-42",
+    "z": "mean 42-64",
+    "normalized": "[-1,1] min/max scaling across 20719",
+    "c": "i%8 OKABE-8",
+    "domain": "hoops(0)/gridiron(1)/pitch(2) from sport_id",
+    "display_name": "entity-{i} fallback, meta stored window._POINT_META",
+    "lod": "full 20719 kept, renderer caps 8000 desktop / 4000 mobile",
+    "void": "#080A0F fillRect DPR1 quaternion arcball",
+    "lcg_chain": "20260813\u2192189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 glibc Math.imul(seed,1103515245)+12345>>>0 &0x7fffffff deterministic",
+    "built": "2026-08-16T01:50:22.721066Z"
+  },
+  "dailySeed_LCG_verified": "20260813\u2192189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 glibc L(s)=(s*1103515245+12345)&0x7fffffff",
+  "zero_deps": true,
+  "honest": true,
+  "stdlib_only": true,
+  "provenance_honest_7_7_0": "7 files 59 hashes hoops10 gridiron7 pitch3 equities7 tennis14 unified12 scout_cli6 DM_PROVENANCE ok7 total7 bad0 VERIFIED true stdlib only"
 }
