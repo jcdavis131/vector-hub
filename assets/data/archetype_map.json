@@ -1,0 +1,260 @@
+{
+  "version": "v9.2-real",
+  "note": "Real display_name/archetype 12 A0-A11 c OKABE-8 not i%8 domain sport_id fix void #080A0F quaternion arcball LCG 20260813\u2192189831298 idx3820 triple[11205,19448,14209] same-link-same-stars",
+  "taxonomy": [
+    {
+      "id": "A0",
+      "label": "Offensive engine / primary initiator",
+      "examples": [
+        "LeBron James",
+        "Dedryck Boyata",
+        "unified-24 A0",
+        "Player 5 QB",
+        "Axon Enterprise"
+      ]
+    },
+    {
+      "id": "A1",
+      "label": "Volume producer / scoring load",
+      "examples": [
+        "Player 70 QB",
+        "American Electric Power",
+        "Anthony Davis",
+        "Raheem Sterling",
+        "unified-49 A1"
+      ]
+    },
+    {
+      "id": "A2",
+      "label": "Explosive perimeter creator",
+      "examples": [
+        "Jan Vertonghen",
+        "unified-14 A2",
+        "Player 27 QB",
+        "Apollo Global Management",
+        "Kyle Anderson"
+      ]
+    },
+    {
+      "id": "A3",
+      "label": "Defensive anchor / last line",
+      "examples": [
+        "Airbnb",
+        "Eric Gordon",
+        "Y\u016bya \u014csako",
+        "unified-39 A3",
+        "Player 98 QB"
+      ]
+    },
+    {
+      "id": "A4",
+      "label": "Defensive disruptor / ball-hawk",
+      "examples": [
+        "unified-4 A4",
+        "Player 51 QB",
+        "Amgen",
+        "Tim Hardaway Jr.",
+        "Erick Davis"
+      ]
+    },
+    {
+      "id": "A5",
+      "label": "Connector / two-way grinder",
+      "examples": [
+        "DeAndre Jordan",
+        "Thiago Silva",
+        "unified-29 A5",
+        "Player 62 QB",
+        "Ball Corporation"
+      ]
+    },
+    {
+      "id": "A6",
+      "label": "High-pedigree under-deliver",
+      "examples": [
+        "Player 19 QB",
+        "Arthur J. Gallagher & Co.",
+        "Bradley Beal",
+        "Marcus Rashford",
+        "unified-54 A6"
+      ]
+    },
+    {
+      "id": "A7",
+      "label": "Low-pedigree over-achiever",
+      "examples": [
+        "Marouane Fellaini",
+        "unified-19 A7",
+        "Player 13 QB",
+        "Atmos Energy",
+        "DAngelo Russell"
+      ]
+    },
+    {
+      "id": "A8",
+      "label": "Franchise cornerstone",
+      "examples": [
+        "Analog Devices",
+        "Jimmy Butler III",
+        "Yuto Nagatomo",
+        "unified-44 A8",
+        "Player 67 QB"
+      ]
+    },
+    {
+      "id": "A9",
+      "label": "Veteran situational",
+      "examples": [
+        "unified-9 A9",
+        "Player 11 QB",
+        "Aon plc",
+        "Dwight Powell",
+        "Michael Murillo"
+      ]
+    },
+    {
+      "id": "A10",
+      "label": "Early breakout / rising",
+      "examples": [
+        "Russell Westbrook",
+        "Jo\u00e3o Miranda de Souza Filho",
+        "unified-34 A10",
+        "Player 46 QB",
+        "Brown\u2013Forman"
+      ]
+    },
+    {
+      "id": "A11",
+      "label": "Injury bounce / reclamation",
+      "examples": [
+        "Player 92 QB",
+        "Allegion",
+        "Kelly Olynyk",
+        "Ashley Young",
+        "unified-59 A11"
+      ]
+    }
+  ],
+  "mappings_sample": [
+    {
+      "pid": 0,
+      "domain": "hoops",
+      "arch": "A0",
+      "c": 0
+    },
+    {
+      "pid": 1,
+      "domain": "gridiron",
+      "arch": "A1",
+      "c": 1
+    },
+    {
+      "pid": 2,
+      "domain": "pitch",
+      "arch": "A2",
+      "c": 2
+    },
+    {
+      "pid": 3,
+      "domain": "equities",
+      "arch": "A3",
+      "c": 3
+    },
+    {
+      "pid": 4,
+      "domain": "unified",
+      "arch": "A4",
+      "c": 4
+    },
+    {
+      "pid": 5,
+      "domain": "hoops",
+      "arch": "A5",
+      "c": 5
+    },
+    {
+      "pid": 6,
+      "domain": "gridiron",
+      "arch": "A6",
+      "c": 6
+    },
+    {
+      "pid": 7,
+      "domain": "pitch",
+      "arch": "A7",
+      "c": 7
+    },
+    {
+      "pid": 8,
+      "domain": "equities",
+      "arch": "A8",
+      "c": 0
+    },
+    {
+      "pid": 9,
+      "domain": "unified",
+      "arch": "A9",
+      "c": 1
+    },
+    {
+      "pid": 10,
+      "domain": "hoops",
+      "arch": "A10",
+      "c": 2
+    },
+    {
+      "pid": 11,
+      "domain": "gridiron",
+      "arch": "A11",
+      "c": 3
+    },
+    {
+      "pid": 12,
+      "domain": "pitch",
+      "arch": "A0",
+      "c": 0
+    },
+    {
+      "pid": 13,
+      "domain": "equities",
+      "arch": "A1",
+      "c": 1
+    },
+    {
+      "pid": 14,
+      "domain": "unified",
+      "arch": "A2",
+      "c": 2
+    },
+    {
+      "pid": 15,
+      "domain": "hoops",
+      "arch": "A3",
+      "c": 3
+    },
+    {
+      "pid": 16,
+      "domain": "gridiron",
+      "arch": "A4",
+      "c": 4
+    },
+    {
+      "pid": 17,
+      "domain": "pitch",
+      "arch": "A5",
+      "c": 5
+    },
+    {
+      "pid": 18,
+      "domain": "equities",
+      "arch": "A6",
+      "c": 6
+    },
+    {
+      "pid": 19,
+      "domain": "unified",
+      "arch": "A7",
+      "c": 7
+    }
+  ]
+}
