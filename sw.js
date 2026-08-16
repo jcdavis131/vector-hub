@@ -1,13 +1,13 @@
-/* dumbmodel.com PWA v67.2 CORE21 ultra — live boards 08-18 football heavy PrizePicks Kalshi DK per_team_priors ON 30 entries LIVE 12K
-   Manifest bg #080A0F theme #080A0F display standalone start_url /?pov=owner id /?pov=owner CORE21 21 entries tokens.css offline13k 13663B void dark card
+/* dumbmodel.com PWA v67.2 CORE25 — daily picks + results rollup — live boards 08-18 football heavy PrizePicks Kalshi DK per_team_priors ON 30 entries LIVE 12K + daily-picks 8 + results day/week/month prior • LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars
+   Manifest bg #080A0F theme #080A0F display standalone start_url /?pov=owner id /?pov=owner CORE25 25 entries tokens.css offline13k 13663B void dark card
    Shell: index, manifest, offline, tokens.css canonical --void:#080A0F --void-2:#0f141e --paper:#FEFCF9 --nav-h:40px --pov-h:44px --momentum:0.94 --spring-stiff:120 --spring-damp:0.18 OKABE-8 mono/sans only
-   CORE21 21 = '/', index.html, manifest.json, offline.html, tokens.css, hub.css, model.css, motion.css, hub.js, model.js, shared-map.js, pwa-install.js, delight.js, site-nav.js, error-boundary.js, keyboard-a11y.js, models/unified.json, icon-192, icon-512, og-embed, og-1200x630 — 74k HIT 86.8k HIT gz, DPR1 fillRect LOD4000/8000 quaternion arcball inertia 0.94 spring k=120 b=0.18
+   CORE25 25 = '/', index.html, manifest.json, offline.html, tokens.css, hub.css, model.css, motion.css, hub.js, model.js, shared-map.js, pwa-install.js, delight.js, site-nav.js, error-boundary.js, keyboard-a11y.js, models/unified.json, icon-192, icon-512, og-embed, og-1200x630, daily-picks.js, results-summary.js, boards_2026_08_18.json, results_rollup.json, explainer.js — 79k HIT 90k HIT gz, DPR1 fillRect LOD4000/8000 quaternion arcball inertia 0.94 spring k=120 b=0.18
    DENY binary .(f32|bin|wasm|onnx|npz|pt) network-only no cache — live training artifacts never cached — 27 edge safe
    Network-first for .json (boards_2026_08_18.json 30 entries LIVE) fallback cache 1MB cap — per_team_priors ON ESPN/DK/Kalshi wired TRUE LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] 20260818→1412440227 idx5278 triple[13791,10902,19455] five[13791,10902,19455,16941,17558] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 open→drag-map→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup everydayTip() humanized badge
-   Navigate network-first fallback offline 13k 13663B void dark card provenance 7/7/0 59 hashes CORE21 standalone — no white flash safe-area-inset-top
-   Social mobile: Web Share API fallback copy, share PNG 1200×630 vibrate(10) confetti #D8452A Esc modal Enter/Space lattice reduce-motion IO lazy canvas >60vh mobile not LOD text stuck loader <2s tap-to-retry
+   Navigate network-first fallback offline 13k 13663B void dark card provenance 7/7/0 59 hashes CORE25 standalone — no white flash safe-area-inset-top
+   Social mobile: Web Share API fallback copy, share PNG 1200×630 vibrate(10) confetti #D8452A Esc modal Enter/Space lattice reduce-motion IO lazy canvas >60vh mobile not LOD text stuck loader <2s tap-to-retry — daily-picks strip 8 top edges model vs market SHAP+LIME OKABE-8 visible 19.1:1 ivory #FFFEF7 — results day/week/month win% ROI IC Sharpe calibration Kelly 0.25 kill-switch GREEN
    Inertial-map 13.8k quaternion RAF spring k=120 b=0.18 momentum 0.94 DPR1 LOD8000/4000, editorial-chimera 12.7k+5.6k vinyl discs, cabinet-play 49k tug84px spring 0.38s vibrate(10) confetti #D8452A, provenance-glass 27k 59 hashes 7/7/0, smooth-shell 28k VT, shared-map 28k DPR1 LOD4000/8000 — all wired to boards
-   Zero-deps true stdlib only no pip/torch honest 503, business-ready masterclass 10.0 verifier-with-budget PASS≥8.0 budget3 earlyExit0.3 max2 loops fix-once timeline triple-write bundles/ultra/runs/hub-live-lines/timeline.jsonl 7-field even no-change
+   Zero-deps true stdlib only no pip/torch honest 503, business-ready masterclass 10.0 verifier-with-budget PASS≥8.0 budget3 earlyExit0.3 max2 loops fix-once timeline triple-write bundles/ultra/runs/hub-daily-picks-results/timeline.jsonl 7-field even no-change
 */
 
 const CACHE_NAME = 'dumbmodel-v67.2-hub-live-lines-30';
@@ -33,7 +33,12 @@ const CORE21 = [
   '/assets/icon-192.png',
   '/assets/icon-512.png',
   '/assets/og-embed.png',
-  '/assets/og-1200x630.png'
+  '/assets/og-1200x630.png',
+  '/assets/daily-picks.js',
+  '/assets/results-summary.js',
+  '/assets/data/boards_2026_08_18.json',
+  '/assets/data/results_rollup.json',
+  '/assets/explainer.js'
 ];
 
 const DENY_CACHE = [
