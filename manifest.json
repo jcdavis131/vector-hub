@@ -102,6 +102,19 @@
       "name": "Daily Chimera",
       "short_name": "Daily",
       "url": "/models/unified.html?utm_source=pwa_shortcut&utm_medium=daily"
+    },
+    {
+      "description": "JOBBENCH \u2014 12 occupations 24 tasks sports jobs real models zero-deps 35.6 rubrics avg Scout Verified PWA v67 LCG 20260813\u2192189831298 idx3820 triple[11205,19448,14209]",
+      "icons": [
+        {
+          "sizes": "192x192",
+          "src": "/assets/icon-192.png",
+          "type": "image/png"
+        }
+      ],
+      "name": "JOBBENCH \u2014 Real Sports Jobs",
+      "short_name": "Jobbench",
+      "url": "/bench.html?daily=20260813&n=3&utm_source=pwa_shortcut&utm_medium=jobbench"
     }
   ],
   "start_url": "/?pov=owner",
