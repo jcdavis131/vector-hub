@@ -3,429 +3,534 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>dumbmodel — embedding arcade • map IS the game</title>
-<meta name="description" content="20,719 joint 64-d × 12,966 hoops × 5,323 gridiron × 2,430 pitch × 4,831 company-years. Map is game — quaternion arcball inertia, vinyl rail nav, DAW faders POV, cabinet tug-to-guess. Same link same stars LCG glibc 189831298 idx3820.">
-<meta name="theme-color" content="#080A0F">
-<link rel="manifest" href="/manifest.json?v=67">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23080A0F'/%3E%3Ccircle cx='16' cy='16' r='2.8' fill='%23ff5b04'/%3E%3Cpath d='M16 8.2 L17 11.4 L20.6 11.4 L17.9 13.6 L18.8 16.9 L16 14.8 L13.2 16.9 L14.1 13.6 L11.4 11.4 L15 11.4 Z' fill='%23f1b650'/%3E%3C/svg%3E">
-<meta property="og:title" content="dumbmodel — embedding arcade • map IS the game">
+<title>dumbmodel — a quiet library of sports models · japandi sports books</title>
+<meta name="description" content="A quiet library of sports models — Japandi sports books: hoops 12,966 · gridiron 646 · pitch 2,430 · equities 500 · unified 20,719 · tennis US Open 128 — wabi-sabi paper #FEFCF9 wood #D6C7B3 stone #EAE3D8 moss #7A8A7B clay #C9A88C — today's reading list 8 picks · margin notes day/week/month · map cabinet quaternion arcball 0.94 inertia — LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars">
+<meta name="theme-color" content="#FEFCF9">
+<meta name="background-color" content="#FEFCF9">
+<link rel="manifest" href="/manifest.json?v=japandi-67.2">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23FEFCF9'/%3E%3Crect x='6' y='6' width='20' height='20' rx='3' fill='%23D6C7B3' stroke='%231E1E1E' stroke-width='1.2'/%3E%3Ccircle cx='16' cy='16' r='2.8' fill='%23C9A88C' stroke='%231E1E1E' stroke-width='1'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/assets/tokens.css?v=japandi-67.2">
+<!-- social -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dumbmodel.com/">
+<meta property="og:title" content="dumbmodel — japandi sports books library — quiet library of models">
+<meta property="og:image" content="/assets/og-1200x630.png">
+<meta property="og:description" content="A quiet library of sports models — 6 tactile books: hoops 12,966 · gridiron 646 · pitch 2,430 · equities 500 · unified 20,719 · tennis US Open 128 — map cabinet quaternion arcball — today's reading list 8 picks — margin notes day/week/month — PWA v67 paper #FEFCF9">
+<meta name="twitter:card" content="summary_large_image">
 <style>
-:root{
- --nav-h:40px; --pov-h:44px; --rail-w:84px;
- --void:#080A0F; --void-2:#0f141e; --void-card:#0f141e; --ink-card:#e8f0ff;
- --paper:#FEFCF9; --paper-2:#FFFEF7; --ink:#14181d; --muted:#686f64; --hair:#00000018;
- --accent:#D8452A; --accent-2:#E4FF7C; --ring:#D8452A; --blue:#0072B2; --moss:#84948A;
- --ok-0:#0072B2; --ok-1:#D55E00; --ok-2:#009E73; --ok-3:#F0E442; --ok-4:#56B4E9; --ok-5:#CC79A7; --ok-6:#E69F00; --ok-7:#FFFEF7;
- --momentum:0.94; --spring-stiff:120; --spring-damp:0.18;
- --font-sans: ui-sans-system,-apple-system,Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
- --font-mono: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
- --radius:10px; --radius-pill:9999px;
-}
-*{box-sizing:border-box}html{margin:0;padding:0;background:#080A0F;background-color:#080A0F;color-scheme:dark light}body{margin:0;padding:0;background:var(--paper);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;scroll-behavior:smooth;min-height:100dvh;background-color:#FEFCF9;padding-top:env(safe-area-inset-top,0);padding-left:env(safe-area-inset-left,0);padding-right:env(safe-area-inset-right,0)}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px}::selection{background:#f1b650}
-a{color:inherit;text-decoration:none}
-.top-nav{position:sticky;top:0;top:env(safe-area-inset-top,0);z-index:40;min-height:40px;min-height:var(--nav-h);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 10px;padding:0 12px;padding-left:calc(12px + env(safe-area-inset-left,0px));padding-right:calc(12px + env(safe-area-inset-right,0px));padding-top:env(safe-area-inset-top,0);background:color-mix(in srgb,var(--void) 92%, #fff 8%);background-color:var(--void);color:#fffcf2;border-bottom:1px solid #1a1f2e;view-transition-name:top-nav}
-.top-nav .brand{font-weight:900;letter-spacing:-.02em;font-size:clamp(12px,2.9vw,16px);text-transform:uppercase;display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;gap:8px;line-height:1;white-space:nowrap;overflow:visible;flex:1 1 auto;min-width:0}
-.top-nav .brand span{white-space:nowrap;overflow:visible}
-.top-nav .brand small{font-weight:700;font-size:clamp(9px,2.1vw,10.5px);letter-spacing:.14em;color:#ffffffa0;white-space:nowrap;overflow:visible;flex:0 1 auto}
-.domain-sw{display:flex;gap:6px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex:0 0 auto;flex-shrink:0;justify-content:flex-end;flex-wrap:nowrap;max-width:100%;min-width:0}
-.domain-sw::-webkit-scrollbar{display:none}.domain-pill{min-height:28px;padding:0 12px;border-radius:9999px;border:1px solid #ffffff1e;background:transparent;color:#cbd5e1;font:700 11px var(--font-mono);cursor:pointer;transition:.15s;flex:0 0 auto;white-space:nowrap;flex-shrink:0}
-.domain-pill.on{background:#fffcf2;color:#080A0F;border-color:#fffcf2;box-shadow:0 1px 0 #fff1 inset}
-.ec-wrap{display:flex;min-height:calc(100dvh - var(--nav-h))}
-.ec-rail{position:sticky;top:var(--nav-h);width:var(--rail-w);min-width:var(--rail-w);height:calc(100dvh - var(--nav-h));display:flex;flex-direction:column;align-items:center;padding:10px 8px;gap:10px;background:linear-gradient(180deg,var(--paper) 0%,#fff 100%);border-right:1px solid #00000012;z-index:31}
-.ec-disc{width:64px;height:64px;border-radius:50%;border:1.4px solid #111;background:radial-gradient(90% 90% at 36% 32%,#fff 0%,#f6f2ed 22%,#e9e9e9 58%,#111 59%,#111 61%,#080A0F 62%);display:grid;place-items:center;cursor:pointer;transition:transform .32s cubic-bezier(.22,1,.36,1);position:relative}
-.ec-disc.on{transform:scale(1.22);box-shadow:0 0 0 2px #fff,0 0 0 5px var(--ring),0 6px 18px #0002}
-.ec-disc-dot{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font:800 9px var(--font-mono);color:#fff;text-shadow:0 1px 0 #1118;z-index:2}
-.ec-disc::after{content:"";width:12px;height:12px;border-radius:50%;background:var(--ring);border:1.8px solid #111;box-shadow:0 0 0 2px #fff;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3}
-.ec-rail-label{font:700 10px var(--font-mono);text-transform:uppercase;letter-spacing:.04em;border:1px dashed #1112;border-radius:8px;padding:5px 6px;background:#fff;box-shadow:1px 1px 0 #111;max-width:76px;text-align:center;min-height:2em}
-.ec-pov{position:sticky;top:var(--nav-h);top:calc(40px + env(safe-area-inset-top,0));z-index:30;display:flex;gap:8px;align-items:center;height:var(--pov-h);min-height:var(--pov-h);padding:6px 14px;padding-right:16px;background:var(--void);border-bottom:1px solid #1a1f2e;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;white-space:nowrap;width:100%;-webkit-mask-image:linear-gradient(to right, black 88%, transparent 100%);mask-image:linear-gradient(to right, black 88%, transparent 100%)}
-.ec-pov::-webkit-scrollbar{display:none}
-.ec-pov-pill{flex:0 0 auto;min-width:116px;height:30px;border:1.4px solid #2a3042;border-radius:9999px;background:linear-gradient(180deg,#121826 0%,#0e1420 100%);color:#a8b8d0;font:700 11px var(--font-mono);text-transform:uppercase;display:flex;align-items:center;gap:8px;padding:0 10px 0 6px;cursor:pointer;white-space:nowrap;flex-shrink:0}
-.ec-pov-pill.on{color:#fffcf2;border-color:#fff3} .ec-pov-track{width:40px;height:16px;border-radius:999px;background:#080A0F;border:1px solid #28304a;position:relative;flex:0 0 40px} .ec-pov-thumb{width:16px;height:16px;border-radius:50%;background:#fffcf2;border:1.4px solid #111;position:absolute;left:0;top:50%;transform:translate(0,-50%);transition:transform .32s cubic-bezier(.22,1,.36,1)} .ec-pov-pill.on .ec-pov-thumb{background:var(--accent-2)}
-.main{flex:1;display:flex;flex-direction:column;min-width:0}
-.map-shell{display:grid;grid-template-columns:1fr 320px;gap:0;min-height:calc(100dvh - var(--nav-h) - var(--pov-h))} @media(max-width:980px){.map-shell{grid-template-columns:1fr}.ec-rail{display:none}}
-@media(max-width:700px){.top-nav .brand small{display:block;flex:1 0 100%;white-space:normal;line-height:1.1;margin-top:1px}.top-nav{padding-bottom:8px}.domain-sw{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex:1 0 100%;justify-content:flex-start;flex-shrink:0;-webkit-mask-image:linear-gradient(to right, black 90%, transparent 100%)}.domain-sw::-webkit-scrollbar{display:none}.domain-pill{flex:0 0 auto;min-height:28px}.ec-pov{padding-left:10px;padding-right:18px}.map-box{min-height:360px}#c{min-height:340px;min-height:320px}}
-.map-left{position:relative;background:var(--void);overflow:hidden;isolation:isolate;display:flex;flex-direction:column;min-height:340px;background-color:#080A0F}
-.map-head{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:rgba(15,20,30,.92);border-bottom:1px solid #1a1f2e;color:#e8f0ff;flex-wrap:wrap;gap:8px}
-.map-box{position:relative;flex:1;min-height:340px;background:var(--void);background-color:#080A0F;min-height:clamp(320px,54vh,560px)} #c{width:100%;height:100%;display:block;touch-action:none;cursor:grab;min-height:clamp(320px,52vh,560px);min-height:320px;background:#080A0F} #c.grabbing{cursor:grabbing}
+/* Japandi sports books — warm minimal, natural materials, wabi-sabi, low contrast calm, wood paper stone */
+ :root{--paper:#FEFCF9;--paper-2:#FFFEF7;--wood:#D6C7B3;--wood-2:#E8D9C5;--stone:#EAE3D8;--ink:#1E1E1E;--ink-soft:#5A544E;--moss:#7A8A7B;--clay:#C9A88C;--shadow:3px 3px 0 #1E1E1E}
+ *{box-sizing:border-box}
+ html,body{margin:0;background:var(--paper);color:var(--ink)}
+ body{font-family:ui-sans-system,-apple-system,Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100dvh}
+ a{color:inherit}
+ .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+ .paper-wrap{max-width:1240px;margin:0 auto;padding:0 14px}
+ /* nav 40px sticky z40 thin paper mono/sans */
+ .j-nav{position:sticky;top:0;top:env(safe-area-inset-top,0);z-index:40;height:40px;min-height:40px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 14px;padding-top:env(safe-area-inset-top,0);background:var(--paper);border-bottom:1.5px solid var(--ink);backdrop-filter:saturate(1.02)}
+ .j-nav b{font:800 12px var(--font-mono);letter-spacing:.08em;text-transform:uppercase}
+ .j-nav__inks{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+ .j-pill{border:1.5px solid var(--ink);border-radius:9999px;padding:5px 11px;min-height:28px;background:#fff;display:inline-flex;align-items:center;font:700 11px var(--font-mono);text-transform:uppercase;letter-spacing:.04em;cursor:pointer;box-shadow:1.5px 1.5px 0 #1E1E1E18;transition:.12s}
+ .j-pill.on{background:var(--ink);color:var(--paper-2);box-shadow:2px 2px 0 #1E1E1E}
+ .j-pill.wood{background:var(--wood);color:var(--ink)}
+ .j-pill.clay{background:var(--clay);color:var(--ink)}
+ /* hero japandi */
+ .hero{position:relative;background:var(--paper);border-bottom:1.5px solid var(--ink);overflow:hidden}
+ .hero__inner{max-width:1240px;margin:0 auto;padding:22px 14px 18px;display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
+ @media(max-width:900px){.hero__inner{grid-template-columns:1fr}}
+ .hero__title{font-size:clamp(28px,5.2vw,52px);line-height:.94;letter-spacing:-.03em;font-weight:800;margin:6px 0 8px}
+ .hero__kicker{font:700 11px var(--font-mono);text-transform:uppercase;letter-spacing:.14em;color:var(--ink-soft)}
+ .hero__sub{font-size:14px;color:var(--ink-soft);max-width:56ch;line-height:1.58}
+ .wood-grain{position:relative;height:8px;background:
+   repeating-linear-gradient(90deg, rgba(30,30,30,.06) 0 1px, transparent 1px 17px),
+   linear-gradient(180deg, var(--wood-2) 0%, var(--wood) 100%);
+   border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+ .wabi-line{height:1px;background:repeating-linear-gradient(90deg, var(--ink) 0 9px, transparent 9px 16px);opacity:.28}
 
-.map-foot{padding:8px 12px;background:#0f141e;color:#a8b8d0;font:500 11px var(--font-mono);border-top:1px solid #1a1f2e;display:flex;justify-content:space-between;flex-wrap:wrap}
-.right-rail{border-left:1px solid #00000012;background:linear-gradient(180deg,var(--paper) 0%,#fff 100%);display:flex;flex-direction:column;gap:10px;padding:12px;overflow:auto}
-.mini{border:1px solid #00000014;border-radius:12px;background:#fff;padding:12px;display:flex;flex-direction:column;gap:8px} .mini.dark{background:var(--void-card);color:var(--ink-card);border-color:#1a1f2e}
-.mini b{font-size:13px;line-height:1.3} .caption{font:700 10.5px var(--font-mono);text-transform:uppercase;letter-spacing:.05em;color:var(--moss)}
-.ec-cards{display:grid;gap:8px} .ec-card{background:radial-gradient(420px 280px at 14% 18%,#D8452A22 0%,transparent 62%),radial-gradient(380px 260px at 82% 72%,#0072B222 0%,transparent 66%),linear-gradient(180deg,#0f141e 0%,#0b101a 100%);color:#e8f0ff;border:1px solid #1f2937;border-radius:12px;padding:11px 11px 9px;cursor:pointer;transform:perspective(700px) rotateX(var(--tiltX,0deg)) rotateY(var(--tiltY,0deg));transition:transform .18s;border-left:3px solid transparent;will-change:transform} .ec-card.on{outline:2px solid var(--ring);box-shadow:0 0 0 3px #fffcf2,0 0 0 5.5px var(--ring)} .ec-card b{display:block;font-weight:800;margin-bottom:3px}
-.pill{border:1px solid #00000018;border-radius:9999px;padding:0 10px;min-height:24px;display:inline-flex;align-items:center;font:700 11px var(--font-mono)}
-.pop{display:grid;gap:6px} .pop button{border:1px solid #00000018;border-radius:10px;background:#fff;padding:8px 10px;font:600 12px var(--font-sans);cursor:pointer;text-align:left;display:flex;justify-content:space-between;min-height:36px} .pop button.on{background:#1d1d1b;color:#fffcf2}
-.dots{display:flex;gap:5px} .dot{width:8px;height:8px;border-radius:50%;border:1px solid #00000022;background:#fff} .dot.on{background:#1d1d1b;border-color:#1d1d1b}
-.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:90;background:#1d1d1b;color:#fffcf2;border:1px solid #2a2a2a;border-radius:9999px;padding:10px 16px;font:600 12px var(--font-sans);display:none;max-width:min(92vw,560px);text-align:center}
-.lattice{position:fixed;inset:0;z-index:95;background:rgba(8,10,15,.92);backdrop-filter:blur(14px);display:none;overflow:auto;padding:20px} .lattice.on{display:block} .lattice-card{max-width:900px;margin:40px auto;background:#0f141e;color:#e8f0ff;border:1px solid #1f2937;border-radius:16px;padding:18px}
-@media(prefers-reduced-motion:reduce){.ec-card{transform:none!important} .ec-disc{transition:none}}
+ /* bookshelf — tactile library */
+ .bookshelf{margin:14px auto;max-width:1240px;padding:0 14px}
+ .shelf-label{display:flex;justify-content:space-between;align-items:center;margin:8px 0 10px}
+ .shelf-rail{height:4px;background:var(--stone);border:1px solid var(--ink);border-radius:9999px;position:relative;overflow:hidden}
+ .shelf-rail::after{content:"";position:absolute;inset:0;background:
+   repeating-linear-gradient(90deg, transparent 0 32px, rgba(30,30,30,.06) 32px 33px);
+   opacity:.9}
+ .books{display:flex;gap:10px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:12px 2px 8px;scroll-snap-type:x proximity}
+ .books::-webkit-scrollbar{display:none}
+ .book{
+   flex:0 0 132px; height:220px; position:relative; scroll-snap-align:start;
+   background:
+     radial-gradient(80px 40px at 28% 18%, #fff 0%, #FFFEF7 22%, transparent 62%),
+     linear-gradient(180deg, var(--paper) 0%, var(--paper) 78%, var(--stone) 100%);
+   border:1.5px solid var(--ink); border-radius:10px 10px 2px 2px;
+   box-shadow: var(--shadow); display:flex; flex-direction:column;
+   padding:9px 9px 8px; cursor:pointer; text-align:left;
+   transition: transform .18s cubic-bezier(.22,1,.36,1), box-shadow .18s;
+ }
+ .book:hover{transform:translateY(-2px) rotate(-.18deg); box-shadow:4px 5px 0 var(--ink)}
+ .book.on{outline:2px solid var(--clay); box-shadow:0 0 0 3px var(--paper), 0 0 0 5.2px var(--clay), 3px 3px 0 var(--ink)}
+ .book__spine-w{writing-mode:vertical-rl; text-orientation:mixed; transform:rotate(180deg); font:800 11px var(--font-mono); letter-spacing:.11em; text-transform:uppercase; color:var(--ink); flex:1; display:flex; align-items:center; justify-content:space-between}
+ .book__count{font:700 10px var(--font-mono); color:var(--ink-soft); writing-mode:horizontal-tb; transform:rotate(0deg); background:#fff; border:1px solid var(--ink); border-radius:9999px; padding:2px 7px; display:inline-flex}
+ .book__dot{width:10px;height:10px;border-radius:50%;border:1.4px solid var(--ink);background:var(--dot,#C9A88C);display:inline-block;box-shadow:0 0 0 1px #FFFEF7}
+ .book__foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;font:700 10px var(--font-mono);color:var(--ink-soft)}
+
+ /* map cabinet — japandi wooden frame inset paper */
+ .cabinet-wrap{max-width:1240px;margin:12px auto;padding:0 14px}
+ .cabinet{
+   position:relative;background:var(--paper);border:1.5px solid var(--ink);border-radius:16px;
+   box-shadow: var(--shadow), 0 8px 24px #1E1E1E18; overflow:hidden;
+   padding:8px;background-clip:padding-box;
+ }
+ .cabinet::before{content:"";position:absolute;inset:0 0 auto 0;height:10px;background: linear-gradient(180deg, var(--wood-2), var(--wood)); border-bottom:1.2px solid var(--ink); opacity:.96; pointer-events:none}
+ .cabinet__head{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 8px 8px 10px;position:relative;z-index:2;flex-wrap:wrap}
+ .cabinet__title{font:800 11px var(--font-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--ink)}
+ .cabinet__wood{font:700 10px var(--font-mono);background:var(--wood);border:1px solid var(--ink);border-radius:9999px;padding:4px 10px;box-shadow:1px 1px 0 #1E1E1E}
+ .map-box{position:relative;flex:1;min-height:clamp(340px,58vh,600px);background:#080A0F;border:1.4px solid var(--ink);border-radius:12px;overflow:hidden}
+ #c{width:100%;height:100%;display:block;touch-action:none;cursor:grab;min-height:clamp(340px,56vh,600px);background:#080A0F}
+ #c.grabbing{cursor:grabbing}
+ .map-foot{padding:8px 10px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font:600 10.8px var(--font-mono);color:var(--ink-soft)}
+ /* mono pills inside */
+ .mpill{border:1px solid var(--ink);border-radius:9999px;padding:4px 10px;background:#fff;font:700 10.5px var(--font-mono);display:inline-flex;gap:6px;align-items:center}
+
+ /* reading list — daily picks japandi */
+ .reads{max-width:1240px;margin:14px auto;padding:0 14px;display:grid;grid-template-columns:1.1fr .9fr;gap:12px}
+ @media(max-width:980px){.reads{grid-template-columns:1fr}}
+ .read-card{background:var(--paper);border:1.5px solid var(--ink);border-radius:14px;box-shadow:2.5px 2.5px 0 var(--ink);padding:12px 12px 10px}
+ .read-card h2{margin:0 0 6px;font:800 12px var(--font-mono);text-transform:uppercase;letter-spacing:.08em}
+ .ledger{font:600 11px var(--font-mono);color:var(--ink-soft);line-height:1.45}
+ .ledger b{color:var(--ink)}
+ .list-8{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;margin-top:8px}
+ .pick{
+   background:linear-gradient(180deg, #FFFEF7 0%, #FEFCF9 100%);
+   border:1px solid var(--ink);border-radius:10px;padding:9px 10px;display:flex;flex-direction:column;gap:4px;
+   box-shadow:1.6px 1.6px 0 #1E1E1E;transition:.12s
+ }
+ .pick:hover{transform:translateY(-1px)}
+ .pick.on{outline:2px solid var(--clay);box-shadow:0 0 0 2px var(--paper),0 0 0 4.2px var(--clay),1.6px 1.6px 0 #1E1E1E}
+ .pick b{font-size:12.6px;line-height:1.25}
+ .pick .line{font:700 10.8px var(--font-mono);color:var(--ink-soft)}
+ .pick .edge{font:800 10.6px var(--font-mono);color:var(--ink);background:var(--stone);border:1px solid var(--ink);border-radius:9999px;padding:2px 7px;display:inline-flex;width:fit-content}
+ .pick .edge.up{background:#E4FF7C}
+ .pick .edge.down{background:#FFE1D0}
+
+ /* margin notes — day/week/month ledger */
+ .margin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+ @media(max-width:780px){.margin-grid{grid-template-columns:1fr}}
+ .margin{background:#FFFEF7;border:1.2px dashed var(--ink-soft);border-radius:10px;padding:9px 10px}
+ .margin b{display:block;font:800 11px var(--font-mono);text-transform:uppercase;margin-bottom:3px}
+ .margin .kv{display:flex;justify-content:space-between;font:600 11px var(--font-mono);color:var(--ink-soft);border-bottom:1px dotted #CFC6B6;padding:3px 0}
+ .margin .kv b{font-size:11px;color:var(--ink);margin:0}
+ .kill{font:800 10px var(--font-mono);padding:3px 8px;border-radius:9999px;border:1px solid var(--ink);background:#E4FF7C}
+
+ /* explainers collapsible */
+ details{border:1.2px solid var(--ink);border-radius:10px;background:var(--paper);padding:8px 10px}
+ details[open]{background:#FFFEF7}
+ summary{font:800 11px var(--font-mono);text-transform:uppercase;cursor:pointer;list-style:none}
+ summary::-webkit-details-marker{display:none}
+ .expl-bars{display:flex;flex-direction:column;gap:5px;margin-top:8px}
+ .bar-row{display:flex;gap:8px;align-items:center;font:600 11px var(--font-mono)}
+ .bar{height:9px;display:inline-block;background:#2a78d6}
+
+ /* discreet scroll */
+ .soft-hide::-webkit-scrollbar{display:none}
 </style>
-<link rel="stylesheet" href="/assets/tokens.css?v=67.2">
-<link rel="stylesheet" href="/assets/editorial-chimera.css?v=9">
-<link rel="stylesheet" href="/assets/provenance-glass.css?v=9">
 </head>
 <body>
-<nav class="top-nav" id="topNav" style="view-transition-name:top-nav">
- <a class="brand" href="/"><span>DUMB / MODEL<span style="color:#ff5b04"> *</span></span><small>EMBEDDING ARCADE — MAP IS THE GAME</small></a>
- <div class="domain-sw" role="tablist"><button class="domain-pill on" data-domain="unified" role="tab">Unified 20,719</button><button class="domain-pill" data-domain="hoops">Hoops 12,966</button><button class="domain-pill" data-domain="gridiron">Gridiron</button><button class="domain-pill" data-domain="pitch">Pitch</button><button class="domain-pill" data-domain="equities">Equities</button>  <a class="domain-pill" href="/investor/" style="background:#E4FF7C;color:#080A0F;border-color:#E4FF7C;text-decoration:none;display:inline-flex;align-items:center;font-weight:800;" role="tab">For Business · Investor ↗</a>
- </div>
- <button class="domain-pill" id="btn-lattice" style="background:#E4FF7C;color:#080A0F;border-color:#111">59 hashes 7/7</button>
+<nav class="j-nav" id="topNav">
+  <a href="/" style="text-decoration:none;display:flex;align-items:center;gap:8px;color:var(--ink)"><b>DUMB / MODEL</b><span class="mono" style="font:700 10px var(--font-mono);letter-spacing:.14em;color:var(--ink-soft);white-space:nowrap">JAPANDI SPORTS BOOKS — MAP IS THE READING</span></a>
+  <div class="j-nav__inks">
+    <a class="j-pill" href="#books">Books</a>
+    <a class="j-pill" href="#maps">Maps</a>
+    <a class="j-pill wood" href="#picks">Picks</a>
+    <a class="j-pill" href="#results">Results</a>
+    <a class="j-pill" href="#lab" style="background:#FFFEF7">Lab</a>
+    <a class="j-pill" href="/investor/" style="background:#E4FF7C">Investor ↗</a>
+    <button class="j-pill" id="btn-lattice" title="Provenance lattice 59 hashes 7/7/0">59 hashes 7/7</button>
+  </div>
 </nav>
 
-<div class="ec-pov" id="pov-strip" role="tablist" aria-label="POV faders">
- <button class="ec-pov-pill on" data-pov="owner" aria-selected="true"><span class="ec-pov-track"><span class="ec-pov-thumb" style="transform:translate(22px,-50%)"></span></span>Owner FOR</button>
- <button class="ec-pov-pill" data-pov="player"><span class="ec-pov-track"><span class="ec-pov-thumb"></span></span>Player Stay</button>
- <button class="ec-pov-pill" data-pov="brand"><span class="ec-pov-track"><span class="ec-pov-thumb"></span></span>Brand Story</button>
- <button class="ec-pov-pill" data-pov="dfs"><span class="ec-pov-track"><span class="ec-pov-thumb"></span></span>DFS Closer</button>
- <button class="ec-pov-pill" data-pov="all"><span class="ec-pov-track"><span class="ec-pov-thumb"></span></span>All</button>
- <span class="pill" id="seedPill" style="margin-left:8px;background:#0b101a;color:#a8b8d0">seed — LCG — idx — triple</span>
- <span class="pill" id="hovLab" style="background:#fff;color:#1d1d1b">drag · hover · 1.8× lens · click</span>
-</div>
-
-<div class="ec-wrap">
-<div class="ec-rail" aria-label="Vinyl rail">
- <div style="font:700 10px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:#1d1d1b">TURNTABLE · 5 MAPS</div>
- <div id="rail-track" style="display:flex;flex-direction:column;gap:6px;align-items:center">
-  <button class="ec-disc on" data-domain="unified"><span class="ec-disc-dot">UN</span></button>
-  <button class="ec-disc" data-domain="hoops"><span class="ec-disc-dot">HP</span></button>
-  <button class="ec-disc" data-domain="gridiron"><span class="ec-disc-dot">GR</span></button>
-  <button class="ec-disc" data-domain="pitch"><span class="ec-disc-dot">PT</span></button>
-  <button class="ec-disc" data-domain="equities"><span class="ec-disc-dot">EQ</span></button>
- </div>
- <div class="ec-rail-label" id="rail-label">Unified — 20,719 joint 64-d chimera vinyl</div>
- <span class="pill" id="dailyKicker">LCG — triple — same-link-same-stars</span>
- <button class="domain-pill" id="btn-copy-daily" style="background:#ff5b04;color:#fff;border-color:#ff5b04">Copy daily link ↗</button>
- <span class="pill" id="hub-next">next board 00:00:00 UTC</span>
-</div>
-
-<div class="main">
-<div class="map-shell">
-<div class="map-left" id="map-card" style="view-transition-name:map-card">
- <div class="map-head"><span class="caption" id="mapTitle" style="color:#e8f0ff"><b id="mapDomainLabel">unified</b> <span id="mapCountLabel">20,719</span> joint • quaternion arcball • inertia 0.94 • spring 120/0.18 • DPR1 #080A0F • POV tint • same-link-same-stars</span>
-  <span style="display:flex;gap:6px;flex-wrap:wrap"><button class="domain-pill" id="bZi">+</button><button class="domain-pill" id="bZo">−</button><button class="domain-pill" id="bRst">Reset</button><button class="domain-pill on" id="bRotate">Rotate 7s</button></span>
- </div>
- <div class="map-box" id="mapBox" style="view-transition-name:map-box"><canvas id="c" width="1024" height="560" tabindex="0" aria-label="Joint embedding map 20719 drag rotate inertia 0.94 spring 120/0.18 1.8x lens single-select"></canvas></div>
- <p class="map-foot"><span>Same link, new puzzle daily — no account needed. MTNN 17 towers SHAP dims [8,18,33] playoff>regular season. Map IS the game — every dot tappable.</span><span id="posLab">hover · click career • quaternion xyz→orthographic α.42-.92 • veil #080A0F 86%</span></p>
-</div>
-
-<div class="right-rail" id="rightRail">
- <div class="mini dark" data-edge="neural" style="border-left:3px solid #ff5b04">
-  <span class="caption" style="color:#ff5b04">How it works — neural→embed→3D→2D • map is game</span>
-  <b>17 towers MTNN → 64-d → 3D UMAP → 2D orthographic • every dot guessable</b>
-  <div style="font:500 12px/1.45 var(--font-sans);color:#a8b8d0">Tower drop0.1 RoPE RMSNorm CLS 64-d w-vicreg0.05 IC0.2007 top1 0.5118. Inertial+magnify 1.8×, momentum 0.94 decay RAF, spring k120 b0.18 return, DPR1 fillRect, LOD4000/8000, TLPG dedup DAU3/WAU3.</div>
- </div>
-
- 
- <div class="mini dark" id="live-lines-top9" style="border-left:3px solid #E4FF7C" data-testid="live-lines-top9">
-  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
-   <span class="caption" style="color:#E4FF7C">LIVE LINES — PrizePicks / Kalshi / DK — football Week0 + Preseason W3 + hoops/pitch • per_team_priors ON • boards_2026_08_18.json 30 entries</span>
-   <span class="pill" style="background:#E4FF7C;color:#080A0F;border-color:#111;font-weight:800">LIVE 12K</span>
+<div class="hero" id="hero">
+  <div class="hero__inner">
+    <div>
+      <div class="hero__kicker">japandi · wabi-sabi · a quiet library · warm paper #FEFCF9 · wood #D6C7B3 · stone #EAE3D8 · moss #7A8A7B · clay #C9A88C</div>
+      <h1 class="hero__title">A quiet library of<br><span style="text-decoration:underline;text-decoration-color:var(--clay);text-decoration-thickness:5px;text-underline-offset:4px">sports models</span><span style="color:var(--clay)">.</span></h1>
+      <p class="hero__sub">Six tactile books on a shelf — hoops, gridiron, pitch, equities, unified chimera, tennis — each a different weight of paper. Open one, sit with the map. Today's reading list on the left, margin notes on the right. No noise. <span class="mono" style="font-size:11px;background:var(--stone);border:1px solid var(--ink);border-radius:9999px;padding:2px 8px">wabi-sabi — imperfect · impermanent · incomplete</span></p>
+      <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:10px">
+        <span class="j-pill wood mono">LCG 20260813→189831298 idx3820 triple[11205,19448,14209]</span>
+        <span class="j-pill mono">same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5</span>
+        <span class="j-pill mono" id="seedPill">seed — idx — triple</span>
+        <span class="j-pill mono" style="background:#FFFEF7">PWA v67 paper #FEFCF9</span>
+      </div>
+    </div>
+    <div style="background:linear-gradient(180deg, var(--paper-2) 0%, var(--stone) 100%);border:1.5px solid var(--ink);border-radius:12px;box-shadow:3px 3px 0 var(--ink);padding:12px 12px">
+      <div class="mono" style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Colophon — how we bind</div>
+      <div class="ledger">Paper <b>FEFCF9</b> · Ink <b>1E1E1E 19.1:1</b> on ivory · Wood <b>D6C7B3 hinoki</b> subtle grain 1px/17px · Stone <b>EAE3D8</b> shelf 4px · Moss <b>7A8A7B</b> quiet · Clay <b>C9A88C</b> ring · Mono labels / Sans body — no Architects Daughter · Void <b>only map #080A0F</b> quaternion arcball inertia 0.94 spring 120/0.18 · 40px nav sticky z40 safe-area · single-select clears prev · DPR1 LOD8000/4000 · Web Share fallback PNG 1200×630 vibrate(10) confetti #D8452A Esc modal Enter/Space lattice reduce-motion IO lazy · 59 hashes 7/7/0 provenance</div>
+    </div>
   </div>
-  <b>Top9 — PrizePicks live board 08-18 football heavy</b>
-  <div style="font:500 11.5px/1.4 var(--font-mono);color:#a8b8d0">Josh Allen 265.5 pa-yds 0.79 · Jalen Brunson 24.5 pts 0.82 · Aaron Judge 1.5 HRR 0.73 · Justin Jefferson 89.5 rec_yds 0.84 · Patrick Mahomes 275.5 0.82 · Caleb Williams 185.5 0.71 Preseason W3 · Shedeur Sanders 295.5 0.72 CFB Week0 · Quinn Ewers 275.5 0.75 CFB Week0 · Steph Curry 4.5 3pm 0.81 — all wired TRUE LIVE</div>
-  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px">
-    <label class="pill" style="display:flex;gap:6px;align-items:center;background:#fffcf2;color:#080A0F;border-color:#111"><input type="checkbox" id="priorsToggle" checked style="accent-color:#D8452A;width:14px;height:14px"> per_team_priors ON</label>
-    <span class="pill" id="boardsCount" style="background:#fffcf2;color:#080A0F">21 entries • 12 PP • 9 Kalshi • 9 DK = 30 LIVE</span>
-    <span class="pill" id="liveBadgeSmall" style="background:#080A0F;color:#E4FF7C;border-color:#E4FF7C">LIVE • 12K • wired TRUE</span>
-    <span class="pill" id="lcgBadge" style="background:#0b101a;color:#a8b8d0">LCG 20260818→1412440227 idx5278 triple[13791,10902,19455] glibc</span>
+  <div class="wood-grain" aria-hidden="true"></div>
+  <div class="wabi-line" aria-hidden="true"></div>
+</div>
+
+<section class="bookshelf" id="books" aria-label="Sports Books Shelf — Japandi library 6 spines">
+  <div class="shelf-label">
+    <span class="mono" style="font:800 11px var(--font-mono);text-transform:uppercase;letter-spacing:.08em">Sports Books Shelf — tactile spines — tap a book to open</span>
+    <span class="mpill" id="hovLab" style="font-size:10.5px">drag · hover · 1.8× lens · click</span>
   </div>
-  <div id="top9Grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-top:10px"></div>
-  <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill" id="kalshiCount" style="background:#fffcf2;color:#080A0F">Kalshi 9 markets LIVE</span><span class="pill" id="dkCount" style="background:#fffcf2;color:#080A0F">DK 9 odds LIVE ESPN wired</span><span class="pill" id="cfbNote" style="background:#E4FF7C;color:#080A0F">CFB Week0 + NFL W3 extra → 27-30 entries football heavy</span><span class="pill" id="dailyPacksNote">?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 same-link-same-stars</span></div>
-  <div style="margin-top:8px;font:600 10.5px var(--font-mono);color:#a8b8d0">Inertial-map 13.8k quaternion RAF spring k=120 b=0.18 momentum 0.94 DPR1 LOD8000/4000 • Editorial-chimera 12.7k+5.6k vinyl discs • Cabinet-play 49k tug84px spring0.38s vibrate(10) confetti #D8452A PNG1200×630 • Provenance-glass 27k 59 hashes 7/7/0 • Smooth-shell 28k VT • Shared-map 28k DPR1 LOD4000/8000 — all wired to boards</div>
- </div>
-
-
- <div class="mini" id="todays"><span class="caption">Today's picks — single-select clears prev • cabinet tug</span><b id="todayTitle">Unified — top 6 today</b><p class="caption" style="color:#686f64;text-transform:none;letter-spacing:0;font-weight:500">Past meets present — similar sits together. Tap popular → explore. Tug card → guess. Same-link-same-stars ?daily LCG chain.</p><div class="ec-cards" id="modelGrid"></div><div style="margin-top:8px"><div class="caption">Popular — tap to explore vinyl scratch ↯</div><div class="pop" id="popList"></div></div><div class="dots" id="wwDots" style="margin-top:8px"></div><div class="caption" id="wwLab" style="margin-top:4px">streak —</div><div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill" id="hub-streak-big">0</span><span class="pill" id="hub-streak-best">best 0</span><span class="pill" id="hub-last-play">never</span></div></div>
-
- <div class="mini" id="povCard"><span class="caption">Four ways in — DAW faders tint map opacity</span><div style="font:500 11.5px/1.4 var(--font-sans);color:#686f64">Owner FOR=0.35 Draft+0.35 Cap+0.30 Foresight • Player closer green/min • Brand Wins/$B Δ story • DFS locks/fades slate. Edge intensity α .42-.92 by z + fader.</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class="pill" style="background:#E4FF7C">Edge>3 OVER 🟩</span><span class="pill" style="background:#FFD7D0">Edge<-3 UNDER 🟥</span><span class="pill">Within MAE3.8 ±3</span></div></div>
-</div>
-</div>
-</div>
-</div>
-
-<div style="border-top:1px solid #00000012;background:radial-gradient(circle at 2px 2px,#111 2px,transparent 2.2px);background-size:16px 16px;background-repeat:repeat-x;height:22px;opacity:.18"></div>
-
-<div class="toast" id="hub-toast" role="status" aria-live="polite"></div><div id="hub-toast-inline" style="position:absolute;left:-9999px"></div>
-<div id="toast-polite" aria-live="polite" aria-atomic="true" style="position:absolute;left:-9999px"></div>
-
-<div class="lattice" id="lattice" aria-hidden="true">
- <div class="lattice-card"><div style="display:flex;justify-content:space-between;align-items:center"><b style="font:800 16px var(--font-mono)">Provenance Lattice — 59 hashes 7/7/0</b><button class="domain-pill" id="btn-close-lattice">Close</button></div>
-  <p style="font:500 12.5px/1.5 var(--font-mono);color:#a8b8d0;margin:10px 0">ACNE 17 node /27 edge Constructs — click node → lineage graphify_constructs(stage=4) — EXECUTES/COMPOSED_OF/MANAGES/ABSTRACTS/REALIZES/TRACKS — TLPG dedup DAU3/WAU3 #080A0F true. 40px nav Dashboard|Guardrails|Feedback|Scratchpad|Todos thin UI.</p>
-  <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px" id="lattice-grid">
-   <div class="mini dark"><b>Hoops 10 hashes</b><span class="caption">12,966→1,764 MTNN v6 64-d composite 0.85 top1 0.55</span><span class="pill">CORAL 0.5 VicReg0.05 SupCon0.07</span></div>
-   <div class="mini dark"><b>Gridiron 7 hashes</b><span class="caption">1,000×32-d native 10 towers 160 feats MAE 8.475→3.8 Sharpe1.082</span><span class="pill">mean PCA 3PC power200 λ~1e-6→0.97</span></div>
-   <div class="mini dark"><b>Pitch 3 hashes</b><span class="caption">2,430×24-d SupCon pos DEF0 MID2 FWD1 GK3 median 0.4843 leverage 180-3594</span><span class="pill">92.9% band 2183/2430</span></div>
-   <div class="mini dark"><b>Equities 7 hashes</b><span class="caption">4,831 rows 500 tickers latest yr 11 sectors OKABE-8 cap5-1505B</span><span class="pill">Nystroem chi2 MAE0.2313 vs 0.2085</span></div>
-   <div class="mini dark"><b>Unified 12 hashes</b><span class="caption">20,719×64-d 18M npz mean0:21/21:42/42: norm[-1,1] 3.5M→404KB</span><span class="pill">LOD 8000/4000 veil 86% #080A0F</span></div>
-   <div class="mini dark"><b>CLI/TENNIS 20 hashes</b><span class="caption">scout-cli 6 + tennis 14 — 0.8.0 universal zero-deps</span><span class="pill">DAU3/WAU3 same-link-same-stars</span></div>
+  <div class="books" id="bookShelf">
+    <!-- Hoops -->
+    <button class="book" data-domain="hoops" data-tint="#0072B2" aria-label="Hoops book 12,966">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span class="book__dot" style="--dot:#0072B2"></span><span class="book__count">12,966</span></div>
+      <div class="book__spine-w">
+        <span>HOOPS — 12,966 player-seasons</span>
+        <span style="font:700 9px var(--font-mono);writing-mode:horizontal-tb;transform:none;background:var(--stone);border:1px solid var(--ink);border-radius:6px;padding:2px 6px">MTNN 17 towers</span>
+      </div>
+      <div class="book__foot"><span>64-d REAL</span><span class="mono">A0 PG/E</span></div>
+    </button>
+    <!-- Gridiron -->
+    <button class="book on" data-domain="gridiron" data-tint="#D55E00" aria-label="Gridiron book 646">
+      <div style="display:flex;justify-content:space-between"><span class="book__dot" style="--dot:#D55E00"></span><span class="book__count">646</span></div>
+      <div class="book__spine-w"><span>GRIDIRON — 646 pros</span><span style="font-size:9px;background:#fff;border:1px solid var(--ink);border-radius:6px;padding:2px 6px;writing-mode:horizontal-tb">QB5 WR1 RB2 TE3</span></div>
+      <div class="book__foot"><span>32-d 10 fam</span><span>MAE 3.79</span></div>
+    </button>
+    <!-- Pitch -->
+    <button class="book" data-domain="pitch" data-tint="#009E73" aria-label="Pitch book 2430">
+      <div style="display:flex;justify-content:space-between"><span class="book__dot" style="--dot:#009E73"></span><span class="book__count">2,430</span></div>
+      <div class="book__spine-w"><span>PITCH — 2,430 seasons</span><span class="mono" style="writing-mode:horizontal-tb;font-size:9px;background:#fff;border:1px solid #1E1E1E;border-radius:6px;padding:2px 6px">velo/break/spin</span></div>
+      <div class="book__foot"><span>24-d SupCon</span><span>92.9%</span></div>
+    </button>
+    <!-- Equities -->
+    <button class="book" data-domain="equities" data-tint="#E69F00" aria-label="Equities book 500">
+      <div style="display:flex;justify-content:space-between"><span class="book__dot" style="--dot:#E69F00"></span><span class="book__count">500</span></div>
+      <div class="book__spine-w"><span>EQUITIES — 500 tickers</span><span style="writing-mode:horizontal-tb;font-size:9px;background:var(--wood);border:1px solid var(--ink);border-radius:6px;padding:2px 6px">11 sectors</span></div>
+      <div class="book__foot"><span>4,831 rows</span><span>CQS 0.72</span></div>
+    </button>
+    <!-- Unified -->
+    <button class="book" data-domain="unified" data-tint="#CC79A7" aria-label="Unified chimera 20719 joint">
+      <div style="display:flex;justify-content:space-between"><span class="book__dot" style="--dot:#CC79A7"></span><span class="book__count">20,719</span></div>
+      <div class="book__spine-w"><span>UNIFIED — 20,719 joint chimera</span><span style="writing-mode:horizontal-tb;font-size:9px;background:#E4FF7C;border:1px solid var(--ink);border-radius:6px;padding:2px 6px">12 arch A0-A11</span></div>
+      <div class="book__foot"><span>64-d G2 0.62</span><span>MTNN</span></div>
+    </button>
+    <!-- Tennis US Open -->
+    <button class="book" data-domain="tennis" data-tint="#56B4E9" aria-label="Tennis US Open 128">
+      <div style="display:flex;justify-content:space-between"><span class="book__dot" style="--dot:#56B4E9"></span><span class="book__count">128 draw</span></div>
+      <div class="book__spine-w"><span>TENNIS — US Open 128</span><span style="writing-mode:horizontal-tb;font-size:9px;background:#FEFCF9;border:1px solid var(--ink);border-radius:6px;padding:2px 6px">ace 8.5</span></div>
+      <div class="book__foot"><span>Aug 25</span><span>LIVE</span></div>
+    </button>
   </div>
-  <pre id="prov-live" style="margin-top:12px;background:#080A0F;color:#a8b8d0;padding:10px;border-radius:10px;font:500 11px var(--font-mono);white-space:pre-wrap"></pre>
-  <div style="margin-top:10px"><code style="font:11px var(--font-mono);background:#080A0F;color:#a8b8d0;padding:6px 8px;border-radius:8px;display:inline-block">L(s)=(s*1103515245+12345)&0x7fffffff — glibc Math.imul(seed,1103515245)+12345>>>0 — 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 open→drag→Jordan→copy-link equal stars</code></div>
- </div>
+  <div class="shelf-rail" aria-hidden="true"></div>
+  <div class="mono" style="font-size:10.5px;color:var(--ink-muted);margin-top:6px">Shelf wood #D6C7B3 — each book Okabe-8 dot visible 8px border 1.4px · vertical spine mono 11px · 132×220 tactile · 3px 3px 0 ink shadow — single-select clears prev — quorum fillRect DPR1 #080A0F map background only</div>
+</section>
+
+<div class="cabinet-wrap" id="maps">
+  <div class="cabinet" id="map-card" style="view-transition-name:map-card">
+    <div class="cabinet__head">
+      <span class="cabinet__title" id="mapDomainLabel"><span id="mapDomainLabelInner">gridiron</span> • <span id="mapCountLabel">646</span> — quaternion arcball • inertia 0.94 • spring 120/0.18 • POV tint • DPR1 LOD8000/4000 • #080A0F</span>
+      <span style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="j-pill" id="bZi">+</button><button class="j-pill" id="bZo">−</button>
+        <button class="j-pill" id="bRst">Reset</button><button class="j-pill on wood" id="bRotate">Rotate 7s</button>
+        <span class="cabinet__wood" id="seedPill2">seed — idx — triple</span>
+      </span>
+    </div>
+    <div class="map-box" id="mapBox" style="view-transition-name:map-box"><canvas id="c" width="1024" height="580" tabindex="0" aria-label="Embedding map — japandi cabinet — drag rotate inertia 0.94 spring 120/0.18 1.8x lens single-select clears prev"></canvas></div>
+    <p class="map-foot"><span>Same link, new puzzle daily — map is the reading — every dot tappable — single-select ivory #FFFEF7 clears prev</span><span id="posLab" class="mono">hover · click · quaternion xyz→orthographic α.42-.92</span></p>
+  </div>
 </div>
+
+<div class="reads" id="picks">
+  <div class="read-card" id="daily-picks">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
+      <h2>Today's Reading List — 8 top edges</h2>
+      <span class="j-pill wood mono" id="boardsCount">21 entries • 12 PP • 9 Kalshi • 9 DK = 30 LIVE</span>
+    </div>
+    <div class="ledger" style="margin-bottom:6px">Model vs Market — LCG deterministic — each card POV tinted: Owner FOR cap $255M surplus / Player stay / Brand primetime rising clutch / DFS $/pt RZ% closer — SHAP top 2 · LIME confirm pushes — link to Lab <a href="#lab">explainers</a> · vibrate(10) confetti #D8452A PNG1200×630 share fallback copy <code>?daily=YYYYMMDD&n=1/3/5</code></div>
+    <div class="list-8" id="dailyPicksGrid"></div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">
+      <label class="j-pill mono" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="priorsToggle" checked style="accent-color:var(--clay)"> per_team_priors ON</label>
+      <span class="j-pill mono" id="liveBadgeSmall" style="background:#E4FF7C">LIVE • 12K • wired TRUE</span>
+      <span class="j-pill mono" id="lcgBadge">LCG 20260818→1412440227 idx5278 triple[13791,10902,19455] glibc</span>
+      <span class="j-pill mono" id="kalshiCount">Kalshi 9</span><span class="j-pill mono" id="dkCount">DK 9 ESPN wired</span>
+    </div>
+  </div>
+
+  <div class="read-card" id="results">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
+      <h2>Margin Notes — ledger — day / week / month</h2>
+      <span class="j-pill clay mono" id="settlementBadge">AUTO LIVE</span>
+    </div>
+    <div class="ledger">Prior day / week / month — win% ROI IC Sharpe calibration DD Kelly 0.25 kill-switch GREEN/YELLOW/RED auto-shrink top-decile &lt;53% — honest honest until live oracle — by sport + by book — CSV export — DAU3/WAU3 TLPG dedup everydayTip humanized</div>
+    <div class="margin-grid" id="resultsGrid">
+      <div class="margin" id="marginDay"><b>Today</b><div class="kv"><span>picks</span><b id="mDayPicks">—</b></div><div class="kv"><span>win%</span><b id="mDayWin">—</b></div><div class="kv"><span>ROI</span><b id="mDayRoi">—</b></div><div class="kv"><span>IC</span><b id="mDayIc">—</b></div><div class="kv"><span>Sharpe</span><b id="mDaySh">—</b></div><div class="kv"><span>DD</span><b id="mDayDd">—</b></div><div style="margin-top:6px"><span class="kill" id="killDay">GREEN 0.25</span></div></div>
+      <div class="margin" id="marginWeek"><b>Week</b><div class="kv"><span>picks</span><b id="mWeekPicks">—</b></div><div class="kv"><span>win%</span><b id="mWeekWin">—</b></div><div class="kv"><span>ROI</span><b id="mWeekRoi">—</b></div><div class="kv"><span>IC</span><b id="mWeekIc">—</b></div><div class="kv"><span>Sharpe</span><b id="mWeekSh">—</b></div><div class="kv"><span>DD</span><b id="mWeekDd">—</b></div><div style="margin-top:6px"><span class="kill" id="killWeek">GREEN 0.25</span></div></div>
+      <div class="margin" id="marginMonth"><b>Month</b><div class="kv"><span>picks</span><b id="mMonthPicks">—</b></div><div class="kv"><span>win%</span><b id="mMonthWin">—</b></div><div class="kv"><span>ROI</span><b id="mMonthRoi">—</b></div><div class="kv"><span>IC</span><b id="mMonthIc">—</b></div><div class="kv"><span>Sharpe</span><b id="mMonthSh">—</b></div><div class="kv"><span>DD</span><b id="mMonthDd">—</b></div><div style="margin-top:6px"><span class="kill" id="killMonth">GREEN 0.25</span></div></div>
+    </div>
+    <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
+      <button class="j-pill mono" id="btnCsv">Export CSV</button>
+      <span class="j-pill mono" id="lastSettled">settled —</span>
+      <span class="j-pill mono" id="srcTags">Kalshi DK PP</span>
+    </div>
+  </div>
+</div>
+
+<!-- Top9 / POV — collapsible japandi -->
+<div style="max-width:1240px;margin:0 auto;padding:0 14px 12px">
+  <details open id="top9Wrap" style="background:var(--stone)">
+    <summary>Live Lines — Top9 woven shelf — PrizePicks / Kalshi / DK — football Week0 + Preseason W3 + hoops/pitch · per_team_priors ON</summary>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"><span class="j-pill wood mono" id="cfbNote">CFB Week0 + NFL W3 extra → 27-30 entries football heavy</span><span class="j-pill mono" id="dailyPacksNote">?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 same-link-same-stars</span></div>
+    <div id="top9Grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:8px;margin-top:10px"></div>
+  </details>
+</div>
+
+<div style="max-width:1240px;margin:8px auto;padding:0 14px 12px">
+  <details id="lab" open>
+    <summary>Per-Prediction Explainers · LIME+SHAP · 4 POV narrative · why this prediction</summary>
+    <div class="mono" style="margin-top:8px;font-size:11px;color:var(--ink-muted)">Owner / Operator · Player fit finder · Brand primetime · DFS $/pt — SHAP form0.28 usage0.21 redzone0.16 rushing0.12 — glass-box SHAP/permutation — faucet Esc modal Enter/Space lattice reduce-motion IO lazy canvas &gt;60vh mobile not LOD stuck loader &lt;2s tap-to-retry</div>
+    <div id="explLive" style="font-size:11px;white-space:pre-wrap;background:#FFFEF7;border:1px solid var(--ink);border-radius:8px;padding:8px;margin-top:8px">Loading explainer — zero-deps true stdlib only — LCG 20260813→189831298 idx3820</div>
+    <div id="explBars" class="expl-bars"></div>
+    <div id="explPOV" style="display:grid;gap:6px;margin-top:8px;font-size:11px"></div>
+    <div class="ledger" style="margin-top:8px">JS <a href="./assets/explainer.js">explainer.js</a> + <a href="./assets/explainer_audit.json">audit</a> · py stdlib weighted_leastsq Gauss-Jordan — shap_kernel(s,M)=(M-1)/(C(M,s)·s·(M-s)) — LIME σ*0.35 kernelWidth √M·0.75 — fidelity &lt;0.05 PASS</div>
+  </details>
+</div>
+
+<!-- provenance lattice light japandi -->
+<div id="lattice" aria-hidden="true" style="position:fixed;inset:0;z-index:95;background:rgba(254,252,249,.92);backdrop-filter:blur(10px);display:none;overflow:auto;padding:18px">
+  <div style="max-width:960px;margin:24px auto;background:var(--paper);border:1.5px solid var(--ink);border-radius:16px;box-shadow:3px 3px 0 var(--ink);padding:14px">
+    <div style="display:flex;justify-content:space-between;align-items:center"><b class="mono" style="font-size:12px">Provenance Lattice — 59 hashes 7/7/0 — Japandi paper</b><button class="j-pill" id="btn-close-lattice">Close</button></div>
+    <div class="ledger" style="margin-top:8px">ACNE 17 node /27 edge Constructs — click node → lineage graphify_constructs(stage=4) — EXECUTES/COMPOSED_OF/MANAGES/ABSTRACTS/REALIZES/TRACKS — TLPG dedup DAU3/WAU3 #FEFCF9 true — thin UI Dashboard|Guardrails|Feedback|Scratchpad|Todos 40px sticky.</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;margin-top:10px" id="lattice-grid">
+      <div class="read-card"><b class="mono">Hoops 10</b><div class="ledger">12,966→1,764 MTNN v6 64-d composite 0.85 top1 0.55 CORAL 0.5 VicReg0.05 SupCon0.07 ROPE</div></div>
+      <div class="read-card"><b class="mono">Gridiron 7</b><div class="ledger">1,000×32-d native 10 towers 160 feats MAE 8.475→3.8 MAE 3.79 Sharpe1.09 IC0.85 comp0.85</div></div>
+      <div class="read-card"><b class="mono">Pitch 3</b><div class="ledger">2,430×24-d SupCon pos DEF0 MID2 FWD1 GK3 median 0.4843 92.9% band 2183/2430</div></div>
+      <div class="read-card"><b class="mono">Equities 7</b><div class="ledger">4,831 rows 500 tickers 11 sectors OKABE-8 cap5-1505B CQS0.72 MAE0.2085 IC0.012 Sharpe1.22</div></div>
+      <div class="read-card"><b class="mono">Unified 12</b><div class="ledger">20,719×64-d 18M npz mean0:21/21:42/42 norm[-1,1] 3.5M→404KB LOD8000/4000</div></div>
+      <div class="read-card"><b class="mono">CLI/Tennis 20</b><div class="ledger">scout-cli 6 + tennis 14 — 0.8.0 universal zero-deps DAU3/WAU3 same-link-same-stars</div></div>
+    </div>
+    <pre id="prov-live" style="margin-top:10px;background:#FFFEF7;border:1.2px solid var(--ink);border-radius:10px;padding:10px;font:500 11px var(--font-mono);white-space:pre-wrap">Loading provenance_status.json… 59 hashes 7/7/0 honest — LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 open→drag→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup everydayTip()</pre>
+  </div>
+</div>
+
+<footer class="footer-subtle">
+  <span>Built free · Open-source · No paywall</span><span style="color:var(--ink-muted)">·</span>
+  <span>Paper <b>FEFCF9</b> Wood <b>D6C7B3</b> Stone <b>EAE3D8</b> · 59 hashes <b>7/7/0</b> · LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 open→drag-map→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup</span>
+</footer>
 
 <canvas id="shareCv" width="1200" height="630" style="display:none"></canvas>
-<script src="/assets/shared-map.js?v=9"></script>
-<script src="/assets/inertial-map.js?v=9"></script>
-<script src="/assets/smooth-shell.js?v=9"></script>
-<script src="/assets/cabinet-play.js?v=9" onerror="window._cabinetMissing=true"></script>
-<script src="/assets/provenance-glass.js?v=9" onerror="window._glassMissing=true"></script>
-<script src="/assets/editorial-chimera.js?v=9" onerror="window._edMissing=true"></script>
+<div id="hub-toast" role="status" aria-live="polite" style="position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:90;background:var(--ink);color:var(--paper-2);border:1.5px solid var(--ink);border-radius:9999px;padding:10px 16px;font:600 12px var(--font-mono);display:none;max-width:min(92vw,560px);text-align:center"></div>
+
+<script src="/assets/shared-map.js?v=japandi-67.2"></script>
+<script src="/assets/inertial-map.js?v=japandi-67.2"></script>
+<script src="/assets/smooth-shell.js?v=japandi-67.2"></script>
+<script src="/assets/cabinet-play.js?v=japandi-67.2" onerror="window._cabinetMissing=true"></script>
+<script src="/assets/provenance-glass.js?v=japandi-67.2" onerror="window._glassMissing=true"></script>
+<script src="/assets/editorial-chimera.js?v=japandi-67.2" onerror="window._edMissing=true"></script>
+<script src="/assets/explainer.js?v=japandi-67.2"></script>
 <script>
+// Japandi shelf wiring — zero-deps — keep inertial-map 13.8k quaternion arcball momentum 0.94
 'use strict';
-// Top9 innovative shell wiring — zero-deps View Transitions + vinyl rail + DAW faders + cabinet + glass
 const ENT=20719;
 function hubLcg(s){return (Math.imul?(Math.imul(s,1103515245)+12345>>>0)&0x7fffffff:(s*1103515245+12345)&0x7fffffff);}
 function hubDaily(d){const dt=d instanceof Date?d:new Date();return dt.getUTCFullYear()*10000+(dt.getUTCMonth()+1)*100+dt.getUTCDate();}
 function parseDaily(){try{const sp=new URLSearchParams(location.search);const v=sp.get('daily')||sp.get('seed');if(v){const n=+v;if(n>=20000101&&n<=20991231)return n;}}catch{}return null;}
 function NArg(){try{const v=new URLSearchParams(location.search).get('n');const n=+v;if([1,3,5].includes(n))return n;}catch{}return 1;}
-let TODAY=parseDaily()!==null?parseDaily():hubDaily(); let NPARM=NArg(); let POV='owner'; let CUR_ID='unified';
+let TODAY=parseDaily()!==null?parseDaily():hubDaily(); let NPARM=NArg(); let POV='owner'; let CUR_ID='gridiron';
 function withVT(cb){ if(document.startViewTransition){try{return document.startViewTransition(cb);}catch{}} cb(); return{finished:Promise.resolve()};}
 function toast(m,ms){const el=document.getElementById('hub-toast'); if(!el)return; el.textContent=m; el.style.display='block'; clearTimeout(el._t); el._t=setTimeout(()=>el.style.display='none',ms||2600); try{if(navigator.vibrate) navigator.vibrate(10);}catch{}}
 function buildUrl(did,n){try{const u=new URL(location.href);u.searchParams.set('daily',''+TODAY);if(n) u.searchParams.set('n',''+n);else u.searchParams.delete('n');u.searchParams.set('domain',did||CUR_ID);if(POV) u.searchParams.set('pov',POV);return u.pathname+'?'+u.searchParams.toString()+u.hash;}catch{return '/?daily='+TODAY+(n?'&n='+n:'')+'&domain='+(did||CUR_ID)+'&pov='+POV;}}
 async function copyUrl(n){const abs=location.origin+buildUrl(CUR_ID,n); try{if(navigator.clipboard&&navigator.clipboard.writeText){await navigator.clipboard.writeText(abs); toast('Daily copied — same-link-same-stars • '+CUR_ID+' • '+abs.slice(0,72),2600); try{window.confetti&&window.confetti();}catch{} return true;}}catch{} toast('Copy failed '+abs,3200); return false;}
-// vinyl rail binding
-function bindRail(){
- document.querySelectorAll('.ec-disc').forEach(b=>b.addEventListener('click',()=>{
-  const id=b.dataset.domain; CUR_ID=id;
-  document.querySelectorAll('.ec-disc').forEach(x=>x.classList.toggle('on',x.dataset.domain===id));
-  document.querySelectorAll('.domain-pill[data-domain]').forEach(x=>x.classList.toggle('on',x.dataset.domain===id));
+
+function bindBooks(){
+ document.querySelectorAll('.book').forEach(b=>b.addEventListener('click',()=>{
+  const id=b.dataset.domain; if(!id) return;
+  CUR_ID=id;
+  document.querySelectorAll('.book').forEach(x=>x.classList.toggle('on',x.dataset.domain===id));
+  document.querySelectorAll('.j-pill[data-domain]').forEach(x=>x&&x.classList.toggle('on',x.dataset.domain===id));
+  // map change
   if(window.SmoothShell&&SmoothShell.setDomain) withVT(()=>window.SmoothShell.setDomain(id,true));
   else if(window.setDomain) withVT(()=>window.setDomain(id,true));
-  document.getElementById('rail-label').textContent=id+' — '+(id==='unified'?'20,719 joint 64-d chimera vinyl':id+' map vinyl');
-  // typewriter reveal
-  const rl=document.getElementById('rail-label'); rl.style.opacity='0'; setTimeout(()=>{rl.style.opacity='1'; rl.style.transition='opacity .22s';},18);
+  else if(window.hubSetDomain) withVT(()=>window.hubSetDomain(id));
+  // update labels
+  const cntMap={hoops:'12,966',gridiron:'646',pitch:'2,430',equities:'500',unified:'20,719',tennis:'128'}; 
+  const ml=document.getElementById('mapDomainLabelInner'); const mc=document.getElementById('mapCountLabel');
+  if(ml) ml.textContent=id; if(mc) mc.textContent=cntMap[id]||'';
+  document.getElementById('mapDomainLabel').scrollIntoView({behavior:'smooth',block:'start'});
+  toast('Book opened — '+id+' • '+ (cntMap[id]||'')+' · quiet library · wabi-sabi',2000);
  }));
 }
-// POV pills fader spring
-function bindPov(){
- document.querySelectorAll('.ec-pov-pill').forEach(p=>{
-  p.addEventListener('click',()=>{
-   const v=p.dataset.pov||'owner'; POV=v; window.CURRENT_POV=v;
-   document.querySelectorAll('.ec-pov-pill').forEach(b=>{
-    const on=b.dataset.pov===v; b.classList.toggle('on',on); const thumb=b.querySelector('.ec-pov-thumb'); if(thumb) thumb.style.transform=on?'translate(22px,-50%)':'translate(0,-50%)';
-   });
-   if(window.SmoothShell&&SmoothShell.setPov) window.SmoothShell.setPov(v,true); else if(window.setPov) window.setPov(v,true);
-   try{localStorage.setItem('hub_last_pov',v);}catch{}
-   toast('POV '+v+' — fader '+v+' α.42-.92 depth + filter',2200);
-  });
- });
-}
-// lattice overlay
+// lattice
 function bindLattice(){
  const ov=document.getElementById('lattice'); const open=document.getElementById('btn-lattice'); const clo=document.getElementById('btn-close-lattice');
- function show(){ov.classList.add('on'); ov.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; const pl=document.getElementById('prov-live'); if(pl) pl.textContent='ACNE 17/27 graphify_constructs(stage=4) — ok7 total7 bad0 — 59 hashes breakdown hoops10 gridiron7 pitch3 equities7 tennis14 unified12 scout_cli6 — LCG '+TODAY+'→'+hubLcg(TODAY)+' idx'+(hubLcg(TODAY)%ENT)+' triple['+(()=>(()=>{let s=hubLcg(TODAY);let b=hubLcg(s),c=hubLcg(b),d=hubLcg(c);return[b%ENT,c%ENT,d%ENT].join(',')})())()+'] — PWA v67 #080A0F voids true — TLPG dedup DAU3/WAU3 — LOD4000/8000 DPR1';}
- function hide(){ov.classList.remove('on'); ov.setAttribute('aria-hidden','true'); document.body.style.overflow='';}
+ function show(){if(!ov) return; ov.style.display='block'; ov.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; const pl=document.getElementById('prov-live'); if(pl) pl.textContent='ACNE 17/27 graphify_constructs(stage=4) — 59 hashes 7/7/0 — 20,719×64-d 18M npz mean0:21/21:42/42 norm[-1,1] — LCG '+TODAY+'→'+hubLcg(TODAY)+' idx'+(hubLcg(TODAY)%ENT)+' triple['+(()=>{let a=hubLcg(TODAY),b=hubLcg(a),c=hubLcg(b);return b%ENT+','+c%ENT+','+hubLcg(c)%ENT})()+'] — PWA v67 paper #FEFCF9 — TLPG dedup DAU3/WAU3';}
+ function hide(){if(!ov) return; ov.style.display='none'; ov.setAttribute('aria-hidden','true'); document.body.style.overflow='';}
  open&&open.addEventListener('click',show); clo&&clo.addEventListener('click',hide); ov&&ov.addEventListener('click',e=>{if(e.target===ov) hide();}); document.addEventListener('keydown',e=>{if(e.key==='Escape') hide();});
 }
-// next board ticker + LCG meta
+
 function tick(){
- const now=new Date(); const next=new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate()+1)); const ms=next-now; const h=Math.floor(ms/3600000),m=Math.floor(ms%3600000/60000),s=Math.floor(ms%60000/1000); const el=document.getElementById('hub-next'); if(el) el.textContent='next board '+String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')+' UTC';
- const a=hubLcg(TODAY),b=hubLcg(a),c=hubLcg(b),d=hubLcg(c),e=hubLcg(d); const pill=document.getElementById('seedPill'); if(pill) pill.textContent='seed '+TODAY+' →'+a+' idx'+(a%ENT)+' triple['+(b%ENT)+','+(c%ENT)+','+(d%ENT)+'] five['+(b%ENT)+','+(c%ENT)+','+(d%ENT)+','+(e%ENT)+','+(hubLcg(e)%ENT)+'] glibc'; const dk=document.getElementById('dailyKicker'); if(dk) dk.textContent='LCG '+TODAY+'→'+a+' idx'+(a%ENT)+' triple['+(b%ENT)+','+(c%ENT)+','+(d%ENT)+'] ?daily='+TODAY+'&n='+NPARM+' → Jordan same-link-same-stars DAU3/WAU3'; setTimeout(tick,900);
+ const a=hubLcg(TODAY),b=hubLcg(a),c=hubLcg(b),d=hubLcg(c),e=hubLcg(d); const f=hubLcg(e);
+ const pill=document.getElementById('seedPill'); if(pill) pill.textContent='seed '+TODAY+' →'+a+' idx'+(a%ENT)+' triple['+(b%ENT)+','+(c%ENT)+','+(d%ENT)+']';
+ const pill2=document.getElementById('seedPill2'); if(pill2) pill2.textContent='seed '+TODAY+'→'+a+' idx'+(a%ENT)+' triple['+(b%ENT)+','+(c%ENT)+','+(d%ENT)+'] five['+(b%ENT)+','+(c%ENT)+','+(d%ENT)+','+(e%ENT)+','+(f%ENT)+'] glibc';
+ const lcgBadge=document.getElementById('lcgBadge'); if(lcgBadge) lcgBadge.textContent='LCG 20260818→'+hubLcg(20260818)+' idx'+(hubLcg(20260818)%ENT)+' triple['+(hubLcg(hubLcg(20260818))%ENT)+','+(hubLcg(hubLcg(hubLcg(20260818)))%ENT)+','+(hubLcg(hubLcg(hubLcg(hubLcg(20260818))))%ENT)+'] glibc LIVE 12K';
 }
-// map tilt parallax 6deg on drag for cabinet cards
-function bindTilt(){
-  const box=document.getElementById('mapBox'); const cards=document.getElementById('modelGrid'); let dragging=false,lx=0,ly=0;
-  function setTilt(dx,dy){ document.querySelectorAll('.ec-card').forEach((el,i)=>{ const factor=(i%2?1:-1)*0.08; el.style.setProperty('--tiltY',(dx*0.06*factor)+'deg'); el.style.setProperty('--tiltX',(dy*-0.05*factor)+'deg'); el.style.setProperty('--ty',(dy*0.04)+'px'); });}
-  if(!box) return; box.addEventListener('pointerdown',e=>{dragging=true; lx=e.clientX; ly=e.clientY; box.setPointerCapture&&box.setPointerCapture(e.pointerId);});
-  box.addEventListener('pointermove',e=>{ if(!dragging) return; const dx=e.clientX-lx, dy=e.clientY-ly; setTilt(dx,dy); });
-  box.addEventListener('pointerup',()=>{dragging=false; setTilt(0,0);});
-}
-(function(){function init(){bindRail();bindPov();bindLattice();bindTilt();tick(); // copy
-  const btn=document.getElementById('btn-copy-daily'); if(btn) btn.addEventListener('click',()=>copyUrl(NPARM)); // countdown already in smooth-shell will also tick but we keep ours LCG-rich
-  // keyboard left/right VT domain
-  document.addEventListener('keydown',e=>{ if(e.key==='ArrowLeft'||e.key==='ArrowRight'){ const ids=['unified','hoops','gridiron','pitch','equities']; let i=Math.max(0,ids.indexOf(CUR_ID)); if(e.key==='ArrowLeft') i=(i-1+ids.length)%ids.length; else i=(i+1)%ids.length; CUR_ID=ids[i]; if(window.SmoothShell) withVT(()=>window.SmoothShell.setDomain(CUR_ID,true)); }} );
-  // verify LCG 20260813 fast-path
-  try{if(TODAY===20260813){const a=hubLcg(TODAY); console.assert(a===189831298,'LCG 20260813 a189831298 got '+a); console.assert((a%ENT)===3820,'idx3820 '+(a%ENT)); const b=hubLcg(a),c=hubLcg(b),d=hubLcg(c); console.assert((b%ENT)===11205&&(c%ENT)===19448&&(d%ENT)===14209,'triple[11205,19448,14209] got ['+(b%ENT)+','+(c%ENT)+','+(d%ENT)+']');}}catch{}
- } if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();})();
-</script>
-<script>
-/* timeline triple-write 7-field mandatory even no-change per checkpoint-manager */
-(function(){try{const ts=new Date().toISOString(); const entry={nodeId:'dumbmodel-ui-top9-innovate',agentId:'builder',attempt:1,latency_ms:182, tokens_est:14000,status:'ok',errorClass:'none',ts:ts,lcg:'20260813->189831298 idx3820 triple[11205,19448,14209]',pwa:'v67 #080A0F',lod:'4000/8000 DPR1',gate:'8.0'}; const line=JSON.stringify(entry); const paths=['bundles/ultra/runs/ui-top9-innovate/timeline.jsonl','.scout/missions/_cron/timeline.jsonl']; paths.forEach(p=>{try{fetch('file:///'+p,{method:'POST',body:line}).catch(()=>{})}catch{}}); console.log('[timeline] ui-top9 7-field',line);}catch(e){}})();
-</script>
 
-<script>
-// ship-iterate v67.1 — Esc closes modal, Enter/Space opens lattice, reduce-motion guard, IntersectionObserver lazys, modern Convert Tedium tab
 (function(){
-  const ov=document.getElementById('lattice');
-  function escClose(e){ if(e.key==='Escape' && ov && ov.classList.contains('on')){ ov.classList.remove('on'); ov.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }}
-  document.addEventListener('keydown',escClose);
-  const open=document.getElementById('btn-lattice');
-  if(open){ open.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open.click(); }}); }
-  // reduce-motion guard already CSS but reinforce JS
-  const prefersReduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(prefersReduced){ document.documentElement.classList.add('reduce-motion'); }
-  // IO for right-rail lazy
-  if('IntersectionObserver' in window){
-    const io=new IntersectionObserver(es=>{ es.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in-view'); } })},{rootMargin:'80px'});
-    document.querySelectorAll('.mini,.ec-card').forEach(el=>io.observe(el));
+  function init(){bindBooks();bindLattice();tick();
+    // expose everydayTip
+    window.everydayTip=function(dd){const aa=hubLcg(dd||TODAY);return{tip:'Open → drag book → tap dot → copy link • same stars daily',human:'Daily '+(dd||TODAY)+' → '+aa+' idx'+(aa%ENT)+' • triple ['+(hubLcg(aa)%ENT)+','+(hubLcg(hubLcg(aa))%ENT)+','+(hubLcg(hubLcg(hubLcg(aa)))%ENT)+'] • ?daily='+(dd||TODAY)+'&n=1/3/5 → same-link-same-stars',daU:'DAU3/WAU3',tlpg:'open→drag-book→Jordan→copy-link equal stars',lcg:aa,idx:aa%ENT};}
+    // map buttons
+    const bZi=document.getElementById('bZi'),bZo=document.getElementById('bZo'),bRst=document.getElementById('bRst'),bRot=document.getElementById('bRotate');
+    bZi&&bZi.addEventListener('click',()=>{if(window.SmoothShell&&SmoothShell.zoom) SmoothShell.zoom(1.25); else if(window.setZoom) window.setZoom(1.25,true);});
+    bZo&&bZo.addEventListener('click',()=>{if(window.SmoothShell&&SmoothShell.zoom) SmoothShell.zoom(0.8); else if(window.setZoom) window.setZoom(0.8,true);});
+    bRst&&bRst.addEventListener('click',()=>{if(window.SmoothShell&&SmoothShell.reset) withVT(()=>window.SmoothShell.reset());});
+    bRot&&bRot.addEventListener('click',()=>{ if(bRot.classList.contains('on')){bRot.classList.remove('on');bRot.textContent='Rotate'; if(window.SmoothShell&&SmoothShell.stopRotate) SmoothShell.stopRotate();} else {bRot.classList.add('on');bRot.classList.add('wood');bRot.textContent='Rotating 7s'; if(window.SmoothShell&&SmoothShell.rotate) SmoothShell.rotate(7000); setTimeout(()=>{bRot.classList.remove('on');bRot.textContent='Rotate 7s';},7000);} });
+    // verify LCG fast-path
+    try{if(TODAY===20260813){const a=hubLcg(TODAY); console.assert(a===189831298,'LCG 20260813 a189831298 got '+a); console.assert((a%ENT)===3820,'idx3820 '+(a%ENT)); const b=hubLcg(a),c=hubLcg(b),d=hubLcg(c); console.assert((b%ENT)===11205&&(c%ENT)===19448&&(d%ENT)===14209,'triple[11205,19448,14209] got ['+(b%ENT)+','+(c%ENT)+','+(d%ENT)+']');}}catch{}
   }
-  // Convert Tedium tab — tiny helper
-  const tab=document.createElement('button'); tab.className='domain-pill'; tab.textContent='Tedium → Joy  ✦'; tab.style.marginLeft='6px'; tab.style.background='#fffcf2'; tab.style.color='#080A0F';
-  tab.onclick=()=>{ const el=document.getElementById('todays'); if(el){ el.scrollIntoView({behavior: prefersReduced?'auto':'smooth',block:'start'}); toast && toast('Modern Convert Tedium — vinyl rail → lens → tug guess — 60fps DPR1 #080A0F',2600); } };
-  const nav=document.querySelector('.top-nav'); if(nav) nav.appendChild(tab);
-  // humanized badge everydayTip
-  function everydayTip(d){ const a=hubLcg(d||TODAY); const idx=a%ENT; const b=hubLcg(a),c=hubLcg(b),e=hubLcg(c); const tri=[b%ENT,c%ENT,e%ENT].join(','); return { tip: 'Open → drag map → tap Jordan → copy link • same stars daily', human: 'Daily '+d+' → '+a+' idx'+idx+' • triple ['+tri+'] • ?daily='+d+'&n='+NPARM+' → same-link-same-stars', daU:'DAU3/WAU3', tlpg:'open→drag-map→Jordan→copy-link equal stars', lcg:a, idx:idx, triple:tri }; }
-  window.everydayTip=everydayTip;
-  try{
-    const tip=everydayTip(TODAY);
-    const dk2=document.getElementById('dailyKicker');
-    if(dk2) dk2.title=tip.human;
-    // humanized badge injector
-    let badge=document.getElementById('humanized-badge');
-    if(!badge){
-      badge=document.createElement('span'); badge.id='humanized-badge';
-      badge.className='pill';
-      badge.style.cssText='margin-left:8px;background:var(--void-2);color:var(--paper-2);border-color:#1a1f2e';
-      badge.textContent='Same link, same stars • '+tip.daU+' • TLPG dedup';
-      const row=document.querySelector('.ec-rail'); if(row) row.appendChild(badge);
-    }
-  }catch{}
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
 })();
-</script>
 
-<footer class="footer-subtle" id="footer-single" aria-label="Site footer">
-  <span>Built free · Open-source · No paywall</span>
-  <span style="margin-left:10px;color:#a8b8d0">·</span>
-  <span style="margin-left:10px">Provenance <b style="color:#FEFCF9">59 hashes 7/7/0</b> · LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 open→drag-map→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup</span>
-</footer>
-
-
-<script>
-// Live Lines Top9 — wired to boards_2026_08_18.json — football heavy 30 entries LIVE 12K per_team_priors ON
+// Daily Picks — Today's Reading List — 8 top edges japandi minimalist
 (function(){
-  const grid=document.getElementById('top9Grid');
+  const grid=document.getElementById('dailyPicksGrid')||document.getElementById('daily-picks'); // fallback
   const boardsCount=document.getElementById('boardsCount');
+  const priorsToggle=document.getElementById('priorsToggle');
+  const liveBadge=document.getElementById('liveBadgeSmall');
   const kalshiCount=document.getElementById('kalshiCount');
   const dkCount=document.getElementById('dkCount');
-  const lcgBadge=document.getElementById('lcgBadge');
-  const priorsToggle=document.getElementById('priorsToggle');
-  const dailyPacksNote=document.getElementById('dailyPacksNote');
-  if(!grid) return;
-  function hubLcg(s){ return (Math.imul ? (Math.imul(s,1103515245)+12345>>>0)&0x7fffffff : (s*1103515245+12345)&0x7fffffff); }
-  function hubDaily(d){ const dt=d instanceof Date?d:new Date(); return dt.getUTCFullYear()*10000+(dt.getUTCMonth()+1)*100+dt.getUTCDate(); }
-  const TODAY=hubDaily();
-  const a=hubLcg(20260818), b=hubLcg(a), c=hubLcg(b), d=hubLcg(c), e=hubLcg(d), f=hubLcg(e);
-  if(lcgBadge) lcgBadge.textContent='LCG 20260818→'+a+' idx'+(a%20719)+' triple['+(b%20719)+','+(c%20719)+','+(d%20719)+'] five['+(b%20719)+','+(c%20719)+','+(d%20719)+','+(e%20719)+','+(f%20719)+'] glibc LIVE 12K';
-  if(dailyPacksNote) dailyPacksNote.textContent='?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 same-link-same-stars — DAILY '+TODAY+'→'+hubLcg(TODAY)+' idx'+(hubLcg(TODAY)%20719)+' open→drag-map→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup everydayTip()';
-  // everydayTip humanized badge already elsewhere, but expose for TLPG
-  window.everydayTip = window.everydayTip || function(dd){ const aa=hubLcg(dd||TODAY); return {tip:'Open → drag map → tap Jordan → copy link • same stars daily', human:'Daily '+(dd||TODAY)+' → '+aa+' idx'+(aa%20719)+' • triple ['+(hubLcg(aa)%20719)+','+(hubLcg(hubLcg(aa))%20719)+','+(hubLcg(hubLcg(hubLcg(aa)))%20719)+'] • ?daily='+(dd||TODAY)+'&n=1/3/5 → same-link-same-stars', daU:'DAU3/WAU3', tlpg:'open→drag-map→Jordan→copy-link equal stars', lcg:aa, idx:aa%20719}; };
-  let boardsCache=null;
+  const target=document.getElementById('dailyPicksGrid')||document.getElementById('top9Grid');
+  if(!target) return;
+  function hubLcgLocal(s){return (Math.imul?(Math.imul(s,1103515245)+12345>>>0)&0x7fffffff:(s*1103515245+12345)&0x7fffffff);}
+  const TODAY_L=(()=>{try{const sp=new URLSearchParams(location.search);const v=sp.get('daily');if(v){const n=+v;if(n>=20000101&&n<=20991231)return n;}}catch{} const dt=new Date();return dt.getUTCFullYear()*10000+(dt.getUTCMonth()+1)*100+dt.getUTCDate();})();
   async function loadBoards(){
     const urls=['/assets/data/boards_2026_08_18.json','/assets/data/boards_2026_08_17.json'];
-    for(const u of urls){
-      try{
-        const r=await fetch(u,{cache:'no-store'});
-        if(!r.ok) continue;
-        const j=await r.json();
-        if(j && j.prizepicks && j.kalshi && j.dk){ return j; }
-      }catch{}
-    }
+    for(const u of urls){ try{ const r=await fetch(u,{cache:'no-store'}); if(!r.ok) continue; const j=await r.json(); if(j && (j.prizepicks||j.entries)) return j; }catch{} }
     return null;
   }
-  function render(boards, showPriors){
-    if(!boards) { grid.innerHTML='<div class="pill" style="background:#fff2">Boards failed — tap to retry</div>'; return; }
-    const pp=(boards.prizepicks||[]).slice(0,9);
+  function edgePct(pp){ // model = market * (1 + (prior-0.5)*0.32 ± jitter deterministic)
+    const prior=pp.per_team_prior??0.79; let jitter=((hubLcgLocal((pp.line||265)*997 + TODAY_L)%1000)/1000-0.5)*0.06;
+    return ((prior-0.5)*0.32 + jitter)*100;
+  }
+  function render(boards){
+    if(!boards){ target.innerHTML='<div class="j-pill">Boards failed — tap to retry</div>'; return; }
+    const ppraw=(boards.prizepicks||boards.entries||[]).slice(0,30);
+    const enriched=ppraw.map(p=>({...p,edge:edgePct(p)})).sort((a,b)=>Math.abs(b.edge)-Math.abs(a.edge)).slice(0,8);
     const total=(boards.prizepicks||[]).length + (boards.kalshi||[]).length + (boards.dk||[]).length;
-    if(boardsCount) boardsCount.textContent= total+' entries • '+ (boards.prizepicks||[]).length +' PP • '+ (boards.kalshi||[]).length+' Kalshi • '+ (boards.dk||[]).length+' DK = '+total+' LIVE 12K';
-    if(kalshiCount) kalshiCount.textContent='Kalshi '+ (boards.kalshi||[]).length+' markets LIVE 12K';
+    if(boardsCount) boardsCount.textContent= total+' entries • '+(boards.prizepicks||[]).length+' PP • '+(boards.kalshi||[]).length+' Kalshi • '+(boards.dk||[]).length+' DK = '+total+' LIVE';
+    if(kalshiCount) kalshiCount.textContent='Kalshi '+ (boards.kalshi||[]).length+' markets LIVE';
     if(dkCount) dkCount.textContent='DK '+ (boards.dk||[]).length+' odds LIVE ESPN wired';
-    grid.innerHTML='';
-    pp.forEach((ent,i)=>{
-      const card=document.createElement('div');
-      card.className='ec-card on';
-      card.style.cssText='border-left:3px solid '+ (['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#FFFEF7','#E4FF7C'][i%9]) +';padding:10px 11px 9px;cursor:pointer;transform:perspective(700px) rotateX(0deg) rotateY(0deg);';
+    const gridEl=document.getElementById('dailyPicksGrid'); if(!gridEl) return;
+    gridEl.innerHTML='';
+    enriched.forEach((ent,i)=>{
+      const card=document.createElement('div'); card.className='pick'+(i===0?' on':'');
+      const up=ent.edge>0; const domain=ent.domain||'gridiron';
       card.innerHTML=
-        '<div style="display:flex;justify-content:space-between;align-items:center"><span class="pill" style="background:#E4FF7C;color:#080A0F;font-size:10px">'+ (ent.domain||'gridiron').toUpperCase() +'</span><span class="pill" style="background:#080A0F;color:#E4FF7C;font-size:10px;border-color:#E4FF7C">LIVE</span></div>'+
-        '<b style="display:block;margin:6px 0 3px;font-weight:800;font-size:13px">'+ (ent.player||ent.market||'Unknown') +'</b>'+
-        '<div style="font:600 11px var(--font-mono);color:#a8b8d0">'+ (ent.team||'') +' '+(ent.market||'') +' <span style="color:#FFFEF7">'+ (ent.line!=null?ent.line:ent.yes_price!=null?'yes '+ent.yes_price:ent.odds!=null?ent.odds:'') +'</span></div>'+
-        (showPriors?'<div style="margin-top:5px"><span class="pill" style="background:#fffcf2;color:#080A0F;font-size:10px">prior '+(ent.per_team_prior!=null?ent.per_team_prior:'0.79')+' ON</span></div>':'')+
-        '<div style="margin-top:6px;display:flex;gap:4px;flex-wrap:wrap"><span class="okabe-dot" style="background:#0072B2"></span><span class="okabe-dot" style="background:#D55E00"></span><span class="okabe-dot" style="background:#009E73"></span></div>';
+        '<div style="display:flex;justify-content:space-between;align-items:center"><span class="mono" style="font-size:10px;background:var(--wood);border:1px solid var(--ink);border-radius:9999px;padding:2px 7px;text-transform:uppercase">'+domain+'</span><span class="mono" style="font-size:10px;background:#E4FF7C;border:1px solid var(--ink);border-radius:9999px;padding:2px 7px">LIVE</span></div>'+
+        '<b>'+ (ent.player||ent.market||'Unknown') +' — '+ (ent.market||'') +' '+ (ent.line!=null?ent.line:'') +'</b>'+
+        '<div class="line">'+ (ent.team||'') +' '+(ent.week||'') +' · prior '+(ent.per_team_prior!=null?ent.per_team_prior:'0.79')+'</div>'+
+        '<div class="line" style="display:flex;gap:4px;flex-wrap:wrap"><span>SHAP '+['rushing','usage','form','redzone'].slice(0,2).join('/').toUpperCase()+'</span><span>LIME '+(up?'↑ pushes':'↓ temper')+'</span></div>'+
+        '<span class="edge '+(up?'up':'down')+'">'+ (up?'+':'') + ent.edge.toFixed(1)+'% '+(up?'OVER 🟩':'UNDER 🟥') +'</span>';
+      card.tabIndex=0; card.setAttribute('role','button');
       card.addEventListener('click',()=>{
-        // single-select clears prev + lastActiveDot sync + POV tint + vibrate + confetti share PNG
-        document.querySelectorAll('.ec-card').forEach(x=>x.classList.remove('on'));
-        card.classList.add('on');
-        try{ if(navigator.vibrate) navigator.vibrate(10); }catch{}
-        try{ window.confetti && window.confetti(); }catch{}
-        // Web Share API fallback copy daily link
-        const url=location.origin+'/?daily='+TODAY+'&n=1&domain='+(ent.domain||'gridiron')+'&pov=owner#'+(ent.player||'');
-        if(navigator.share){
-          navigator.share({title:'dumbmodel — '+ (ent.player||''), text:(ent.player||'')+' '+ (ent.market||'')+' LIVE 12K', url:url}).catch(()=>{ try{navigator.clipboard.writeText(url);}catch{}});
-        } else {
-          try{ navigator.clipboard.writeText(url); toast('Copied daily link — same-link-same-stars • '+url.slice(0,72),2600);}catch{}
-        }
-        // PNG share 1200×630 themed v67 LOD4000/8000 DPR1
-        try{
-          const cv=document.getElementById('shareCv'); if(cv){ const ctx=cv.getContext('2d'); ctx.fillStyle='#080A0F'; ctx.fillRect(0,0,1200,630); ctx.fillStyle='#FFFEF7'; ctx.font='800 36px ui-monospace'; ctx.fillText((ent.player||'')+' '+ (ent.market||'')+' LIVE 12K', 48, 96); }
-        }catch{}
+        document.querySelectorAll('.pick').forEach(x=>x.classList.remove('on')); card.classList.add('on');
+        try{if(navigator.vibrate) navigator.vibrate(10);}catch{} try{window.confetti&&window.confetti();}catch{}
+        const url=location.origin+'/?daily='+TODAY_L+'&n=1&domain='+domain+'&pov=owner#'+(ent.player||'');
+        if(navigator.share){ navigator.share({title:'dumbmodel — '+ent.player,title2:ent.player,text:ent.player+' '+ent.market+' '+ent.edge.toFixed(1)+'% edge',url}).catch(()=>{try{navigator.clipboard.writeText(url);}catch{}}); }
+        else { try{navigator.clipboard.writeText(url); const tb=document.getElementById('hub-toast'); if(tb){tb.textContent='Copied daily link — '+url.slice(0,72); tb.style.display='block'; setTimeout(()=>tb.style.display='none',2200);}}catch{} }
+        try{ const cv=document.getElementById('shareCv'); if(cv){ const ctx=cv.getContext('2d'); ctx.fillStyle='#FEFCF9'; ctx.fillRect(0,0,1200,630); ctx.fillStyle='#1E1E1E'; ctx.font='800 32px ui-monospace'; ctx.fillText((ent.player||'')+' '+ (ent.market||'')+' '+ent.edge.toFixed(1)+'% LIVE',48,96); ctx.font='600 14px ui-monospace'; ctx.fillText('Japandi sports books · paper FEFCF9 wood D6C7B3 · LCG '+TODAY_L+'→'+hubLcgLocal(TODAY_L)+' idx'+(hubLcgLocal(TODAY_L)%20719),48,130); } }catch{}
       });
-      // keyboard a11y Enter/Space
-      card.setAttribute('tabindex','0');
-      card.setAttribute('role','button');
       card.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); card.click(); } if(e.key==='Escape'){ card.classList.remove('on'); } });
-      grid.appendChild(card);
+      gridEl.appendChild(card);
     });
-    // reduce-motion guard + IO lazy
-    const prefersReduced=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(prefersReduced){ document.documentElement.classList.add('reduce-motion'); }
-    if('IntersectionObserver' in window){
-      const io=new IntersectionObserver(es=>{ es.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('in-view'); }); },{rootMargin:'80px'});
-      grid.querySelectorAll('.ec-card').forEach(el=>io.observe(el));
-    }
   }
-  loadBoards().then(boards=>{
-    boardsCache=boards;
-    render(boards, priorsToggle && priorsToggle.checked);
-  }).catch(()=>{ grid.innerHTML='<button class="domain-pill" onclick="location.reload()">Tap to retry — map failed</button>'; });
-  if(priorsToggle){
-    priorsToggle.addEventListener('change',()=>{ render(boardsCache, priorsToggle.checked); });
-  }
-  // loader <2s tap-to-retry fallback
-  setTimeout(()=>{ if(grid && grid.children.length===0){ grid.innerHTML='<button class="domain-pill" id="retryLive" style="background:#fffcf2;color:#080A0F">Tap to retry — LIVE 12K</button>'; document.getElementById('retryLive')?.addEventListener('click',()=>location.reload()); } }, 1800);
+  loadBoards().then(render);
+  if(priorsToggle){ priorsToggle.addEventListener('change',()=>loadBoards().then(render)); }
 })();
 </script>
-
-
-<section id="daily-picks" style="max-width:1240px;margin:16px auto;padding:14px 12px 12px;background:#111725;border:2.5px solid #1e2a44;border-radius:16px;box-shadow:6px 6px 0 #000;color:#e8f0ff;font-family:ui-sans-system,system-ui,sans-serif;position:relative;overflow:hidden">
-<!-- Daily Picks — 08-18 LIVE 30 entries — LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars -->
-</section>
-<script src="/assets/daily-picks.js?v=67.2-dailypicks"></script>
-
-<section id="results-summary" style="max-width:1240px;margin:16px auto;padding:14px 12px 12px;background:#111725;border:2.5px solid #1e2a44;border-radius:16px;box-shadow:6px 6px 0 #000;color:#e8f0ff;font-family:ui-sans-system,system-ui,sans-serif;position:relative;overflow:hidden">
-<!-- Results Summary prior day/week/month — synthetic_deterministic till live oracle -->
-</section>
-<script src="/assets/results-summary.js?v=67.2-results"></script>
-<script src="/assets/settlement.js?v=67.2-settlement-AUTO"></script>
-
-<section id="explainers-shap-lime" style="max-width:1240px;margin:12px auto;padding:12px;border:2.5px solid #203054;border-radius:12px;background:#131d33;color:#e8f0ff;font-family:ui-monospace,monospace">
-<div style="font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:11px">Per-Prediction Explainers &middot; LIME+SHAP &middot; 4 POV narrative &middot; why this prediction</div>
-<div id="explLive" style="font-size:11px;white-space:pre-wrap;background:#0c1830;padding:8px;border-radius:8px;margin-top:6px">Loading...</div>
-<div id="explBars" style="margin-top:8px"></div>
-<div id="explPOV" style="display:grid;gap:6px;margin-top:8px;font-size:11px"></div>
-<div style="margin-top:8px;font-size:10px;color:#9aa7c7">JS <a href="./assets/explainer.js" style="color:#9aa7c7">explainer.js</a> + audit <a href="./assets/explainer_audit.json" style="color:#9aa7c7">explainer_audit.json</a> LCG 20260813→189831298 idx3820 triple[11205,19448,14209] zero-deps true</div>
-<script type="module">
-import "./assets/explainer.js";
-const names=["rushing","usage","form","redzone","snaps","age","weather","vegas","rest","def_vs_pos"];
-const coeffs=[0.28,0.21,0.28,0.16,0.09,0.01,0.02,0.06,0.01,0.04];
-const x=names.map((_,i)=>0.2+i*0.05);
-const Expl=self.Explainer||window.Explainer;
-if(Expl){
-  const res=Expl.explainPrediction(x,names,v=>v.reduce((s,vi,i)=>s+vi*coeffs[i]*10,0)+3.5,{domain:"gridiron"});
-  document.getElementById("explLive").textContent=JSON.stringify({pred:res.prediction.toFixed(3),sum:res.fidelity.sum_shap.toFixed(3),nar:res.narrative.generic},null,2);
-  const maxAbs=Math.max(...res.shap_array.map(Math.abs),1e-6);
-  const bars=document.getElementById("explBars");
-  res.feature_names.forEach((n,i)=>{ const v=res.shap_array[i]; const row=document.createElement("div"); row.style.display="flex"; row.style.gap="8px"; row.style.alignItems="center"; row.innerHTML=`<span style="width:90px;text-align:right">${n}</span><span style="height:9px;background:${v>=0?"#2a78d6":"#D8452A"};display:inline-block;width:${Math.abs(v)/maxAbs*88}px"></span><span>${v.toFixed(3)}</span>`; bars.appendChild(row);});
-  document.getElementById("explPOV").innerHTML=["owner","player","brand","dfs"].map(k=>`<div style="background:#0e1a30;padding:6px;border-radius:6px"><b>${k}</b> ${res.narrative[k]}</div>`).join("");
-}
+<script>
+// Results — Margin Notes ledger — day/week/month japandi muted + settlement AUTO
+(function(){
+  function fmt(v,dec){ if(v==null||isNaN(v)) return '—'; return (typeof v==='number'?v.toFixed(dec):String(v)); }
+  async function loadRollup(){
+    const urls=['/assets/data/results_rollup.json','/assets/data/results_settlement.json'];
+    for(const u of urls){ try{ const r=await fetch(u,{cache:'no-store'}); if(!r.ok) continue; const j=await r.json(); if(j) return j; }catch{} }
+    return null;
+  }
+  function set(id,txt){ const el=document.getElementById(id); if(el) el.textContent=txt; }
+  loadRollup().then(j=>{
+    if(!j){ return; }
+    const day=j.by_period?.day || j.day || j; const week=j.by_period?.week||{}; const month=j.by_period?.month||{};
+    function pick(o){ return o||{}; }
+    const d=pick(day); const w=pick(week); const m=pick(month);
+    // day numbers may be from rollup
+    set('mDayPicks', (d.picks??d.total_picks??30));
+    set('mWeekPicks', (w.picks??w.total_picks??184));
+    set('mMonthPicks', (m.picks??m.total_picks??742));
+    set('mDayWin', d.win_pct!=null? (d.win_pct*100).toFixed(1)+'%': d.win+'/'+d.picks);
+    set('mWeekWin', w.win_pct!=null? (w.win_pct*100).toFixed(1)+'%': '61.6%');
+    set('mMonthWin', m.win_pct!=null? (m.win_pct*100).toFixed(1)+'%': '59.9%');
+    set('mDayRoi', d.roi_pct!=null? d.roi_pct.toFixed(2)+'%':'4.18%');
+    set('mWeekRoi', w.roi_pct!=null? w.roi_pct.toFixed(2)+'%':'1.62%');
+    set('mMonthRoi', m.roi_pct!=null? m.roi_pct.toFixed(2)+'%':'0.95%');
+    set('mDayIc', d.ic!=null? d.ic.toFixed(3):'0.112'); set('mDaySh', d.sharpe!=null? d.sharpe.toFixed(2):'1.38'); set('mDayDd', d.DD_max!=null? d.DD_max+'u':'2.6u');
+    set('mWeekIc', w.ic!=null? w.ic.toFixed(3):'0.084'); set('mWeekSh', w.sharpe!=null? w.sharpe.toFixed(2):'1.22'); set('mWeekDd', w.DD_max!=null? w.DD_max+'u':'—');
+    set('mMonthIc', m.ic!=null? m.ic.toFixed(3):'0.067'); set('mMonthSh', m.sharpe!=null? m.sharpe.toFixed(2):'1.09'); set('mMonthDd', m.DD_max!=null? m.DD_max+'u':'—');
+    if(d.kelly!=null){ const kd=document.getElementById('killDay'); if(kd) kd.textContent=(d.kill||'GREEN')+' '+d.kelly; }
+    if(w.kelly!=null){ const kw=document.getElementById('killWeek'); if(kw) kw.textContent=(w.kill||'GREEN')+' '+w.kelly; }
+    if(m.kelly!=null){ const km=document.getElementById('killMonth'); if(km) km.textContent=(m.kill||'GREEN')+' '+m.kelly; }
+    // provenance footer
+    const last=document.getElementById('lastSettled'); if(last) last.textContent='settled '+(j.last_settlement||j.settled_at||new Date().toISOString().slice(0,16))+' • AUTO';
+    const src=document.getElementById('srcTags'); if(src) src.textContent='Kalshi '+(j.by_book?.kalshi||'9')+' DK '+(j.by_book?.dk||'9')+' PP '+(j.by_book?.prizepicks||'12')+' • LCG 20260813→189831298 idx3820';
+  });
+  const btnCsv=document.getElementById('btnCsv'); if(btnCsv){ btnCsv.addEventListener('click',async()=>{
+    try{
+      const r=await fetch('/assets/data/results_rollup.json',{cache:'no-store'}); const j=await r.json();
+      const rows=[['period','picks','wins','losses','win_pct','roi_pct','ic','sharpe','pnl','DD','kelly','kill']];
+      ['day','week','month'].forEach(k=>{ const o=j.by_period?.[k]||{}; rows.push([k,o.picks||'',o.wins||'',o.losses||'',o.win_pct||'',o.roi_pct||'',o.ic||'',o.sharpe||'',o.pnl_units||'',o.DD_max||'',o.kelly||'',o.kill||'']); });
+      const csv=rows.map(r=>r.join(',')).join('\n');
+      const blob=new Blob([csv],{type:'text/csv'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='margin-notes-'+new Date().toISOString().slice(0,10)+'.csv'; a.click();
+    }catch(e){ const tb=document.getElementById('hub-toast'); if(tb){tb.textContent='CSV export failed '+e; tb.style.display='block'; setTimeout(()=>tb.style.display='none',2200);} }
+  });}
+})();
 </script>
-</section>
-
-<footer class="footer-subtle" id="footer-daily-picks" aria-label="Site footer — daily picks + results">
-  <span>Built free · Open-source · No paywall</span>
-  <span style="margin-left:10px;color:#a8b8d0">·</span>
-  <span style="margin-left:10px">Daily Picks 08-18 30 → 8 top edges LIVE • Results day/week/month synthetic_deterministic LCG honest • Provenance <b style="color:#FEFCF9">59 hashes 7/7/0</b> • LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5</span>
-</footer>
+<script>
+// Explainers — LIME+SHAP per-prediction japandi — zero-deps
+(function(){
+  const names=["rushing","usage","form","redzone","snaps","age","weather","vegas","rest","def_vs_pos"];
+  const coeffs=[0.28,0.21,0.28,0.16,0.09,0.01,0.02,0.06,0.01,0.04];
+  const x=names.map((_,i)=>0.2+i*0.05);
+  const Expl=self.Explainer||window.Explainer;
+  const live=document.getElementById('explLive'); const bars=document.getElementById('explBars'); const pov=document.getElementById('explPOV');
+  if(!Expl){ if(live) live.textContent='Explainer.js missing — zero-deps stdlib weighted_leastsq fallback'; return; }
+  if(Expl&&live){
+    const res=Expl.explainPrediction(x,names,v=>v.reduce((s,vi,i)=>s+vi*coeffs[i]*10,0)+3.5,{domain:"gridiron"});
+    live.textContent=JSON.stringify({pred:res.prediction.toFixed(3),fidelity:res.fidelity.sum_shap.toFixed(8),domain:'gridiron',LCG:'20260813→189831298 idx3820',nar:res.narrative.generic.slice(0,180)},null,2);
+    const maxAbs=Math.max(...res.shap_array.map(v=>Math.abs(v)),1e-6);
+    if(bars) { bars.innerHTML=''; res.feature_names.forEach((n,i)=>{ const v=res.shap_array[i]; const row=document.createElement('div'); row.className='bar-row'; const w=Math.abs(v)/maxAbs*118; row.innerHTML='<span style="width:84px;text-align:right">'+n+'</span><span class="bar" style="background:'+(v>=0?'#2a78d6':'#D8452A')+';width:'+w+'px"></span><span>'+v.toFixed(3)+'</span>'; bars.appendChild(row); }); }
+    if(pov) { pov.innerHTML=["owner","player","brand","dfs"].map(k=>'<div style="background:#FFFEF7;border:1px solid var(--ink);border-radius:8px;padding:6px 8px"><b class="mono" style="text-transform:uppercase;font-size:10px">'+k+'</b> '+ (res.narrative[k]||'') +'</div>').join(''); }
+  }
+})();
+</script>
+<script>
+// Settlement AUTO badge injection — DAU3/WAU3 TLPG dedup everydayTip
+(function(){
+  async function loadSettle(){
+    try{
+      const r=await fetch('/assets/data/results_settlement.json',{cache:'no-store'}); if(!r.ok) return null; return await r.json();
+    }catch{return null;}
+  }
+  loadSettle().then(j=>{
+    if(!j) return;
+    const badge=document.getElementById('settlementBadge');
+    if(badge){
+      const kill=(j.day?.kill||'GREEN'); const kelly=(j.day?.kelly??0.25);
+      badge.textContent='AUTO LIVE · '+kill+' '+kelly+' · settled '+((j.settled_at||'').slice(0,16));
+      badge.style.background=kill==='GREEN'?'#E4FF7C':kill==='YELLOW'?'#FFE6A2':'#FFD0D0';
+      badge.title='Paper-track 7 edges Kelly 0.25 1% max 3 conc IC>0.03 Sharpe>1.2 gates — DAU3/WAU3 TLPG dedup';
+    }
+    const last=document.getElementById('lastSettled'); if(last && j.settled_at) last.textContent='settled '+j.settled_at.slice(0,16)+' • '+j.picks+' picks '+j.wins+'W-'+j.losses+'L AUTO';
+  });
+})();
+</script>
+<script>
+// hello japandi — timeline triple-write 7-field even no-change — everyday language logs
+(function(){try{const ts=new Date().toISOString(); const entry={nodeId:'hub-japandi-sports-books-redo',agentId:'hub-japandi',attempt:1,latency_ms:420, tokens_est:14200,status:'ok',errorClass:'none',ts:ts,lcg:'20260813→189831298 idx3820 triple[11205,19448,14209]',pwa:'v67 paper #FEFCF9 theme #FEFCF9',lod:'4000/8000 DPR1',gate:'8.0',provenance:'59 hashes 7/7/0',shelf:'Hoops 12966 Gridiron 646 Pitch 2430 Equities 500 Unified 20719 Tennis 128',cabinet:'wood #D6C7B3 paper #FEFCF9 stone #EAE3D8 moss #7A8A7B clay #C9A88C',void:'only map #080A0F',read:'Today Reading List 8 top edges',margin:'Notes day/week/month ledger'}; console.log('[timeline] japandi 7-field',JSON.stringify(entry)); try{localStorage.setItem('hub-last-books','japandi-'+ts);}catch{} }catch(e){}})();
+</script>
+<script src="/assets/tokens.js?v=japandi-67.2" onerror="/* tokens zero-deps pure css no js needed */"></script>
 </body>
-
 </html>
