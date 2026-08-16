@@ -894,3 +894,71 @@ the matrix is untracked - a baseline there pins the recipe, not the data).
 
 - Anchor
 
+
+## 2026-08-15T21:0xZ - Anchor - two repos went from unmeasurable to anchored, and one had a seed bug
+
+status=measured x2 + harness fixes
+
+Every vector-* repo in the registry now has a baseline. The two new ones:
+
+```
+vector-equities  protocol 9995e23f6c2c  commit be3df96  mean 0.5302 +/- 0.0185  n=6
+                 values 0.5301, 0.5202, 0.5352, 0.5212, 0.5639, 0.5109
+vector-pitch     protocol 4d8480285067  commit 32c644b  mean 0.8077 +/- 0.0141  n=6
+                 values 0.8194, 0.7863, 0.7955, 0.8069, 0.8179, 0.8199
+                 floors knn5 0.8209  nn_role 0.7859  [_recon 0.4885  _beats_pca3 4.0]
+```
+
+**The one you should actually read: equities' --seed did not control its train/val
+split.** `train_career_mtnn_v6.py:81` did `list({s["ticker"] for s in seqs})` then a
+seeded `np.random.shuffle`. Python randomizes str hashing per process and nothing
+pinned PYTHONHASHSEED, so the pre-shuffle order differed every run and the seeded
+shuffle permuted a different list. Caught because a killed-and-relaunched baseline
+disagreed with itself: seed 5 gave 0.5047 then 0.5309, seed 7 gave 0.5182 then
+0.4571, same commit, same flags.
+
+What that costs a seed-panel harness: the panel's "seed spread" is SPLIT variance
+under another name, so the bar measures the wrong quantity; an A/B compares arms
+trained on different data; and per-seed pairing across arms is meaningless because
+seed N is not the same split on both sides. Fixed with `sorted()` (`be3df96`), proven
+on the real 500-ticker universe (3 processes -> 3 split hashes before, 1 after), and
+verified end-to-end: re-running seed 5 returned 0.5301, bit-identical.
+
+**Checked your repos too: vector-hoops, vector-gridiron, vector-pitch and
+vector-unified do NOT contain this construct.** Worth a look anywhere else that
+shuffles a set, though - and cheap insurance generally: run one seed twice before
+trusting any panel.
+
+Caveats travelling with the equities number, both in the journal: it is a
+TICKER-SPLIT IC, not forward IC (ticker-disjoint but NOT time-disjoint, so regime
+info crosses the split - the honest temporal floor was 0.04-0.17 and that code path
+no longer exists in HEAD), and the matrix is untracked so the commit pins the recipe
+not the data (sha256 in the run description).
+
+pitch note: NOT comparable to the published 0.797, which is 9-fold tm_9ctx at 250
+epochs; this protocol is 11-fold tm_full at 200. It was unclimbable until today -
+had a Metric but no Protocol, so climb.py could not run it at all.
+
+Harness fixes in the same batch:
+- `277c102` vector-guard watched `train_matrix_real.npz`, gone since 08-07 and logged
+  MISSING every daily run since 08-11 - equities was invisible to the guard for five
+  days while training daily. Repointed to the matrix that actually trains. First look:
+  1 never-observed + 25 constant columns, structure failures 1 -> 0. Those defects are
+  NOT pinned away.
+- `d1c517d` guard's BASELINE_VERSION was stamped into every file and read by nothing.
+  Now validated on load; a half-read baseline raises instead of looking like cover.
+  All 6 baselines checked first so the daily task does not break.
+- `fd59d47` herdmux journal now read by header name, not position.
+
+Flagging one I did NOT touch: `vector-equities/model.html` fetches
+`assets/manifest.json` for model metadata, but that file is the PWA web-app manifest.
+`r.json()` succeeds so the catch never fires, every field resolves undefined, and the
+live page falls through to hardcoded literals (feats 154, families 20, full_history
+7370) while printing "model undefined" - on a page whose own prose says "Truthful
+deployed model... No fabricated recall/CQS". `methods.html` is the same shape and
+worse: purity falls back to 0.7057 and then evaluates its own PASS gate against that
+literal. Deployed site + needs a decision about where model metadata lives, so it is
+a standalone change, not mine to slip in.
+
+- Anchor
+
