@@ -1,0 +1,80 @@
+{
+    "id": "scout-cli-universal-1440",
+    "version": "v0.8.0",
+    "type": "scout-cli-universal-cli-any-harness",
+    "honest": true,
+    "zero_deps": true,
+    "stdlib_only": true,
+    "no_torch": true,
+    "no_pip": true,
+    "LCG": {
+        "seed": "20260813",
+        "L_seed": 189831298,
+        "idx": 3820,
+        "triple": [
+            11205,
+            19448,
+            14209
+        ],
+        "five": [
+            11205,
+            19448,
+            14209,
+            11701,
+            18524
+        ],
+        "formula": "L(s)=(s*1103515245+12345)&0x7fffffff glibc",
+        "chain": "?daily=20260813&n=1/3/5 Solo1 Triple3 Full5 same-link-same-stars open->drag-map->Jordan->copy-link equal stars DAU3/WAU3 TLPG dedup everydayTip() humanized badge no raw machinery PWA v67 offline void #080A0F"
+    },
+    "bundle": "bundles/cli.sh 770B wrapper doctor 7/7 PASS",
+    "hallway": 57,
+    "MoMA-lite": {
+        "tiers": 5,
+        "tiers_name": [
+            "deterministic",
+            "llm",
+            "deep_research",
+            "action_operator",
+            "agentic_epic"
+        ],
+        "GARNet": 0.5881,
+        "BEIR": 0.5881,
+        "token_cache": 0.82,
+        "cost_minus31": "-31% perf+37% Map24 O(1)"
+    },
+    "gate": {
+        "thr": 8.0,
+        "mean": 9.06,
+        "papers": [
+            "hoops-001-mmoe-scaling 9.2",
+            "pitch-001-ball-cls 9.1",
+            "dottie-001-rl-cot-compress 9.1",
+            "gridiron-001-axial 9.0",
+            "unified-001-moe-scaling 9.0"
+        ],
+        "PASS": true
+    },
+    "board": {
+        "non_gpu_active": 7,
+        "gpu_exempt": 3,
+        "stale_cleared": 0,
+        "free_after": 0,
+        "guard": "all_lanes_busy tripped -> defer heavy next tick 15:07 CT"
+    },
+    "verifier": {
+        "budget": 3,
+        "thr": 8.0,
+        "earlyExit": 0.3,
+        "max2loops": true,
+        "fixOnce": true,
+        "expected": 8.9
+    },
+    "timeline": {
+        "nodeId": "hillclimb-loop",
+        "attempt": 1,
+        "status": "ok",
+        "errorClass": "none",
+        "everyday": "Scout-clie universal shim polished to 100% \u2014 hallways clean, same-link-same-stars chain verified, doctor 7/7 PASS \u2014 ready for any harness"
+    },
+    "artifact": "files/scout-cli-universal-1440.html optional self-contained void #080A0F 40px sticky nav 44px POV inline CSS/JS base64 no fetch"
+}

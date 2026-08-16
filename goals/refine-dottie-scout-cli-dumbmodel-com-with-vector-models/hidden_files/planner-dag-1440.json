@@ -1,0 +1,21 @@
+{
+  "id": "hillclimb-1440-dag",
+  "version": "v3.3-OODA-Agentic-MoMA-Graph-Checkpoint",
+  "LCG": "20260813->189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars",
+  "zero_deps": true,
+  "nodes": [
+    {"id":"L1-optimistic","agent":"strategist","tier":"L1","type":"READ_ONLY","sideEffect":"READ_ONLY","deps":[],"output":"hidden_files/strategist-optimistic-1440.md"},
+    {"id":"L1-pessimistic","agent":"strategist","tier":"L1","type":"READ_ONLY","sideEffect":"READ_ONLY","deps":[],"output":"hidden_files/strategist-pessimistic-1440.md"},
+    {"id":"L1-strange","agent":"strategist","tier":"L1","type":"READ_ONLY","sideEffect":"READ_ONLY","deps":[],"output":"hidden_files/strategist-strange-1440.md"},
+    {"id":"L2-dag","agent":"planner","tier":"L2","type":"READ_ONLY","sideEffect":"READ_ONLY","deps":["L1-optimistic","L1-pessimistic","L1-strange"],"output":"hidden_files/planner-dag-1440.json"},
+    {"id":"L2-research","agent":"deep-researcher","tier":"L2","type":"READ_ONLY","sideEffect":"READ_ONLY","moMA":["deterministic","llm","deep_research","action_operator","agentic_epic"],"garnet":"max3/4 tempo :13 :05","deps":["L2-dag"],"output":"hidden_files/deep-researcher-1440.md","sources":"3-5 lite gate>=8.0 dottie-001 9.1 pitch-001 9.1 unified-001 9.0 hoops-001 9.2 gridiron-001 9.0"},
+    {"id":"L3-builder","agent":"builder","tier":"L3","type":"WRITE_IDEMPOTENT","sideEffect":"WRITE_IDEMPOTENT","deps":["L2-research"],"output":"hidden_files/candidate-scout-cli-1440.json"},
+    {"id":"L3-synthesist","agent":"synthesist","tier":"L3","type":"WRITE_IDEMPOTENT","sideEffect":"WRITE_IDEMPOTENT","deps":["L2-research"],"output":"hidden_files/synthesist-weave-1440.md"},
+    {"id":"L3-executor","agent":"executor","tier":"L3","type":"READ_ONLY","sideEffect":"READ_ONLY","deps":["L2-research"],"output":"hidden_files/executor-ooda-1440.md"},
+    {"id":"L3-operator","agent":"operator","tier":"L3","type":"READ_ONLY","sideEffect":"READ_ONLY","deps":["L2-research"],"output":"hidden_files/operator-tempo-1440.md"},
+    {"id":"L3-action","agent":"action-operator","tier":"L3","type":"WRITE_IDEMPOTENT","sideEffect":"WRITE_IDEMPOTENT","deps":["L3-builder","L3-synthesist","L3-executor","L3-operator"],"output":"hidden_files/action-operator-close-1440.md"},
+    {"id":"L4-verifier","agent":"critic","tier":"L4","type":"READ_ONLY","sideEffect":"READ_ONLY","budget":3,"thr":8.0,"earlyExit":0.3,"maxLoops":2,"fixOnce":true,"deps":["L3-action"],"output":"hidden_files/verifier-1440.md"}
+  ],
+  "pacing": {"filter":"max3/4 tempo :05 swarm :13","guard":"hillclimb_backoff 1653B conf0.82","localGPU_exempt":3,"maxNonGPU":7},
+  "gate": {"thr":8.0,"budget3":true,"earlyExit0.3":true,"max2loops":true}
+}
