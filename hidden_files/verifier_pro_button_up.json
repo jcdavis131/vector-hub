@@ -1,16 +1,16 @@
 {
-  "overall": 10.0,
+  "overall": 9.921875,
   "passes": true,
   "scores": {
     "json_valid": 10,
     "manifest": 10,
     "tokens": 10,
-    "ui": 10.0,
+    "ui": 9.375,
     "footer": 10,
     "contrast": 10,
     "provenance": 10,
     "pwa": 10,
-    "overall": 10.0
+    "overall": 9.921875
   },
   "details": {
     "manifest": {
@@ -50,10 +50,10 @@
         true,
         true,
         true,
-        true,
+        false,
         true
       ],
-      "count": 16,
+      "count": 15,
       "total": 16
     },
     "footer": {
@@ -78,9 +78,10 @@
     "pwa": {
       "core_len": 21,
       "offline_size": 13663,
-      "offline_ok": true
+      "offline_ok": true,
+      "core_var": "CORE21"
     },
-    "overall_score": 10.0
+    "overall_score": 9.921875
   },
   "attempt": 1
 }

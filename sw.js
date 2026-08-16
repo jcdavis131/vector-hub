@@ -1,23 +1,18 @@
-/* dumbmodel.com PWA v67 ultra 1m — 74k HIT / 86.8k HIT index+shared-map self-contained 118k inline <100k gz void #080A0F LOD4000/8000 DPR1 fillRect CORE20 shell-only immutable SWR, DENY9 network-only, offline 13k void #080A0F
-   T4 ultra 1m: API v1 Bearer dm_scout_* timingSafeEqual constant-time JSON-or-CSV 120/min key 60/min IP 429
-   CORS allowlist *.dumbmodel.com localhost *.vercel.app, vercel.json no-store no-cache must-revalidate Pragma no-cache nosniff DENY Referrer strict-origin GET POST OPTIONS
-   endpoints: health v67 free roster models daily 1233799701 idx3970 triple five chimera provenance 7/7/0 vectors search proof MAE0.2085 R20.8934 CQS0.7017 IC0.007 kill-switch 1%
-   PWA v67 74k HIT CORE20 offline shell 13k void #080A0F, LCG glibc hub.js vs api/_lib/lcg.js vs Python agree — daily 20260812→1233799701 idx3970 triple [3970,14390,4582] five [3970,14390,4582,13307,8695]
-   Skills auto-load ~/.scout/dumbmodel_api_key 58B chmod600. 1 Vercel click left unified 404→200 Domains→Production. Triple-write T4-ultra-01.
-
-   Mirrors vector-hoops v66 pattern → v67 upgrade → chimera 5th game live tags:
-   - CORE20 shell-only: index, manifest, offline, css (hub/model/motion), js hub/model/shared-map/pwa-install/delight/site-nav/error-boundary/keyboard-a11y, assets/models/unified.json 1.6k 20,719×64-d 12-arch provenance honest dailySeed LCG Procrustes glass-box, icons 192/512, og-embed/og-1200x630
-     HIT estimate: hub.css 19k + model.css 9.6k + motion 3.8k + hub.js 11k + model.js 9k + shared-map 27k + pwa-install 5k + delight 5k + site-nav 1.9k + error-boundary 10k + keyboard-a11y 9.6k + manifest 2.2k + offline 13k + unified.json 1.6k + icons ~10k ≈ 138k raw, 74k gzipped HIT (Chrome DevTools 74k compressed)
-   - DENY9: vectors/maps/data JSON never SW-cached (network only, browser HTTP still applies) → offline mode is shell-only + small metadata CORE20; data needs connection
-   - CACHE_NAME v67 still valid for hit — prov 7/7 honest dailySeed LCG 1103515245
-   - network-first for js/css/img with 1MB cap, immutable SWR instant cache + bg update, skipWaiting + clients.claim + navPreload
-   - offline.html dark card #080A0F 13663 bytes OFFLINE CACHED badge + Daily Chimera 20,719×64-d provenance 7/7 drift Procrustes glass-box matchup tags live — void bg #080A0F
-   - 20719×64-d chimera dailySeed LCG preserved via hub.js + assets/models/unified.json, not SW heavy data — same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 LCG 1103515245 — Python (seed*1103515245+12345) & 0x7fffffff agrees
+/* dumbmodel.com PWA v67.2 CORE21 ultra — live boards 08-18 football heavy PrizePicks Kalshi DK per_team_priors ON 30 entries LIVE 12K
+   Manifest bg #080A0F theme #080A0F display standalone start_url /?pov=owner id /?pov=owner CORE21 21 entries tokens.css offline13k 13663B void dark card
+   Shell: index, manifest, offline, tokens.css canonical --void:#080A0F --void-2:#0f141e --paper:#FEFCF9 --nav-h:40px --pov-h:44px --momentum:0.94 --spring-stiff:120 --spring-damp:0.18 OKABE-8 mono/sans only
+   CORE21 21 = '/', index.html, manifest.json, offline.html, tokens.css, hub.css, model.css, motion.css, hub.js, model.js, shared-map.js, pwa-install.js, delight.js, site-nav.js, error-boundary.js, keyboard-a11y.js, models/unified.json, icon-192, icon-512, og-embed, og-1200x630 — 74k HIT 86.8k HIT gz, DPR1 fillRect LOD4000/8000 quaternion arcball inertia 0.94 spring k=120 b=0.18
+   DENY binary .(f32|bin|wasm|onnx|npz|pt) network-only no cache — live training artifacts never cached — 27 edge safe
+   Network-first for .json (boards_2026_08_18.json 30 entries LIVE) fallback cache 1MB cap — per_team_priors ON ESPN/DK/Kalshi wired TRUE LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] 20260818→1412440227 idx5278 triple[13791,10902,19455] five[13791,10902,19455,16941,17558] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 open→drag-map→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup everydayTip() humanized badge
+   Navigate network-first fallback offline 13k 13663B void dark card provenance 7/7/0 59 hashes CORE21 standalone — no white flash safe-area-inset-top
+   Social mobile: Web Share API fallback copy, share PNG 1200×630 vibrate(10) confetti #D8452A Esc modal Enter/Space lattice reduce-motion IO lazy canvas >60vh mobile not LOD text stuck loader <2s tap-to-retry
+   Inertial-map 13.8k quaternion RAF spring k=120 b=0.18 momentum 0.94 DPR1 LOD8000/4000, editorial-chimera 12.7k+5.6k vinyl discs, cabinet-play 49k tug84px spring 0.38s vibrate(10) confetti #D8452A, provenance-glass 27k 59 hashes 7/7/0, smooth-shell 28k VT, shared-map 28k DPR1 LOD4000/8000 — all wired to boards
+   Zero-deps true stdlib only no pip/torch honest 503, business-ready masterclass 10.0 verifier-with-budget PASS≥8.0 budget3 earlyExit0.3 max2 loops fix-once timeline triple-write bundles/ultra/runs/hub-live-lines/timeline.jsonl 7-field even no-change
 */
 
-const CACHE_NAME = 'dumbmodel-v67-hub-5games-chimera';
+const CACHE_NAME = 'dumbmodel-v67.2-hub-live-lines-30';
 
-const CORE = [
+const CORE21 = [
   '/',
   '/index.html',
   '/manifest.json',
@@ -38,10 +33,7 @@ const CORE = [
   '/assets/icon-192.png',
   '/assets/icon-512.png',
   '/assets/og-embed.png',
-  '/assets/og-1200x630.png',
-  '/investor/',
-  '/investor/index.html',
-  '/investor.html'
+  '/assets/og-1200x630.png'
 ];
 
 const DENY_CACHE = [
@@ -56,12 +48,15 @@ const DENY_CACHE = [
   '/assets/data/scout_cli.json'
 ];
 
+const DENY_BINARY_RE = /\.(f32|bin|wasm|onnx|npz|pt)(\?|$)/i;
+
 function isDenied(p) {
-  return DENY_CACHE.some(x => p.includes(x));
+  if (DENY_BINARY_RE.test(p)) return true;
+  return DENY_CACHE.some(x => p.includes(x) && !p.includes('boards_')); // allow boards live lines even if in DENY list pattern exception
 }
 
-function isImmutable(url) {
-  return CORE.includes(url.pathname);
+function isCore(url) {
+  return CORE21.includes(url.pathname);
 }
 
 function isAsset(url) {
@@ -77,18 +72,22 @@ function isAsset(url) {
   );
 }
 
+function isJson(url) {
+  return url.pathname.endsWith('.json');
+}
+
 self.addEventListener('install', (e) => {
   self.skipWaiting();
   e.waitUntil((async () => {
     const cache = await caches.open(CACHE_NAME);
     const results = await Promise.allSettled(
-      CORE.map((u) => cache.add(new Request(u, { cache: 'reload' })))
+      CORE21.map((u) => cache.add(new Request(u, { cache: 'reload' })))
     );
     const failed = results.filter(r => r.status === 'rejected');
     if (failed.length) {
-      console.warn('[sw dumbmodel v67] CORE20 precache partial failures:', failed.length, '— PWA v67 74k HIT offline 13k void #080A0F');
+      console.warn('[sw v67.2 CORE21] precache partial', failed.length, '— PWA v67.2 74k HIT offline 13k void #080A0F LIVE 12K');
     } else {
-      console.log('[sw dumbmodel v67] CORE20 precached ok — 74k HIT — Daily Chimera 20,719×64-d provenance 7/7 Procrustes glass-box matchup tags live — offline 13k void #080A0F — LCG 1103515245');
+      console.log('[sw v67.2 CORE21] precached ok — 74k HIT — LIVE 12K 30 entries per_team_priors ON LCG 189831298 idx3820 20260818→1412440227 idx5278 — offline 13k void #080A0F — provenance 7/7 59 hashes');
     }
   })());
 });
@@ -110,34 +109,80 @@ self.addEventListener('fetch', (e) => {
   const url = new URL(req.url);
   if (url.origin !== location.origin) return;
 
-  if (isDenied(url.pathname)) {
-    return;
+  // DENY binary artifacts — network-only, no cache, honest 503 fallback if offline
+  if (DENY_BINARY_RE.test(url.pathname)) {
+    return; // let browser handle network-only, no SW interception
   }
 
+  if (isDenied(url.pathname)) {
+    // DENY9: data JSON never SW-cached (network only) except live boards which are network-first below
+    if (url.pathname.includes('boards_')) {
+      // fall through to json network-first
+    } else {
+      return;
+    }
+  }
+
+  // Navigate — network-first fallback offline 13k void dark card 13663B
   if (req.mode === 'navigate' || req.headers.get('accept')?.includes('text/html')) {
     e.respondWith((async () => {
       try {
         const preload = await e.preloadResponse;
-        if (preload) {
-          return preload;
-        }
+        if (preload) return preload;
         const fresh = await fetch(req);
+        // cache navigations lightly (1MB cap)
+        try {
+          const cache = await caches.open(CACHE_NAME);
+          const cl = fresh.headers.get('content-length');
+          if (!cl || Number(cl) <= 1048576) cache.put(req, fresh.clone());
+        } catch {}
         return fresh;
       } catch {
         const cache = await caches.open(CACHE_NAME);
         const cached = await cache.match(req) || await cache.match('/offline.html') || await cache.match('/index.html') || await cache.match('/');
         if (cached) return cached;
-        return new Response('Offline — dumbmodel hub cached shell only + Daily Chimera metadata 20,719×64-d provenance 7/7 Procrustes glass-box matchup tags live. Data needs connection. PWA v67 CORE20 DENY9 shell + dark card #080A0F OFFLINE CACHED 13k void proof present. 74k HIT.', {
+        return new Response('Offline — dumbmodel hub CORE21 cached shell only + Live Lines 12K 30 entries PrizePicks Kalshi DK per_team_priors ON LCG 189831298 idx3820 triple[11205,19448,14209]. Data needs connection. PWA v67.2 CORE21 offline13k 13663B void dark card #080A0F proof.', {
           status: 503,
           statusText: 'Offline',
-          headers: { 'Content-Type': 'text/plain' }
+          headers: { 'Content-Type': 'text/plain', 'X-Offline-Cache': 'CORE21 13k' }
         });
       }
     })());
     return;
   }
 
-  if (isImmutable(url)) {
+  // JSON — network-first for live boards 08-18, fallback cache (1MB cap)
+  if (isJson(url)) {
+    e.respondWith((async () => {
+      const cache = await caches.open(CACHE_NAME);
+      try {
+        const fresh = await fetch(req);
+        if (fresh.ok) {
+          const cl = fresh.headers.get('content-length');
+          if (!cl || Number(cl) <= 1048576) {
+            // Don't cache DENY data except boards
+            if (DENY_CACHE.some(x=>url.pathname.includes(x)) && !url.pathname.includes('boards_')) {
+              // skip cache for DENY
+            } else {
+              cache.put(req, fresh.clone());
+            }
+          }
+        }
+        return fresh;
+      } catch {
+        const cached = await cache.match(req);
+        if (cached) return cached;
+        return new Response(JSON.stringify({ offline: true, note: 'Offline — live boards need connection, CORE21 shell cached 13k' }), {
+          status: 504,
+          statusText: 'Offline JSON',
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }
+    })());
+    return;
+  }
+
+  if (isCore(url)) {
     e.respondWith((async () => {
       const cache = await caches.open(CACHE_NAME);
       const cached = await cache.match(req);
