@@ -22,6 +22,7 @@ const CORE = [
   '/index.html',
   '/manifest.json',
   '/offline.html',
+  '/assets/tokens.css',
   '/assets/hub.css',
   '/assets/model.css',
   '/assets/motion.css',

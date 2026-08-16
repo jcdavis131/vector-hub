@@ -1,0 +1,86 @@
+{
+  "overall": 10.0,
+  "passes": true,
+  "scores": {
+    "json_valid": 10,
+    "manifest": 10,
+    "tokens": 10,
+    "ui": 10.0,
+    "footer": 10,
+    "contrast": 10,
+    "provenance": 10,
+    "pwa": 10,
+    "overall": 10.0
+  },
+  "details": {
+    "manifest": {
+      "bg": true,
+      "theme": true,
+      "display": true,
+      "start_url": true
+    },
+    "tokens": {
+      "checks": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "okabe": true
+    },
+    "ui": {
+      "checks": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "count": 16,
+      "total": 16
+    },
+    "footer": {
+      "has_phrase": true,
+      "footer_count": 1,
+      "no_free_forever": true
+    },
+    "contrast": {
+      "ivory_void": true,
+      "points_visible": true,
+      "void_class": true
+    },
+    "provenance": {
+      "ok7": true,
+      "hashes59": true,
+      "lcg": true,
+      "same_link": true,
+      "everydayTip": true,
+      "humanized": true,
+      "chain": true
+    },
+    "pwa": {
+      "core_len": 21,
+      "offline_size": 13663,
+      "offline_ok": true
+    },
+    "overall_score": 10.0
+  },
+  "attempt": 1
+}
