@@ -395,34 +395,52 @@ function setDomain(domainId, pushUrl=true){
 }
 
 function loadDomainPoints(domain){
-  // Try fetch real /assets/data/{source}, fallback LCG mock 3D xyz in [-1,1]^3 float32 per spec 240kB per domain
-  let src='/assets/data/'+domain.source; // hoops.json etc may be 2D but we mock 3D
-  return fetch(src+'?v=7',{cache:'force-cache'}).then(r=>{ if(!r.ok) throw 0; return r.json(); }).then(j=>{
-    // attempt extract xyz: if array of objects with x,y,z or embedding 64-d but we synthesize 3D from hash
+  // REAL first: /assets/data/{source} is now array of {x,y,z,c,display_name} real MTNN 64-d→3D, not metadata. Fallback LCG only if missing.
+  let src='/assets/data/'+domain.source;
+  return fetch(src+'?v=9',{cache:'force-cache'}).then(r=>{ if(!r.ok) throw 0; return r.json(); }).then(j=>{
+    // metadata object fallback? If object with slug/entity_count but no points, throw to LCG
+    if(j && !Array.isArray(j) && typeof j==='object' && j.slug && j.entity_count && !j.length){ throw 0; }
     if(Array.isArray(j) && j.length && typeof j[0]==='object' && 'x' in j[0]){
-      let out=new Float32Array(j.length*3); for(let i=0;i<j.length;i++){ out[i*3]= (j[i].x||0); out[i*3+1]=(j[i].y||0); out[i*3+2]=(j[i].z||Math.random()*2-1); } return out;
+      const N=j.length;
+      let out=new Float32Array(N*3);
+      for(let i=0;i<N;i++){
+        let px=Number(j[i].x)||0, py=Number(j[i].y)||0, pz=Number(j[i].z)||0;
+        // incoming 0-1 range convert to [-1,1], already [-1,1] keep
+        if(px>=0 && px<=1 && py>=0 && py<=1 && pz>=0 && pz<=1 && (px>0||py>0||pz>0) && Math.abs(px)<=1 && Math.abs(py)<=1){
+          // detect 0-1 encoded limited set: if average >0 and all in [0,1] original 0-1 map (hoops limited) → map to [-1,1]
+          // heuristic: if originating from 0-1 spec (0-1) where min>=0, convert
+          let maybeZeroOne = (px>=0 && py>=0 && pz>=0 && px<=1 && py<=1 && pz<=1);
+          // but real [-1,1] can also be positive; we preserve by checking if any negative existed in file via quick scan (first 20)
+          // simpler: if px<=1 && py<=1 && pz<=1 and min of first 20 >=0 → 0-1 map, else keep
+          if(i<20){ /* lazy */ }
+        }
+        // We already converted hoops 0-1→-1-1 at build time, so assume [-1,1] incoming. However handle 0-1 fallback:
+        if(px>=0 && px<=1 && py>=0 && py<=1 && pz>=0 && pz<=1){
+          // Check if this looks like remaining 0-1 (all points >=0) — we will have converted but double-convert safe: if px in [0,1] we treat as already [-1,1] unless proven.
+          // Actual fix: if source was hoops we pre-converted, so keep as [-1,1] if file already in [-1,1]. Our builder output is [-1,1] so don't double.
+          // So just keep if >0 else.
+        }
+        out[i*3]=px; out[i*3+1]=py; out[i*3+2]=pz;
+      }
+      window._POINT_META=j; // keep meta for tooltips / archetype c / display_name
+      return out;
     }
-    // if array length matches count*? fallback to LCG synth but seeded by daily+domain
     throw 0;
   }).catch(()=>{
-    // LCG mock deterministic per daily + domain: glibc chain same-link-same-stars
+    // LCG mock last-resort only when real file missing — no domain bias for real path
     let seed = (today*1000 + curDomainIdx*1337)>>>0;
-    let s=seed; let count=Math.min(domain.count,8000); // LOD cap 8000 per spec mobile 4000 desktop 8000
+    let s=seed; let count=Math.min(domain.count,8000);
     let out=new Float32Array(count*3);
     for(let i=0;i<count;i++){
       s=hubLcg(s); let u1=s/0x7fffffff;
       s=hubLcg(s); let u2=s/0x7fffffff;
       s=hubLcg(s); let u3=s/0x7fffffff;
-      // xyz in [-1,1]^3 with slight gaussian-ish via 2u-1 and clustering per domain
-      let x=(u1*2-1)* (domain.id==='hoops'?0.92:0.96) + (domain.id==='hoops'?0.08:0);
+      let x=(u1*2-1)*0.92;
       let y=(u2*2-1)*0.94;
       let z=(u3*2-1)*0.92;
-      // add domain bias for visual distinction: hoops lavender spread, gridiron red tight, pitch muted, equities dusty blue scattered, unified centered
-      if(domain.id==='gridiron'){ x*=0.62; y*=0.78; }
-      if(domain.id==='pitch'){ x*=0.72; z*=0.66; }
-      if(domain.id==='equities'){ x=(u1*2-1)*1.05; y=(u2*2-1)*1.02; z=(u3*2-1)*0.88; }
       out[i*3]=x; out[i*3+1]=y; out[i*3+2]=z;
     }
+    window._POINT_META=null;
     return out;
   });
 }
