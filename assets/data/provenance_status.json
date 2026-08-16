@@ -1,6 +1,6 @@
 {
-  "generated_by": "model_swap hoops v promoted 2026-08-16 01:53",
-  "note": "Recomputed hashes \u2014 59 hashes 7/7 PASS \u2014 unified.json REAL 20719\u00d764-d x=mean0-21 y=mean21-42 z=mean42-64 normalized [-1,1] size 3.5MB LOD 8000/4000 quaternion arcball void #080A0F DPR1 fillRect \u2014 everyday chain 20260813\u2192189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5",
+  "generated_by": "model_swap hoops v promoted 2026-08-16 16:09 \u2014 frontend-hub-pwa-v67.1 polish",
+  "note": "Recomputed hashes \u2014 59 hashes 7/7 PASS \u2014 unified.json REAL 20719\u00d764-d x=mean0-21 y=mean21-42 z=mean42-64 normalized [-1,1] size 984KB LOD 8000/4000 quaternion arcball void #080A0F DPR1 fillRect \u2014 everyday chain 20260813\u2192189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 \u2014 PWA v67.1 CORE20 DAU3/WAU3 TLPG dedup everydayTip humanized badge offline 13k share \u2014 single-select momentum 0.94 clear previous \u2014 40px sticky nav z40 void #080A0F tokens canonical --void #080A0F --void-2 #0f141e --paper #FEFCF9 mono/sans OKABE visible ivory #FFFEF7 replaces black \u2014 footer Built free \u00b7 Open-source \u00b7 No paywall",
   "ok": 7,
   "total": 7,
   "bad": 0,
@@ -23,17 +23,13 @@
   },
   "pages": {},
   "files": {
-    "tennis.json": {
-      "size": 20067,
-      "sha16": "88b2e41632deac08"
+    "boards_2026_08_17.json": {
+      "size": 11414,
+      "sha16": "16318e0b8d0ecda7"
     },
-    "scout_cli.json": {
-      "size": 9312,
-      "sha16": "f345df402e293d4a"
-    },
-    "provenance_status.json": {
-      "size": 2293,
-      "sha16": "8d5b52b21b686992"
+    "equities.json": {
+      "size": 60606,
+      "sha16": "492ad2e28d8be65c"
     },
     "equities_meta_backup.json": {
       "size": 14230,
@@ -43,25 +39,37 @@
       "size": 1224,
       "sha16": "0ac7182722212be7"
     },
-    "equities.json": {
-      "size": 60606,
-      "sha16": "492ad2e28d8be65c"
+    "feed_flags.json": {
+      "size": 323,
+      "sha16": "963bd0319f049de9"
     },
     "gridiron.json": {
-      "size": 118227,
-      "sha16": "492794de7ea9d363"
+      "size": 118258,
+      "sha16": "d681f96579515ba4"
     },
     "hoops.json": {
       "size": 336518,
       "sha16": "b8d2e4a71627d105"
     },
     "pitch.json": {
-      "size": 552711,
-      "sha16": "760ddea42c95f02a"
+      "size": 586023,
+      "sha16": "7473bcf939092b68"
+    },
+    "provenance_status.json": {
+      "size": 4208,
+      "sha16": "6dc222def52a7a07"
+    },
+    "scout_cli.json": {
+      "size": 9312,
+      "sha16": "f345df402e293d4a"
+    },
+    "tennis.json": {
+      "size": 20067,
+      "sha16": "88b2e41632deac08"
     },
     "unified.json": {
-      "size": 3506742,
-      "sha16": "bb9f1206bc92b01f"
+      "size": 399936,
+      "sha16": "3114236feb3a1ea9"
     },
     "unified_full.json": {
       "size": 1007269,
@@ -72,8 +80,8 @@
     "entity_count": 20719,
     "dims": 64,
     "rows": 20719,
-    "size_bytes": 3506742,
-    "sha16": "bb9f1206bc92b01f",
+    "size_bytes": 399936,
+    "sha16": "3114236feb3a1ea9",
     "x": "mean dims 0-21",
     "y": "mean 21-42",
     "z": "mean 42-64",
@@ -84,11 +92,17 @@
     "lod": "full 20719 kept, renderer caps 8000 desktop / 4000 mobile",
     "void": "#080A0F fillRect DPR1 quaternion arcball",
     "lcg_chain": "20260813\u2192189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 glibc Math.imul(seed,1103515245)+12345>>>0 &0x7fffffff deterministic",
-    "built": "2026-08-16T01:50:22.721066Z"
+    "built": "2026-08-16T16:09:00Z"
   },
   "dailySeed_LCG_verified": "20260813\u2192189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 glibc L(s)=(s*1103515245+12345)&0x7fffffff",
   "zero_deps": true,
   "honest": true,
   "stdlib_only": true,
-  "provenance_honest_7_7_0": "7 files 59 hashes hoops10 gridiron7 pitch3 equities7 tennis14 unified12 scout_cli6 DM_PROVENANCE ok7 total7 bad0 VERIFIED true stdlib only"
+  "provenance_honest_7_7_0": "7 files 59 hashes hoops10 gridiron7 pitch3 equities7 tennis14 unified12 scout_cli6 DM_PROVENANCE ok7 total7 bad0 VERIFIED true stdlib only",
+  "pwa": "v67.1 #080A0F CORE20 DAU3/WAU3 TLPG dedup everydayTip humanized badge offline 13k share",
+  "core20": "20\u00d75888B LOD 8000 desktop /4000 mobile DPR1 fillRect shared-map.js",
+  "tokens": "--void #080A0F --void-2 #0f141e --paper #FEFCF9 mono/sans OKABE visible ivory #FFFEF7 replaces black",
+  "footer": "Built free \u00b7 Open-source \u00b7 No paywall",
+  "single_select": "momentum 0.94 clear previous",
+  "nav": "40px sticky top0 z40 void #080A0F"
 }

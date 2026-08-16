@@ -291,3 +291,7 @@
   } catch (_e) {}
 
 })();
+
+// everydayTip humanized badge — PWA v67.1 DAU3/WAU3 TLPG dedup
+function everydayTip(){return "Today's three change every day — same link same three as friends"}
+try{window.everydayTip=everydayTip; const badge=document.getElementById('dailyKicker'); if(badge) badge.title=everydayTip();}catch{}
