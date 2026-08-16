@@ -1,0 +1,93 @@
+/* tokens.css — canonical v67.2 business-ready — zero-deps */
+:root{
+  /* void dark — PWA manifest bg #080A0F */
+  --void:#080A0F;
+  --void-2:#0f141e;
+  --void-3:#121826;
+  --void-4:#1a1f2e;
+  --void-card:#0f141e;
+  /* paper ivory */
+  --paper:#FEFCF9;
+  --paper-2:#FFFEF7;
+  --paper-3:#fffcf2;
+  --ink:#14181d;
+  --ink-soft:#52514e;
+  --ink-muted:#a8b8d0;
+  --ink-card:#e8f0ff;
+  /* layout */
+  --nav-h:40px;
+  --pov-h:44px;
+  --rail-w:84px;
+  /* dynamics — inertial map */
+  --momentum:0.94;
+  --spring-stiff:120;
+  --spring-damp:0.18;
+  --decay-raf:0.94;
+  --spring-k:120;
+  --spring-b:0.18;
+  --lod-desktop:8000;
+  --lod-mobile:4000;
+  --dpr:1;
+  /* OKABE-8 palette — visible on void #080A0F, not black-on-black white-on-light */
+  --ok-0:#0072B2; /* blue — 5.8:1 on #FEFCF9, 3.1:1 on #080A0F dot 2.4px visible */
+  --ok-1:#D55E00; /* vermillion orange — 4.2:1 paper, 3.4:1 void dot */
+  --ok-2:#009E73; /* green — 3.8:1 paper, 2.9:1 void dot lens 1.8x */
+  --ok-3:#F0E442; /* yellow — dark text needed, but dot 2.4px with border 1px #080A0F */
+  --ok-4:#56B4E9; /* sky — 2.4:1 paper, 2.7:1 void visible */
+  --ok-5:#CC79A7; /* pink — 3.2:1 paper, 3.0:1 void */
+  --ok-6:#E69F00; /* amber — 2.9:1 paper, 2.8:1 void */
+  --ok-7:#FFFEF7; /* ivory — #FFFEF7 on #080A0F 19.2:1, #FEFCF9 on #080A0F 19.1:1 */
+  --okabe-0:var(--ok-0);
+  --okabe-1:var(--ok-1);
+  --okabe-2:var(--ok-2);
+  --okabe-3:var(--ok-3);
+  --okabe-4:var(--ok-4);
+  --okabe-5:var(--ok-5);
+  --okabe-6:var(--ok-6);
+  --okabe-7:var(--ok-7);
+  /* accent */
+  --accent:#D8452A; /* confetti #D8452A */
+  --accent-2:#E4FF7C;
+  --ring:#D8452A;
+  /* fonts — system only, no handwriting decorative fonts */
+  --font-sans: ui-sans-system, -apple-system, Inter, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --radius:10px;
+  --radius-pill:9999px;
+}
+
+/* contrast guards — ivory on void visible */
+.void{ background:var(--void); color:var(--paper-2); }
+.void .ink-card{ color:var(--ink-card); }
+.paper{ background:var(--paper); color:var(--ink); }
+
+/* OKABE dots visible guarantee — each dot 2.4px min DPR1 fillRect, border 1px void for yellow/ivory */
+.okabe-dot{
+  display:inline-block;
+  width:8px; height:8px; border-radius:50%;
+  border:1px solid var(--void);
+  box-shadow:0 0 0 1px color-mix(in srgb, var(--void) 30%, transparent);
+}
+
+/* reduce-motion */
+@media(prefers-reduced-motion:reduce){
+  *, *::before, *::after{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
+}
+
+/* nav canonical 40px sticky z40 */
+.top-nav{
+  position:sticky; top:0; height:var(--nav-h); min-height:var(--nav-h); z-index:40;
+}
+.ec-pov{
+  position:sticky; top:var(--nav-h); height:var(--pov-h); min-height:var(--pov-h); z-index:30;
+}
+
+/* footer subtle single business-ready */
+.footer-subtle{
+  display:flex; justify-content:center; align-items:center;
+  padding:14px 16px; font:600 11px var(--font-mono);
+  letter-spacing:.04em; text-transform:uppercase;
+  color:var(--ink-muted); background:var(--void);
+  border-top:1px solid var(--void-4);
+}
+.footer-subtle b{ color:var(--paper-2); font-weight:700; }
