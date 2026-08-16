@@ -52,8 +52,8 @@
       "sha16": "b8d2e4a71627d105"
     },
     "unified_full.json": {
-      "size": 1007269,
-      "sha16": "ea6df823a22ed827"
+      "size": 4939249,
+      "sha16": "5e4a74818fdabac7"
     },
     "boards_2026_08_17.json": {
       "size": 11414,
@@ -61,19 +61,19 @@
     },
     "feed_flags.json": {
       "size": 323,
-      "sha16": "963bd0319f049de9"
+      "sha16": "cc681b7e180b00c3"
     },
     "equities.json": {
-      "size": 63588,
-      "sha16": "9c0416cf24a455de"
+      "size": 146321,
+      "sha16": "a2c315e1f5e5c05d"
     },
     "provenance_status.json": {
-      "size": 4995,
-      "sha16": "c67b64a7f40ebbd9"
+      "size": 5219,
+      "sha16": "ddd4ea0ba83ae0a9"
     },
     "unified.json": {
-      "size": 399936,
-      "sha16": "3114236feb3a1ea9"
+      "size": 1913769,
+      "sha16": "7177c7f3fa517d34"
     },
     "archetype_map.json": {
       "size": 4856,
@@ -94,17 +94,18 @@
     "rows": 8000,
     "size_bytes": 399936,
     "sha16": "3114236feb3a1ea9",
-    "x": "mean dims 0-21",
+    "x": "mean 0-21",
     "y": "mean 21-42",
     "z": "mean 42-64",
-    "normalized": "[-1,1] min/max scaling across 20719",
-    "c": "i%8 OKABE-8",
-    "domain": "hoops(0)/gridiron(1)/pitch(2) from sport_id",
-    "display_name": "entity-{i} fallback, meta stored window._POINT_META",
+    "normalized": "[-1,1] minimal separators",
+    "c": "OKABE-8 hash(display_name) not i%8 - domain sport_id fixed (0 hoops/1 gridiron/2 pitch/3 equities)",
+    "domain": "REAL sport_id 0/1/2/3 fixed",
+    "display_name": "REAL LeBron James/Jordan + gridiron Player 10 QB + pitch Youri Tielemans etc not entity-i",
     "lod": "full 20719 kept, renderer caps 8000 desktop / 4000 mobile",
     "void": "#080A0F fillRect DPR1 quaternion arcball",
     "lcg_chain": "20260813\u2192189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 glibc Math.imul(seed,1103515245)+12345>>>0 &0x7fffffff deterministic",
-    "built": "2026-08-16T18:03:27.686917Z"
+    "built": "2026-08-16T18:03:27.686917Z",
+    "c_detail": "c = sha256(display_name) %8 OKABE-8 not i%8"
   },
   "dailySeed_LCG_verified": "20260813\u2192189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 glibc L(s)=(s*1103515245+12345)&0x7fffffff",
   "zero_deps": true,

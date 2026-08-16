@@ -52,5 +52,11 @@
   "built": "2026-08-15T20:58 CDT",
   "partial": false,
   "real": true,
-  "honest": true
+  "honest": true,
+  "c": "sector->OKABE-8 not i%8",
+  "display": "REAL names + archetype from latest FY",
+  "pid": "eq-<ticker> fixed",
+  "minimal": "[x,y,z,c,pid,display_name,archetype]",
+  "domain": "equities sport_id 3",
+  "updated": "2026-08-16T18:30Z builder-equities lane4"
 }
