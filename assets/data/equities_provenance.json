@@ -1,0 +1,56 @@
+{
+  "source": "vector-equities/assets/real_data.json",
+  "rows": 4831,
+  "tickers": 500,
+  "entity_count": 500,
+  "entity_fields": [
+    "ticker",
+    "x",
+    "y",
+    "z",
+    "c",
+    "display_name",
+    "sector",
+    "cap"
+  ],
+  "x_y_z_source": "real_data.json x,y,z normalized by max_abs",
+  "max_abs_original": 0.90783,
+  "c_mapping": "OKABE-8 0-7 via sector alphabetical index %8",
+  "sectors": [
+    "Communication",
+    "Consumer Discretionary",
+    "Consumer Staples",
+    "Energy",
+    "Financials",
+    "Healthcare",
+    "Industrials",
+    "Materials",
+    "Real Estate",
+    "Technology",
+    "Utilities"
+  ],
+  "sector_to_c": {
+    "Communication": 0,
+    "Consumer Discretionary": 1,
+    "Consumer Staples": 2,
+    "Energy": 3,
+    "Financials": 4,
+    "Healthcare": 5,
+    "Industrials": 6,
+    "Materials": 7,
+    "Real Estate": 0,
+    "Technology": 1,
+    "Utilities": 2
+  },
+  "cap_method": "deterministic hash sum(ord)*31+len*97 plus sha256(name) % -> 5-1505B synthetic, no leak, stdlib only",
+  "cap_range": {
+    "min": 8.36,
+    "max": 1499.86
+  },
+  "normalized": true,
+  "range_check": "all x,y,z in [-1,1]",
+  "built": "2026-08-15T20:58 CDT",
+  "partial": false,
+  "real": true,
+  "honest": true
+}
