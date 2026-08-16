@@ -638,3 +638,98 @@ anchor-period skew **0 / 50,173**.
 **Lesson: a bound you inherited is not a fact.** I deleted 5,345 rows to respect a floor
 without once asking where the floor came from. It came from a fetch flag. Check whether a
 limit is in the world or in your cache before you honor it with data loss.
+
+
+---
+
+## 2026-08-16 (tick 31) -- market tower: 8 new schema fields, 3 sourcing paths, 4-lane migration
+
+Backup of remote SHA before this push: `25ae55a`
+
+User proposal: Vegas betting odds/moneylines as new team-level towers, complementing the
+existing player towers, on the theory that market data is a strong team-quality signal the
+current schema does not carry directly. Investigated three lanes, found three different
+answers, delivered what was real for each.
+
+**Schema: 85 -> 93 keys.** `vegas_moneyline_team`, `vegas_moneyline_opp`,
+`vegas_spread_odds_team`, `vegas_spread_odds_opp`, `vegas_total_over_odds`,
+`vegas_total_under_odds`, `vegas_draw_price`, `preseason_win_total_line`. The first six give
+the PRICE a line was offered at, distinct from `vegas_spread`/`vegas_total` which already
+gave the LINE itself. `vegas_draw_price` and `preseason_win_total_line` are always null
+outside the one lane that actually has that kind of market.
+
+**Gridiron -- zero new fetches.** `games.csv` (already cached, already fetched every tick)
+carries `home_moneyline`/`away_moneyline`/`home_spread_odds`/`away_spread_odds`/`over_odds`/
+`under_odds`; the harvester read the file but only ever pulled `spread_line`/`total_line`
+and discarded the rest. Wired the discarded columns in, team-perspective flip matching the
+existing spread logic. 32,165/32,165 rows filled, 100% coverage, real data
+(spot-checked: 2023 KC home vs DET, home_moneyline -198 favorite, home spread_odds/
+over_odds/under_odds all -110 standard vig).
+
+**Hoops -- no per-game source exists, but a season-level one already did.** The standard
+free historical NBA odds archive (sportsbookreviewsonline.com) pivoted to a
+gambling-affiliate marketing site and stopped updating after 2022-23 -- confirmed dead, not
+worth scraping harder. The real answer was already in the repo:
+`vector-hoops/pipeline/fetch_preseason_odds.py` scrapes Basketball-Reference's preseason
+O/U win total, already cached, already current -- 33 seasons, 1993-94 through **2026-27**
+(next season, all 30 teams, built 2026-08-09). Broadcast onto every row of that team+season,
+same pattern as gridiron's per-game vegas_spread broadcast. 189,327/189,327 rows filled,
+100% coverage (spot-check: 2023-24 BOS 54.5, 2019-20 LAL 50.5 -- both sane for those rosters).
+
+**Pitch -- built correctly, currently 0% filled, and that is the honest answer.**
+`football-data.co.uk` gives free EPL match odds (1X2 + over/under 2.5, no auth). But only
+the `fpl_bootstrap` family (587 rows, the single current gameweek) has real team+date grain;
+`fpl_history_past` (2,032 rows) is a season AGGREGATE with `team=null` by construction --
+structurally non-joinable to a per-match source, not a bug. Two real bugs found and fixed
+before trusting a single line of output:
+1. Requesting the 2026/27 season file (`mmz4281/2627/E0.csv`) returned HTTP 200 -- but
+   `r.geturl()` showed a silent redirect to `EC.csv` (English National League, wrong
+   division), because the PL season had not started and the site has no clean 404 for that.
+   Guard checks the DATA (`row["Div"] == "E0"`), not the URL or status.
+2. The CSV header carries a UTF-8 BOM. Decoding with plain `utf-8` glues it to the first
+   column name (`"\ufeffDiv"` != `"Div"`), so the Div guard silently rejected every row --
+   no exception, no error, fetch "succeeded", cache wrote real bytes, join map just always
+   empty. Caught only because the mechanism was tested against BOTH a not-started season
+   (correctly empty) AND a completed season known to have real data (WRONGLY also empty) --
+   a single test case would have looked like a working "honest zero" by accident.
+   Fix: `utf-8-sig`.
+Verified after the fix: 2025-26 (completed) returns 646 team-match entries with correct
+values (Liverpool 1.31 favorite / Bournemouth 8.31 underdog, shared draw 5.96); 2026-27
+(not started) correctly returns 0. The 646-vs-760-expected gap is fully explained by 3
+relegated clubs (Burnley/West Ham/Wolves) not in the current-roster team-name map --
+irrelevant to live wiring, which only ever needs the current 20-team roster.
+Team-name map (FPL short_name -> football-data.co.uk name) verified against live fetches,
+not guessed -- the two sites disagree on 5 of 20 names (Man Utd/Man United, Spurs/
+Tottenham, Hull City/Hull, Ipswich Town/Ipswich, Coventry City/Coventry).
+
+**Equities -- no market analog, null-backfilled for schema uniformity only.** 51,114 rows,
+all 8 new keys null (there is no game to attach a moneyline to).
+
+**A real bug found across all three migrations, same shape each time.** The scripts that
+enriched EXISTING rows in place did `r.update(mf)` where `mf` only contained the fields
+that lane actually has data for -- silently leaving the OTHER lanes' new keys missing
+entirely (e.g. hoops's `preseason_win_total_line` absent from a gridiron row). Rows ended
+up at 91 keys instead of 93. The row_hash-unchanged safety check does not look at key
+completeness at all, so it passed clean while the bug was live -- caught only by explicitly
+counting keys per row after migration. Fixed by setting every new key to `None` as a
+baseline before overlaying real values, in all three migration scripts.
+
+| lane | rows | new-field coverage |
+|---|---|---|
+| gridiron | 32,165 | 100% (6 of 8 fields; draw/preseason N/A) |
+| hoops | 189,327 | 100% (1 of 8 fields; rest N/A) |
+| pitch | 2,619 | 0% (correct -- season not started upstream) |
+| equities | 51,114 | 0% (correct -- no market analog) |
+
+**Row count unchanged: 275,225.** This was enrichment, not a rebuild -- every migration
+script verified `row_hash` set identical before/after before writing, same discipline as
+the equities price-floor backfill. Both standing audits green: `audit_upstreams.py` =
+`no upstream gap`, `audit_rows.py` = `row integrity ok`. Cross-lane `schema_uniform` = true
+(93 keys, all four lanes, all 275,225 rows) -- verified directly by counting keys per row,
+not inferred from the contract builder alone.
+
+**Lesson, compounding on the last two sessions':** a bound you inherited is not a fact
+(tick 27); a check must test the invariant, not a symptom (tick 25); this time -- a
+completeness invariant ("every row has every key") is not verified by the safety check
+built for a DIFFERENT invariant ("no row changed identity"). Two different properties need
+two different checks, and neither one substitutes for the other.
