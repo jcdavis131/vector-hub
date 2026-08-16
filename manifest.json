@@ -1,1 +1,109 @@
-{"background_color":"#080A0F","categories":["sports","games","education","finance"],"description":"Six model cards, five daily vector puzzles — NBA, NFL, World Cup, tennis, public companies, and joint 20,719×64-d chimera dailySeed LCG. Every number recomputable.","dir":"ltr","display":"standalone","display_override":["standalone","minimal-ui","browser"],"icons":[{"purpose":"any","sizes":"192x192","src":"/assets/icon-192.png","type":"image/png"},{"purpose":"any","sizes":"512x512","src":"/assets/icon-512.png","type":"image/png"},{"purpose":"maskable","sizes":"192x192","src":"/assets/icon-192.png","type":"image/png"},{"purpose":"maskable","sizes":"512x512","src":"/assets/icon-512.png","type":"image/png"}],"id":"/?utm_source=pwa","lang":"en","name":"dumbmodel — the vector arcade","orientation":"any","prefer_related_applications":false,"scope":"/","screenshots":[{"form_factor":"wide","label":"Five daily vector puzzles — NBA, NFL, World Cup, equities, joint chimera 20,719×64-d","sizes":"1200x630","src":"/assets/og-1200x630.png","type":"image/png"},{"form_factor":"narrow","label":"Daily chimera 20,719×64-d joint — streak 7-dot Week Warrior","sizes":"1080x1920","src":"/assets/og-embed.png","type":"image/png"}],"short_name":"dumbmodel","shortcuts":[{"description":"Five daily vector puzzles — hoops, gridiron, pitch, equities, unified chimera 20,719×64-d dailySeed LCG","icons":[{"sizes":"192x192","src":"/assets/icon-192.png","type":"image/png"}],"name":"Play today's — 5 daily puzzles","short_name":"Play","url":"/#games?utm_source=pwa_shortcut&utm_medium=play"},{"description":"Six model cards — 48-d hoops, 32-d gridiron, 24-d pitch, 64-d equities, 32-d tennis, 64-d joint","icons":[{"sizes":"192x192","src":"/assets/icon-192.png","type":"image/png"}],"name":"Model cards — how vectors know","short_name":"Models","url":"/#models?utm_source=pwa_shortcut&utm_medium=models"},{"description":"Daily chimera — joint 20,719×64-d deterministic dailySeed LCG same-link-same-stars","icons":[{"sizes":"192x192","src":"/assets/icon-192.png","type":"image/png"}],"name":"Daily Chimera","short_name":"Daily","url":"/models/unified.html?utm_source=pwa_shortcut&utm_medium=daily"}],"start_url":"/?utm_source=pwa","theme_color":"#080A0F"}
+{
+  "background_color": "#080A0F",
+  "categories": [
+    "sports",
+    "games",
+    "education",
+    "finance"
+  ],
+  "description": "Six model cards, five daily vector puzzles \u2014 NBA, NFL, World Cup, tennis, public companies, and joint 20,719\u00d764-d chimera dailySeed LCG. Every number recomputable.",
+  "dir": "ltr",
+  "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui",
+    "browser"
+  ],
+  "icons": [
+    {
+      "purpose": "any",
+      "sizes": "192x192",
+      "src": "/assets/icon-192.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "/assets/icon-512.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "maskable",
+      "sizes": "192x192",
+      "src": "/assets/icon-192.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "maskable",
+      "sizes": "512x512",
+      "src": "/assets/icon-512.png",
+      "type": "image/png"
+    }
+  ],
+  "id": "/?utm_source=pwa",
+  "lang": "en",
+  "name": "dumbmodel \u2014 the vector arcade",
+  "orientation": "any",
+  "prefer_related_applications": false,
+  "scope": "/",
+  "screenshots": [
+    {
+      "form_factor": "wide",
+      "label": "Five daily vector puzzles \u2014 NBA, NFL, World Cup, equities, joint chimera 20,719\u00d764-d",
+      "sizes": "1200x630",
+      "src": "/assets/og-1200x630.png",
+      "type": "image/png"
+    },
+    {
+      "form_factor": "narrow",
+      "label": "Daily chimera 20,719\u00d764-d joint \u2014 streak 7-dot Week Warrior",
+      "sizes": "1080x1920",
+      "src": "/assets/og-embed.png",
+      "type": "image/png"
+    }
+  ],
+  "short_name": "dumbmodel",
+  "shortcuts": [
+    {
+      "description": "Five daily vector puzzles \u2014 hoops, gridiron, pitch, equities, unified chimera 20,719\u00d764-d dailySeed LCG",
+      "icons": [
+        {
+          "sizes": "192x192",
+          "src": "/assets/icon-192.png",
+          "type": "image/png"
+        }
+      ],
+      "name": "Play today's \u2014 5 daily puzzles",
+      "short_name": "Play",
+      "url": "/#games?utm_source=pwa_shortcut&utm_medium=play"
+    },
+    {
+      "description": "Six model cards \u2014 48-d hoops, 32-d gridiron, 24-d pitch, 64-d equities, 32-d tennis, 64-d joint",
+      "icons": [
+        {
+          "sizes": "192x192",
+          "src": "/assets/icon-192.png",
+          "type": "image/png"
+        }
+      ],
+      "name": "Model cards \u2014 how vectors know",
+      "short_name": "Models",
+      "url": "/#models?utm_source=pwa_shortcut&utm_medium=models"
+    },
+    {
+      "description": "Daily chimera \u2014 joint 20,719\u00d764-d deterministic dailySeed LCG same-link-same-stars",
+      "icons": [
+        {
+          "sizes": "192x192",
+          "src": "/assets/icon-192.png",
+          "type": "image/png"
+        }
+      ],
+      "name": "Daily Chimera",
+      "short_name": "Daily",
+      "url": "/models/unified.html?utm_source=pwa_shortcut&utm_medium=daily"
+    }
+  ],
+  "start_url": "/?pov=owner",
+  "theme_color": "#080A0F"
+}
