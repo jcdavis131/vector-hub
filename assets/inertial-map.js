@@ -88,17 +88,26 @@
     try{ if(navigator.vibrate) navigator.vibrate(10); }catch{}
   }
 
-  // === DPR1 canvas void hit ===
+    // === DPR1 canvas void hit — best-in-class with parent measurement + ResizeObserver fallback ===
+
   function ensureCanvasDPR1(){
     var c=document.getElementById('c'); if(!c) return null;
     var rect=c.getBoundingClientRect();
     var W=Math.max(1, Math.round(rect.width));
     var H=Math.max(1, Math.round(rect.height));
-    // DPR1 only — no devicePixelRatio
+    if(W<10||H<10){
+      var pr=c.parentElement && c.parentElement.getBoundingClientRect();
+      if(pr){ if(W<10 && pr.width>10) W=Math.round(pr.width); if(H<10 && pr.height>10) H=Math.round(pr.height); }
+      if(W<10) W=window.innerWidth||390;
+      if(H<10) H=Math.round((window.innerHeight||800)*0.52);
+      if(H<320) H=320;
+    }
+    if(c.clientHeight<320) H=Math.max(H,320);
     if(c.width!==W) c.width=W;
     if(c.height!==H) c.height=H;
+    c.style.minHeight='320px';
+    c.style.background='#080A0F';
     var ctx=c.getContext('2d');
-    // PWA v67 HIT — fillStyle '#080A0F' fillRect(0,0,W,H)
     ctx.setTransform(1,0,0,1,0,0);
     ctx.fillStyle='#080A0F';
     ctx.fillRect(0,0,W,H);
@@ -334,6 +343,15 @@
     tryPatch();
     bindDrag();
     ensureCanvasDPR1();
+    try{
+      if('ResizeObserver' in window){
+        var ro=new ResizeObserver(function(){ ensureCanvasDPR1(); renderInertial(false); });
+        var cc=document.getElementById('c'); if(cc){ ro.observe(cc); if(cc.parentElement) ro.observe(cc.parentElement); }
+        window.addEventListener('resize', function(){ ensureCanvasDPR1(); renderInertial(false); }, {passive:true});
+      } else {
+        window.addEventListener('resize', function(){ ensureCanvasDPR1(); renderInertial(false); }, {passive:true});
+      }
+    }catch(e){ console.warn('ro fallback fail',e); }
     // tick loop momentum decay 0.94 RAF 60fps
     if(!state.rafId) state.rafId=requestAnimationFrame(tick);
 

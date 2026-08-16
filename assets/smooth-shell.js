@@ -226,31 +226,56 @@
   }
 
   function loadDomainPoints(domain){
-    // SSOT real-first Float32Array(N*3) loads — LOD 4000 mobile 8000 desktop DPR1
-    var url='/assets/data/'+domain.id+'.json?v=9';
+    // SSOT real-first Float32Array(N*3) loads — LOD 4000 mobile 8000 desktop DPR1 + fallback + retry + toast retry
+    var urls=[
+      '/assets/data/'+domain.id+'.json?v=9',
+      'assets/data/'+domain.id+'.json?v=9',
+      '/assets/data/'+domain.id+'.json',
+      'assets/data/'+domain.id+'.json',
+      '/assets/vectors_map_lite.json',
+      'assets/vectors_map_lite.json',
+      '/assets/data/unified.json',
+      'assets/data/unified.json'
+    ];
     var isMobile=window.innerWidth<700 || /Android|iPhone|iPad/i.test(navigator.userAgent||'');
     var maxRender=isMobile?4000:8000;
-    // if shared-map mounted, delegate to its loader? For smooth-shell we load ourselves then render.
     try{
-      if(window.__mapFullCache && window.__mapFullCache[url]){
-        var j=window.__mapFullCache[url];
+      if(window.__mapFullCache && window.__mapFullCache[urls[0]]){
+        var j=window.__mapFullCache[urls[0]];
         ingestPoints(j, domain, maxRender);
         return;
       }
     }catch(_){}
-    fetch(url,{cache:'force-cache'}).then(function(r){
-      if(!r.ok) throw new Error('fetch '+url+' '+r.status);
-      return r.json();
-    }).then(function(j){
-      try{ window.__mapFullCache=window.__mapFullCache||{}; window.__mapFullCache[url]=j; }catch(_){}
-      ingestPoints(j, domain, maxRender);
-    }).catch(function(err){
-      console.warn('[smooth-shell] load fail '+url,err);
-      showToast(domain.id+' offline CORE20 shell-only — 13.6k void #080A0F • data needs connection', 3200);
-      // fallback empty points but still render void
-      window._POINTS_3D=new Float32Array(0);
-      renderMap(false);
-    });
+    (async function tryUrls(i){
+      if(i>=urls.length){
+        console.error('[smooth-shell] map failed — tap to retry', domain.id);
+        try{ var fn=window.showToast||window.SmoothShell&&window.SmoothShell.showToast; if(fn) fn('Map failed — tap to retry', 3300); else { var el=document.getElementById('hub-toast'); if(el){ el.textContent='Map failed — tap to retry'; el.style.display='block'; } } }catch{}
+        try{
+          var box=document.getElementById('mapBox'); if(box && !box.querySelector('[data-retry]')){
+            var btn=document.createElement('button'); btn.setAttribute('data-retry','1'); btn.textContent='Tap to retry'; btn.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:14;background:#fffcf2;color:#080A0F;border:1px solid #111;border-radius:9999px;padding:10px 16px;font:700 12px ui-monospace,monospace;cursor:pointer;box-shadow:0 6px 18px #0004';
+            btn.onclick=function(){ btn.textContent='Retrying…'; btn.disabled=true; loadDomainPoints(domain); setTimeout(()=>{ try{btn.remove();}catch{}}, 1800); };
+            box.style.position='relative'; box.appendChild(btn);
+          }
+        }catch{}
+        window._POINTS_3D=new Float32Array(0);
+        renderMap(false);
+        return;
+      }
+      var url=urls[i];
+      try{
+        var res=await fetch(url,{cache:'force-cache'});
+        if(!res.ok) throw new Error('status '+res.status);
+        var j=await res.json();
+        try{ window.__mapFullCache=window.__mapFullCache||{}; window.__mapFullCache[url]=j; window.__mapFullCache[urls[0]]=j; }catch(_){}
+        ingestPoints(j, domain, maxRender);
+      }catch(err){
+        console.warn('[smooth-shell] load fail '+url,err);
+        if(i<2){
+          try{ var res2=await fetch(url,{cache:'no-store'}); if(res2.ok){ var j2=await res2.json(); ingestPoints(j2, domain, maxRender); return; } }catch{}
+        }
+        setTimeout(()=>tryUrls(i+1), 120);
+      }
+    })(0);
   }
 
   function ingestPoints(j, domain, maxRender){
