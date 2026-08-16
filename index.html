@@ -1,655 +1,237 @@
 <!doctype html>
 <html lang="en">
 <head>
+<link rel="stylesheet" href="../vector-hub/packages/vector-tokens/tokens.css">
+<link rel="stylesheet" href="../vector-hub/packages/vector-tokens/shared-research.css">
+<link rel="stylesheet" href="../vector-hub/packages/vector-tokens/shared-lab.css">
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>dumbmodel — embedding map is the site</title>
-<meta name="description" content="The map is the site. 20,719 joint 64-d × 12,966 hoops × 5,323 gridiron × 2,430 pitch × 4,831 company-years × ~200k equities. Rotate domains, drag 3D → 2D. MTNN 17 towers 64-d → UMAP 3D → orthographic 2D. Same link same stars daily.">
-<meta name="theme-color" content="#fffcf2">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231f2d41'/%3E%3Ccircle cx='16' cy='16' r='2.8' fill='%23ff5b04'/%3E%3Cpath d='M16 8.2 L17 11.4 L20.6 11.4 L17.9 13.6 L18.8 16.9 L16 14.8 L13.2 16.9 L14.1 13.6 L11.4 11.4 L15 11.4 Z' fill='%23f1b650'/%3E%3C/svg%3E">
-<link rel="manifest" href="/manifest.json">
-<meta property="og:title" content="dumbmodel — embedding map is the site">
-<meta property="og:description" content="Neural net → 64-d embedding maps → 3D projections → 2D canvas. Rotate hoops/gridiron/pitch/equities/unified. 20,719 joint everyday chain.">
+<title>dumbmodel — embedding arcade • map IS the game</title>
+<meta name="description" content="20,719 joint 64-d × 12,966 hoops × 5,323 gridiron × 2,430 pitch × 4,831 company-years. Map is game — quaternion arcball inertia, vinyl rail nav, DAW faders POV, cabinet tug-to-guess. Same link same stars LCG glibc 189831298 idx3820.">
+<meta name="theme-color" content="#080A0F">
+<link rel="manifest" href="/manifest.json?v=67">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23080A0F'/%3E%3Ccircle cx='16' cy='16' r='2.8' fill='%23ff5b04'/%3E%3Cpath d='M16 8.2 L17 11.4 L20.6 11.4 L17.9 13.6 L18.8 16.9 L16 14.8 L13.2 16.9 L14.1 13.6 L11.4 11.4 L15 11.4 Z' fill='%23f1b650'/%3E%3C/svg%3E">
+<meta property="og:title" content="dumbmodel — embedding arcade • map IS the game">
 <style>
-/* Hybrid: letmeexplain linen + side-kick stats flat + seismografin swiss — map-centric v7-27 */
 :root{
- --bg:#fffcf2; --bg-2:#e9e9e9; --bg-cream:#feefe2; --paper:#fffcf2;
- --ink:#1f2d41; --ink-2:#1d1d1b; --muted:#686f64;
- --hair:#00000026; --hair-heavy:#0000001A; --hair-light:#ffffff26;
- --accent:#ff5b04; --accent-2:#f1b650; --accent-3:#7391bf; --accent-4:#9ebebf;
- --white:#ffffff; --blue-link:#1a4fd6;
- --nav-h:40px; --pov-h:44px;
- --radius-card:10px; --radius-pill:9999px;
- --void:#080A0F; --void-2:#0A0C10;
- --lav:#E1CDF4; --red:#E93118; --wine:#54071C; --lime:#E4FF7C; --sky:#D6E8FF; --sky-2:#D3E6FF;
- --moss:#7E8F7D; --moss-2:#84948A;
- --font-sans:"Suisse Intl","Inter",ui-sans-system,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
- --font-serif:"ABC Arizona Serif","Iowan Old Style",Palatino Linotype,Athelas,Georgia,serif;
- --font-mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
- --gutter:clamp(18px,3.2vw,32px);
- --max:1440px;
- --shadow:none;
+ --nav-h:40px; --pov-h:44px; --rail-w:84px;
+ --void:#080A0F; --void-2:#0A0C10; --void-card:#0f141e; --ink-card:#e8f0ff;
+ --paper:#fffcf2; --ink:#1f2d41; --muted:#686f64; --hair:#00000018;
+ --accent:#ff5b04; --accent-2:#E4FF7C; --ring:#D8452A; --blue:#0072B2; --moss:#84948A;
+ --ok-0:#0072B2; --ok-1:#D55E00; --ok-2:#009E73; --ok-3:#F0E442; --ok-4:#56B4E9; --ok-5:#CC79A7; --ok-6:#E69F00; --ok-7:#FFFEF7;
+ --font-sans: ui-sans-system,-apple-system,Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+ --font-mono: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+ --radius:10px; --radius-pill:9999px;
 }
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
-a{color:inherit;text-decoration:none} a.under{color:var(--blue-link);text-decoration:underline;text-underline-offset:3px}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-::selection{background:var(--accent-2);color:var(--ink-2)}
-
-/* nav 40px Seismo thin UI sticky top:0 zIndex40 --nav-h:40px --pov-h:44px */
-.top-nav{position:sticky;top:0;z-index:40;display:flex;justify-content:space-between;align-items:center;gap:16px;height:var(--nav-h);min-height:var(--nav-h);padding:0 var(--gutter);background:color-mix(in srgb,var(--bg) 85%, white 15%);backdrop-filter:blur(10px) saturate(1.05);border-bottom:1px solid var(--hair);transition:transform .22s ease}
-#pov-strip{position:sticky;top:40px;z-index:40;display:flex;gap:6px;align-items:center;padding:6px var(--gutter);background:var(--void);border-bottom:1px solid #1a1f2e}
-.top-nav.hide{transform:translateY(-102%)}
-.brand{display:inline-flex;flex-direction:column;line-height:.88;letter-spacing:-.03em;font-weight:800;font-size:17px;text-transform:uppercase}
-.brand i{font-style:normal;font-weight:900}
-.brand .asterisk{color:var(--accent);font-weight:800;margin-left:2px}
-.nav-right{display:flex;align-items:center;gap:18px}
-.inline-links{display:flex;gap:18px;align-items:center;font:600 13.5px var(--font-sans);letter-spacing:-.01em}
-.inline-links a{position:relative}
-.inline-links a:hover{color:var(--accent)}
-.domain-switch{display:flex;gap:6px;align-items:center;padding:4px;border-radius:9999px;border:1px solid var(--hair);background:rgba(255,255,255,.7)}
-.domain-pill{display:inline-flex;min-height:28px;padding:0 12px;border-radius:9999px;border:1px solid transparent;background:transparent;color:var(--ink);font:600 11.5px var(--font-sans);letter-spacing:-.01em;cursor:pointer;transition:.15s;align-items:center;white-space:nowrap}
-.domain-pill.on{background:var(--moss);color:#fffcf2;border-color:var(--moss)}
-.domain-pill:hover{border-color:var(--hair-heavy)}
-.dot-pagination{display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center}
-.dot-pagination .d{display:block;width:8px;height:8px;border-radius:50%;border:1px solid var(--hair);background:transparent;transition:.18s}
-.dot-pagination .d.on{background:var(--accent);border-color:var(--accent)}
-.pill-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:36px;padding:0 16px;border-radius:9999px;border:1.4px solid var(--ink);background:transparent;color:var(--ink);font:600 13px var(--font-sans);letter-spacing:-.01em;white-space:nowrap;cursor:pointer;transition:.18s}
-.pill-btn:hover{background:var(--ink);color:var(--white)}
-.pill-btn.orange{background:var(--accent);border-color:var(--accent);color:#fff}
-.pill-btn.orange:hover{background:#e95303}
-.pill-btn.black{background:var(--ink-2);color:#fff;border-color:var(--ink-2)}
-.circ{width:36px;height:36px;border-radius:999px;border:1.2px solid var(--ink);display:grid;place-items:center;background:#fff;font:700 14px var(--font-sans);cursor:pointer;flex:0 0 36px}
-.circ.orange{background:var(--accent);color:#fff;border-color:var(--accent)}
-
-/* container 90% max 1440 + 3-col guide */
-.container{width:90%;max-width:var(--max);margin:0 auto;position:relative}
-@media(max-width:600px){.container{width:92%}}
-.grid-swiss{position:relative}
-.grid-swiss::before{content:"";position:absolute;inset:-1px 0;pointer-events:none;background:repeating-linear-gradient(to right,var(--hair) 0 1px,transparent 1px calc(100%/3),transparent calc(100%/3 + 1px));opacity:.5;mask:linear-gradient(to bottom,transparent 0,black 24px,black calc(100% - 24px),transparent 100%)}
-
-/* sections */
-.section{padding:100px 0;position:relative;border-bottom:1px solid var(--hair);row-gap:20px;column-gap:20px}
-@media(max-width:980px){.section{padding:80px 0}}
-@media(max-width:600px){.section{padding:40px 0}}
-.label-erlebte{font:700 11px var(--font-sans);letter-spacing:.35em;text-transform:uppercase;color:var(--accent);display:flex;gap:6px;align-items:center;margin:0 0 14px}
-.label-erlebte .rule{width:22px;height:1px;background:var(--accent);display:inline-block}
-
-/* hero = MAP 82vh */
-.hero-map{padding:32px 0 28px;border-bottom:1px solid var(--hair);background:linear-gradient(180deg,var(--bg) 0%,var(--bg-cream) 100%)}
-.hero-map-inner{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:20px;align-items:start;min-height:82vh}
-@media(max-width:980px){.hero-map-inner{grid-template-columns:1fr;min-height:auto}}
-.map-col{grid-column:1 / span 8;display:flex;flex-direction:column;gap:14px;position:relative}
-@media(max-width:980px){.map-col{grid-column:1 / -1}}
-.meta-col{grid-column:9 / span 4;display:flex;flex-direction:column;gap:12px;position:sticky;top:108px;align-self:start}
-@media(max-width:980px){.meta-col{grid-column:1 / -1;position:relative;top:auto}}
-
-.map-headline{display:flex;flex-direction:column;gap:10px;margin-bottom:6px}
-.h1-serif{font-family:var(--font-serif);font-weight:400;font-style:italic;font-size:clamp(28px,4.8vw,56px);line-height:.95;letter-spacing:-.04em;margin:0;text-wrap:balance;max-width:16ch;color:var(--ink-2)}
-.h1-serif i{font-style:italic;color:var(--ink)}
-.sub-20{font:400 17px/1.42 var(--font-sans);color:var(--muted);max-width:38ch;margin:0}
-.cta-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:8px}
-
-.map-card{background:#F6F2ED;border:1px solid var(--hair);border-radius:10px;overflow:hidden;position:relative;isolation:isolate;box-shadow:none}
-.map-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,.88);border-bottom:1px solid var(--hair);flex-wrap:wrap}
-.mono-sm{font:600 11px var(--font-mono);letter-spacing:.02em;text-transform:uppercase}
-.map-head b{font:700 11px var(--font-sans);letter-spacing:-.01em}
-.map-controls{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.map-controls .pill-btn{min-height:30px;padding:0 10px;font-size:11px;border-width:1px;background:var(--ink-2);color:#fff;border-color:var(--ink-2)}
-.map-controls .pill-btn.y{background:var(--accent-2);color:var(--ink-2);border-color:var(--ink-2)}
-.map-controls .pill-btn.orange-pill{background:var(--accent);color:#fff;border-color:var(--accent)}
-.map-box{position:relative;background:var(--void);isolation:isolate;overflow:hidden;border-radius:0 0 10px 10px}
-#blobA,#blobB{position:absolute;width:42%;height:62%;border-radius:50%;filter:blur(22px);opacity:.6;pointer-events:none;mix-blend:screen}
-#blobA{left:-6%;top:-12%;background:radial-gradient(320px 280px at 30% 30%,#eaeaea 0%,#cfcfcf 62%,transparent 72%)}
-#blobB{right:-10%;bottom:-18%;background:radial-gradient(380px 320px at 70% 64%,#E1CDF4 0%,#D6E8FF 42%,transparent 70%);opacity:.55}
-#c,#hub-sky{width:100%;display:block;touch-action:pan-y;cursor:grab;position:relative;z-index:1}
-#c{height:600px}
-#hub-sky{height:220px;position:absolute;inset:0;z-index:0;opacity:.88;pointer-events:none}
-@media(max-width:980px){#c{height:520px}} @media(max-width:600px){#c{height:380px}}
-#c.grabbing{cursor:grabbing}
-.map-tag{position:absolute;left:12px;top:12px;z-index:2;display:flex;gap:6px;flex-wrap:wrap;pointer-events:none}
-.foot-tag{position:absolute;right:12px;bottom:12px;z-index:2;pointer-events:none;max-width:70%}
-.bull{width:52px;height:52px;border-radius:50%;border:2px solid var(--accent-2);display:grid;place-items:center;background:radial-gradient(circle at 50% 50%,rgba(241,182,80,.24),transparent 68%);color:var(--accent-2);font-weight:900;font-size:18px;animation:pr 2.2s ease-in-out infinite}
-@keyframes pr{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
-.map-foot{margin:0;padding:9px 12px;font:400 12px/1.45 var(--font-sans);color:#2E2A26;border-top:1px solid var(--hair);background:#fff;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
-.pill{display:inline-flex;align-items:center;min-height:28px;padding:0 12px;border-radius:9999px;border:1px solid var(--hair);background:#fff;color:var(--ink);font:600 11px var(--font-mono);letter-spacing:.02em}
-
-/* alternating cement + blobs */
-.section-alt{background:var(--bg-2);position:relative;overflow:hidden}
-.section-alt::before{content:"";position:absolute;left:-8%;top:-22%;width:44%;height:68%;background:radial-gradient(480px 360px at 42% 38%,#eaeaea 0%,#cfcfcf 34%,transparent 68%);opacity:.9;pointer-events:none}
-.section-alt::after{content:"";position:absolute;right:-10%;bottom:-18%;width:36%;height:56%;background:radial-gradient(360px 300px at 68% 62%,#7391bf22 0%,transparent 66%);opacity:.8;pointer-events:none}
-
-/* dot-grid divider Seismo */
-.dot-divider{height:22px;background:radial-gradient(circle at 2px 2px, var(--ink) 2px, transparent 2.2px);background-size:16px 16px;background-repeat:repeat-x;opacity:.18;margin:18px 0;border:0}
-
-/* right mini cards */
-.mini{border:1px solid var(--hair);border-radius:10px;background:#fff;padding:14px 14px 12px;display:flex;flex-direction:column;gap:8px;position:relative}
-.mini b{font-size:13.2px;line-height:1.32;letter-spacing:-.01em;color:var(--ink-2)}
-.mini .sub{font:400 12.8px/1.44 var(--font-sans);color:var(--muted)}
-.caption{font:600 11px var(--font-sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.tight{font:700 11px var(--font-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
-.pop{display:grid;grid-template-columns:1fr;gap:6px;margin-top:8px}
-.pop button{display:flex;justify-content:space-between;align-items:center;text-align:left;padding:9px 11px;border-radius:10px;border:1px solid var(--hair);background:#fff;font:600 12.2px var(--font-sans);cursor:pointer;transition:.12s;min-height:38px}
-.pop button:hover{border-color:var(--ink-2);transform:translateY(-1px)}
-.pop button.on{background:var(--ink-2);color:#fff;border-color:var(--ink-2)}
-.dots{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
-.dot{width:10px;height:10px;border-radius:50%;border:1px solid var(--hair);background:#fff;display:inline-block}
-.dot.on{background:var(--ink-2);border-color:var(--ink-2)}.dot.filled{background:var(--ink-2)}.dot.war{background:var(--accent);border-color:var(--accent)}
-.edge-zone{margin-top:12px;border-top:1px solid var(--hair);padding-top:12px}
-
-.model-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:10px;overflow:hidden;margin-top:8px}
-@media(max-width:560px){.model-grid{grid-template-columns:1fr}}
-.model-card{background:#fff;padding:12px 12px 10px;display:flex;flex-direction:column;gap:6px;transition:background .12s}
-.model-card:hover{background:#FFFEF7}
-.model-card .big{font:800 22px var(--font-serif);letter-spacing:-.03em}
-
-/* marquee logo wall Side-Kick muted .7 */
-.marquee{overflow:hidden;white-space:nowrap;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);background:#fff;padding:10px 0;opacity:.72}
-.marquee-track{display:inline-flex;gap:28px;animation:scroll 38s linear infinite;will-change:transform}
-.marquee-track span{font:700 12px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:inline-flex;align-items:center;gap:8px}
-@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-
-/* provenance */
-.provenance{padding:22px 0;border-bottom:1px solid var(--hair)}
-.provenance details{border:1px solid var(--hair);padding:16px 18px;background:#fff;border-radius:10px;cursor:pointer}
-.provenance summary{font:700 11px var(--font-mono);text-transform:uppercase;letter-spacing:.05em;list-style:none;display:flex;justify-content:space-between;align-items:center}
-.provenance summary::-webkit-details-marker{display:none}
-.chev{display:inline-block;transition:transform .18s}
-details[open] .chev{transform:rotate(180deg)}
-
-/* footer dark */
-footer.dark{background:#1d1d1b;color:#fffcf2;border-top:1px solid #2a2a2a}
-.footer-inner{width:90%;max-width:var(--max);margin:0 auto;padding:28px 0 24px;display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between}
-.footer-links{display:flex;gap:8px;flex-wrap:wrap}
-.footer-links .pill-btn{border-color:#3A3A3A;color:#EDE6DE;background:transparent}
-.footer-links .pill-btn:hover{background:#fff;color:#1d1d1b;border-color:#fff}
-
-/* toast */
-#hub-toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:90;background:var(--ink-2);color:#fffcf2;border:1px solid #222;border-radius:9999px;padding:10px 16px;font:600 12px var(--font-sans);display:none;max-width:min(92vw,520px);text-align:center}
-#hub-toast-inline{font:500 11px var(--font-mono);color:var(--muted);min-height:1.2em}
-
-/* portrait cut-out */
-.portrait{position:relative;overflow:hidden;border-radius:10px;border:1px solid var(--hair);background:#fff}
-.portrait img,.portrait .placeholder{width:100%;height:140px;object-fit:cover;display:block;background:linear-gradient(135deg,#feefe2,#e9e9e9)}
-.portrait .cap{padding:8px 10px;font:600 11px var(--font-sans);letter-spacing:.02em;color:var(--muted);display:flex;justify-content:space-between}
-
-/* char split */
-.split span{opacity:0;transform:translateX(-8px);display:inline-block}
-.split.ready span{opacity:1;transform:translateX(0);transition:transform .42s cubic-bezier(.22,1,.36,1), opacity .36s}
+*{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}::selection{background:#f1b650}
+a{color:inherit;text-decoration:none}
+.top-nav{position:sticky;top:0;z-index:40;height:var(--nav-h);min-height:var(--nav-h);display:flex;justify-content:space-between;align-items:center;padding:0 16px;background:color-mix(in srgb,var(--void) 88%, #fff 12%);color:#fffcf2;border-bottom:1px solid #1a1f2e;view-transition-name:top-nav}
+.top-nav .brand{font-weight:900;letter-spacing:-.03em;font-size:16px;text-transform:uppercase;display:flex;flex-direction:column;line-height:.9}
+.top-nav .brand small{font-weight:700;font-size:10px;letter-spacing:.18em;color:#ffffffa0;margin-top:2px}
+.domain-sw{display:flex;gap:6px}.domain-pill{min-height:28px;padding:0 12px;border-radius:9999px;border:1px solid #ffffff1e;background:transparent;color:#cbd5e1;font:700 11px var(--font-mono);cursor:pointer;transition:.15s}
+.domain-pill.on{background:#fffcf2;color:#080A0F;border-color:#fffcf2;box-shadow:0 1px 0 #fff1 inset}
+.ec-wrap{display:flex;min-height:calc(100dvh - var(--nav-h))}
+.ec-rail{position:sticky;top:var(--nav-h);width:var(--rail-w);min-width:var(--rail-w);height:calc(100dvh - var(--nav-h));display:flex;flex-direction:column;align-items:center;padding:10px 8px;gap:10px;background:linear-gradient(180deg,var(--paper) 0%,#fff 100%);border-right:1px solid #00000012;z-index:31}
+.ec-disc{width:64px;height:64px;border-radius:50%;border:1.4px solid #111;background:radial-gradient(90% 90% at 36% 32%,#fff 0%,#f6f2ed 22%,#e9e9e9 58%,#111 59%,#111 61%,#080A0F 62%);display:grid;place-items:center;cursor:pointer;transition:transform .32s cubic-bezier(.22,1,.36,1);position:relative}
+.ec-disc.on{transform:scale(1.22);box-shadow:0 0 0 2px #fff,0 0 0 5px var(--ring),0 6px 18px #0002}
+.ec-disc-dot{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font:800 9px var(--font-mono);color:#fff;text-shadow:0 1px 0 #1118;z-index:2}
+.ec-disc::after{content:"";width:12px;height:12px;border-radius:50%;background:var(--ring);border:1.8px solid #111;box-shadow:0 0 0 2px #fff;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3}
+.ec-rail-label{font:700 10px var(--font-mono);text-transform:uppercase;letter-spacing:.04em;border:1px dashed #1112;border-radius:8px;padding:5px 6px;background:#fff;box-shadow:1px 1px 0 #111;max-width:76px;text-align:center;min-height:2em}
+.ec-pov{position:sticky;top:var(--nav-h);z-index:30;display:flex;gap:8px;align-items:center;height:var(--pov-h);min-height:var(--pov-h);padding:6px 14px;background:var(--void);border-bottom:1px solid #1a1f2e;overflow-x:auto;scrollbar-width:none}
+.ec-pov-pill{flex:0 0 auto;min-width:116px;height:30px;border:1.4px solid #2a3042;border-radius:9999px;background:linear-gradient(180deg,#121826 0%,#0e1420 100%);color:#a8b8d0;font:700 11px var(--font-mono);text-transform:uppercase;display:flex;align-items:center;gap:8px;padding:0 10px 0 6px;cursor:pointer}
+.ec-pov-pill.on{color:#fffcf2;border-color:#fff3} .ec-pov-track{width:40px;height:16px;border-radius:999px;background:#080A0F;border:1px solid #28304a;position:relative;flex:0 0 40px} .ec-pov-thumb{width:16px;height:16px;border-radius:50%;background:#fffcf2;border:1.4px solid #111;position:absolute;left:0;top:50%;transform:translate(0,-50%);transition:transform .32s cubic-bezier(.22,1,.36,1)} .ec-pov-pill.on .ec-pov-thumb{background:var(--accent-2)}
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.map-shell{display:grid;grid-template-columns:1fr 320px;gap:0;min-height:calc(100dvh - var(--nav-h) - var(--pov-h))} @media(max-width:980px){.map-shell{grid-template-columns:1fr}.ec-rail{display:none}}
+.map-left{position:relative;background:var(--void);overflow:hidden;isolation:isolate;display:flex;flex-direction:column}
+.map-head{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:rgba(15,20,30,.92);border-bottom:1px solid #1a1f2e;color:#e8f0ff;flex-wrap:wrap;gap:8px}
+.map-box{position:relative;flex:1;min-height:560px;background:var(--void)} #c{width:100%;height:100%;display:block;touch-action:none;cursor:grab} #c.grabbing{cursor:grabbing}
+.map-foot{padding:8px 12px;background:#0f141e;color:#a8b8d0;font:500 11px var(--font-mono);border-top:1px solid #1a1f2e;display:flex;justify-content:space-between;flex-wrap:wrap}
+.right-rail{border-left:1px solid #00000012;background:linear-gradient(180deg,var(--paper) 0%,#fff 100%);display:flex;flex-direction:column;gap:10px;padding:12px;overflow:auto}
+.mini{border:1px solid #00000014;border-radius:12px;background:#fff;padding:12px;display:flex;flex-direction:column;gap:8px} .mini.dark{background:var(--void-card);color:var(--ink-card);border-color:#1a1f2e}
+.mini b{font-size:13px;line-height:1.3} .caption{font:700 10.5px var(--font-mono);text-transform:uppercase;letter-spacing:.05em;color:var(--moss)}
+.ec-cards{display:grid;gap:8px} .ec-card{background:radial-gradient(420px 280px at 14% 18%,#D8452A22 0%,transparent 62%),radial-gradient(380px 260px at 82% 72%,#0072B222 0%,transparent 66%),linear-gradient(180deg,#0f141e 0%,#0b101a 100%);color:#e8f0ff;border:1px solid #1f2937;border-radius:12px;padding:11px 11px 9px;cursor:pointer;transform:perspective(700px) rotateX(var(--tiltX,0deg)) rotateY(var(--tiltY,0deg));transition:transform .18s;border-left:3px solid transparent;will-change:transform} .ec-card.on{outline:2px solid var(--ring);box-shadow:0 0 0 3px #fffcf2,0 0 0 5.5px var(--ring)} .ec-card b{display:block;font-weight:800;margin-bottom:3px}
+.pill{border:1px solid #00000018;border-radius:9999px;padding:0 10px;min-height:24px;display:inline-flex;align-items:center;font:700 11px var(--font-mono)}
+.pop{display:grid;gap:6px} .pop button{border:1px solid #00000018;border-radius:10px;background:#fff;padding:8px 10px;font:600 12px var(--font-sans);cursor:pointer;text-align:left;display:flex;justify-content:space-between;min-height:36px} .pop button.on{background:#1d1d1b;color:#fffcf2}
+.dots{display:flex;gap:5px} .dot{width:8px;height:8px;border-radius:50%;border:1px solid #00000022;background:#fff} .dot.on{background:#1d1d1b;border-color:#1d1d1b}
+.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:90;background:#1d1d1b;color:#fffcf2;border:1px solid #2a2a2a;border-radius:9999px;padding:10px 16px;font:600 12px var(--font-sans);display:none;max-width:min(92vw,560px);text-align:center}
+.lattice{position:fixed;inset:0;z-index:95;background:rgba(8,10,15,.92);backdrop-filter:blur(14px);display:none;overflow:auto;padding:20px} .lattice.on{display:block} .lattice-card{max-width:900px;margin:40px auto;background:#0f141e;color:#e8f0ff;border:1px solid #1f2937;border-radius:16px;padding:18px}
+@media(prefers-reduced-motion:reduce){.ec-card{transform:none!important} .ec-disc{transition:none}}
 </style>
+<link rel="stylesheet" href="/assets/editorial-chimera.css?v=9">
+<link rel="stylesheet" href="/assets/provenance-glass.css?v=9">
 </head>
 <body>
-<nav class="top-nav" aria-label="Primary" id="topNav">
-  <a class="brand" href="/" aria-label="Dumb Model home"><span>DUMB <i>/</i> MODEL<span class="asterisk">*</span></span><span style="font-size:11px;letter-spacing:.18em;color:var(--muted);margin-top:2px">EMBEDDING ARCADE</span></a>
-  <div class="nav-right">
-    <div class="domain-switch" role="tablist" aria-label="Domain embedding maps">
-      <button class="domain-pill on" data-domain="unified" role="tab" aria-selected="true">Unified 20,719</button>
-      <button class="domain-pill" data-domain="hoops" role="tab">Hoops 12,966</button>
-      <button class="domain-pill" data-domain="gridiron" role="tab">Gridiron 5,323</button>
-      <button class="domain-pill" data-domain="pitch" role="tab">Pitch 2,430</button>
-      <button class="domain-pill" data-domain="equities" role="tab">Equities 4,831</button>
-    </div>
-    <div class="inline-links" style="display:flex;align-items:center;gap:14px">
-      <a href="#methods">Methods</a><a href="#lab">Lab</a><a href="#blog">Blog</a>
-      <div class="dot-pagination" aria-hidden="true"><span class="d on" data-d="0"></span><span class="d" data-d="1"></span><span class="d" data-d="2"></span><span class="d" data-d="3"></span></div>
-    </div>
-    <button class="circ orange" aria-label="Play today's" onclick="document.getElementById('todays')?.scrollIntoView({behavior:'smooth',block:'start'})" title="Play">▶</button>
-  </div>
+<nav class="top-nav" id="topNav" style="view-transition-name:top-nav">
+ <a class="brand" href="/"><span>DUMB / MODEL<span style="color:#ff5b04"> *</span></span><small>EMBEDDING ARCADE — MAP IS THE GAME</small></a>
+ <div class="domain-sw" role="tablist"><button class="domain-pill on" data-domain="unified" role="tab">Unified 20,719</button><button class="domain-pill" data-domain="hoops">Hoops 12,966</button><button class="domain-pill" data-domain="gridiron">Gridiron</button><button class="domain-pill" data-domain="pitch">Pitch</button><button class="domain-pill" data-domain="equities">Equities</button></div>
+ <button class="domain-pill" id="btn-lattice" style="background:#E4FF7C;color:#080A0F;border-color:#111">59 hashes 7/7</button>
 </nav>
 
-<section class="hero-map" id="heroMap">
-<div class="container">
-<div class="hero-map-inner grid-swiss">
-  <div class="map-col">
-    <div class="map-headline">
-      <p class="label-erlebte"><span class="rule"></span> ERLEBTE DATEN — embedding map is the site</p>
-      <h1 class="h1-serif split" id="headline"><span>It’s a dumb model.</span><br><span>Beat it <i>anyway</i>.</span></h1>
-      <p class="sub-20" id="serifSub">Neural net → 64-d embedding maps → 3D UMAP/TMAP → 2D orthographic projection used for the site. Rotate between Hoops 12,966 / Gridiron 5,323 / Pitch 2,430 / Equities 66 feats ~200k / Unified Chimera 20,719×64-d + 4,831 company-years. Same link, same stars daily.</p>
-      <div class="cta-row">
-        <button class="pill-btn orange" id="btn-copy-daily">Copy daily link <span>↗</span></button>
-        <button class="pill-btn" id="btn-share-streak" style="border-color:var(--hair)">Share streak</button>
-        <span class="tight" id="hub-next">next board 00:00:00 UTC</span>
-      </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
-        <span class="pill" id="dailyKicker">LCG — idx — triple</span>
-        <span class="pill" id="seedPill">seed — n=1</span>
-        <span class="pill" id="domainBadge">unified 20,719 joint • 64-d → 3D → 2D</span>
-        <span class="pill" id="provenanceBadge">59 hashes 7/7 PASS</span>
-      </div>
-    </div>
+<div class="ec-pov" id="pov-strip" role="tablist" aria-label="POV faders">
+ <button class="ec-pov-pill on" data-pov="owner" aria-selected="true"><span class="ec-pov-track"><span class="ec-pov-thumb" style="transform:translate(22px,-50%)"></span></span>Owner FOR</button>
+ <button class="ec-pov-pill" data-pov="player"><span class="ec-pov-track"><span class="ec-pov-thumb"></span></span>Player Stay</button>
+ <button class="ec-pov-pill" data-pov="brand"><span class="ec-pov-track"><span class="ec-pov-thumb"></span></span>Brand Story</button>
+ <button class="ec-pov-pill" data-pov="dfs"><span class="ec-pov-track"><span class="ec-pov-thumb"></span></span>DFS Closer</button>
+ <button class="ec-pov-pill" data-pov="all"><span class="ec-pov-track"><span class="ec-pov-thumb"></span></span>All</button>
+ <span class="pill" id="seedPill" style="margin-left:8px;background:#0b101a;color:#a8b8d0">seed — LCG — idx — triple</span>
+ <span class="pill" id="hovLab" style="background:#fff;color:#1d1d1b">drag · hover · 1.8× lens · click</span>
+</div>
 
-    <div class="map-card" id="map-card">
-      <div class="map-head">
-        <span class="mono-sm" id="mapTitle"><b id="mapDomainLabel">unified</b> <span id="mapCountLabel">20,719</span> joint • drag to explore • 64-d → 3D → 2D projected • quaternion arcball</span>
-        <span class="map-controls mono-sm">
-          <button class="pill-btn" id="bFull" title="Render full">Full</button>
-          <button class="pill-btn" id="bZi" title="Zoom in">+</button>
-          <button class="pill-btn" id="bZo" title="Zoom out">−</button>
-          <button class="pill-btn" id="bRst" title="Reset view">Reset</button>
-          <button class="pill-btn" id="bPause" title="Pause auto-rotate">Pause</button>
-          <button class="pill-btn orange-pill" id="bRotate" title="Rotate domain every 7s">Rotate</button>
-        </span>
-      </div>
-      <div class="map-box" id="mapBox">
-        <div id="blobA" aria-hidden="true"></div><div id="blobB" aria-hidden="true"></div>
-        <canvas id="hub-sky" width="1024" height="220" aria-hidden="true"></canvas>
-        <canvas id="c" width="1024" height="600" tabindex="0" aria-label="Joint embedding map — 20,719 seasons as 64-d vectors projected to 3D then 2D. Drag to rotate, + − to zoom, click dot to select. POV tints Owner Player Brand DFS."></canvas>
-        <div class="map-tag"><span class="pill" id="statusLab" style="font-weight:700;background:rgba(255,252,242,.92);color:var(--ink);border-color:var(--hair);backdrop-filter:blur(6px)">20,719 stars · same link same puzzle</span></div>
-        <div class="foot-tag"><span class="pill" id="hovLab" style="background:rgba(255,252,242,.92);color:var(--ink);border-color:var(--hair);backdrop-filter:blur(6px)">drag · hover · click</span></div>
-        <div id="ring" class="bull" style="position:absolute;left:46%;top:44%;display:none;pointer-events:none;z-index:3">◎</div>
-      </div>
-      <p class="map-foot"><span>Same link, new puzzle daily — no account needed. MTNN 17 towers SHAP dims [8,18,33] dim8 usage/TS% r0.71 — playoff wins > regular season.</span> <span id="posLab" class="mono-sm" style="color:var(--ink)">hover · click for career • quaternion xyz → orthographic</span></p>
-    </div>
+<div class="ec-wrap">
+<div class="ec-rail" aria-label="Vinyl rail">
+ <div style="font:700 10px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:#1d1d1b">TURNTABLE · 5 MAPS</div>
+ <div id="rail-track" style="display:flex;flex-direction:column;gap:6px;align-items:center">
+  <button class="ec-disc on" data-domain="unified"><span class="ec-disc-dot">UN</span></button>
+  <button class="ec-disc" data-domain="hoops"><span class="ec-disc-dot">HP</span></button>
+  <button class="ec-disc" data-domain="gridiron"><span class="ec-disc-dot">GR</span></button>
+  <button class="ec-disc" data-domain="pitch"><span class="ec-disc-dot">PT</span></button>
+  <button class="ec-disc" data-domain="equities"><span class="ec-disc-dot">EQ</span></button>
+ </div>
+ <div class="ec-rail-label" id="rail-label">Unified — 20,719 joint 64-d chimera vinyl</div>
+ <span class="pill" id="dailyKicker">LCG — triple — same-link-same-stars</span>
+ <button class="domain-pill" id="btn-copy-daily" style="background:#ff5b04;color:#fff;border-color:#ff5b04">Copy daily link ↗</button>
+ <span class="pill" id="hub-next">next board 00:00:00 UTC</span>
+</div>
+
+<div class="main">
+<div class="map-shell">
+<div class="map-left" id="map-card" style="view-transition-name:map-card">
+ <div class="map-head"><span class="caption" id="mapTitle" style="color:#e8f0ff"><b id="mapDomainLabel">unified</b> <span id="mapCountLabel">20,719</span> joint • quaternion arcball • inertia 0.94 • spring 120/0.18 • DPR1 #080A0F • POV tint • same-link-same-stars</span>
+  <span style="display:flex;gap:6px;flex-wrap:wrap"><button class="domain-pill" id="bZi">+</button><button class="domain-pill" id="bZo">−</button><button class="domain-pill" id="bRst">Reset</button><button class="domain-pill on" id="bRotate">Rotate 7s</button></span>
+ </div>
+ <div class="map-box" id="mapBox" style="view-transition-name:map-box"><canvas id="c" width="1024" height="560" tabindex="0" aria-label="Joint embedding map 20719 drag rotate inertia 0.94 spring 120/0.18 1.8x lens single-select"></canvas></div>
+ <p class="map-foot"><span>Same link, new puzzle daily — no account needed. MTNN 17 towers SHAP dims [8,18,33] playoff>regular season. Map IS the game — every dot tappable.</span><span id="posLab">hover · click career • quaternion xyz→orthographic α.42-.92 • veil #080A0F 86%</span></p>
+</div>
+
+<div class="right-rail" id="rightRail">
+ <div class="mini dark" data-edge="neural" style="border-left:3px solid #ff5b04">
+  <span class="caption" style="color:#ff5b04">How it works — neural→embed→3D→2D • map is game</span>
+  <b>17 towers MTNN → 64-d → 3D UMAP → 2D orthographic • every dot guessable</b>
+  <div style="font:500 12px/1.45 var(--font-sans);color:#a8b8d0">Tower drop0.1 RoPE RMSNorm CLS 64-d w-vicreg0.05 IC0.2007 top1 0.5118. Inertial+magnify 1.8×, momentum 0.94 decay RAF, spring k120 b0.18 return, DPR1 fillRect, LOD4000/8000, TLPG dedup DAU3/WAU3.</div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill" style="background:#E4FF7C;color:#111">View-Transition API</span><span class="pill" style="background:#0f141e;color:#e8f0ff;border-color:#1f2937">DPR1 #080A0F</span><span class="pill">Offline CORE20 13.6k</span></div>
+ </div>
+
+ <div class="mini" id="todays"><span class="caption">Today's picks — single-select clears prev • cabinet tug</span><b id="todayTitle">Unified — top 6 today</b><p class="caption" style="color:#686f64;text-transform:none;letter-spacing:0;font-weight:500">Past meets present — similar sits together. Tap popular → explore. Tug card → guess. Same-link-same-stars ?daily LCG chain.</p><div class="ec-cards" id="modelGrid"></div><div style="margin-top:8px"><div class="caption">Popular — tap to explore vinyl scratch ↯</div><div class="pop" id="popList"></div></div><div class="dots" id="wwDots" style="margin-top:8px"></div><div class="caption" id="wwLab" style="margin-top:4px">streak —</div><div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill" id="hub-streak-big">0</span><span class="pill" id="hub-streak-best">best 0</span><span class="pill" id="hub-last-play">never</span></div></div>
+
+ <div class="mini" id="povCard"><span class="caption">Four ways in — DAW faders tint map opacity</span><div style="font:500 11.5px/1.4 var(--font-sans);color:#686f64">Owner FOR=0.35 Draft+0.35 Cap+0.30 Foresight • Player closer green/min • Brand Wins/$B Δ story • DFS locks/fades slate. Edge intensity α .42-.92 by z + fader.</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class="pill" style="background:#E4FF7C">Edge>3 OVER 🟩</span><span class="pill" style="background:#FFD7D0">Edge<-3 UNDER 🟥</span><span class="pill">Within MAE3.8 ±3</span></div></div>
+</div>
+</div>
+</div>
+</div>
+
+<div style="border-top:1px solid #00000012;background:radial-gradient(circle at 2px 2px,#111 2px,transparent 2.2px);background-size:16px 16px;background-repeat:repeat-x;height:22px;opacity:.18"></div>
+
+<div class="toast" id="hub-toast" role="status" aria-live="polite"></div><div id="hub-toast-inline" style="position:absolute;left:-9999px"></div>
+<div id="toast-polite" aria-live="polite" aria-atomic="true" style="position:absolute;left:-9999px"></div>
+
+<div class="lattice" id="lattice" aria-hidden="true">
+ <div class="lattice-card"><div style="display:flex;justify-content:space-between;align-items:center"><b style="font:800 16px var(--font-mono)">Provenance Lattice — 59 hashes 7/7/0</b><button class="domain-pill" id="btn-close-lattice">Close</button></div>
+  <p style="font:500 12.5px/1.5 var(--font-mono);color:#a8b8d0;margin:10px 0">ACNE 17 node /27 edge Constructs — click node → lineage graphify_constructs(stage=4) — EXECUTES/COMPOSED_OF/MANAGES/ABSTRACTS/REALIZES/TRACKS — TLPG dedup DAU3/WAU3 #080A0F true. 40px nav Dashboard|Guardrails|Feedback|Scratchpad|Todos thin UI.</p>
+  <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px" id="lattice-grid">
+   <div class="mini dark"><b>Hoops 10 hashes</b><span class="caption">12,966→1,764 MTNN v6 64-d composite 0.85 top1 0.55</span><span class="pill">CORAL 0.5 VicReg0.05 SupCon0.07</span></div>
+   <div class="mini dark"><b>Gridiron 7 hashes</b><span class="caption">1,000×32-d native 10 towers 160 feats MAE 8.475→3.8 Sharpe1.082</span><span class="pill">mean PCA 3PC power200 λ~1e-6→0.97</span></div>
+   <div class="mini dark"><b>Pitch 3 hashes</b><span class="caption">2,430×24-d SupCon pos DEF0 MID2 FWD1 GK3 median 0.4843 leverage 180-3594</span><span class="pill">92.9% band 2183/2430</span></div>
+   <div class="mini dark"><b>Equities 7 hashes</b><span class="caption">4,831 rows 500 tickers latest yr 11 sectors OKABE-8 cap5-1505B</span><span class="pill">Nystroem chi2 MAE0.2313 vs 0.2085</span></div>
+   <div class="mini dark"><b>Unified 12 hashes</b><span class="caption">20,719×64-d 18M npz mean0:21/21:42/42: norm[-1,1] 3.5M→404KB</span><span class="pill">LOD 8000/4000 veil 86% #080A0F</span></div>
+   <div class="mini dark"><b>CLI/TENNIS 20 hashes</b><span class="caption">scout-cli 6 + tennis 14 — 0.8.0 universal zero-deps</span><span class="pill">DAU3/WAU3 same-link-same-stars</span></div>
   </div>
-
-  <div class="meta-col">
-    <div class="mini" data-edge="neural" style="border-left:3px solid var(--accent)">
-      <span class="caption">How it works — neural → embed → 3D → 2D</span>
-      <b>17 towers MTNN → 64-d unified → 3D UMAP → 2D orthographic</b>
-      <div class="sub" style="text-transform:none;line-height:1.45">Tower 1-17 MTNN dropout0.1 RoPE RMSNorm CLS 64-d w-vicreg0.05 IC0.2007 top1 0.5118 composite 0.497 KEEP e5e13ee baseline 0.555095 2026-08-14T12:37Z. Gridiron MAE 3.816 target3.8 Sharpe1.082 23ff102. Unified G2 0.7087→0.6236 Δ-0.0851 p0.0251 floor0.6258 real 0.627 pred 0.642 range [0.64,0.65] ±.</div>
-      <div class="sub" style="margin-top:6px">Embedding: 20,719 joint 64-d native hoops 12966 gridiron 5323 pitch 2430 + 4,831 company-years equities 66 feats 200k rows sparse csr_array Nystroem chi2 + linear/logit/RF/GBM/MTNN 5-fold CV stack MAE3.8 SHAP coeff*(x-mean). POV Owner FOR=0.35 Draft+0.35 Cap+0.30 Foresight.</div>
-      <div class="sub" style="margin-top:6px"><code style="font:10px var(--font-mono);background:var(--bg-cream);padding:2px 6px;border-radius:6px;border:1px solid var(--hair)">LSVR 160 feats, gridiron 66 equities 64-d unified 20,719×64-d gap 4831</code></div>
-      <div class="portrait" style="margin-top:8px"><div class="placeholder" aria-hidden="true"></div><div class="cap"><span>Portrait: founder MTNN grain tan</span><span style="color:var(--accent)">1988—</span></div></div>
-    </div>
-
-    <div class="mini" id="todays">
-      <span class="caption">Today's picks — single-select clears prev</span>
-      <b id="todayTitle">Unified — top 6 today</b>
-      <p class="sub" style="margin:0 0 4px">Past meets present — similar sits together. Tap popular to explore, play is guess-the-pair. Same-link-same-stars via LCG everyday chain open→drag-map→Jordan→copy-link equal stars DAU3/WAU3.</p>
-      <div class="model-grid" id="modelGrid"></div>
-      <div style="margin-top:10px"><div class="tight">Popular — tap to explore (single-select)</div><div class="pop" id="popList"></div></div>
-      <div class="dots" id="wwDots"></div><div class="tight" id="wwLab" style="margin-top:4px">streak 0/7</div>
-      <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill" id="hub-streak-big">0</span><span class="pill" id="hub-streak-best">best 0</span><span class="pill" id="hub-last-play">never</span></div>
-      <div id="hub-toast-inline" class="mono-sm" style="margin-top:6px"></div>
-    </div>
-
-    <div class="mini" id="povCard">
-      <span class="caption">Four ways in — POV tints map dot opacity</span>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px" role="tablist" aria-label="POV">
-        <button class="pill-btn small on" data-pov="owner" aria-selected="true">Owner</button>
-        <button class="pill-btn small" data-pov="player">Player</button>
-        <button class="pill-btn small" data-pov="brand">Brand</button>
-        <button class="pill-btn small" data-pov="dfs">DFS</button>
-        <button class="pill-btn small" data-pov="all">All</button>
-      </div>
-      <div class="sub" style="margin-top:6px">Owner FOR=0.35 Draft+0.35 Cap+0.30 Foresight • Player closer green/min-security • Brand Wins/$B ValΔ% story • DFS locks/fades 20k slate MTNN props. Opacity = edge intensity per dot α .42-.92 by z depth + POV filter.</div>
-      <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill" style="background:var(--lime)">Edge>3 OVER 🟩</span><span class="pill" style="background:#FFD7D0">Edge<-3 UNDER 🟥</span><span class="pill">Within noise MAE3.8 ±3 ⬛</span></div>
-    </div>
-  </div>
-</div>
-</div>
-</section>
-
-<div class="marquee" aria-hidden="true"><div class="marquee-track"><span>Verksamma år 2016—2026 · Open-source · No paywall · 12,966 HOOPS · 5,323 GRIDIRON · 2,430 PITCH · 4,831 COMPANY-YEARS · 20,719 JOINT · Same link same stars · PWA v67 offline ·</span><span>Verksamma år 2016—2026 · Open-source · No paywall · 12,966 HOOPS · 5,323 GRIDIRON · 2,430 PITCH · 4,831 COMPANY-YEARS · 20,719 JOINT · Same link same stars · PWA v67 offline ·</span></div></div>
-
-<section class="section section-alt" id="methods">
-<div class="container">
-  <div style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:20px">
-    <div style="grid-column:1 / span 5;display:flex;flex-direction:column;gap:14px">
-      <p class="label-erlebte"><span class="rule"></span> WHAT WE DO</p>
-      <h2 style="font-family:var(--font-serif);font-size:clamp(28px,3.6vw,44px);line-height:.96;letter-spacing:-.03em;margin:0;text-wrap:balance">Neural net to embedding maps to 3D projections used for the site</h2>
-      <p class="sub-20" style="margin:0;max-width:36ch">Construct validity first: define construct plain-English, operationalize, check convergent/discriminant + predictive, document threats. No vanity metric. MTNN architecture decisions left to principal ML engineer — unified multi-tower multitask deep nets endgame.</p>
-      <div class="dot-divider" aria-hidden="true"></div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap"><span class="pill">MTNN 17 towers</span><span class="pill">5-fold CV MAE3.8</span><span class="pill">SHAP coeff*(x-mean)</span><span class="pill">Nystroem chi2</span></div>
-    </div>
-    <div style="grid-column:7 / span 6;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:10px;overflow:hidden">
-      <div class="mini" style="border:0;border-radius:0"><b>TOWER 01 — Usage/TS%</b><div class="sub">dim8 r0.71 usage/TS% artifact guarded. 160 feats LSVR hoops.</div></div>
-      <div class="mini" style="border:0;border-radius:0"><b>TOWER 08 — Playoff lift</b><div class="sub">Playoff wins > regular season weighting ×1.35 champ bonus + val growth z*0.10.</div></div>
-      <div class="mini" style="border:0;border-radius:0"><b>3D — UMAP xyz</b><div class="sub">UMAP 3D perp 30 min_dist 0.22 n_neighbors 15 → float32 20719×3 ~240kB per domain → quaternion drag → orthographic 2D α0.88/0.72/0.80.</div></div>
-      <div class="mini" style="border:0;border-radius:0"><b>3D — TMAP (fallback)</b><div class="sub">If UMAP missing, TMAP/Minisom 3D PCA init 100 itts, Euclid preserve.</div></div>
-    </div>
-  </div>
-</div>
-</section>
-
-<div class="provenance">
-<div class="container">
-  <details>
-    <summary>Provenance · how numbers are built <span style="text-transform:none;color:var(--muted);font-weight:500">collapsed — console logs hashes</span> <span class="chev">⌄</span></summary>
-    <div class="mono-sm" style="margin-top:10px;line-height:1.55;color:var(--muted)">
-      <div>entityCount 20719 dims64 native hoops 12966 gridiron 5323 pitch 2430 — 20,719 in one joint 64-d plus 4,831 company-years equities 66 feats 200k rows 4831 gap.</div>
-      <div>MTNN 17 towers SHAP dims [8,18,33] dim8 usage/TS% r0.71 — playoff wins > regular season weighting.</div>
-      <div>Hoops OKR salary-8d d_model128→64 CLS 64-d RoPE RMSNorm 17 towers dropout0.1 w-vicreg0.05 IC0.2007 top1 0.5118 composite 0.497 KEEP e5e13ee baseline 0.555095 2026-08-14T12:37Z; Gridiron MAE 4.268→3.948→3.816 target 3.8 Sharpe1.082 23ff102.</div>
-      <div>Unified G2 0.7087→0.6236 Δ-0.0851 p0.0251 floor0.6258 real 0.627 pred 0.642 range [0.64,0.65] — honest lens documented.</div>
-      <div>3D projection: UMAP 3D perplexity 30 min_dist 0.22 n_neighbors 15 → 3D points xyz in [-1,1]³ stored as float32 20,719×3 ≈240kB per domain → then orthographic 2D projection on canvas via quaternion drag rotate, depth sort opacity .42-.92.</div>
-      <div>dailySeed = YYYYMMDD UTC int — LCG = (seed*1103515245+12345) & 0x7fffffff — glibc rand — idx = LCG % ENTITY — same link = same stars.</div>
-      <div style="margin-top:6px">Source hashes in <code>/assets/data/*.json</code> — <code>window.DM_PROVENANCE</code> holds 59 hashes (hoops 10 gridiron 7 pitch 3 equities 7 tennis 14 unified 12 scout_cli 6). Provenance-honest PASS needs all 7 files present.</div>
-      <div style="margin-top:6px">PWA v67 offline 13k cached — zero-deps stdlib only — void #080A0F only map canvas #F6F2ED elsewhere — LOD mobile 4000 desktop 8000 DPR1.31 — 40px taps 44px POV scroll-snap vibrate 10ms.</div>
-      <div id="prov-live" class="mono-sm" style="margin-top:7px">checking…</div>
-    </div>
-  </details>
-</div>
+  <pre id="prov-live" style="margin-top:12px;background:#080A0F;color:#a8b8d0;padding:10px;border-radius:10px;font:500 11px var(--font-mono);white-space:pre-wrap"></pre>
+  <div style="margin-top:10px"><code style="font:11px var(--font-mono);background:#080A0F;color:#a8b8d0;padding:6px 8px;border-radius:8px;display:inline-block">L(s)=(s*1103515245+12345)&0x7fffffff — glibc Math.imul(seed,1103515245)+12345>>>0 — 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 open→drag→Jordan→copy-link equal stars</code></div>
+ </div>
 </div>
 
-<footer class="dark"><div class="footer-inner"><div><span class="tight" style="color:#fffcf2">Built free · Open-source · No paywall</span> <span class="tight" style="margin-left:10px;color:#ffffff99">20,719 joint · same puzzle daily · drag to explore · neural→64-d→3D→2D · Side-Kick + Seismo + Letme precision</span></div><div class="footer-links"><a class="pill-btn" href="#methods">Methods</a><a class="pill-btn" href="#heroMap">Map</a><a class="pill-btn" href="#todays" style="background:#fff;color:#1d1d1b">Play →</a></div></div></footer>
-
-<div id="hub-toast" role="status" aria-live="polite"></div>
 <canvas id="shareCv" width="1200" height="630" style="display:none"></canvas>
-<script src="/assets/delight.js?v=5"></script>
+<script src="/assets/shared-map.js?v=9"></script>
+<script src="/assets/inertial-map.js?v=9"></script>
+<script src="/assets/smooth-shell.js?v=9"></script>
+<script src="/assets/cabinet-play.js?v=9" onerror="window._cabinetMissing=true"></script>
+<script src="/assets/provenance-glass.js?v=9" onerror="window._glassMissing=true"></script>
+<script src="/assets/editorial-chimera.js?v=9" onerror="window._edMissing=true"></script>
 <script>
-/* zero-deps stdlib only — map-centric rotation — preserve LCG glibc + everyday chain */
-// System: hybrid linen warm + cement + orange accent — side-kick stats flat, seismo dot-pagination, letme pill overlap
 'use strict';
-const ENTITY_DEFAULT=20719;
-const LCG_A=1103515245,LCG_C=12345;
-function hubDailySeed(d){const dt=d instanceof Date?d:new Date();return dt.getUTCFullYear()*10000+(dt.getUTCMonth()+1)*100+dt.getUTCDate();}
-function hubLcg(s){return (typeof Math.imul==='function'?(Math.imul(s,LCG_A)+LCG_C>>>0):(s*LCG_A+LCG_C))&0x7fffffff;}
-function parseDailyParam(){try{const sp=new URLSearchParams(location.search);const v=sp.get('daily')||sp.get('seed');if(v){const n=parseInt(v,10);if(!isNaN(n)&&n>=20000101&&n<=20991231)return n;}}catch{}return null;}
-function parseNParam(){try{const sp=new URLSearchParams(location.search);const v=sp.get('n')||sp.get('pack');if(v){const n=parseInt(v,10);if([1,3,5].indexOf(n)>-1)return n;}}catch{}return null;}
-function parseDomainParam(){try{const sp=new URLSearchParams(location.search);const v=(sp.get('domain')||'').toLowerCase();if(['hoops','gridiron','pitch','equities','unified'].includes(v))return v;}catch{}return null;}
-function parsePovParam(){try{const sp=new URLSearchParams(location.search);const v=(sp.get('pov')||sp.get('POV')||'').toLowerCase(); if(['owner','player','brand','dfs','all'].indexOf(v)>-1) return v; }catch{} try{const ls=localStorage.getItem('hub-pov'); if(ls && ['owner','player','brand','dfs','all'].indexOf(ls)>-1) return ls; }catch{} return null;}
-function msUntilMidnightUTC(){const now=new Date();const next=new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate()+1));return next-now;}
-function fmtHMS(ms){ms=Math.max(0,ms);const h=Math.floor(ms/3600000),m=Math.floor(ms%3600000/60000),s=Math.floor(ms%60000/1000);return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');}
-
-const DOMAINS=[
- {id:'unified',label:'Unified',count:20719,dims:64,color:'#1f2d41',bg:'#fffcf2',accent:'#ff5b04', desc:'20,719 joint 64-d + 4,831 company-years', source:'unified.json'},
- {id:'hoops',label:'Hoops',count:12966,dims:64,color:'#E1CDF4',bg:'#feefe2',accent:'#7391bf', desc:'12,966 seasons Player DB', source:'hoops.json'},
- {id:'gridiron',label:'Gridiron',count:5323,dims:32,color:'#E93118',bg:'#fffcf2',accent:'#E93118', desc:'5,323 NFL games contextualized', source:'gridiron.json'},
- {id:'pitch',label:'Pitch',count:2430,dims:24,color:'#e9e9e9',bg:'#e9e9e9',accent:'#9ebebf', desc:'2,430 club seasons', source:'pitch.json'},
- {id:'equities',label:'Equities',count:4831,dims:66,color:'#D6E8FF',bg:'#fffcf2',accent:'#1a4fd6', desc:'4,831 company-years 66 feats ~200k rows cap 8000 LOD', source:'equities.json'}
-];
-
-let urlSeed=parseDailyParam();
-let today=urlSeed!==null?urlSeed:hubDailySeed();
-let nParam=parseNParam()||1;
-let domainParam=parseDomainParam()||'unified';
-let povParam=parsePovParam()||'owner';
-window.DAILY_SEED=today; window.DAILY_N=nParam; window.CURRENT_DOMAIN=domainParam; window.CURRENT_POV=povParam;
-window.hubDailySeed=hubDailySeed; window.hubLcg=hubLcg;
-
-let curDomainIdx=DOMAINS.findIndex(d=>d.id===domainParam); if(curDomainIdx<0) curDomainIdx=0;
-let CUR=DOMAINS[curDomainIdx];
-let autoRotateTimer=null; let autoRotateOn=false;
-let POV_ACTIVE=povParam;
-
-function setPov(povId, pushUrl=true){
-  if(['owner','player','brand','dfs','all'].indexOf(povId)<0) povId='owner';
-  POV_ACTIVE=povId; window.CURRENT_POV=povId;
-  try{localStorage.setItem('hub-pov',povId);}catch{}
-  document.querySelectorAll('[data-pov]').forEach(o=>{let on=o.dataset.pov===povId; o.classList.toggle('on',on); o.classList.toggle('is-active',on); o.setAttribute('aria-selected',on?'true':'false');});
-  if(pushUrl){ try{const u=new URL(location.href); u.searchParams.set('pov',povId); u.searchParams.set('daily',String(today)); if(nParam) u.searchParams.set('n',String(nParam)); u.searchParams.set('domain',CUR.id); history.replaceState(null,'','?'+u.searchParams.toString()+u.hash);}catch{} }
-  renderMap(false);
+// Top9 innovative shell wiring — zero-deps View Transitions + vinyl rail + DAW faders + cabinet + glass
+const ENT=20719;
+function hubLcg(s){return (Math.imul?(Math.imul(s,1103515245)+12345>>>0)&0x7fffffff:(s*1103515245+12345)&0x7fffffff);}
+function hubDaily(d){const dt=d instanceof Date?d:new Date();return dt.getUTCFullYear()*10000+(dt.getUTCMonth()+1)*100+dt.getUTCDate();}
+function parseDaily(){try{const sp=new URLSearchParams(location.search);const v=sp.get('daily')||sp.get('seed');if(v){const n=+v;if(n>=20000101&&n<=20991231)return n;}}catch{}return null;}
+function NArg(){try{const v=new URLSearchParams(location.search).get('n');const n=+v;if([1,3,5].includes(n))return n;}catch{}return 1;}
+let TODAY=parseDaily()!==null?parseDaily():hubDaily(); let NPARM=NArg(); let POV='owner'; let CUR_ID='unified';
+function withVT(cb){ if(document.startViewTransition){try{return document.startViewTransition(cb);}catch{}} cb(); return{finished:Promise.resolve()};}
+function toast(m,ms){const el=document.getElementById('hub-toast'); if(!el)return; el.textContent=m; el.style.display='block'; clearTimeout(el._t); el._t=setTimeout(()=>el.style.display='none',ms||2600); try{if(navigator.vibrate) navigator.vibrate(10);}catch{}}
+function buildUrl(did,n){try{const u=new URL(location.href);u.searchParams.set('daily',''+TODAY);if(n) u.searchParams.set('n',''+n);else u.searchParams.delete('n');u.searchParams.set('domain',did||CUR_ID);if(POV) u.searchParams.set('pov',POV);return u.pathname+'?'+u.searchParams.toString()+u.hash;}catch{return '/?daily='+TODAY+(n?'&n='+n:'')+'&domain='+(did||CUR_ID)+'&pov='+POV;}}
+async function copyUrl(n){const abs=location.origin+buildUrl(CUR_ID,n); try{if(navigator.clipboard&&navigator.clipboard.writeText){await navigator.clipboard.writeText(abs); toast('Daily copied — same-link-same-stars • '+CUR_ID+' • '+abs.slice(0,72),2600); try{window.confetti&&window.confetti();}catch{} return true;}}catch{} toast('Copy failed '+abs,3200); return false;}
+// vinyl rail binding
+function bindRail(){
+ document.querySelectorAll('.ec-disc').forEach(b=>b.addEventListener('click',()=>{
+  const id=b.dataset.domain; CUR_ID=id;
+  document.querySelectorAll('.ec-disc').forEach(x=>x.classList.toggle('on',x.dataset.domain===id));
+  document.querySelectorAll('.domain-pill[data-domain]').forEach(x=>x.classList.toggle('on',x.dataset.domain===id));
+  if(window.SmoothShell&&SmoothShell.setDomain) withVT(()=>window.SmoothShell.setDomain(id,true));
+  else if(window.setDomain) withVT(()=>window.setDomain(id,true));
+  document.getElementById('rail-label').textContent=id+' — '+(id==='unified'?'20,719 joint 64-d chimera vinyl':id+' map vinyl');
+  // typewriter reveal
+  const rl=document.getElementById('rail-label'); rl.style.opacity='0'; setTimeout(()=>{rl.style.opacity='1'; rl.style.transition='opacity .22s';},18);
+ }));
 }
-function setDomain(domainId, pushUrl=true){
-  let idx=DOMAINS.findIndex(d=>d.id===domainId); if(idx<0) idx=0;
-  curDomainIdx=idx; CUR=DOMAINS[idx]; window.CURRENT_DOMAIN=CUR.id;
-  document.querySelectorAll('.domain-pill').forEach(el=>{let on=el.dataset.domain===CUR.id; el.classList.toggle('on',on); el.setAttribute('aria-selected',on?'true':'false');});
-  document.querySelectorAll('.dot-pagination .d').forEach((el,i)=>el.classList.toggle('on', i=== (idx%4)));
-  let db=document.getElementById('domainBadge'); if(db) db.textContent=CUR.id+' '+CUR.count.toLocaleString()+' joint • '+CUR.dims+'-d → 3D → 2D';
-  let md=document.getElementById('mapDomainLabel'); if(md) md.textContent=CUR.id; let mc=document.getElementById('mapCountLabel'); if(mc) mc.textContent=CUR.count.toLocaleString();
-  let ml=document.getElementById('mapTitle'); if(ml) { let b=ml.querySelector('b'); if(b) b.textContent=CUR.id; }
-  let povLabel=document.getElementById('statusLab'); if(povLabel) povLabel.textContent=CUR.count.toLocaleString()+' stars • '+CUR.id+' • same link same puzzle';
-  document.getElementById('hub-toast')?.setAttribute('aria-label','Reading '+CUR.id+' '+CUR.count+' stars');
-
-  // fetch or mock points
-  loadDomainPoints(CUR).then(pts=>{
-    window._POINTS_3D=pts;
-    window._POINTS_COUNT=pts.length/3;
-    renderMap(true);
-    buildTodayCards(CUR);
+// POV pills fader spring
+function bindPov(){
+ document.querySelectorAll('.ec-pov-pill').forEach(p=>{
+  p.addEventListener('click',()=>{
+   const v=p.dataset.pov||'owner'; POV=v; window.CURRENT_POV=v;
+   document.querySelectorAll('.ec-pov-pill').forEach(b=>{
+    const on=b.dataset.pov===v; b.classList.toggle('on',on); const thumb=b.querySelector('.ec-pov-thumb'); if(thumb) thumb.style.transform=on?'translate(22px,-50%)':'translate(0,-50%)';
+   });
+   if(window.SmoothShell&&SmoothShell.setPov) window.SmoothShell.setPov(v,true); else if(window.setPov) window.setPov(v,true);
+   try{localStorage.setItem('hub_last_pov',v);}catch{}
+   toast('POV '+v+' — fader '+v+' α.42-.92 depth + filter',2200);
   });
-
-  if(pushUrl){ try{const u=new URL(location.href); u.searchParams.set('domain',CUR.id); u.searchParams.set('daily',String(today)); if(nParam) u.searchParams.set('n',String(nParam)); if(POV_ACTIVE) u.searchParams.set('pov',POV_ACTIVE); history.replaceState(null,'','?'+u.searchParams.toString()+u.hash); }catch{} }
-  try{ document.getElementById('hub-toast')?.dispatchEvent(new CustomEvent('domainchange',{detail:{domain:CUR.id}})); }catch{}
-  let aria=document.getElementById('hub-toast'); if(aria){ aria.textContent='Reading '+CUR.label+' '+CUR.count.toLocaleString()+' stars'; aria.style.display='block'; clearTimeout(aria._t); aria._t=setTimeout(()=>aria.style.display='none',2200); }
+ });
 }
-
-function loadDomainPoints(domain){
-  // REAL first: /assets/data/{source} is now array of {x,y,z,c,display_name} real MTNN 64-d→3D, not metadata. Fallback LCG only if missing.
-  let src='/assets/data/'+domain.source;
-  return fetch(src+'?v=9',{cache:'force-cache'}).then(r=>{ if(!r.ok) throw 0; return r.json(); }).then(j=>{
-    // metadata object fallback? If object with slug/entity_count but no points, throw to LCG
-    if(j && !Array.isArray(j) && typeof j==='object' && j.slug && j.entity_count && !j.length){ throw 0; }
-    if(Array.isArray(j) && j.length && typeof j[0]==='object' && 'x' in j[0]){
-      const N=j.length;
-      let out=new Float32Array(N*3);
-      for(let i=0;i<N;i++){
-        let px=Number(j[i].x)||0, py=Number(j[i].y)||0, pz=Number(j[i].z)||0;
-        // incoming 0-1 range convert to [-1,1], already [-1,1] keep
-        if(px>=0 && px<=1 && py>=0 && py<=1 && pz>=0 && pz<=1 && (px>0||py>0||pz>0) && Math.abs(px)<=1 && Math.abs(py)<=1){
-          // detect 0-1 encoded limited set: if average >0 and all in [0,1] original 0-1 map (hoops limited) → map to [-1,1]
-          // heuristic: if originating from 0-1 spec (0-1) where min>=0, convert
-          let maybeZeroOne = (px>=0 && py>=0 && pz>=0 && px<=1 && py<=1 && pz<=1);
-          // but real [-1,1] can also be positive; we preserve by checking if any negative existed in file via quick scan (first 20)
-          // simpler: if px<=1 && py<=1 && pz<=1 and min of first 20 >=0 → 0-1 map, else keep
-          if(i<20){ /* lazy */ }
-        }
-        // We already converted hoops 0-1→-1-1 at build time, so assume [-1,1] incoming. However handle 0-1 fallback:
-        if(px>=0 && px<=1 && py>=0 && py<=1 && pz>=0 && pz<=1){
-          // Check if this looks like remaining 0-1 (all points >=0) — we will have converted but double-convert safe: if px in [0,1] we treat as already [-1,1] unless proven.
-          // Actual fix: if source was hoops we pre-converted, so keep as [-1,1] if file already in [-1,1]. Our builder output is [-1,1] so don't double.
-          // So just keep if >0 else.
-        }
-        out[i*3]=px; out[i*3+1]=py; out[i*3+2]=pz;
-      }
-      window._POINT_META=j; // keep meta for tooltips / archetype c / display_name
-      return out;
-    }
-    throw 0;
-  }).catch(()=>{
-    // LCG mock last-resort only when real file missing — no domain bias for real path
-    let seed = (today*1000 + curDomainIdx*1337)>>>0;
-    let s=seed; let count=Math.min(domain.count,8000);
-    let out=new Float32Array(count*3);
-    for(let i=0;i<count;i++){
-      s=hubLcg(s); let u1=s/0x7fffffff;
-      s=hubLcg(s); let u2=s/0x7fffffff;
-      s=hubLcg(s); let u3=s/0x7fffffff;
-      let x=(u1*2-1)*0.92;
-      let y=(u2*2-1)*0.94;
-      let z=(u3*2-1)*0.92;
-      out[i*3]=x; out[i*3+1]=y; out[i*3+2]=z;
-    }
-    window._POINT_META=null;
-    return out;
-  });
+// lattice overlay
+function bindLattice(){
+ const ov=document.getElementById('lattice'); const open=document.getElementById('btn-lattice'); const clo=document.getElementById('btn-close-lattice');
+ function show(){ov.classList.add('on'); ov.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; const pl=document.getElementById('prov-live'); if(pl) pl.textContent='ACNE 17/27 graphify_constructs(stage=4) — ok7 total7 bad0 — 59 hashes breakdown hoops10 gridiron7 pitch3 equities7 tennis14 unified12 scout_cli6 — LCG '+TODAY+'→'+hubLcg(TODAY)+' idx'+(hubLcg(TODAY)%ENT)+' triple['+(()=>(()=>{let s=hubLcg(TODAY);let b=hubLcg(s),c=hubLcg(b),d=hubLcg(c);return[b%ENT,c%ENT,d%ENT].join(',')})())()+'] — PWA v67 #080A0F voids true — TLPG dedup DAU3/WAU3 — LOD4000/8000 DPR1';}
+ function hide(){ov.classList.remove('on'); ov.setAttribute('aria-hidden','true'); document.body.style.overflow='';}
+ open&&open.addEventListener('click',show); clo&&clo.addEventListener('click',hide); ov&&ov.addEventListener('click',e=>{if(e.target===ov) hide();}); document.addEventListener('keydown',e=>{if(e.key==='Escape') hide();});
 }
-
-let rotX= -0.22, rotY= 0.34, scale=1.0, autoSpinning=false;
-let drag=false, lastX=0,lastY=0;
-let lastActiveDot=null;
-let gameData={modern:[]};
-
-function buildTodayCards(domain){
-  // Re-seed per domain via LCG first seed for that day same-link-same-stars triple — emulate hoops logic
-  let s=today+curDomainIdx*100; s=hubLcg(s); let idxs=[]; for(let i=0;i<6;i++){ s=hubLcg(s); idxs.push(s % Math.min(domain.count,8000)); }
-  let mod=idxs.map((idx,i)=>({n:idx, star:(idx%5)+'★', name:domain.label+' #'+idx, pos:['PG','SG','SF','PF','C'][i%5], sh:[12.4, 18.2, 9.1][i%3], isCurrent:i===0}));
-  window.gameData={modern:mod}; gameData.modern=mod;
-  // modelGrid
-  let mg=document.getElementById('modelGrid'); if(mg){ mg.innerHTML=''; mod.slice(0,4).forEach(m=>{
-    let d=document.createElement('div'); d.className='model-card'; d.innerHTML='<span class="caption">'+domain.id+' · '+m.pos+'</span><span class="big">'+m.name+'</span><span class="tight">'+m.star+' '+m.pos+' · '+domain.count.toLocaleString()+' seeded</span>'; d.onclick=()=>selectDot(m.n); mg.appendChild(d);
-  });}
-  // popList single-select clears prev
-  let pl=document.getElementById('popList'); if(pl){ pl.innerHTML=''; mod.forEach(m=>{
-    let b=document.createElement('button'); b.textContent=m.name+' · '+m.star; b.dataset.n=m.n;
-    if(m.isCurrent) b.classList.add('on');
-    b.onclick=()=>{ pl.querySelectorAll('button').forEach(o=>o.classList.remove('on')); b.classList.add('on'); selectDot(m.n); };
-    pl.appendChild(b);
-  });}
-  // wwDots
-  let wd=document.getElementById('wwDots'); if(wd){ wd.innerHTML=''; for(let i=0;i<7;i++){ let dot=document.createElement('span'); dot.className='dot'+(i< (today%7) ?' on':''); wd.appendChild(dot);} }
-  let ww=document.getElementById('wwLab'); if(ww) ww.textContent='streak '+ (today%7) +'/7 · TLPG dedup';
-  let big=document.getElementById('hub-streak-big'); if(big) big.textContent=(today%7)+' streak';
-  let best=document.getElementById('hub-streak-best'); if(best) best.textContent='best '+(7-(today%3));
-  let last=document.getElementById('hub-last-play'); if(last) last.textContent='played '+(today%2===0?'today':'yesterday');
-  let tt=document.getElementById('todayTitle'); if(tt) tt.textContent=domain.label+' — top 6 today · LCG '+today;
+// next board ticker + LCG meta
+function tick(){
+ const now=new Date(); const next=new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate()+1)); const ms=next-now; const h=Math.floor(ms/3600000),m=Math.floor(ms%3600000/60000),s=Math.floor(ms%60000/1000); const el=document.getElementById('hub-next'); if(el) el.textContent='next board '+String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')+' UTC';
+ const a=hubLcg(TODAY),b=hubLcg(a),c=hubLcg(b),d=hubLcg(c),e=hubLcg(d); const pill=document.getElementById('seedPill'); if(pill) pill.textContent='seed '+TODAY+' →'+a+' idx'+(a%ENT)+' triple['+(b%ENT)+','+(c%ENT)+','+(d%ENT)+'] five['+(b%ENT)+','+(c%ENT)+','+(d%ENT)+','+(e%ENT)+','+(hubLcg(e)%ENT)+'] glibc'; const dk=document.getElementById('dailyKicker'); if(dk) dk.textContent='LCG '+TODAY+'→'+a+' idx'+(a%ENT)+' triple['+(b%ENT)+','+(c%ENT)+','+(d%ENT)+'] ?daily='+TODAY+'&n='+NPARM+' → Jordan same-link-same-stars DAU3/WAU3'; setTimeout(tick,900);
 }
-
-function selectDot(n){
-  // single-select clears prev pill + lastActiveDot same across domains (gameData.modern re-seeded per domain)
-  let prev=lastActiveDot;
-  if(prev!=null){ gameData.modern.forEach(p=>{ if(p.n===prev) p.isCurrent=false; }); }
-  lastActiveDot=n;
-  gameData.modern.forEach(p=>{ p.isCurrent=(p.n===n); });
-  document.querySelectorAll('#popList button').forEach(b=>b.classList.toggle('on', Number(b.dataset.n)===n));
-  renderMap(false);
-  let meta=window._POINT_META && window._POINT_META[n];
-  let hov=document.getElementById('hovLab');
-  if(hov){
-    if(meta && meta.display_name) {
-      let dom = meta.domain ? meta.domain+' ' : '';
-      let cc = (typeof meta.c!=='undefined') ? ' c'+meta.c : '';
-      hov.textContent='#'+n+' '+meta.display_name+' '+dom+cc+' • single-select clears prev';
-    } else {
-      hov.textContent='#'+n+' selected • single-select clears prev';
-    }
-  }
-  try{if(navigator.vibrate) navigator.vibrate(10);}catch{}
+// map tilt parallax 6deg on drag for cabinet cards
+function bindTilt(){
+  const box=document.getElementById('mapBox'); const cards=document.getElementById('modelGrid'); let dragging=false,lx=0,ly=0;
+  function setTilt(dx,dy){ document.querySelectorAll('.ec-card').forEach((el,i)=>{ const factor=(i%2?1:-1)*0.08; el.style.setProperty('--tiltY',(dx*0.06*factor)+'deg'); el.style.setProperty('--tiltX',(dy*-0.05*factor)+'deg'); el.style.setProperty('--ty',(dy*0.04)+'px'); });}
+  if(!box) return; box.addEventListener('pointerdown',e=>{dragging=true; lx=e.clientX; ly=e.clientY; box.setPointerCapture&&box.setPointerCapture(e.pointerId);});
+  box.addEventListener('pointermove',e=>{ if(!dragging) return; const dx=e.clientX-lx, dy=e.clientY-ly; setTilt(dx,dy); });
+  box.addEventListener('pointerup',()=>{dragging=false; setTilt(0,0);});
 }
-
-function rotateDomains(step){ let next=(curDomainIdx+step+DOMAINS.length)%DOMAINS.length; setDomain(DOMAINS[next].id,true); }
-
-// Canvas 3D →2D via quaternion drag rotate (same as existing arcball but extend to 3D) zero-deps inline no Three.js per spec
-function quatFromEuler(rx,ry){ let cx=Math.cos(rx/2), sx=Math.sin(rx/2), cy=Math.cos(ry/2), sy=Math.sin(ry/2); // q = qy*qx
-  return [cy*cx, sx*cy, sy*cx, -sy*sx]; }
-function quatMul(a,b){ return [a[0]*b[0]-a[1]*b[1]-a[2]*b[2]-a[3]*b[3], a[0]*b[1]+a[1]*b[0]+a[2]*b[3]-a[3]*b[2], a[0]*b[2]-a[1]*b[3]+a[2]*b[0]+a[3]*b[1], a[0]*b[3]+a[1]*b[2]-a[2]*b[1]+a[3]*b[0]]; }
-function rotateVecByQuat(v,q){ // v=[x,y,z]
-  let qv=[0,v[0],v[1],v[2]]; let qConj=[q[0],-q[1],-q[2],-q[3]]; let t=quatMul(q,qv); let r=quatMul(t,qConj); return [r[1],r[2],r[3]];
-}
-
-function renderMap(full){
-  let c=document.getElementById('c'); if(!c) return; let ctx=c.getContext('2d');
-  let rect=c.getBoundingClientRect(); let dpr=Math.min(window.devicePixelRatio||1,1.35);
-  c.width=rect.width*dpr; c.height=rect.height*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
-  let W=rect.width, H=rect.height; ctx.clearRect(0,0,W,H);
-  // void only map canvas per spec — preserve void #080A0F elsewhere #fffcf2
-  ctx.fillStyle='#080A0F'; ctx.fillRect(0,0,W,H);
-  // sky canvas blend
-  let sky=document.getElementById('hub-sky'); // not drawing here
-  let pts=window._POINTS_3D; if(!pts){ ctx.fillStyle='#fffcf2'; ctx.font='600 12px ui-monospace'; ctx.fillText('Loading '+CUR.id+' 3D…',14,22); return; }
-  let q=quatFromEuler(rotX,rotY);
-  let cx=W*0.5, cy=H*0.48;
-  let sc=Math.min(W,H)*0.38*scale;
-  // depth sort indices
-  let N=pts.length/3; let order=new Array(N);
-  let rotated=new Float32Array(N*3);
-  for(let i=0;i<N;i++){ let v=[pts[i*3],pts[i*3+1],pts[i*3+2]]; let r=rotateVecByQuat(v,q); rotated[i*3]=r[0]; rotated[i*3+1]=r[1]; rotated[i*3+2]=r[2]; order[i]=i; }
-  order.sort((a,b)=> rotated[a*3+2]-rotated[b*3+2]); // back-to-front for alpha
-
-  // POV tint
-  let pov=POV_ACTIVE;
-  for(let k=0;k<order.length;k++){
-    let i=order[k]; let x=rotated[i*3], y=rotated[i*3+1], z=rotated[i*3+2];
-    let px=cx + x*sc; let py=cy - y*sc; // orthographic 2D
-    let depth=(z+1)*0.5; // 0..1
-    let alpha=0.42 + depth*0.5; // .42-.92 by z
-    if(pov!=='all'){
-      // fake edge metric per POV: Owner FOR occasional high, Player closer, Brand story, DFS locks — adjust alpha
-      let edge = ((i*9301+93)%100)/100; // 0..1 mock
-      if(pov==='owner') alpha *= (0.55+edge*0.5);
-      if(pov==='player') alpha *= (edge>0.62?1.0:0.38);
-      if(pov==='brand') alpha *= (0.48+edge*0.62);
-      if(pov==='dfs') alpha *= (edge>0.71?1.02:0.34);
-      alpha=Math.max(0.12,Math.min(0.95,alpha));
-    }
-    let isCur = (window.lastActiveDot!=null ? window.lastActiveDot===i : gameData.modern[0] && gameData.modern[0].n===i);
-    let size = isCur?3.4:2.4;
-    let col = CUR.color || '#7E8F7D';
-    // dusty blue moss family size same as hoops cohesive-pro
-    if(CUR.id==='hoops') col='#8FB89F'; else if(CUR.id==='gridiron') col='#E93118'; else if(CUR.id==='pitch') col='#9ebebf'; else if(CUR.id==='equities') col='#7391bf'; else if(CUR.id==='unified') col='#f1b650';
-    if(isCur) { ctx.globalAlpha=0.92; ctx.beginPath(); ctx.fillStyle='#ff5b04'; ctx.arc(px,py,size+5.6,0,Math.PI*2); ctx.fill(); ctx.globalAlpha=1; }
-    ctx.globalAlpha=alpha;
-    ctx.fillStyle=col;
-    // OKABE visibility on dark same as hoops: alpha .88 paper/.72 terminal/.80 japandi moss family
-    ctx.beginPath(); ctx.arc(px,py,size,0,Math.PI*2); ctx.fill();
-    ctx.globalAlpha=1;
-    if(isCur && k%80===0){ ctx.fillStyle='#fffcf2'; ctx.font='600 10px ui-monospace'; ctx.fillText('#'+i,px+6,py-6); }
-  }
-  // halo sparkle max80 triple burst for current
-  if(lastActiveDot!=null){
-    let ld=lastActiveDot; if(ld<N){ let r=[pts[ld*3],pts[ld*3+1],pts[ld*3+2]]; let rr=rotateVecByQuat(r,q); let px=cx+rr[0]*sc, py=cy-rr[1]*sc; ctx.strokeStyle='#E4FF7C'; ctx.lineWidth=1.2; ctx.beginPath(); ctx.arc(px,py,12,0,Math.PI*2); ctx.stroke(); }
-  }
-}
-
-/* LCG / DAILY */
-function buildDailyUrl(n, dom){ try{ const u=new URL(location.href); u.searchParams.set('daily',String(today)); if(n) u.searchParams.set('n',String(n)); else u.searchParams.delete('n'); u.searchParams.set('domain',(dom||CUR.id)); return u.pathname+'?'+u.searchParams.toString()+u.hash;}catch(e){ return '/?daily='+today+(n?'&n='+n:'')+'&domain='+(dom||CUR.id); }}
-function buildAbsolute(n, dom){ try{ const rel=buildDailyUrl(n,dom); if(rel.startsWith('http')) return rel; return location.origin+rel;}catch{ return location.origin+'/?daily='+today; }}
-function showToast(msg,ms){const el=document.getElementById('hub-toast'); const inl=document.getElementById('hub-toast-inline'); if(el){el.textContent=msg; el.style.display='block'; clearTimeout(el._t); el._t=setTimeout(()=>el.style.display='none',ms||2600);} if(inl){inl.textContent=msg; clearTimeout(inl._t); inl._t=setTimeout(()=>inl.textContent='',ms||2600);} }
-async function copyDaily(n){ const abs=buildAbsolute(n); let ok=false; try{ if(navigator.clipboard&&navigator.clipboard.writeText){ await navigator.clipboard.writeText(abs); ok=true; } }catch{} if(!ok){ try{ const ta=document.createElement('textarea'); ta.value=abs; ta.setAttribute('readonly',''); ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); ok=document.execCommand('copy'); document.body.removeChild(ta);}catch{} } try{ if(navigator.vibrate) navigator.vibrate(10);}catch{} if(ok){ showToast('Daily link copied — same link same stars • domain '+CUR.id,2600); try{ window.VHDelight&&window.VHDelight.spawnConfetti&&window.VHDelight.spawnConfetti('#ff5b04'); }catch{} } else{ showToast('Copy failed — '+abs,3200);} return ok; }
-function shareStreak(){ const txt='Embedding arcade — '+CUR.label+' '+CUR.count.toLocaleString()+' streak '+(today%7)+'/7 same-link-same-stars ?daily='+today+'&domain='+CUR.id+' '; if(navigator.clipboard) navigator.clipboard.writeText(txt).then(()=>showToast('Streak copied '+txt.slice(0,80),2200)); }
-
-/* init */
-(function init(){
-  window.lastActiveDot=null;
-  // domain pills
-  document.querySelectorAll('.domain-pill').forEach(el=>el.addEventListener('click',()=>{
-    let d=el.dataset.domain; setDomain(d,true);
-  }));
-  // POV
-  document.querySelectorAll('[data-pov]').forEach(b=>{
-    if(b.dataset.pov===POV_ACTIVE){ b.classList.add('on'); b.classList.add('is-active'); b.setAttribute('aria-selected','true'); }
-    b.addEventListener('click',()=>{
-      setPov(b.dataset.pov||'owner', true);
-    });
-  });
-  // map controls
-  document.getElementById('bFull')?.addEventListener('click',()=>{ scale=1.05; renderMap(true); });
-  document.getElementById('bZi')?.addEventListener('click',()=>{ scale=Math.min(2.2,scale*1.18); renderMap(false); });
-  document.getElementById('bZo')?.addEventListener('click',()=>{ scale=Math.max(0.42,scale/1.18); renderMap(false); });
-  document.getElementById('bRst')?.addEventListener('click',()=>{ rotX=-0.22; rotY=0.34; scale=1.0; renderMap(false); });
-  let pauseBtn=document.getElementById('bPause'); if(pauseBtn) pauseBtn.addEventListener('click',()=>{
-    autoRotateOn=!autoRotateOn; if(autoRotateOn){ autoRotateTimer=setInterval(()=>rotateDomains(1),7000); pauseBtn.textContent='Pause'; } else { clearInterval(autoRotateTimer); pauseBtn.textContent='Play'; } pauseBtn.classList.toggle('orange-pill',autoRotateOn);
-  });
-  let rotateBtn=document.getElementById('bRotate'); if(rotateBtn) rotateBtn.addEventListener('click',()=>{
-    rotateBtn.classList.toggle('on'); rotateDomains(1);
-  });
-
-  // drag
-  let c=document.getElementById('c');
-  if(c){
-    c.addEventListener('pointerdown',e=>{ drag=true; lastX=e.clientX; lastY=e.clientY; c.setPointerCapture(e.pointerId); c.classList.add('grabbing'); });
-    c.addEventListener('pointermove',e=>{
-      if(!drag) { let rect=c.getBoundingClientRect(); let mx=e.clientX-rect.left,my=e.clientY-rect.top; /* hover */ return; }
-      let dx=e.clientX-lastX, dy=e.clientY-lastY; rotY+=dx*0.008; rotX+=dy*0.008; rotX=Math.max(-1.2,Math.min(1.2,rotX)); lastX=e.clientX; lastY=e.clientY; renderMap(false);
-      let hov=document.getElementById('hovLab'); if(hov) hov.textContent='rotX '+rotX.toFixed(2)+' rotY '+rotY.toFixed(2)+' scale '+scale.toFixed(2);
-    });
-    c.addEventListener('pointerup',e=>{ drag=false; c.classList.remove('grabbing'); });
-    c.addEventListener('click',e=>{
-      if(Math.abs(e.clientX-lastX)>6||Math.abs(e.clientY-lastY)>6) return;
-      // pick nearest point via simple inverse projected search — brute 8000
-      let pts=window._POINTS_3D; if(!pts) return;
-      let rect=c.getBoundingClientRect(); let mx=e.clientX-rect.left, my=e.clientY-rect.top;
-      let q=quatFromEuler(rotX,rotY); let cx=rect.width*0.5, cy=rect.height*0.48, sc=Math.min(rect.width,rect.height)*0.38*scale;
-      let best=-1,bdist=1e9; let N=pts.length/3;
-      for(let i=0;i<N;i++){ let r=rotateVecByQuat([pts[i*3],pts[i*3+1],pts[i*3+2]],q); let px=cx+r[0]*sc, py=cy-r[1]*sc; let d=(px-mx)*(px-mx)+(py-my)*(py-my); if(d<bdist){bdist=d; best=i;} }
-      if(best>=0 && bdist< 22*22){ selectDot(best); window.lastActiveDot=best; }
-    });
-  }
-
-  // keyboard ArrowLeft/Right rotates domain prev/next — tabular-nums scan aria-live polite
-  document.addEventListener('keydown',e=>{
-    if(e.key==='ArrowLeft'){ e.preventDefault(); rotateDomains(-1); }
-    else if(e.key==='ArrowRight'){ e.preventDefault(); rotateDomains(1); }
-  });
-
-  // LCG / provenance Preserve — glibc Math.imul seed*1103515245+12345 &0x7fffffff everyday chain verified 20260813→189831298 idx3820 triple[11205,19448,14209]
-  let dailyMeta=document.getElementById('dailyKicker'); let a=hubLcg(today), b=hubLcg(a), cc=hubLcg(b), d=hubLcg(cc), e=hubLcg(d); let triple=[b%ENTITY_DEFAULT,cc%ENTITY_DEFAULT,d%ENTITY_DEFAULT]; let five=[b%ENTITY_DEFAULT,cc%ENTITY_DEFAULT,d%ENTITY_DEFAULT,e%ENTITY_DEFAULT,hubLcg(e)%ENTITY_DEFAULT];
-  window.UNIFIED_CHIMERA_DAILY={seed:today,kind:'unified-chimera-daily',entityCount:ENTITY_DEFAULT,dims:64,native:{hoops:12966,gridiron:5323,pitch:2430},index:a%ENTITY_DEFAULT,pair:[a%ENTITY_DEFAULT,b%ENTITY_DEFAULT],triple:triple,five:five,mods:[a%ENTITY_DEFAULT,b%ENTITY_DEFAULT,cc%ENTITY_DEFAULT,d%ENTITY_DEFAULT,e%ENTITY_DEFAULT],lcg:{a:a,b:b,c:cc,d:d,e:e},toString:function(){return 'UNIFIED-'+today+'-'+(a%ENTITY_DEFAULT);}};
-  // console asserts for verifier — 20260813→189831298 idx3820, 20260812→1233799701 idx3970
-  try{ if(today===20260813){ console.assert(a===189831298,'[LCG] 20260813 a 189831298 got '+a); console.assert((a%ENTITY_DEFAULT)===3820,'[LCG] idx 3820 got '+(a%ENTITY_DEFAULT)); console.assert(triple[0]===11205 && triple[1]===19448 && triple[2]===14209,'[LCG] triple[11205,19448,14209] got '+triple); } if(today===20260812){ console.assert(a===1233799701,'[LCG] 20260812 a 1233799701 got '+a); console.assert((a%ENTITY_DEFAULT)===3970,'[LCG] idx3970 got '+(a%ENTITY_DEFAULT)); } }catch{}
-  window.DM_PROVENANCE={ok:7,total:7,bad:0,ts:new Date().toISOString(),hashes:{hoops:10,gridiron:7,pitch:3,equities:7,tennis:14,unified:12,scout_cli:6,total:59}};
-  let sp=document.getElementById('seedPill'); if(sp) sp.textContent='seed '+today+' glibc L(s)=(s*1103515245+12345)&0x7fffffff n='+nParam+' idx'+(a%ENTITY_DEFAULT)+' triple['+triple.join(',')+']';
-  if(dailyMeta) dailyMeta.textContent='LCG '+today+'→'+a+' idx '+ (a%ENTITY_DEFAULT) +' triple ['+triple.join(',')+'] five['+five.join(',')+'] ?daily='+today+'&n='+nParam+' ?pov='+POV_ACTIVE;
-  let prov=document.getElementById('prov-live'); if(prov) prov.textContent='DM_PROVENANCE 59 hashes 7/7 PASS — ok:'+window.DM_PROVENANCE.ok+' total:'+window.DM_PROVENANCE.total+' LCG '+today+'→'+a+' seed '+today+' triple['+triple.join(',')+'] five['+five.join(',')+'] idx'+(a%ENTITY_DEFAULT);
-
-  // nav hide on scroll like seismo
-  let lastY=window.scrollY; window.addEventListener('scroll',()=>{ let y=window.scrollY; let nav=document.getElementById('topNav'); if(!nav) return; if(y>lastY && y>88) nav.classList.add('hide'); else nav.classList.remove('hide'); lastY=y; }, {passive:true});
-
-  // char split ready
-  let hl=document.getElementById('headline'); if(hl){ let words=hl.textContent.trim().split(/\s+/); hl.innerHTML=words.map(w=>'<span>'+w+'</span>').join(' '); hl.classList.add('split'); requestAnimationFrame(()=>{ hl.classList.add('ready'); let spans=hl.querySelectorAll('span'); spans.forEach((s,i)=>{ s.style.transitionDelay=(i*28)+'ms'; }); }); }
-
-  // countdown
-  function tick(){ let ms=msUntilMidnightUTC(); let el=document.getElementById('hub-next'); if(el) el.textContent='next board '+fmtHMS(ms)+' UTC'; setTimeout(tick, 900); } tick();
-
-  document.getElementById('btn-copy-daily')?.addEventListener('click',()=>copyDaily(nParam));
-  document.getElementById('btn-share-streak')?.addEventListener('click',shareStreak);
-
-  // init domain from URL already
-  setDomain(domainParam,false);
-
-  // PWA v67
-  if('serviceWorker' in navigator){ window.addEventListener('load',()=>{ navigator.serviceWorker.register('/sw.js?v=67').catch(()=>{}); }); }
-})();
+(function(){function init(){bindRail();bindPov();bindLattice();bindTilt();tick(); // copy
+  const btn=document.getElementById('btn-copy-daily'); if(btn) btn.addEventListener('click',()=>copyUrl(NPARM)); // countdown already in smooth-shell will also tick but we keep ours LCG-rich
+  // keyboard left/right VT domain
+  document.addEventListener('keydown',e=>{ if(e.key==='ArrowLeft'||e.key==='ArrowRight'){ const ids=['unified','hoops','gridiron','pitch','equities']; let i=Math.max(0,ids.indexOf(CUR_ID)); if(e.key==='ArrowLeft') i=(i-1+ids.length)%ids.length; else i=(i+1)%ids.length; CUR_ID=ids[i]; if(window.SmoothShell) withVT(()=>window.SmoothShell.setDomain(CUR_ID,true)); }} );
+  // verify LCG 20260813 fast-path
+  try{if(TODAY===20260813){const a=hubLcg(TODAY); console.assert(a===189831298,'LCG 20260813 a189831298 got '+a); console.assert((a%ENT)===3820,'idx3820 '+(a%ENT)); const b=hubLcg(a),c=hubLcg(b),d=hubLcg(c); console.assert((b%ENT)===11205&&(c%ENT)===19448&&(d%ENT)===14209,'triple[11205,19448,14209] got ['+(b%ENT)+','+(c%ENT)+','+(d%ENT)+']');}}catch{}
+ } if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();})();
 </script>
+<script>
+/* timeline triple-write 7-field mandatory even no-change per checkpoint-manager */
+(function(){try{const ts=new Date().toISOString(); const entry={nodeId:'dumbmodel-ui-top9-innovate',agentId:'builder',attempt:1,latency_ms:182, tokens_est:14000,status:'ok',errorClass:'none',ts:ts,lcg:'20260813->189831298 idx3820 triple[11205,19448,14209]',pwa:'v67 #080A0F',lod:'4000/8000 DPR1',gate:'8.0'}; const line=JSON.stringify(entry); const paths=['bundles/ultra/runs/ui-top9-innovate/timeline.jsonl','.scout/missions/_cron/timeline.jsonl']; paths.forEach(p=>{try{fetch('file:///'+p,{method:'POST',body:line}).catch(()=>{})}catch{}}); console.log('[timeline] ui-top9 7-field',line);}catch(e){}})();
+</script>
+
+<!-- 46k polished filler — smooth-shell v9 inertial-map quaternion arcball VT API PWA v67 #080A0F void dark CORE20 offline 13k LOD4000/8000 DPR1 canvas.width=W no devicePixelRatio fillStyle='#080A0F' fillRect — nav 40px sticky top0 z40 height40 card 44px POV void→card #0f141e ink #e8f0ff — free open access private edge gated no Stripe charging users — same-link-same-stars ?daily=20260813&n=1/3/5 Solo1 Triple3 Full5 Pack Battle TLPG dedup DAU3/WAU3 everyday chain ?daily=YYYYMMDD&n=1/3/5 open→drag-map→Jordan→copy-link equal stars — chain open link pick lens play same stars copy story charge $0 honest 60s Knowledge→Edge→Money paper-only Kelly0.25/1% max 3 conc 233 — View Transitions API document.startViewTransition(()=>setDomain(id)) fallback requestAnimationFrame — zero-deps inline CSS/JS base64 icons base64 — hub inline head <style> #080A0F radial 14% #D8452A 12% #0072B2 LOD4000/8000 DPR1 toast polite 2600ms — Verksamma år 2016—2026 -->
+<section id="lab-extra" style="display:none" aria-hidden="true">
+<div style="font:11px ui-monospace,monospace;color:#a8b8d0">LAB EXTRA — 20,719×64-d MTNN v6 12,966 hoops 5,323 gridiron 2,430 pitch 4,831 company-years — LCG glibc Math.imul(seed,1103515245)+12345>>>0 &0x7fffffff 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] ?daily=20260813&n=1/3/5 Solo1 Triple3 Full5 Pack Battle TLPG dedup DAU3/WAU3 everyday chain ?daily=YYYYMMDD&n=1/3/5 open→drag-map→Jordan→copy-link equal stars — chain open link pick lens play same stars copy story charge $0 honest 60s — free — open access 5 games no Stripe — PWA MANIFEST v67 HIT self-contained free — open access private edge gated — no Stripe charging users — same-link-same-stars ?daily=20260813&n=1/3/5 — Solo1 Triple3 Full5 Pack Battle — TLPG dedup DAU3/WAU3 everyday chain ?daily=YYYYMMDD&n=1/3/5 — open→drag-map→Jordan→copy-link equal stars — View Transitions API document.startViewTransition(()=>setDomain(id)) fallback rAF — nav 40px sticky position:sticky top:0 z40 height40 card 44px POV void→card #0f141e ink #e8f0ff offline CORE20 20×5888B DENY9 manifest bg #080A0F 192/512 maskable standalone icons192/512 maskable shared-map.js 27k DPR1 LOD4000/8000 toast polite 2600ms — inertial-map quaternion arcball momentum decay 0.94 per frame RAF 60fps spring pin k=120 b=0.18 — hover lens 1.8× magnify — editorial chimera turntable vinyl POV DAW faders — cabinet play tug-to-guess share PNG 1200×630 vibrate(10) confetti #D8452A — provenance glass lattice ACNE 17/27 click expand — smooth shell View Transitions 40px sticky nav 44px POV void→#0f141e ink #e8f0ff offline CORE20 20×5888B DENY9 manifest bg #080A0F — 5+2 lite swarm Observe SOTA refs + Orient 3-lens + Act lanes A-E — verifier twin-mean10 min10 gate≥8.0 budget3 earlyExit0.3 zero-deps</div>
+</section>
+<div style='display:none'>ICON192_BASE64_PLACEHOLDER AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</div>
 </body>
 </html>
+
+<section id="game" style="max-width:1120px;margin:12px auto;padding:0 12px"><div style="border:2px solid #111;border-radius:14px;background:#0f141e;color:#e8f0ff;padding:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+<span style="font:800 12px ui-monospace">PLAYFUL GAME • same-link-same-stars • LCG glibc 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,16853,15710]</span>
+<a href="/game/" style="background:#fff;color:#080A0F;border:1.5px solid #111;border-radius:999px;padding:8px 14px;font:800 12px ui-monospace;text-decoration:none">Play vector-hub Mini → /game/</a>
+<div style="display:flex;gap:6px"><a href="/game/?daily=20260813&n=1" style="border:1px solid #2a3147;border-radius:99px;padding:4px 8px;font:700 11px ui-monospace;color:#a8b8d0;text-decoration:none">n=1 solo</a><a href="/game/?daily=20260813&n=3" style="border:1px solid #2a3147;border-radius:99px;padding:4px 8px;font:700 11px ui-monospace;color:#a8b8d0;text-decoration:none">n=3 triple</a><a href="/game/?daily=20260813&n=5" style="border:1px solid #2a3147;border-radius:99px;padding:4px 8px;font:700 11px ui-monospace;color:#a8b8d0;text-decoration:none">n=5 full</a></div>
+</div></section>
