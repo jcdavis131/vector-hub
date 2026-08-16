@@ -1,0 +1,229 @@
+{
+ "slug": "equities",
+ "name": "Vector Equities",
+ "tagline": "500 public companies rendered as 4,831 company-years of SEC EDGAR XBRL and market data, embedded into 64 dimensions covering fiscal 2015 through 2024.",
+ "dims": "64-d MTNN, 17 towers",
+ "entity_count": 500,
+ "source_files": [
+  "vector-equities/assets/real_data.json",
+  "vector-equities/assets/eval_sector_coherence.json",
+  "vector-equities/assets/forward_calibration_isotonic.json",
+  "vector-equities/assets/manifest_v6_real.json",
+  "vector-equities/pipeline/data/mtnn_report.json",
+  "vector-equities/pipeline/data/feature_audit.json",
+  "vector-equities/pipeline/data/ab_sector_labels.json"
+ ],
+ "headline_stats": [
+  {
+   "value": "4,831",
+   "label": "company-years embedded (500 tickers x 2015-2024)",
+   "source": "assets/real_data.json -> rows, tickers, years"
+  },
+  {
+   "value": "0.91",
+   "label": "recall@10 on the 500 held-out test pairs",
+   "source": "pipeline/data/mtnn_report.json -> held_out_recall.test.recall_at_10_mtnn"
+  },
+  {
+   "value": "6.32x",
+   "label": "sector purity@10 lift over random (0.7057 vs 0.1117)",
+   "source": "assets/eval_sector_coherence.json -> metrics.knn_sector_purity_at_10.lift_over_random"
+  },
+  {
+   "value": "33 of 118",
+   "label": "input features with zero coverage - dead in the trained model",
+   "source": "pipeline/data/feature_audit.json -> dead_or_constant (33 entries); features = 118"
+  }
+ ],
+ "insights": [
+  {
+   "title": "The sector clustering is mostly the same company standing next to itself",
+   "body": "Nearest-neighbor sector purity@10 reads 0.7057 against a random-assignment baseline of 0.1117 - a 6.32x lift. But when neighbors drawn from the query row's own ticker are excluded, purity falls to 0.4013 (3.59x lift), and the cosine silhouette score of the sector clusters is -0.0034, versus -0.0204 for randomly permuted labels. Most of the headline coherence is a company's own ten fiscal years sitting on top of each other, which contrastive training guarantees by construction.",
+   "source": "assets/eval_sector_coherence.json -> metrics.knn_sector_purity_at_10.score, .knn_sector_purity_at_10_cross_ticker.score, .silhouette_cosine.score"
+  },
+  {
+   "title": "Three towers are feeding the model nothing at all",
+   "body": "The feature audit flags 33 of 118 features at 0.0 coverage: all 6 ownership features (INST_PCT, SHORT_INTEREST_PCT, INSIDER_NET_12M, FLOAT_PCT, TOP10_INST_CONC, INST_DELTA_QOQ), all 6 disclosure_text features (MDA_SENTIMENT, RISK_FACTOR_COUNT, FOG_INDEX_PROXY among them), all 3 sector_context features, and 12 of the 14 management_neo features including CEO_TENURE and BOARD_INDEP_PCT. It shows in the outputs: the Management_Quality skill spans only 0.3312 to 0.6575 across all 4,831 rows and Disclosure_Quality only 0.3449 to 0.6437, while Balance_Health - fed by live XBRL - spans -0.0445 to 1.2711.",
+   "source": "pipeline/data/feature_audit.json -> dead_or_constant; assets/real_data.json -> points[].skills, indices for Management_Quality / Disclosure_Quality / Balance_Health"
+  },
+  {
+   "title": "The archetype head calls JPMorgan a SaaS company",
+   "body": "Cross-cycle archetype purity@20 is 0.4855 and sector top-1 accuracy is 0.5454 over the 8 of 11 sectors that were scored at all (see the label-mismatch insight below), and the labels show why. HyperGrowth_SaaS absorbs 1,984 of 4,831 rows (41.1%), including JPMorgan in 9 of its 10 years, Bank of America in 9 of 10, Southern Company in 2017 and Starbucks in 2024. Meanwhile Microsoft's 2022 row is labeled Bank_Capital_Heavy and Nucor's 2022 row is labeled Moonshot_Bio. The Turnaround archetype gets 137 rows in total.",
+   "source": "assets/real_data.json -> points[].archetype (counts by label and by ticker); pipeline/data/mtnn_report.json -> cross_cycle_archetype_purity_at_20, sector_top1_acc"
+  },
+  {
+   "title": "The forward head is calibrated, and the calibration does not count",
+   "body": "The isotonic fit takes the forward drawdown head's predicted mean from 0.1137 down to 0.0561 against a true mean of 0.0561 - bias_after 0.0, inside the stated <1.0% tolerance, with IC nudged from 0.87843 to 0.88106. The artifact still records passed: false, because passed_requires is 'bias_within_tolerance AND trained_on == real' and trained_on is 'synthetic matching 11.37% vs 5.61% spec + real bundle if available'. An IC of 0.88106 against a stated ic_target of 0.5066 is itself a signal the fit is not seeing real out-of-sample data.",
+   "source": "assets/forward_calibration_isotonic.json -> passed, passed_requires, trained_on, pred_mean_before, pred_mean_after, bias_after, ic_after, ic_target"
+  },
+  {
+   "title": "Next-year prediction is weak, and the model's own report says so",
+   "body": "The next_profile head explains 26.2% of variance on validation (r2 0.262, MAE 0.2516 z) and 19.65% on the 500 test rows (r2 0.1965, RMSE 0.6511). Market directional accuracy is 0.6581. Those roll into a composite quality score of 0.6154 that cleared the promote gate on the strength of retrieval rather than forecasting - inside composite.parts, recall contributes 0.91 while r2_clip contributes 0.1965.",
+   "source": "pipeline/data/mtnn_report.json -> next_profile.val, next_profile.test, market_directional_acc, composite.parts, promote.reason"
+  },
+  {
+   "title": "That sector number was an 8-class problem wearing an 11-class name",
+   "body": "feature_spec.SECTORS spells the GICS sectors with underscores. The training matrix spells them with spaces. The lookup fell back to -1, so Consumer Discretionary (463 rows), Consumer Staples (328) and Real Estate (307) — 1,098 of 4,831, 22.7% of the corpus — were never assigned a sector at all. The loss masks -1 and so does the accuracy metric, so nothing crashed and nothing looked wrong: 0.5454 was computed over 3,733 rows and 8 classes. The real damage was elsewhere. The contrastive loss boosts hard negatives for any pair sharing a sector label, and it does NOT mask -1, so those three sectors were trained as a single merged pseudo-sector. Fixing the mapping and re-running five paired seeds moves sector accuracy from 0.5697 to 0.5058 — an 11-class problem over every company is harder than an 8-class one over 77% of them — while retrieval, purity and next-year R2 stay flat. The drop is the measurement becoming honest, not the model getting worse.",
+   "source": "vector-equities/pipeline/data/ab_sector_labels.json -> rows_unmapped=1098, rows_total=4831, pct_unmapped=22.7, classes_scored_buggy=8, classes_scored_fixed=11, rows_scored_buggy=3733, sector_acc_buggy=0.5697, sector_acc_fixed=0.5058, n_seeds=5; pipeline/data/mtnn_report.json -> sector_top1_acc=0.5454"
+  }
+ ],
+ "game": {
+  "kind": "split-decision",
+  "prompt": "Two real company-years from the model's training set. Which one does Vector Equities score higher on Balance_Health?",
+  "axis_label": "Balance_Health",
+  "explainer": "Balance_Health is one of 12 skill-head outputs the MTNN predicts from a company-year's SEC XBRL feature vector; across all 4,831 rows it averages 0.4905 and runs from -0.0445 (Norwegian Cruise Line Holdings, 2024) to 1.2711 (Fastenal, 2019), so a higher number means the model reads that year's balance sheet as further from distress.",
+  "rounds": [
+   {
+    "a": {
+     "name": "Tesla, Inc.",
+     "sub": "Consumer Discretionary - 2023",
+     "value": 0.7094
+    },
+    "b": {
+     "name": "Boeing",
+     "sub": "Industrials - 2023",
+     "value": 0.2755
+    },
+    "answer": "a",
+    "reveal": "Same fiscal year, opposite trajectories: Tesla climbs from 0.2360 in 2016 to 0.7094 in 2023 (81.5th percentile of all 4,831 rows) while Boeing falls from 0.4458 in 2016 to a low of 0.1688 in 2021 and recovers only to 0.2755 (18.1st percentile)."
+   },
+   {
+    "a": {
+     "name": "Starbucks",
+     "sub": "Consumer Discretionary - 2024",
+     "value": 0.0361
+    },
+    "b": {
+     "name": "Marriott International",
+     "sub": "Consumer Discretionary - 2024",
+     "value": 0.0377
+    },
+    "answer": "b",
+    "reveal": "The closest call on the board - 0.0016 apart, at the 0.9th and 1.0th percentiles. Starbucks 2024 is its own ten-year low, down from 0.3077 in 2015; Marriott has lived in this basement the whole decade, never above 0.1703 and dipping to -0.0033 in 2019."
+   },
+   {
+    "a": {
+     "name": "Southern Company",
+     "sub": "Utilities - 2017",
+     "value": -0.0415
+    },
+    "b": {
+     "name": "Royal Caribbean Group",
+     "sub": "Consumer Discretionary - 2020",
+     "value": 0.0365
+    },
+    "answer": "b",
+    "reveal": "A regulated utility scores below a cruise line in the year cruising stopped. Southern's 2017 row sits at the 0th percentile of all 4,831 rows and the company posts negative Balance_Health in four separate years (-0.0415, -0.0147, -0.0161, -0.0161); Royal Caribbean's 2020 row is 0.0365, though it does go negative later, bottoming at -0.0360 in 2024."
+   },
+   {
+    "a": {
+     "name": "3M",
+     "sub": "Industrials - 2023",
+     "value": 0.2257
+    },
+    "b": {
+     "name": "GE Aerospace",
+     "sub": "Industrials - 2023",
+     "value": 0.5122
+    },
+    "answer": "b",
+    "reveal": "3M drops from 0.7615 in 2022 to 0.2257 in 2023 - a 0.5358 single-year fall, the sharpest of any name on this board - then rebounds to 0.6138 in 2024. GE runs the other way, from a 2018 trough of 0.2665 up to 0.5122."
+   },
+   {
+    "a": {
+     "name": "Intel",
+     "sub": "Technology - 2024",
+     "value": 0.44
+    },
+    "b": {
+     "name": "Advanced Micro Devices",
+     "sub": "Technology - 2024",
+     "value": 0.7756
+    },
+    "answer": "b",
+    "reveal": "The two curves cross in 2021. Intel slides from 0.9727 in 2015 to 0.4400 in 2024; AMD rises from 0.3236 to 0.7756 over the same span. In 2020 Intel still led 0.8545 to 0.8000; by 2021 AMD was ahead 0.8267 to 0.8030 and never gave it back."
+   },
+   {
+    "a": {
+     "name": "Texas Instruments",
+     "sub": "Technology - 2017",
+     "value": 1.1823
+    },
+    "b": {
+     "name": "Nvidia",
+     "sub": "Technology - 2018",
+     "value": 1.1008
+    },
+    "answer": "a",
+    "reveal": "0.0815 apart at the very top of the distribution - the 99.9th and 98.9th percentiles. Texas Instruments never drops below 1.0534 in any of its ten years; Nvidia's own decade peak is this 2018 row."
+   },
+   {
+    "a": {
+     "name": "Oracle Corporation",
+     "sub": "Technology - 2022",
+     "value": 0.0616
+    },
+    "b": {
+     "name": "Uber",
+     "sub": "Industrials - 2022",
+     "value": 0.1937
+    },
+    "answer": "b",
+    "reveal": "Oracle falls from 0.9212 in 2017 to 0.0616 in 2022 - the 1.5th percentile of all 4,831 rows, below cash-burning Uber at the 9.2nd. Note the model also files Uber under Industrials, not Technology."
+   },
+   {
+    "a": {
+     "name": "Moderna",
+     "sub": "Healthcare - 2022",
+     "value": 1.0262
+    },
+    "b": {
+     "name": "Pfizer",
+     "sub": "Healthcare - 2022",
+     "value": 0.5853
+    },
+    "answer": "a",
+    "reveal": "Moderna's 2022 row is its own peak at the 97.2nd percentile, nearly double Pfizer's 0.5853 (70.1st) in the same year. Moderna does not hold it - the very next year it falls to 0.5116."
+   },
+   {
+    "a": {
+     "name": "Nucor",
+     "sub": "Materials - 2022",
+     "value": 1.0004
+    },
+    "b": {
+     "name": "Microsoft",
+     "sub": "Technology - 2022",
+     "value": 0.7949
+    },
+    "answer": "a",
+    "reveal": "2022 is Microsoft's strongest Balance_Health year of the decade at 0.7949 (87.8th percentile), and a steel mill still beats it: Nucor posts 1.0004 at the 96.3rd. The model labels that Nucor row Moonshot_Bio and the Microsoft row Bank_Capital_Heavy."
+   },
+   {
+    "a": {
+     "name": "CVS Health",
+     "sub": "Healthcare - 2024",
+     "value": 0.109
+    },
+    "b": {
+     "name": "Kraft Heinz",
+     "sub": "Consumer Staples - 2024",
+     "value": 0.1242
+    },
+    "answer": "b",
+    "reveal": "0.0152 apart near the floor - the 3.3rd and 4.2nd percentiles. CVS falls across the decade, 0.6317 in 2015 to 0.1090 in 2024, its ten-year low; Kraft Heinz never had it, topping out at 0.1407 in 2015 and staying under 0.1450 every year since."
+   }
+  ]
+ },
+ "caveat": "Recorded verbatim in the model's own eval file: \"Engineering quality metric for the embedding space only; measures label coherence of the geometry, not investment merit and not predictive of returns.\" (assets/eval_sector_coherence.json -> note). The forward-return head backs that up - assets/forward_calibration_isotonic.json records \"passed\": false, because passed_requires is \"bias_within_tolerance AND trained_on == 'real'\" and trained_on is \"synthetic matching 11.37% vs 5.61% spec + real bundle if available\". Nothing here is a forecast. The sector top-1 figure on this page describes the SHIPPED model, which was trained before the sector-label mismatch was found and therefore scored on 8 of 11 sectors covering 77.3% of companies. The corrected 11-class figure on an otherwise identical config is 0.5058.",
+ "_verification": "MECHANICAL — every cited numeric claim compared against its artifact by check_cited_fields.py. Stronger than review for NUMBERS, weaker for PROSE: it proves each value matches its source and says nothing about whether the sentence around it draws a fair conclusion. Scope: Everything else passed through unchanged, keeping: CLEAN — adversarially verified against source artifacts; One insight body is QUALIFIED and one insight is new, both because 7b67eab found the published sector accuracy was computed over 8 of 11 sectors. The shipped number 0.5454 is unchanged and still correct FOR THE SHIPPED MODEL; what changed is that the page now says what it measures.",
+ "source_hashes": {
+  "vector-equities/assets/real_data.json": "8c3db05c088d96cd",
+  "vector-equities/assets/eval_sector_coherence.json": "67dfa196cadecb56",
+  "vector-equities/assets/forward_calibration_isotonic.json": "7de9ed1055d76982",
+  "vector-equities/assets/manifest_v6_real.json": "1ada86aaf64498c0",
+  "vector-equities/pipeline/data/mtnn_report.json": "724c05abfddbb624",
+  "vector-equities/pipeline/data/feature_audit.json": "6d7b464584b820ed",
+  "vector-equities/pipeline/data/ab_sector_labels.json": "ba37c6f13f366c7d"
+ }
+}
