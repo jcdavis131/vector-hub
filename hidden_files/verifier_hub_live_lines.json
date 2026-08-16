@@ -1,29 +1,29 @@
 {
-  "overall": 9.441558441558442,
+  "overall": 9.87012987012987,
   "passes": true,
   "scores": {
-    "boards": 7,
+    "boards": 10,
     "top9": 10.0,
     "modules": 10.0,
     "header": 9.09090909090909,
     "manifest_pwa": 10.0,
     "tokens": 10,
     "social_provenance": 10.0,
-    "overall": 9.441558441558442
+    "overall": 9.87012987012987
   },
   "details": {
     "boards": {
-      "total": 0,
-      "pp": 10,
-      "kal": 7,
-      "dk": 7,
-      "live": false,
+      "total": 30,
+      "pp": 12,
+      "kal": 9,
+      "dk": 9,
+      "live": true,
       "priors": true,
       "football": true,
-      "sample_brunson": false,
-      "allen": false,
-      "judge": false,
-      "lcg_18": false,
+      "sample_brunson": true,
+      "allen": true,
+      "judge": true,
+      "lcg_18": true,
       "lcg_13": true,
       "week0": true
     },
