@@ -1,16 +1,20 @@
-/* shared-map.js v4-filtered — 3+ seasons OR rookie last 3
-   - Fast lite 4322 first paint
+/* shared-map.js v4-filtered best-in-class — 3+ seasons OR rookie last 3
+   - Fast lite 4322 first paint with fallback absolute paths /assets/vectors_map_lite.json /assets/data/unified.json /assets/data/hoops.json
    - Full progressive filtered: only players with 3+ player-seasons, plus any player whose max season is in last 3 seasons window (rookies)
    - Cache API + session reuse, pending focus queue, injection always works even if filtered out
-   - PWA v67 reuse 22990 bytes baseline (actual 27k with comments) — LOD 4000 mobile 8000 desktop DPR1 fillRect void dark #080A0F
-   - DPR1 enforced: canvas.width=W, canvas.height=H, no devicePixelRatio scaling — fillRect #080A0F void dark true
+   - PWA v67 reuse DPR1 fillRect void dark #080A0F
+   - Classic script compatible (no ESM export) + window.mountSharedMap
+   - Best-in-class: ResizeObserver + window resize fallback, DPR1 enforced, retry + toast "Map failed — tap to retry"
+   - Best-in-class mobile: #c min-height 320px via CSS + JS ensure
 */
-export async function mountSharedMap(canvas, opts={}){
+'use strict';
+async function mountSharedMap(canvas, opts){
+  opts=opts||{};
   if(!canvas) return null;
   const OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#FFFEF7'];
   const ARCH=["Glass+Rim","LowVol Glass","Low Impact","Def Glass FT","Vol+3P","3P Acc+Vol","Playmaking","Scoring Vol"];
   const POS=['PG','SG','SF','PF','C'];
-  const highlightInit = opts.highlightId ?? null;
+  const highlightInit = opts.highlightId != null ? opts.highlightId : null;
   const dark = !!opts.dark;
   const isMobile = (typeof window!=='undefined') && (window.innerWidth<700 || /Android|iPhone|iPad/i.test(navigator.userAgent||''));
   const maxRender = isMobile ? 4000 : 8000;
@@ -23,13 +27,44 @@ export async function mountSharedMap(canvas, opts={}){
   let embedPaused=false, lastRender=0;
   let fullLoaded=false, fullLoading=false, pendingFocus=null;
   let totalRaw=12966, filteredCount=0;
+  let _retryBtn=null;
+
+  function toast(msg, ms){
+    try{
+      const fn=window.showToast||window.SmoothShell&&window.SmoothShell.showToast;
+      if(fn){ fn(msg, ms||2600); return; }
+      let el=document.getElementById('hub-toast');
+      if(!el){ el=document.createElement('div'); el.id='hub-toast'; el.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:90;background:#1d1d1b;color:#fffcf2;border:1px solid #2a2a2a;border-radius:9999px;padding:10px 16px;font:600 12px system-ui,sans-serif;display:none;max-width:min(92vw,560px)'; document.body.appendChild(el); }
+      el.textContent=msg; el.style.display='block'; clearTimeout(el._t); el._t=setTimeout(()=>el.style.display='none', ms||2600);
+    }catch{}
+  }
+
+  function showRetry(errMsg){
+    console.error('[shared-map] Map failed — tap to retry', errMsg);
+    toast('Map failed — tap to retry', 3200);
+    try{
+      if(!_retryBtn){
+        const box=canvas.parentElement||document.getElementById('mapBox');
+        if(box){
+          const btn=document.createElement('button');
+          btn.textContent='Tap to retry';
+          btn.setAttribute('aria-label','Retry map load');
+          btn.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:12;background:#fffcf2;color:#080A0F;border:1px solid #111;border-radius:9999px;padding:10px 16px;font:700 12px ui-monospace,monospace;cursor:pointer;box-shadow:0 6px 18px #0004;display:block';
+          btn.onclick=async()=>{ btn.textContent='Retrying…'; btn.disabled=true; try{ await loadLite(); projectFrame(); draw(); scheduleLoop(); loadNamesLazy().then(()=>{projectFrame(); draw();}); setTimeout(()=>loadFullProgressive().finally(()=>{ btn.remove(); _retryBtn=null; }), 120); toast('Retrying map…', 1200);}catch(e){ console.error('retry fail',e); btn.textContent='Tap to retry'; btn.disabled=false; toast('Map failed — tap to retry',3000);} };
+          btn.onkeydown=(e)=>{ if(e.key==='Enter'||e.key===' ') { e.preventDefault(); btn.click(); } };
+          box.style.position=box.style.position||'relative';
+          box.appendChild(btn);
+          _retryBtn=btn;
+        }
+      } else { _retryBtn.style.display='block'; }
+    }catch{}
+    try{ canvas.style.minHeight='320px'; }catch{}
+  }
 
   function seasonEndYear(s){
     if(!s) return null;
-    // captures "97-98" "03-04" "1997-98" "2023-24" "23-24"
     const m = String(s).match(/(\d{2,4})\s*-\s*(\d{2,4})/);
     if(!m) {
-      // maybe single year like "2024"
       const y = parseInt(String(s).slice(-4),10);
       return y? (y<100 ? (y>=50?1900+y:2000+y) : y) : null;
     }
@@ -39,14 +74,10 @@ export async function mountSharedMap(canvas, opts={}){
   }
 
   function buildSeasonFilter(arr){
-    // 1) compute max year in dataset
     let maxYear=0;
     for(const p of arr){ const y=seasonEndYear(p.s); if(y && y>maxYear) maxYear=y; }
-    if(!maxYear) maxYear = (new Date()).getFullYear(); // fallback
-    const recentMin = maxYear - 2; // last 3 seasons inclusive
-    // unique person key = pid if present (name+dob proxy) else name
-    // fixes Gary Payton (pid 56, 1996-07 11 seasons) vs Gary Payton II (pid 1627780, 2017-26 7 seasons)
-    // previously counted together as 18 seasons → kept incorrectly; now separate.
+    if(!maxYear) maxYear = (new Date()).getFullYear();
+    const recentMin = maxYear - 2;
     const byPerson=new Map();
     for(const p of arr){
       const pid = p.pid!=null ? String(p.pid) : (p.player_id!=null ? String(p.player_id) : '');
@@ -62,15 +93,13 @@ export async function mountSharedMap(canvas, opts={}){
     const keepKeys=new Set();
     for(const [k, rec] of byPerson){
       if(rec.count>=3) keepKeys.add(k);
-      else if(rec.maxY && rec.maxY>=recentMin) keepKeys.add(k); // rookie / new last 3 seasons
+      else if(rec.maxY && rec.maxY>=recentMin) keepKeys.add(k);
     }
-    // stats for log
     let kept=0; for(const p of arr){
       const pid = p.pid!=null ? String(p.pid) : (p.player_id!=null ? String(p.player_id) : '');
       const key = pid ? ('pid:'+pid) : ('name:'+(p.n||'').trim().toLowerCase());
       if(keepKeys.has(key)) kept++;
     }
-  // filtered merge info — keep minimal for dev, debug level to avoid prod noise
     if(typeof console.debug==='function') console.debug('season filter v5 pid-aware: maxYear',maxYear,'recentMin',recentMin,'keptPersons',keepKeys.size,'keptPts',kept,'/',arr.length);
     return {keepKeys, maxYear, recentMin, kept, raw:arr.length};
   }
@@ -117,17 +146,24 @@ export async function mountSharedMap(canvas, opts={}){
   function getSize(){
     const rect=canvas.getBoundingClientRect();
     let w=rect.width, h=rect.height;
-    if(w<10||h<10){ const pr=canvas.parentElement?.getBoundingClientRect(); w=Math.max(w, pr?.width||0, 320); h=Math.max(h, pr?.height||0, 380); if(w<10) w=window.innerWidth||390; if(h<10) h=Math.round((window.innerHeight||800)*0.5); }
+    if(w<10||h<10){
+      const pr=canvas.parentElement?.getBoundingClientRect();
+      w=Math.max(w, pr?.width||0, 320);
+      h=Math.max(h, pr?.height||0, 380);
+      if(w<10) w=window.innerWidth||390;
+      if(h<10) h=Math.round((window.innerHeight||800)*0.5);
+      if(h<320) h=320;
+    }
     return {w:Math.max(10,Math.round(w)), h:Math.max(10,Math.round(h))};
   }
   function resize(){
     if(!canvas) return;
     const sz=getSize();
     if(W===sz.w && H===sz.h && canvas.width===sz.w && canvas.height===sz.h) return;
-    // DPR1 enforced: use CSS pixels only, no devicePixelRatio * W/H to avoid OOM; canvas.width=W not DPR*W
     W=sz.w; H=sz.h; canvas.width=W; canvas.height=H;
     if(canvas.style.width!==W+'px') canvas.style.width=W+'px';
     if(canvas.style.height!==H+'px') canvas.style.height=H+'px';
+    canvas.style.minHeight='320px';
     if(ctx) ctx.setTransform(1,0,0,1,0,0);
     projectFrame(); draw();
   }
@@ -141,36 +177,69 @@ export async function mountSharedMap(canvas, opts={}){
 
   async function fetchWithCache(url){
     if(window.__mapFullCache && window.__mapFullCache[url]) return window.__mapFullCache[url];
+    // retry up to 2 times on failure
+    let lastErr=null;
+    for(let attempt=0; attempt<2; attempt++){
+      try{
+        if('caches' in window){
+          const cache=await caches.open('vector-maps-v4');
+          const hit=await cache.match(url);
+          if(hit){ const j=await hit.json(); window.__mapFullCache=window.__mapFullCache||{}; window.__mapFullCache[url]=j; return j; }
+          const res=await fetch(url,{cache:'default'});
+          if(res.ok){ cache.put(url, res.clone()); const j=await res.json(); window.__mapFullCache=window.__mapFullCache||{}; window.__mapFullCache[url]=j; return j; }
+          lastErr=new Error('fetch '+url+' status '+res.status);
+        } else {
+          const r=await fetch(url,{cache:'force-cache'});
+          if(!r.ok) throw new Error('fetch failed '+url+' '+r.status);
+          const j=await r.json();
+          window.__mapFullCache=window.__mapFullCache||{}; window.__mapFullCache[url]=j;
+          return j;
+        }
+      }catch(e){ lastErr=e; }
+      // wait small backoff before retry
+      if(attempt===0) await new Promise(r=>setTimeout(r, 180));
+    }
+    // final fallback direct fetch without cache
     try{
-      if('caches' in window){
-        const cache=await caches.open('vector-maps-v4');
-        const hit=await cache.match(url);
-        if(hit){ const j=await hit.json(); window.__mapFullCache=window.__mapFullCache||{}; window.__mapFullCache[url]=j; return j; }
-        const res=await fetch(url,{cache:'default'});
-        if(res.ok){ cache.put(url, res.clone()); const j=await res.json(); window.__mapFullCache=window.__mapFullCache||{}; window.__mapFullCache[url]=j; return j; }
-      }
-    }catch{}
-    const r=await fetch(url,{cache:'force-cache'});
-    if(!r.ok) throw new Error('fetch failed '+url);
-    const j=await r.json();
-    window.__mapFullCache=window.__mapFullCache||{}; window.__mapFullCache[url]=j;
-    return j;
+      const r2=await fetch(url,{cache:'no-store'});
+      if(r2.ok){ const j=await r2.json(); window.__mapFullCache=window.__mapFullCache||{}; window.__mapFullCache[url]=j; return j; }
+      throw new Error('final fetch '+url+' '+r2.status);
+    }catch(e){ throw lastErr||e; }
   }
 
   async function loadLite(){
-    const urls=['assets/vectors_map_lite.json','assets/vectors_lite.json','assets/vectors_search_lite.json'];
+    const urls=[
+      'assets/vectors_map_lite.json',
+      '/assets/vectors_map_lite.json',
+      'assets/vectors_lite.json',
+      '/assets/vectors_lite.json',
+      'assets/vectors_search_lite.json',
+      '/assets/vectors_search_lite.json',
+      // hub absolute fallbacks per spec
+      '/assets/data/unified.json',
+      'assets/data/unified.json',
+      '/assets/data/hoops.json',
+      'assets/data/gridiron.json',
+      'assets/data/pitch.json',
+      'assets/data/equities.json'
+    ];
     for(const u of urls){
       try{
         const j=await fetchWithCache(u);
-        const arr=j.players||j;
+        const arr=j.players||j.points||j.data||j;
         if(!Array.isArray(arr)||!arr.length) continue;
         N=arr.length; ensureArrays(N);
         let localMax=0;
         for(let i=0;i<N;i++){ const p=arr[i]||{}; baseOx[i]=((p.x??0.5)-0.5)*2; baseOy[i]=((p.y??0.5)-0.5)*2; baseOz[i]=((p.z??0.5)-0.5)*2; baseC[i]=(p.c|0)&7; baseI[i]=p.i!=null? (p.i|0) : i; baseN[i]=p.n||''; baseS[i]=p.s||''; baseP[i]=p.p??-1; projected[i].c=baseC[i]; if(baseI[i]>localMax) localMax=baseI[i]; }
         maxId=localMax; projById=new Int32Array(maxId+1); projById.fill(-1); for(let i=0;i<N;i++){ const id=baseI[i]; if(id>=0&&id<=maxId) projById[id]=i; }
-        if(typeof console.debug==='function') console.debug('shared-map v4 lite loaded',N,u); return true;
+        if(typeof console.debug==='function') console.debug('shared-map v4 lite loaded',N,u); 
+        // hide retry on success
+        if(_retryBtn){ _retryBtn.remove(); _retryBtn=null; }
+        return true;
       }catch(e){ console.warn('lite load fail',u,e); }
     }
+    console.error('[shared-map] all lite URLs failed');
+    showRetry('all lite urls failed');
     return false;
   }
 
@@ -178,22 +247,23 @@ export async function mountSharedMap(canvas, opts={}){
     if(fullLoaded||fullLoading) return;
     fullLoading=true;
     try{
-      const url='assets/vectors_search_lite_pos.json?v=58';
+      // try primary, then absolute fallback
       let j=null;
-      try{ j=await fetchWithCache(url); }catch{ j=await fetchWithCache('assets/vectors_search_lite.json'); }
+      const tries=['assets/vectors_search_lite_pos.json?v=58','/assets/vectors_search_lite_pos.json?v=58','assets/vectors_search_lite.json','/assets/vectors_search_lite.json','assets/vectors_map_lite.json','/assets/vectors_map_lite.json'];
+      for(const t of tries){
+        try{ j=await fetchWithCache(t); if(j) break; }catch{}
+      }
+      if(!j) { throw new Error('full progressive fetch all urls failed'); }
       const arr=j.players||j;
       if(!Array.isArray(arr)||arr.length<1000){ fullLoading=false; return; }
       totalRaw=arr.length;
-      // build filter (pid-aware keeps Gary Payton 11 and Gary Payton II 7 separate)
       const {keepKeys, maxYear, recentMin, kept, raw} = buildSeasonFilter(arr);
       filteredCount=kept;
-      // actually filter array
       const filtered = arr.filter(p=>{
         const pid = p.pid!=null ? String(p.pid) : (p.player_id!=null ? String(p.player_id) : '');
         const key = pid ? ('pid:'+pid) : ('name:'+(p.n||'').trim().toLowerCase());
         return keepKeys.has(key);
       });
-      // If filtering would be too aggressive (keeps <2000), fall back to full
       const useArr = (filtered.length>=1500)? filtered : arr;
       if(useArr!==filtered) console.warn('filter too aggressive, using full',arr.length);
       const fullN=useArr.length;
@@ -209,11 +279,10 @@ export async function mountSharedMap(canvas, opts={}){
         newProj[i]={sx:0,sy:0,depth:0,alpha:0.6,c:newC[i]};
         if(newI[i]>newMax) newMax=newI[i];
       }
-      // preserve any injected extras not in filtered but needed (e.g., target)
       if(N>0 && projById){
         const keepIds=new Set(useArr.map(a=>a.i));
         const extra=[];
-        for(let i=0;i<N;i++){ const id=baseI[i]; if(!keepIds.has(id)){ // maybe it was lite but not passing filter — keep if it's a pending target?
+        for(let i=0;i<N;i++){ const id=baseI[i]; if(!keepIds.has(id)){
           if(targetId!=null && id===targetId) extra.push({i:id,x:baseOx[i]/2+0.5,y:baseOy[i]/2+0.5,z:baseOz[i]/2+0.5,c:baseC[i],n:baseN[i],s:baseS[i],p:baseP[i]});
         } }
         if(extra.length){
@@ -229,14 +298,13 @@ export async function mountSharedMap(canvas, opts={}){
       fullLoaded=true; if(typeof console.debug==='function') console.debug('shared-map v4 filtered merged',N,'from raw',raw,'maxYear',maxYear,'recentMin',recentMin);
       projectFrame(); draw();
       if(pendingFocus){ const {id,label}=pendingFocus; pendingFocus=null; if(projById[id]>=0){ targetId=id; projectFrame(); draw(); focusOnTargetInternal(); if(label&&document.getElementById('popular-current')) document.getElementById('popular-current').textContent='Showing '+label+' — ★ on map · '+N+' filtered stars'; } else {
-        // target was filtered out? inject anyway
         try{
           const row=useArr.find(a=>a.i===id) || arr.find(a=>a.i===id);
           if(row) _injectPoint(row); else _injectPoint({i:id,x:0.5,y:0.5,z:0.5,c:7});
           targetId=id; projectFrame(); draw(); focusOnTargetInternal();
         }catch{}
       } }
-    }catch(e){ console.warn('full progressive fail',e); }
+    }catch(e){ console.warn('full progressive fail',e); console.error('[shared-map] full progressive fail — map partial', e); }
     fullLoading=false;
   }
 
@@ -335,20 +403,38 @@ export async function mountSharedMap(canvas, opts={}){
   const pauseBtn=document.getElementById('btn-pause'); if(pauseBtn) pauseBtn.addEventListener('click',()=>{ auto=!auto; embedPaused=!auto; pauseBtn.textContent=auto?'Pause':'Resume'; lastT=0; idleMs=0; if(auto) scheduleLoop(); });
   const resetBtn=document.getElementById('btn-reset'); if(resetBtn) resetBtn.addEventListener('click',()=>{ rotY=Math.PI*0.18; rotX=0.22; auto=!reduceMotion; embedPaused=false; idleMs=0; lastT=0; if(pauseBtn) pauseBtn.textContent=auto?'Pause':'Resume'; resize(); scheduleLoop(); });
 
+  // ensure mobile min-height 320px + DPR1 after parent measured
   resize();
   let ro=null, roPending=false;
-  try{ const onResizeObserved=()=>{ if(roPending) return; roPending=true; requestAnimationFrame(()=>{ roPending=false; resize(); }); }; ro=new ResizeObserver(onResizeObserved); ro.observe(canvas); if(canvas.parentElement) ro.observe(canvas.parentElement); }catch{}
+  try{ 
+    const onResizeObserved=()=>{ if(roPending) return; roPending=true; requestAnimationFrame(()=>{ roPending=false; resize(); }); };
+    ro=new ResizeObserver(onResizeObserved);
+    ro.observe(canvas);
+    if(canvas.parentElement) ro.observe(canvas.parentElement);
+    // window resize fallback per spec
+    window.addEventListener('resize', onResizeObserved, {passive:true});
+    // inner dims fallback if ResizeObserver fails
+    if(!('ResizeObserver' in window)){
+      window.addEventListener('resize', ()=>{ const sz=getSize(); if(sz.w!==W||sz.h!==H) resize(); }, {passive:true});
+    }
+  }catch{
+    window.addEventListener('resize', ()=>resize(), {passive:true});
+    try{
+      const check=()=>{ const rect=canvas.getBoundingClientRect(); const w=Math.round(rect.width||window.innerWidth||390); const h=Math.round(rect.height||window.innerHeight*0.5||380); if(Math.abs(w-W)>2||Math.abs(h-H)>2) resize(); };
+      setInterval(check, 800);
+    }catch{}
+  }
   const ok=await loadLite();
   if(ok){ projectFrame(); draw(); scheduleLoop(); loadNamesLazy().then(()=>{ projectFrame(); draw(); }); setTimeout(()=>{ loadFullProgressive(); }, 120); }
-  else { ctx.fillStyle='#FFFEF7'; ctx.fillText('Map failed to load',14,22); }
+  else { 
+    try{ if(ctx){ ctx.fillStyle='#080A0F'; ctx.fillRect(0,0,W||320,H||320); ctx.fillStyle='#FFFEF7'; ctx.font='700 12px ui-monospace,monospace'; ctx.fillText('Map failed — tap to retry',14,22); } }catch{}
+    console.error('[shared-map] Map failed — tap to retry');
+  }
 
-  // single-select: only one targetId at a time, prev cleared on replacement (no multi-select accumulation)
   function ensureFullThenFocus(id,label){
     const newId = (id==null? null : id|0);
-    // DPR1 & clearPrev: draw() full clears each frame (clearRect+fillRect W,H), so previous highlight voided automatically
     if(!fullLoaded && !fullLoading){ loadFullProgressive(); }
     if(fullLoaded && projById && newId!=null && newId>=0 && newId<=maxId && projById[newId]>=0){
-      // single-select replacement — clear previous highlight
       targetId=newId;
       if(label&&document.getElementById('popular-current')) document.getElementById('popular-current').textContent='Showing '+label+' — ★ on map · '+N+' filtered stars';
       projectFrame(); draw(); focusOnTargetInternal(); return true;
@@ -363,7 +449,7 @@ export async function mountSharedMap(canvas, opts={}){
       return false;
     }
     if(newId!=null && (!projById||projById[newId]<0)){ _injectPoint({i:newId,x:0.5,y:0.5,z:0.5,c:7}); }
-    targetId=newId; // single-select: replaces previous, null clears all highlights
+    targetId=newId;
     projectFrame(); draw(); if(targetId!=null) focusOnTargetInternal(); return true;
   }
   function focusOnTargetInternal(){
@@ -375,16 +461,13 @@ export async function mountSharedMap(canvas, opts={}){
 
   return {
     setTarget(id){
-      // single-select enforcement: clear prev, highlight only current, no array accumulation
       const newId = (id==null? null : id|0);
-      if(targetId===newId){ draw(); return; } // already selected
+      if(targetId===newId){ draw(); return; }
       if(!ensureFullThenFocus(newId,null)){
-        // pending full load — temporarily set single target, will be re-resolved when full loads
         targetId=newId;
         draw();
         return;
       }
-      // ensureFullThenFocus already set targetId = newId and cleared prev via full redraw
     },
     setGuesses(ids){ guessIds=normalizeGuesses(ids); try{ for(const gm of guessIds){ if(!gm||gm.idx==null) continue; if(projById && gm.idx>=0 && gm.idx<=maxId && projById[gm.idx]>=0) continue; if(gm.x!=null && gm.y!=null && gm.z!=null){ _injectPoint({i:gm.idx, x:gm.x, y:gm.y, z:gm.z, c:gm.c??0, n:gm.n||'', s:gm.s||'', p:gm.p??-1}); } else if(window.VHPastModern && VHPastModern.state){ try{ const sl=VHPastModern.state().searchLite; const arr=sl&&(sl.players||sl); const row=Array.isArray(arr)&&arr.find(p=>p&&p.i===gm.idx); if(row) _injectPoint(row); }catch{} } } }catch(e){ console.warn('setGuesses inject fail',e); } draw(); },
     focusOnTarget(){ if(!ensureFullThenFocus(targetId,'')) { focusOnTargetInternal(); } else focusOnTargetInternal(); },
@@ -395,3 +478,7 @@ export async function mountSharedMap(canvas, opts={}){
     resize, getCount(){return N;}, dispose(){ try{ro&&ro.disconnect();}catch{} }
   };
 }
+// classic globals + ESM interop
+if(typeof window!=='undefined'){ window.mountSharedMap=mountSharedMap; window.mountSharedMapAsync=mountSharedMap; }
+try{ if(typeof module!=='undefined' && module.exports){ module.exports={mountSharedMap}; } }catch{}
+try{ if(typeof exports!=='undefined'){ exports.mountSharedMap=mountSharedMap; } }catch{}
