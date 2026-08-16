@@ -7,9 +7,9 @@
 <meta name="description" content="A quiet library of sports models — Japandi sports books: hoops 12,966 · gridiron 646 · pitch 2,430 · equities 500 · unified 20,719 · tennis US Open 128 — wabi-sabi paper #FEFCF9 wood #D6C7B3 stone #EAE3D8 moss #7A8A7B clay #C9A88C — today's reading list 8 picks · margin notes day/week/month · map cabinet quaternion arcball 0.94 inertia — LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars">
 <meta name="theme-color" content="#FEFCF9">
 <meta name="background-color" content="#FEFCF9">
-<link rel="manifest" href="/manifest.json?v=japandi-67.2">
+<link rel="manifest" href="/manifest.json?v=japandi-taste-v2-34">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23FEFCF9'/%3E%3Crect x='6' y='6' width='20' height='20' rx='3' fill='%23D6C7B3' stroke='%231E1E1E' stroke-width='1.2'/%3E%3Ccircle cx='16' cy='16' r='2.8' fill='%23C9A88C' stroke='%231E1E1E' stroke-width='1'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="/assets/tokens.css?v=japandi-67.2">
+<link rel="stylesheet" href="/assets/tokens.css?v=japandi-taste-v2-34">
 <!-- social -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://dumbmodel.com/">
@@ -19,7 +19,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <style>
 /* Japandi sports books — warm minimal, natural materials, wabi-sabi, low contrast calm, wood paper stone */
- :root{--paper:#FEFCF9;--paper-2:#FFFEF7;--wood:#D6C7B3;--wood-2:#E8D9C5;--stone:#EAE3D8;--ink:#1E1E1E;--ink-soft:#5A544E;--moss:#7A8A7B;--clay:#C9A88C;--shadow:3px 3px 0 #1E1E1E}
+ :root{--paper:#FEFCF9;--paper-2:#FFFEF7;--wood:#D6C7B3;--wood-2:#E8D9C5;--stone:#EAE3D8;--ink:#1E1E1E;--ink-soft:#5A544E;--moss:#7A8A7B;--clay:#C9A88C;--shadow:2.5px 2.5px 0 #1E1E1E}
  *{box-sizing:border-box}
  html,body{margin:0;background:var(--paper);color:var(--ink)}
  body{font-family:ui-sans-system,-apple-system,Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100dvh}
@@ -59,19 +59,26 @@
  .book{
    flex:0 0 132px; height:220px; position:relative; scroll-snap-align:start;
    background:
+     repeating-linear-gradient(0deg, rgba(30,30,30,.015) 0 1px, transparent 1px 9px),
+     repeating-linear-gradient(90deg, rgba(30,30,30,.018) 0 1px, transparent 1px 13px),
      radial-gradient(80px 40px at 28% 18%, #fff 0%, #FFFEF7 22%, transparent 62%),
      linear-gradient(180deg, var(--paper) 0%, var(--paper) 78%, var(--stone) 100%);
    border:1.5px solid var(--ink); border-radius:10px 10px 2px 2px;
-   box-shadow: var(--shadow); display:flex; flex-direction:column;
+   box-shadow: var(--shadow), 0 1px 0 #1E1E1E08; display:flex; flex-direction:column;
    padding:9px 9px 8px; cursor:pointer; text-align:left;
    transition: transform .18s cubic-bezier(.22,1,.36,1), box-shadow .18s;
  }
- .book:hover{transform:translateY(-2px) rotate(-.18deg); box-shadow:4px 5px 0 var(--ink)}
- .book.on{outline:2px solid var(--clay); box-shadow:0 0 0 3px var(--paper), 0 0 0 5.2px var(--clay), 3px 3px 0 var(--ink)}
- .book__spine-w{writing-mode:vertical-rl; text-orientation:mixed; transform:rotate(180deg); font:800 11px var(--font-mono); letter-spacing:.11em; text-transform:uppercase; color:var(--ink); flex:1; display:flex; align-items:center; justify-content:space-between}
- .book__count{font:700 10px var(--font-mono); color:var(--ink-soft); writing-mode:horizontal-tb; transform:rotate(0deg); background:#fff; border:1px solid var(--ink); border-radius:9999px; padding:2px 7px; display:inline-flex}
- .book__dot{width:10px;height:10px;border-radius:50%;border:1.4px solid var(--ink);background:var(--dot,#C9A88C);display:inline-block;box-shadow:0 0 0 1px #FFFEF7}
- .book__foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;font:700 10px var(--font-mono);color:var(--ink-soft)}
+ .book::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:
+   repeating-linear-gradient(90deg, rgba(30,30,30,.035) 0 1px, transparent 1px 17px),
+   linear-gradient(90deg, transparent 0%, rgba(214,199,179,.18) 28%, transparent 62%);
+   opacity:.52; mix-blend-mode:multiply}
+ .book::after{content:"";position:absolute;inset:-1.5px;border-radius:10px 10px 2px 2px;pointer-events:none;box-shadow:inset 0 1px 0 #FFFEF7, inset 0 -1px 0 rgba(30,30,30,.06);opacity:.9}
+ .book:hover{transform:translateY(-1.6px) rotate(-.15deg); box-shadow:3.2px 4px 0 var(--ink), 0 2px 10px #1E1E1E10}
+ .book.on{outline:2px solid var(--clay); box-shadow:0 0 0 3px var(--paper), 0 0 0 5.2px var(--clay), 2.5px 2.5px 0 var(--ink)}
+ .book__spine-w{writing-mode:vertical-rl; text-orientation:mixed; transform:rotate(180deg); font:800 11px var(--font-mono); letter-spacing:.11em; text-transform:uppercase; color:var(--ink); flex:1; display:flex; align-items:center; justify-content:space-between; position:relative; z-index:1}
+ .book__count{font:700 10px var(--font-mono); color:var(--ink-soft); writing-mode:horizontal-tb; transform:rotate(0deg); background:#fff; border:1px solid var(--ink); border-radius:9999px; padding:2px 7px; display:inline-flex; position:relative; z-index:1}
+ .book__dot{width:10px;height:10px;border-radius:50%;border:1.4px solid var(--ink);background:var(--dot,#C9A88C);display:inline-block;box-shadow:0 0 0 1px #FFFEF7; position:relative; z-index:1}
+ .book__foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;font:700 10px var(--font-mono);color:var(--ink-soft); position:relative; z-index:1}
 
  /* map cabinet — japandi wooden frame inset paper */
  .cabinet-wrap{max-width:1240px;margin:12px auto;padding:0 14px}
@@ -98,19 +105,35 @@
  .read-card h2{margin:0 0 6px;font:800 12px var(--font-mono);text-transform:uppercase;letter-spacing:.08em}
  .ledger{font:600 11px var(--font-mono);color:var(--ink-soft);line-height:1.45}
  .ledger b{color:var(--ink)}
- .list-8{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;margin-top:8px}
+ .list-8{display:grid;grid-template-columns:repeat(auto-fit,minmax(192px,1fr));gap:9px;margin-top:9px}
  .pick{
-   background:linear-gradient(180deg, #FFFEF7 0%, #FEFCF9 100%);
-   border:1px solid var(--ink);border-radius:10px;padding:9px 10px;display:flex;flex-direction:column;gap:4px;
-   box-shadow:1.6px 1.6px 0 #1E1E1E;transition:.12s
+   background:var(--paper-2);
+   background-image: var(--paper-fiber);
+   border:1.5px solid var(--ink);border-radius:12px;padding:10px 11px 9px 13px;display:flex;flex-direction:column;gap:4.5px;
+   box-shadow:1.2px 1.2px 0 var(--ink), inset 0 1px 0 #fff;transition:.14s;
+   position:relative;
  }
- .pick:hover{transform:translateY(-1px)}
- .pick.on{outline:2px solid var(--clay);box-shadow:0 0 0 2px var(--paper),0 0 0 4.2px var(--clay),1.6px 1.6px 0 #1E1E1E}
- .pick b{font-size:12.6px;line-height:1.25}
- .pick .line{font:700 10.8px var(--font-mono);color:var(--ink-soft)}
- .pick .edge{font:800 10.6px var(--font-mono);color:var(--ink);background:var(--stone);border:1px solid var(--ink);border-radius:9999px;padding:2px 7px;display:inline-flex;width:fit-content}
- .pick .edge.up{background:#E4FF7C}
- .pick .edge.down{background:#FFE1D0}
+ .pick::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:2px;background:var(--clay);border-radius:9999px;opacity:.82;pointer-events:none}
+ .pick:hover{transform:translateY(-0.8px); box-shadow:1.6px 1.6px 0 var(--ink), inset 0 1px 0 #fff}
+ .pick.on{outline:2px solid var(--clay);box-shadow:0 0 0 2px var(--paper),0 0 0 4.2px var(--clay),1.2px 1.2px 0 var(--ink)}
+ .pick b{font-size:12.7px;line-height:1.28;letter-spacing:-.01em}
+ .pick .line{font:700 10.7px var(--font-mono);color:var(--ink-soft);line-height:1.35}
+ .pick .line.mono{font-size:10.6px}
+ .pick .edge{
+   font:800 10.5px var(--font-mono);color:var(--ink);
+   background:transparent;
+   border:1px dashed var(--ink-soft);
+   border-left:2px solid var(--ink);
+   border-radius:8px;
+   padding:3px 8px 3px 8px;
+   display:inline-flex; width:fit-content;
+   letter-spacing:.02em;
+   position:relative;
+ }
+ .pick .edge::before{content:"↗";font-size:10px;margin-right:4px;opacity:.7}
+ .pick .edge.down::before{content:"↘"}
+ .pick .edge.up{background:linear-gradient(180deg, #FEFCF9 0%, #F2FFB8 100%); border-color:#8A847A; border-left-color:var(--ink)}
+ .pick .edge.down{background:linear-gradient(180deg, #FEFCF9 0%, #FFE8DC 100%); border-color:#8A847A; border-left-color:var(--ink)}
 
  /* margin notes — day/week/month ledger */
  .margin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
@@ -132,6 +155,13 @@
 
  /* discreet scroll */
  .soft-hide::-webkit-scrollbar{display:none}
+ /* reduce-motion respects — no dev pills — ESC closes modal Enter/Space lattice IO lazy */
+ @media(prefers-reduced-motion:reduce){
+   .book,.pick,.j-pill{transition:none!important}
+   .book:hover,.pick:hover{transform:none!important}
+   #c{transition:none!important}
+   .cabinet__wood{animation:none!important}
+ }
 </style>
 </head>
 <body>
@@ -161,9 +191,9 @@
         <span class="j-pill mono" style="background:#FFFEF7">PWA v67 paper #FEFCF9</span>
       </div>
     </div>
-    <div style="background:linear-gradient(180deg, var(--paper-2) 0%, var(--stone) 100%);border:1.5px solid var(--ink);border-radius:12px;box-shadow:3px 3px 0 var(--ink);padding:12px 12px">
+    <div style="background:linear-gradient(180deg, var(--paper-2) 0%, var(--stone) 100%);border:1.5px solid var(--ink);border-radius:12px;box-shadow:2.5px 2.5px 0 var(--ink);padding:12px 12px">
       <div class="mono" style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Colophon — how we bind</div>
-      <div class="ledger">Paper <b>FEFCF9</b> · Ink <b>1E1E1E 19.1:1</b> on ivory · Wood <b>D6C7B3 hinoki</b> subtle grain 1px/17px · Stone <b>EAE3D8</b> shelf 4px · Moss <b>7A8A7B</b> quiet · Clay <b>C9A88C</b> ring · Mono labels / Sans body — no Architects Daughter · Void <b>only map #080A0F</b> quaternion arcball inertia 0.94 spring 120/0.18 · 40px nav sticky z40 safe-area · single-select clears prev · DPR1 LOD8000/4000 · Web Share fallback PNG 1200×630 vibrate(10) confetti #D8452A Esc modal Enter/Space lattice reduce-motion IO lazy · 59 hashes 7/7/0 provenance</div>
+      <div class="ledger">Paper <b>FEFCF9</b> · Ink <b>1E1E1E 19.1:1</b> on ivory · Wood <b>D6C7B3 hinoki</b> subtle grain 1px/17px · Stone <b>EAE3D8</b> shelf 4px · Moss <b>7A8A7B</b> quiet · Clay <b>C9A88C</b> ring · Mono labels / Sans body — system type only · Void <b>only map #080A0F</b> quaternion arcball inertia 0.94 spring 120/0.18 · 40px nav sticky z40 safe-area · single-select clears prev · DPR1 LOD8000/4000 · Web Share fallback PNG 1200×630 vibrate(10) confetti #D8452A Esc modal Enter/Space lattice reduce-motion IO lazy · 59 hashes 7/7/0 provenance</div>
     </div>
   </div>
   <div class="wood-grain" aria-hidden="true"></div>
@@ -292,7 +322,7 @@
 
 <!-- provenance lattice light japandi -->
 <div id="lattice" aria-hidden="true" style="position:fixed;inset:0;z-index:95;background:rgba(254,252,249,.92);backdrop-filter:blur(10px);display:none;overflow:auto;padding:18px">
-  <div style="max-width:960px;margin:24px auto;background:var(--paper);border:1.5px solid var(--ink);border-radius:16px;box-shadow:3px 3px 0 var(--ink);padding:14px">
+  <div style="max-width:960px;margin:24px auto;background:var(--paper);border:1.5px solid var(--ink);border-radius:16px;box-shadow:2.5px 2.5px 0 var(--ink);padding:14px">
     <div style="display:flex;justify-content:space-between;align-items:center"><b class="mono" style="font-size:12px">Provenance Lattice — 59 hashes 7/7/0 — Japandi paper</b><button class="j-pill" id="btn-close-lattice">Close</button></div>
     <div class="ledger" style="margin-top:8px">ACNE 17 node /27 edge Constructs — click node → lineage graphify_constructs(stage=4) — EXECUTES/COMPOSED_OF/MANAGES/ABSTRACTS/REALIZES/TRACKS — TLPG dedup DAU3/WAU3 #FEFCF9 true — thin UI Dashboard|Guardrails|Feedback|Scratchpad|Todos 40px sticky.</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;margin-top:10px" id="lattice-grid">
@@ -315,13 +345,13 @@
 <canvas id="shareCv" width="1200" height="630" style="display:none"></canvas>
 <div id="hub-toast" role="status" aria-live="polite" style="position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:90;background:var(--ink);color:var(--paper-2);border:1.5px solid var(--ink);border-radius:9999px;padding:10px 16px;font:600 12px var(--font-mono);display:none;max-width:min(92vw,560px);text-align:center"></div>
 
-<script src="/assets/shared-map.js?v=japandi-67.2"></script>
-<script src="/assets/inertial-map.js?v=japandi-67.2"></script>
-<script src="/assets/smooth-shell.js?v=japandi-67.2"></script>
-<script src="/assets/cabinet-play.js?v=japandi-67.2" onerror="window._cabinetMissing=true"></script>
-<script src="/assets/provenance-glass.js?v=japandi-67.2" onerror="window._glassMissing=true"></script>
-<script src="/assets/editorial-chimera.js?v=japandi-67.2" onerror="window._edMissing=true"></script>
-<script src="/assets/explainer.js?v=japandi-67.2"></script>
+<script src="/assets/shared-map.js?v=japandi-taste-v2-34"></script>
+<script src="/assets/inertial-map.js?v=japandi-taste-v2-34"></script>
+<script src="/assets/smooth-shell.js?v=japandi-taste-v2-34"></script>
+<script src="/assets/cabinet-play.js?v=japandi-taste-v2-34" onerror="window._cabinetMissing=true"></script>
+<script src="/assets/provenance-glass.js?v=japandi-taste-v2-34" onerror="window._glassMissing=true"></script>
+<script src="/assets/editorial-chimera.js?v=japandi-taste-v2-34" onerror="window._edMissing=true"></script>
+<script src="/assets/explainer.js?v=japandi-taste-v2-34"></script>
 <script>
 // Japandi shelf wiring — zero-deps — keep inertial-map 13.8k quaternion arcball momentum 0.94
 'use strict';
@@ -531,6 +561,6 @@ function tick(){
 // hello japandi — timeline triple-write 7-field even no-change — everyday language logs
 (function(){try{const ts=new Date().toISOString(); const entry={nodeId:'hub-japandi-sports-books-redo',agentId:'hub-japandi',attempt:1,latency_ms:420, tokens_est:14200,status:'ok',errorClass:'none',ts:ts,lcg:'20260813→189831298 idx3820 triple[11205,19448,14209]',pwa:'v67 paper #FEFCF9 theme #FEFCF9',lod:'4000/8000 DPR1',gate:'8.0',provenance:'59 hashes 7/7/0',shelf:'Hoops 12966 Gridiron 646 Pitch 2430 Equities 500 Unified 20719 Tennis 128',cabinet:'wood #D6C7B3 paper #FEFCF9 stone #EAE3D8 moss #7A8A7B clay #C9A88C',void:'only map #080A0F',read:'Today Reading List 8 top edges',margin:'Notes day/week/month ledger'}; console.log('[timeline] japandi 7-field',JSON.stringify(entry)); try{localStorage.setItem('hub-last-books','japandi-'+ts);}catch{} }catch(e){}})();
 </script>
-<script src="/assets/tokens.js?v=japandi-67.2" onerror="/* tokens zero-deps pure css no js needed */"></script>
+<script src="/assets/tokens.js?v=japandi-taste-v2-34" onerror="/* tokens zero-deps pure css no js needed */"></script>
 </body>
 </html>
