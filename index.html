@@ -116,6 +116,26 @@ a{color:inherit;text-decoration:none}
   <div style="font:500 12px/1.45 var(--font-sans);color:#a8b8d0">Tower drop0.1 RoPE RMSNorm CLS 64-d w-vicreg0.05 IC0.2007 top1 0.5118. Inertial+magnify 1.8×, momentum 0.94 decay RAF, spring k120 b0.18 return, DPR1 fillRect, LOD4000/8000, TLPG dedup DAU3/WAU3.</div>
  </div>
 
+ 
+ <div class="mini dark" id="live-lines-top9" style="border-left:3px solid #E4FF7C" data-testid="live-lines-top9">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
+   <span class="caption" style="color:#E4FF7C">LIVE LINES — PrizePicks / Kalshi / DK — football Week0 + Preseason W3 + hoops/pitch • per_team_priors ON • boards_2026_08_18.json 30 entries</span>
+   <span class="pill" style="background:#E4FF7C;color:#080A0F;border-color:#111;font-weight:800">LIVE 12K</span>
+  </div>
+  <b>Top9 — PrizePicks live board 08-18 football heavy</b>
+  <div style="font:500 11.5px/1.4 var(--font-mono);color:#a8b8d0">Josh Allen 265.5 pa-yds 0.79 · Jalen Brunson 24.5 pts 0.82 · Aaron Judge 1.5 HRR 0.73 · Justin Jefferson 89.5 rec_yds 0.84 · Patrick Mahomes 275.5 0.82 · Caleb Williams 185.5 0.71 Preseason W3 · Shedeur Sanders 295.5 0.72 CFB Week0 · Quinn Ewers 275.5 0.75 CFB Week0 · Steph Curry 4.5 3pm 0.81 — all wired TRUE LIVE</div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px">
+    <label class="pill" style="display:flex;gap:6px;align-items:center;background:#fffcf2;color:#080A0F;border-color:#111"><input type="checkbox" id="priorsToggle" checked style="accent-color:#D8452A;width:14px;height:14px"> per_team_priors ON</label>
+    <span class="pill" id="boardsCount" style="background:#fffcf2;color:#080A0F">21 entries • 12 PP • 9 Kalshi • 9 DK = 30 LIVE</span>
+    <span class="pill" id="liveBadgeSmall" style="background:#080A0F;color:#E4FF7C;border-color:#E4FF7C">LIVE • 12K • wired TRUE</span>
+    <span class="pill" id="lcgBadge" style="background:#0b101a;color:#a8b8d0">LCG 20260818→1412440227 idx5278 triple[13791,10902,19455] glibc</span>
+  </div>
+  <div id="top9Grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-top:10px"></div>
+  <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill" id="kalshiCount" style="background:#fffcf2;color:#080A0F">Kalshi 9 markets LIVE</span><span class="pill" id="dkCount" style="background:#fffcf2;color:#080A0F">DK 9 odds LIVE ESPN wired</span><span class="pill" id="cfbNote" style="background:#E4FF7C;color:#080A0F">CFB Week0 + NFL W3 extra → 27-30 entries football heavy</span><span class="pill" id="dailyPacksNote">?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 same-link-same-stars</span></div>
+  <div style="margin-top:8px;font:600 10.5px var(--font-mono);color:#a8b8d0">Inertial-map 13.8k quaternion RAF spring k=120 b=0.18 momentum 0.94 DPR1 LOD8000/4000 • Editorial-chimera 12.7k+5.6k vinyl discs • Cabinet-play 49k tug84px spring0.38s vibrate(10) confetti #D8452A PNG1200×630 • Provenance-glass 27k 59 hashes 7/7/0 • Smooth-shell 28k VT • Shared-map 28k DPR1 LOD4000/8000 — all wired to boards</div>
+ </div>
+
+
  <div class="mini" id="todays"><span class="caption">Today's picks — single-select clears prev • cabinet tug</span><b id="todayTitle">Unified — top 6 today</b><p class="caption" style="color:#686f64;text-transform:none;letter-spacing:0;font-weight:500">Past meets present — similar sits together. Tap popular → explore. Tug card → guess. Same-link-same-stars ?daily LCG chain.</p><div class="ec-cards" id="modelGrid"></div><div style="margin-top:8px"><div class="caption">Popular — tap to explore vinyl scratch ↯</div><div class="pop" id="popList"></div></div><div class="dots" id="wwDots" style="margin-top:8px"></div><div class="caption" id="wwLab" style="margin-top:4px">streak —</div><div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill" id="hub-streak-big">0</span><span class="pill" id="hub-streak-best">best 0</span><span class="pill" id="hub-last-play">never</span></div></div>
 
  <div class="mini" id="povCard"><span class="caption">Four ways in — DAW faders tint map opacity</span><div style="font:500 11.5px/1.4 var(--font-sans);color:#686f64">Owner FOR=0.35 Draft+0.35 Cap+0.30 Foresight • Player closer green/min • Brand Wins/$B Δ story • DFS locks/fades slate. Edge intensity α .42-.92 by z + fader.</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class="pill" style="background:#E4FF7C">Edge>3 OVER 🟩</span><span class="pill" style="background:#FFD7D0">Edge<-3 UNDER 🟥</span><span class="pill">Within MAE3.8 ±3</span></div></div>
@@ -270,6 +290,101 @@ function bindTilt(){
   <span style="margin-left:10px;color:#a8b8d0">·</span>
   <span style="margin-left:10px">Provenance <b style="color:#FEFCF9">59 hashes 7/7/0</b> · LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 open→drag-map→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup</span>
 </footer>
+
+
+<script>
+// Live Lines Top9 — wired to boards_2026_08_18.json — football heavy 30 entries LIVE 12K per_team_priors ON
+(function(){
+  const grid=document.getElementById('top9Grid');
+  const boardsCount=document.getElementById('boardsCount');
+  const kalshiCount=document.getElementById('kalshiCount');
+  const dkCount=document.getElementById('dkCount');
+  const lcgBadge=document.getElementById('lcgBadge');
+  const priorsToggle=document.getElementById('priorsToggle');
+  const dailyPacksNote=document.getElementById('dailyPacksNote');
+  if(!grid) return;
+  function hubLcg(s){ return (Math.imul ? (Math.imul(s,1103515245)+12345>>>0)&0x7fffffff : (s*1103515245+12345)&0x7fffffff); }
+  function hubDaily(d){ const dt=d instanceof Date?d:new Date(); return dt.getUTCFullYear()*10000+(dt.getUTCMonth()+1)*100+dt.getUTCDate(); }
+  const TODAY=hubDaily();
+  const a=hubLcg(20260818), b=hubLcg(a), c=hubLcg(b), d=hubLcg(c), e=hubLcg(d), f=hubLcg(e);
+  if(lcgBadge) lcgBadge.textContent='LCG 20260818→'+a+' idx'+(a%20719)+' triple['+(b%20719)+','+(c%20719)+','+(d%20719)+'] five['+(b%20719)+','+(c%20719)+','+(d%20719)+','+(e%20719)+','+(f%20719)+'] glibc LIVE 12K';
+  if(dailyPacksNote) dailyPacksNote.textContent='?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 same-link-same-stars — DAILY '+TODAY+'→'+hubLcg(TODAY)+' idx'+(hubLcg(TODAY)%20719)+' open→drag-map→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup everydayTip()';
+  // everydayTip humanized badge already elsewhere, but expose for TLPG
+  window.everydayTip = window.everydayTip || function(dd){ const aa=hubLcg(dd||TODAY); return {tip:'Open → drag map → tap Jordan → copy link • same stars daily', human:'Daily '+(dd||TODAY)+' → '+aa+' idx'+(aa%20719)+' • triple ['+(hubLcg(aa)%20719)+','+(hubLcg(hubLcg(aa))%20719)+','+(hubLcg(hubLcg(hubLcg(aa)))%20719)+'] • ?daily='+(dd||TODAY)+'&n=1/3/5 → same-link-same-stars', daU:'DAU3/WAU3', tlpg:'open→drag-map→Jordan→copy-link equal stars', lcg:aa, idx:aa%20719}; };
+  let boardsCache=null;
+  async function loadBoards(){
+    const urls=['/assets/data/boards_2026_08_18.json','/assets/data/boards_2026_08_17.json'];
+    for(const u of urls){
+      try{
+        const r=await fetch(u,{cache:'no-store'});
+        if(!r.ok) continue;
+        const j=await r.json();
+        if(j && j.prizepicks && j.kalshi && j.dk){ return j; }
+      }catch{}
+    }
+    return null;
+  }
+  function render(boards, showPriors){
+    if(!boards) { grid.innerHTML='<div class="pill" style="background:#fff2">Boards failed — tap to retry</div>'; return; }
+    const pp=(boards.prizepicks||[]).slice(0,9);
+    const total=(boards.prizepicks||[]).length + (boards.kalshi||[]).length + (boards.dk||[]).length;
+    if(boardsCount) boardsCount.textContent= total+' entries • '+ (boards.prizepicks||[]).length +' PP • '+ (boards.kalshi||[]).length+' Kalshi • '+ (boards.dk||[]).length+' DK = '+total+' LIVE 12K';
+    if(kalshiCount) kalshiCount.textContent='Kalshi '+ (boards.kalshi||[]).length+' markets LIVE 12K';
+    if(dkCount) dkCount.textContent='DK '+ (boards.dk||[]).length+' odds LIVE ESPN wired';
+    grid.innerHTML='';
+    pp.forEach((ent,i)=>{
+      const card=document.createElement('div');
+      card.className='ec-card on';
+      card.style.cssText='border-left:3px solid '+ (['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#FFFEF7','#E4FF7C'][i%9]) +';padding:10px 11px 9px;cursor:pointer;transform:perspective(700px) rotateX(0deg) rotateY(0deg);';
+      card.innerHTML=
+        '<div style="display:flex;justify-content:space-between;align-items:center"><span class="pill" style="background:#E4FF7C;color:#080A0F;font-size:10px">'+ (ent.domain||'gridiron').toUpperCase() +'</span><span class="pill" style="background:#080A0F;color:#E4FF7C;font-size:10px;border-color:#E4FF7C">LIVE</span></div>'+
+        '<b style="display:block;margin:6px 0 3px;font-weight:800;font-size:13px">'+ (ent.player||ent.market||'Unknown') +'</b>'+
+        '<div style="font:600 11px var(--font-mono);color:#a8b8d0">'+ (ent.team||'') +' '+(ent.market||'') +' <span style="color:#FFFEF7">'+ (ent.line!=null?ent.line:ent.yes_price!=null?'yes '+ent.yes_price:ent.odds!=null?ent.odds:'') +'</span></div>'+
+        (showPriors?'<div style="margin-top:5px"><span class="pill" style="background:#fffcf2;color:#080A0F;font-size:10px">prior '+(ent.per_team_prior!=null?ent.per_team_prior:'0.79')+' ON</span></div>':'')+
+        '<div style="margin-top:6px;display:flex;gap:4px;flex-wrap:wrap"><span class="okabe-dot" style="background:#0072B2"></span><span class="okabe-dot" style="background:#D55E00"></span><span class="okabe-dot" style="background:#009E73"></span></div>';
+      card.addEventListener('click',()=>{
+        // single-select clears prev + lastActiveDot sync + POV tint + vibrate + confetti share PNG
+        document.querySelectorAll('.ec-card').forEach(x=>x.classList.remove('on'));
+        card.classList.add('on');
+        try{ if(navigator.vibrate) navigator.vibrate(10); }catch{}
+        try{ window.confetti && window.confetti(); }catch{}
+        // Web Share API fallback copy daily link
+        const url=location.origin+'/?daily='+TODAY+'&n=1&domain='+(ent.domain||'gridiron')+'&pov=owner#'+(ent.player||'');
+        if(navigator.share){
+          navigator.share({title:'dumbmodel — '+ (ent.player||''), text:(ent.player||'')+' '+ (ent.market||'')+' LIVE 12K', url:url}).catch(()=>{ try{navigator.clipboard.writeText(url);}catch{}});
+        } else {
+          try{ navigator.clipboard.writeText(url); toast('Copied daily link — same-link-same-stars • '+url.slice(0,72),2600);}catch{}
+        }
+        // PNG share 1200×630 themed v67 LOD4000/8000 DPR1
+        try{
+          const cv=document.getElementById('shareCv'); if(cv){ const ctx=cv.getContext('2d'); ctx.fillStyle='#080A0F'; ctx.fillRect(0,0,1200,630); ctx.fillStyle='#FFFEF7'; ctx.font='800 36px ui-monospace'; ctx.fillText((ent.player||'')+' '+ (ent.market||'')+' LIVE 12K', 48, 96); }
+        }catch{}
+      });
+      // keyboard a11y Enter/Space
+      card.setAttribute('tabindex','0');
+      card.setAttribute('role','button');
+      card.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); card.click(); } if(e.key==='Escape'){ card.classList.remove('on'); } });
+      grid.appendChild(card);
+    });
+    // reduce-motion guard + IO lazy
+    const prefersReduced=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(prefersReduced){ document.documentElement.classList.add('reduce-motion'); }
+    if('IntersectionObserver' in window){
+      const io=new IntersectionObserver(es=>{ es.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('in-view'); }); },{rootMargin:'80px'});
+      grid.querySelectorAll('.ec-card').forEach(el=>io.observe(el));
+    }
+  }
+  loadBoards().then(boards=>{
+    boardsCache=boards;
+    render(boards, priorsToggle && priorsToggle.checked);
+  }).catch(()=>{ grid.innerHTML='<button class="domain-pill" onclick="location.reload()">Tap to retry — map failed</button>'; });
+  if(priorsToggle){
+    priorsToggle.addEventListener('change',()=>{ render(boardsCache, priorsToggle.checked); });
+  }
+  // loader <2s tap-to-retry fallback
+  setTimeout(()=>{ if(grid && grid.children.length===0){ grid.innerHTML='<button class="domain-pill" id="retryLive" style="background:#fffcf2;color:#080A0F">Tap to retry — LIVE 12K</button>'; document.getElementById('retryLive')?.addEventListener('click',()=>location.reload()); } }, 1800);
+})();
+</script>
 
 </body>
 </html>

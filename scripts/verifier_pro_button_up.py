@@ -162,18 +162,23 @@ def score_and_details():
     try:
         sw=SW.read_text()
         core_count = sw.count("'/'") # not ideal; parse CORE list
-        # count entries in CORE array
+        # count entries in CORE array (supports CORE and CORE21 for v67.2 live lines)
         import re
-        m=re.search(r'const CORE\s*=\s*\[(.*?)\];', sw, re.DOTALL)
+        m=re.search(r'const CORE(?:21)?\s*=\s*\[(.*?)\];', sw, re.DOTALL)
         core_items=[]
         if m:
             core_items=[x.strip() for x in m.group(1).split(',') if x.strip()]
+        else:
+            # fallback try CORE21 explicitly
+            m2=re.search(r'const CORE21\s*=\s*\[(.*?)\];', sw, re.DOTALL)
+            if m2:
+                core_items=[x.strip() for x in m2.group(1).split(',') if x.strip()]
         core_ok = len(core_items)>=20
         offline_size = (BASE/'offline.html').stat().st_size
         offline_ok = 10000 <= offline_size <= 16000  # 13k +-3k
         s=10 if (core_ok and offline_ok) else (7 if core_ok else 4)
         scores['pwa']=s
-        details['pwa']={'core_len':len(core_items),'offline_size':offline_size,'offline_ok':offline_ok}
+        details['pwa']={'core_len':len(core_items),'offline_size':offline_size,'offline_ok':offline_ok,'core_var':'CORE21' if 'CORE21' in sw else 'CORE'}
     except Exception as e:
         scores['pwa']=0
         details['pwa']=str(e)
