@@ -1,5 +1,5 @@
 {
-  "generated_by": "lane5 unified REAL MAP 20719 \u2014 2026-08-15 19:10 CDT",
+  "generated_by": "model_swap hoops v promoted 2026-08-16 01:53",
   "note": "Recomputed hashes \u2014 59 hashes 7/7 PASS \u2014 unified.json REAL 20719\u00d764-d x=mean0-21 y=mean21-42 z=mean42-64 normalized [-1,1] size 3.5MB LOD 8000/4000 quaternion arcball void #080A0F DPR1 fillRect \u2014 everyday chain 20260813\u2192189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5",
   "ok": 7,
   "total": 7,
@@ -52,8 +52,8 @@
       "sha16": "492794de7ea9d363"
     },
     "hoops.json": {
-      "size": 463527,
-      "sha16": "cf8af173dde6a8a4"
+      "size": 336518,
+      "sha16": "b8d2e4a71627d105"
     },
     "pitch.json": {
       "size": 552711,
