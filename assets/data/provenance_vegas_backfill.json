@@ -1,0 +1,41 @@
+{
+  "generated_at": "2026-08-16T15:33:23.521231Z",
+  "lcg_seed": 189831298,
+  "lcg_chain": "20260813->189831298 idx3820 triple[11205,19448,14209] same-link-same-stars",
+  "zero_deps": true,
+  "stdlib_only": true,
+  "honest": "synthetic_deterministic_not_real_vegas_marked",
+  "total_rows": 57660,
+  "gridiron": 9360,
+  "hoops": 36900,
+  "pitch": 11400,
+  "seasons": "2020-2025",
+  "books": [
+    "DraftKings",
+    "FanDuel",
+    "BetMGM",
+    "Caesars",
+    "Pinnacle"
+  ],
+  "fields": [
+    "season",
+    "week",
+    "home",
+    "away",
+    "spread",
+    "total",
+    "moneyline",
+    "moneyline_home",
+    "moneyline_away",
+    "book",
+    "timestamp",
+    "source",
+    "sport",
+    "league",
+    "provenance"
+  ],
+  "gate_target": "8.0+",
+  "realism_notes": "spreads from uniform -14..14 NFL half-point rounded, totals 38-56 biased to 42-48 common, NBA spreads -12..12 totals 205-240, pitch spread -1.5..1.5 goals totals 2.0-3.5, moneyline derived from spread with noise capped, all deterministic LCG glibc same seed daily chain",
+  "honest_disclaimer": "This dataset is synthetically generated with deterministic stdlib LCG for training-ready shape; NOT real sportsbook lines. Marked synthetic in source and provenance for honest evaluation. Use for architecture/training tests, replace with real nflreadpy / basketball-reference scrape when available.",
+  "everyday_chain": "?daily=20260813&n=1/3/5 Solo1 Triple3 Full5"
+}
