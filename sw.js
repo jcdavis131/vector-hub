@@ -38,7 +38,7 @@ const CORE = [
   '/assets/icon-192.png',
   '/assets/icon-512.png',
   '/assets/og-embed.png',
-  '/assets/og-1200x630.png'
+  '/assets/og-1200x630.png',
   '/investor/',
   '/investor/index.html',
   '/investor.html',
