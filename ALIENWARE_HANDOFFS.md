@@ -338,3 +338,92 @@ python3 pipeline/eval_unified.py --ckpt pipeline/data/unified_stage2_best.pt
 - candidate metric 0.518212 secondary 16.1
 - collector schema dfs_harvest_hoops.jsonl present
 - torch auto cuda else cpu honest 503 Hatch CPU fallback stdlib smoke
+
+---
+
+## 2026-08-16 10:32 CT data-first packager v9.2 150ep — unified_matrix / embedding_v3 / mtnn_best.pt manifests + cache bundle
+
+> Branch: scout/data-training-packager — data-first blocking Alienware — zero-deps true stdlib only, no pip/torch, honest placeholders
+> LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link same stars offline-ready — glibc LCG L(s)=(s*1103515245+12345)&0x7fffffff ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5
+> User said data first then frontend — you are blocking Alienware — make manifests clean and honest
+
+### SSOT rule (load-bearing invariant)
+- **Outbound:** GitHub raw main sole writer https://raw.githubusercontent.com/jcdavis131/vector-hub/main/ALIENWARE_HANDOFFS.md — machine-only, Hatch is writer
+- **Inbound:** branch `scout/alienware-results` read-only NEVER touch ALIENWARE_RESULTS.md from Hatch lane — Alienware GPU is sole writer for results
+- **Mirror:** vector-unified/ALIENWARE_HANDOFFS.md + vector-hub/ALIENWARE_HANDOFFS.md SSOT same content — sync both
+- Triple-write timeline mandatory even no-change 7-field nodeId,agentId,attempt,latency_ms,tokens_est,status,errorClass per checkpoint-manager spec
+
+### What is READY (Hatch CPU honest)
+- `vector-unified/data/unified_matrix.npz` — 20719×64 float32 18M — sha16 7c742c2715262ab1 — keys X,sport_id,E_unified,E_hoops(12966×64),E_gridiron_original(5323×32),E_gridiron_64(5323×64),E_pitch_64(2430×64),equities_X(4831×64) — rows 20719 cols 64 towers=17 d_model=128 dtype=float32 — READY true — provenance: 15-feat 6 families partial fallback honest gated not promoted pending 130 feats full 18 families LOCAL-GPU
+- `vector-pitch/assets/pitch_mtnn_embeddings.json` — 804k sha16 88002e0d75ca012d — 2430 entries 24-d — READY true — WC tournament-z 633 Twins
+- `vector-gridiron/assets/vectors.json` — 398k sha16 744b847f00f20889 — 5323 entries 32-d native — READY true smoke MAE 3.8937 current gate FAIL 3.948>3.8 need weather+Vegas
+- `vector-hoops/assets/vectors.json` — 3.09M sha16 d023678f790927b2 — 12966 entries 64-d — READY true composite 0.555 keep not yet 0.85 top1 0.4992 <0.50 FAIL pending v6/v9.2 150ep
+- `vector-pitch/assets/vectors.json` — 285k sha16 12e6999048ba1689 — 24-d backup — READY true
+- Manifests validated via `python -m json.tool` — zero-deps true stdlib only:
+  - `vector-unified/data/unified_matrix.npz_manifest.json` — path, rows 20719, cols 64, towers=17, d_model=128, dtype=float32, sha256 7c742c2715262ab1..., created 2026-08-16, ready true
+  - `vector-unified/data/embedding_v3.npz_manifest.json` — rows 20719 cols 128 towers=17 d_model=128 placeholder honest needs GPU — ready false — created 2026-08-16
+  - `vector-unified/data/mtnn_best.pt_manifest.json` — towers 17 d_model128 heads4 layers4 composite_target 0.85 composite_current 0.555 — ready false placeholder — created 2026-08-16
+  - Cache bundle `vector-unified/data/alienware_cache_bundle.json` — 7 caches listed, expected sizes, sha256_short16, ready flags, blocking [embedding_v3.npz,mtnn_best.pt] — validated json.tool PASS — zero-deps offline-ready
+
+### What Alienware MUST BUILD (blocking)
+- `embedding_v3.npz` — FULL 20719×128 float32 17 towers d_model128 — current placeholder 2012 bytes tiny zip honest stdlib — needs GPU build: 128-d encoder output before 64-d head projection, MTNN v9.2 150ep multi-tower CLS RoPE RMSNorm SupCon0.07 VICReg0.05 CORAL0.5 BLOOM8192 — expected size ~18M — REPLACE placeholder with real
+- `mtnn_best.pt` — MTNN v9.2 150ep best checkpoint 17 towers CLS128 4L4H d_model128 →64-d — current placeholder json 519 bytes honest no-fake torch — needs CUDA train — composite target 0.85 top1 0.55 — current 0.555/0.4992 FAIL — Alienware must train 150ep and output real pt
+- `gridiron 32-d` enrichment — current 398k cache partial 15-feat 6 families — pending 130 feats full 18 families nflreadpy 2020-2025 weather+Vegas 32-d native — MAE 4.268→3.8 smoke 3.8937 measured 3.948 FAIL — Alienware rebuild needed via pipeline/acquire_gridiron.py
+- `unified_matrix.npz` refresh — current 18M honest fallback — after per-domain PASS, rebuild full 20719×64 with 130 feats 18 families full LOCAL-GPU 60ep to unblock Procrustes mean-pool Phase2 — G2 measured 0.627 real <0.64 PASS but gates FAIL hoops+gridiron so stays Phase1_only
+- Per-domain gates MUST PASS before Phase2 Procrustes — hoops composite 0.7937→0.85 top1 0.438→0.55 IC>0.15 MAE<5 ROI_IC>0.05 FAIL top1 0.4992<0.50, gridiron MAE 3.948>3.8 FAIL, pitch PASS pos_acc0.893 MAE3.55 IC0.255, equities PASS IC2.947 Sharpe5.32 R2 8.68 — CODE_CHANGES_LIVE__FULL_DATA_MISSING_ON_VM honest CPU 503 no LOCAL-GPU 60ep needed
+
+### Alienware command hints — v9.2 150ep data-first packager
+```bash
+# SSOT: outbound main writer, inbound scout/alienware-results read-only
+cd vector-unified
+
+# 1) smoke wiring — 2ep fast check 7-field timeline triple-write
+python3 pipeline/train_stage2.py --smoke --epochs 2 --grl-lambda 0.3 --grl-lambda-target 0.5 --grl-ramp 10 --w-task 2.0 --w-coral 0.5 --w-coral-centroid 0.5 --w-sport 0.5 --seeds 7,11
+
+# 2) full 60ep — like best_epoch58 — centroid_ab pt
+pip install torch --index-url https://download.pytorch.org/whl/cu121  # Alienware CUDA only, Hatch CPU stays stdlib
+pip install numpy scikit-learn tqdm
+python3 pipeline/train_unified.py --epochs 60 --grl-lambda 0.3 --grl-lambda-target 0.5 --grl-ramp 10 --w-coral 0.5 --w-coral-centroid 0.5 --w-sport 0.5 --w-task 2.0 --seeds 7,11,13,17,19 --paired --eval-every 5 --out pipeline/data/unified_stage2_centroid_ab.pt
+
+# 3) eval — overwrite unified_report.json experimental block measured G2 real not placeholder
+python3 pipeline/eval_unified.py --ckpt pipeline/data/unified_stage2_best.pt
+python -m json.tool data/unified_report.json > /dev/null && echo "report OK" && cat data/unified_report.json | grep -A2 G2
+
+# 4) v9.2 150ep hoops+unified — composite 0.7937→0.85 transformer MTNN v6/v9.2 150ep CLS d_model128 4-head 17 towers
+python3 pipeline/train_mtnn_v7_unified.py --epochs 150 --d-model 128 --heads 4 --layers 4 --cls-dim 128 --w-vicreg 0.05 --token-dropout 0.1 --w-coral 0.5 --w-coral-centroid 0.5 --grl-lambda 0.3 --grl-target 0.5 --seeds 7,11,13,17,19 --out data/mtnn_best.pt
+# + hoops v6 transformer
+cd ../vector-hoops
+python3 pipeline/train_mtnn_v6.py --epochs 150 --d-model 128 --heads 4 --layers 4 --cls-dim 128 --out models/mtnn_best.pt
+
+# 5) after PASS, rebuild caches for Hatch
+python3 pipeline/build_unified_matrix.py --in data/mtnn_best.pt --out data/unified_matrix.npz --embedding-v3-out data/embedding_v3.npz
+# copy to assets
+cp data/unified_matrix.npz assets/data/
+cp data/embedding_v3.npz data/embedding_v3.npz  # Hatch picks via manifest sha
+# update manifests sha256 short16 size_bytes ready true
+python3 -c "import hashlib,json,pathlib; p=pathlib.Path('data/unified_matrix.npz'); h=hashlib.sha256(p.read_bytes()).hexdigest(); print(h[:16], p.stat().st_size)"
+
+# 6) results — write ALIENWARE_RESULTS.md on branch scout/alienware-results ONLY — never from Hatch
+# git checkout -b scout/alienware-results && echo "## 2026-08-16 10:32 CT ..." >> ALIENWARE_RESULTS.md && git push origin scout/alienware-results
+```
+
+### No-torch OOM guard — zero-deps true
+- Hatch VM = CPU (no CUDA) torch auto cuda else cpu honest 503 fallback stdlib smoke — never pip install torch on Hatch
+- Alienware = GPU CUDA when available — torch auto-switch cuda if available else cpu timeout 300 background per 2026-08-10 08:29 clarification
+- timeline.jsonl even no-change mandatory 7-field nodeId,agentId,attempt,latency_ms,tokens_est,status,errorClass per checkpoint-manager — triple-write verified 7/7 per lane2
+- provenance-honest numbers only replace experimental block with measured G2 0.627 real (correct placeholder 0.639) — assets/data numbers only cite source file
+- offline-ready PWA v67.1 void #080A0F 13k LOD 4000/8000 everyday chain ?daily=YYYYMMDD same-link-same-stars DAU3/WAU3 TLPG dedup humanized badge no raw machinery
+
+### Cache bundle quick-ref
+- Path: `vector-unified/data/alienware_cache_bundle.json` — json.tool PASS — LCG 20260813→189831298 idx3820 triple[11205,19448,14209]
+- Caches needed 7:
+  - embedding_v3.npz — 18M expected [20719,128] — ready false blocking — placeholder 2012B sha16 placeholder honest
+  - unified_matrix.npz — 18M [20719,64] — ready true sha16 7c742c2715262ab1 — includes equities_X 4831×64
+  - mtnn_best.pt — ~3.7MB pt gated honest not promoted — ready false blocking — placeholder 519B
+  - pitch_mtnn_embeddings.json — 804k 2430×24 — ready true sha16 88002e0d75ca012d
+  - gridiron 32-d vectors.json — 398k 5323×32 — ready true sha16 744b847f00f20889 — smoke 3.8937
+  - hoops 64-d vectors.json — 3.09M 12966×64 — ready true sha16 d023678f790927b2 — composite 0.555
+  - pitch vectors.json 285k backup ready true sha16 12e6999048ba1689
+
+End 2026-08-16 10:32 CT data-first packager — manifests clean honest — blocking Alienware v9.2 150ep — data first then frontend per user — cache bundle ready flags honest — SSOT outbound main sole writer inbound scout/alienware-results read-only — zero-deps true stdlib only no pip torch — LCG same-link same stars offline-ready.
+
