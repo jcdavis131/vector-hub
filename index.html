@@ -438,15 +438,19 @@ button:focus-visible,.j-pill:focus-visible,.book:focus-visible,.pick:focus-visib
   <div class="read-card" id="daily-picks">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
       <h2>Today's Reading List — 8 top edges</h2>
-      <span class="j-pill wood mono" id="boardsCount">21 entries • 12 PP • 9 Kalshi • 9 DK = 30 LIVE</span>
+      <span class="j-pill wood mono" id="boardsCount" style="min-width:176px">21 entries • 12 PP • 9 Kalshi • 9 DK = 30 LIVE</span>
     </div>
     <div class="ledger" style="margin-bottom:6px">Model vs Market — LCG deterministic — each card POV tinted: Owner FOR cap $255M surplus / Player stay / Brand primetime rising clutch / DFS $/pt RZ% closer — SHAP top 2 · LIME confirm pushes — link to Lab <a href="#lab">explainers</a> · vibrate(10) confetti #D8452A PNG1200×630 share fallback copy <code>?daily=YYYYMMDD&n=1/3/5</code></div>
-    <div class="list-8" id="dailyPicksGrid"></div>
-    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">
-      <label class="j-pill mono" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="priorsToggle" checked style="accent-color:var(--clay)"> per_team_priors ON</label>
-      <span class="j-pill mono" id="liveBadgeSmall" style="background:#E4FF7C">LIVE • 12K • wired TRUE</span>
-      <span class="j-pill mono" id="lcgBadge">LCG 20260818→1412440227 idx5278 triple[13791,10902,19455] glibc</span>
-      <span class="j-pill mono" id="kalshiCount">Kalshi 9</span><span class="j-pill mono" id="dkCount">DK 9 ESPN wired</span>
+    <div class="list-8" id="dailyPicksGrid">
+      <!-- skeleton x3 CLS-safe -->
+      <div class="skel"></div><div class="skel"></div><div class="skel"></div>
+    </div>
+    <div id="pickFilterBar" style="display:flex;gap:6px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px;margin-top:10px;scrollbar-width:none">
+      <input id="pickSearch" placeholder="filter picks — team, player, market" class="j-pill mono" style="min-width:220px;flex:1 1 220px;border:1.4px solid #161410;background:#FFFEF7" aria-label="filter picks">
+      <label class="j-pill mono" style="display:flex;gap:6px;align-items:center;white-space:nowrap"><input type="checkbox" id="priorsToggle" checked style="accent-color:var(--clay)"> per_team_priors ON</label>
+      <span class="j-pill mono" id="liveBadgeSmall" style="background:#E4FF7C;white-space:nowrap">LIVE • 12K • wired TRUE</span>
+      <span class="j-pill mono" id="lcgBadge" style="min-width:236px;white-space:nowrap">LCG 20260818→1412440227 idx5278 triple[13791,10902,19455] glibc</span>
+      <span class="j-pill mono" id="kalshiCount" style="min-width:96px">Kalshi 9</span><span class="j-pill mono" id="dkCount" style="min-width:128px">DK 9 ESPN wired</span>
     </div>
   </div>
 
@@ -602,6 +606,47 @@ function tick(){
       });
     }
     setTimeout(wrapPicks,700);
+    // hill-climb #2 – search type-ahead with history-penalized dedup (like 3-lens strategist)
+    try{
+      const q=document.getElementById('pickSearch');
+      if(q){
+        let hist=[];
+        q.addEventListener('input',()=>{
+          const v=(q.value||'').toLowerCase().trim();
+          hist.unshift(v); if(hist.length>12) hist.pop();
+          const grid=document.getElementById('dailyPicksGrid'); if(!grid) return;
+          let seen=new Set();
+          grid.querySelectorAll('.pick').forEach(card=>{
+            const txt=(card.textContent||'').toLowerCase();
+            const dedupKey=txt.slice(0,32);
+            const penalized=seen.has(dedupKey) && hist.slice(0,3).includes(v);
+            if(seen.has(dedupKey) && penalized){ card.style.display='none'; return; }
+            seen.add(dedupKey);
+            if(!v){ card.style.display=''; return; }
+            card.style.display=txt.includes(v)?'':'none';
+          });
+          // empty state
+          const vis=[...grid.querySelectorAll('.pick')].some(c=>c.style.display!=='none');
+          let emp=grid.querySelector('#pickNone');
+          if(!vis && !emp){ const d=document.createElement('div'); d.id='pickNone'; d.className='empty'; d.textContent='No picks match — try team ticker or “over” — LIME confirms push LCG deterministic'; grid.appendChild(d); }
+          if(vis && emp) emp.remove();
+        });
+      }
+    }catch{}
+    // hill-climb – PerformanceObserver CLS street-test (report only)
+    try{
+      if('PerformanceObserver' in window){
+        const po=new PerformanceObserver((list)=>{
+          for(const e of list.getEntries()){
+            if(e.entryType==='layout-shift' && !e.hadRecentInput){
+              try{ sessionStorage.setItem('cls_last',''+e.value.toFixed(4)+' @ '+new Date().toISOString()); }catch{}
+              if(e.value>0.07) console.warn('[cls]',e.value.toFixed(4),e.sources&&e.sources[0]&&e.sources[0].node&&e.sources[0].node.id);
+            }
+          }
+        });
+        po.observe({type:'layout-shift',buffered:true});
+      }
+    }catch{}
     // thumb-dock current link highlight on scroll
     try{
       const dock=document.getElementById('thumbDock');
