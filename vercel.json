@@ -1,7 +1,9 @@
 {
-  "cleanUrls": false,
+  "cleanUrls": true,
+  "trailingSlash": false,
   "headers": [
     {
+      "source": "/assets/(.*)\\.(json|js|css|png|webp|svg|woff2|f32|bin)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -11,10 +13,10 @@
           "key": "Access-Control-Allow-Origin",
           "value": "*"
         }
-      ],
-      "source": "/assets/(.*)\\.(json|js|css|png|webp|svg|woff2|f32|bin)"
+      ]
     },
     {
+      "source": "/assets/(.*)\\.f32",
       "headers": [
         {
           "key": "Cache-Control",
@@ -24,37 +26,37 @@
           "key": "Content-Type",
           "value": "application/octet-stream"
         }
-      ],
-      "source": "/assets/(.*)\\.f32"
+      ]
     },
     {
+      "source": "/sw.js",
       "headers": [
         {
           "key": "Cache-Control",
           "value": "public, max-age=0, must-revalidate"
         }
-      ],
-      "source": "/sw.js"
+      ]
     },
     {
+      "source": "/manifest.json",
       "headers": [
         {
           "key": "Cache-Control",
           "value": "public, max-age=3600, stale-while-revalidate=86400"
         }
-      ],
-      "source": "/manifest.json"
+      ]
     },
     {
+      "source": "/manifest.who-e.json",
       "headers": [
         {
           "key": "Cache-Control",
           "value": "public, max-age=3600, stale-while-revalidate=86400"
         }
-      ],
-      "source": "/manifest.who-e.json"
+      ]
     },
     {
+      "source": "/who-e-landing.html",
       "headers": [
         {
           "key": "Cache-Control",
@@ -64,10 +66,10 @@
           "key": "X-Content-Type-Options",
           "value": "nosniff"
         }
-      ],
-      "source": "/who-e-landing.html"
+      ]
     },
     {
+      "source": "/(.*)\\.html",
       "headers": [
         {
           "key": "Cache-Control",
@@ -77,19 +79,19 @@
           "key": "X-Content-Type-Options",
           "value": "nosniff"
         }
-      ],
-      "source": "/(.*)\\.html"
+      ]
     },
     {
+      "source": "/",
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate, stale-while-revalidate=600"
+          "value": "public, max-age=3600, stale-while-revalidate=86400"
         }
-      ],
-      "source": "/"
+      ]
     },
     {
+      "source": "/api/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -145,99 +147,133 @@
         },
         {
           "key": "X-Kill-Switch",
-          "value": "1% day loss \u2192 halt"
+          "value": "1% day loss → halt"
         }
-      ],
-      "source": "/api/(.*)"
+      ]
     }
   ],
   "redirects": [
     {
+      "source": "/arena",
       "destination": "/",
-      "permanent": true,
-      "source": "/arena"
+      "permanent": true
     },
     {
+      "source": "/arena.html",
       "destination": "/",
-      "permanent": true,
-      "source": "/arena.html"
+      "permanent": true
     },
     {
+      "source": "/arena/:path*",
       "destination": "/",
-      "permanent": true,
-      "source": "/arena/:path*"
+      "permanent": true
     },
     {
-      "destination": "/models/hoops.html",
-      "permanent": true,
-      "source": "/hoops"
-    },
-    {
-      "destination": "/models/gridiron.html",
-      "permanent": true,
-      "source": "/gridiron"
-    },
-    {
-      "destination": "/models/pitch.html",
-      "permanent": true,
-      "source": "/pitch"
-    },
-    {
-      "destination": "/models/equities.html",
-      "permanent": true,
-      "source": "/equities"
-    },
-    {
-      "destination": "/models/tennis.html",
-      "permanent": true,
-      "source": "/tennis"
-    },
-    {
+      "source": "/unified-old",
       "destination": "/models/unified.html",
-      "permanent": true,
-      "source": "/unified-old"
+      "permanent": true
     }
   ],
   "rewrites": [
     {
-      "destination": "/api/v1/roster.js",
-      "source": "/api/v1/roster"
+      "source": "/",
+      "destination": "/index.html"
     },
     {
-      "destination": "/api/v1/free.js",
-      "source": "/api/v1/free"
+      "source": "/index",
+      "destination": "/index.html"
     },
     {
-      "destination": "/models/unified.html",
-      "source": "/unified"
+      "source": "/api/v1/roster",
+      "destination": "/api/v1/roster.js"
     },
     {
-      "destination": "/models/unified.html",
-      "source": "/models/unified"
+      "source": "/api/v1/free",
+      "destination": "/api/v1/free.js"
     },
     {
-      "destination": "/models/hoops.html",
-      "source": "/models/hoops"
+      "source": "/unified",
+      "destination": "/models/unified.html"
     },
     {
-      "destination": "/models/gridiron.html",
-      "source": "/models/gridiron"
+      "source": "/unified/",
+      "destination": "/models/unified.html"
     },
     {
-      "destination": "/models/pitch.html",
-      "source": "/models/pitch"
-    },
-    {
-      "destination": "/models/equities.html",
-      "source": "/models/equities"
-    },
-    {
-      "destination": "/models/tennis.html",
-      "source": "/models/tennis"
+      "source": "/models/unified",
+      "destination": "/models/unified.html"
     },
     {
       "source": "/unified.html",
       "destination": "/models/unified.html"
+    },
+    {
+      "source": "/hoops",
+      "destination": "/models/hoops.html"
+    },
+    {
+      "source": "/hoops/",
+      "destination": "/models/hoops.html"
+    },
+    {
+      "source": "/models/hoops",
+      "destination": "/models/hoops.html"
+    },
+    {
+      "source": "/gridiron",
+      "destination": "/models/gridiron.html"
+    },
+    {
+      "source": "/gridiron/",
+      "destination": "/models/gridiron.html"
+    },
+    {
+      "source": "/models/gridiron",
+      "destination": "/models/gridiron.html"
+    },
+    {
+      "source": "/pitch",
+      "destination": "/models/pitch.html"
+    },
+    {
+      "source": "/pitch/",
+      "destination": "/models/pitch.html"
+    },
+    {
+      "source": "/models/pitch",
+      "destination": "/models/pitch.html"
+    },
+    {
+      "source": "/equities",
+      "destination": "/models/equities.html"
+    },
+    {
+      "source": "/equities/",
+      "destination": "/models/equities.html"
+    },
+    {
+      "source": "/models/equities",
+      "destination": "/models/equities.html"
+    },
+    {
+      "source": "/tennis",
+      "destination": "/models/tennis.html"
+    },
+    {
+      "source": "/tennis/",
+      "destination": "/models/tennis.html"
+    },
+    {
+      "source": "/models/tennis",
+      "destination": "/models/tennis.html"
+    },
+    {
+      "source": "/game",
+      "destination": "/game/index.html"
+    },
+    {
+      "source": "/game/",
+      "destination": "/game/index.html"
     },
     {
       "source": "/owner",
@@ -276,7 +312,6 @@
       "destination": "/who-e-landing.html"
     }
   ],
-  "trailingSlash": false,
   "version": 2,
   "framework": null,
   "buildCommand": null,
