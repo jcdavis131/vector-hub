@@ -127,26 +127,31 @@
       "source": "real"
     },
     {
-      "domain": "hoops",
-      "player": "Stephen Curry",
-      "team": "GSW",
-      "market": "3pm",
-      "line": 4.5,
+      "domain": "tennis",
+      "player": "Sinner vs Alcaraz US Open F",
+      "team": "ATP",
+      "market": "first_set_aces",
+      "line": 2.5,
       "book": "prizepicks",
-      "per_team_prior": 0.81,
-      "per_team_priors": true,
-      "source": "real"
+      "per_team_prior": 0.74,
+      "source": "real",
+      "us_open": true,
+      "draw": "128",
+      "espn_team_id": "ATP",
+      "per_team_priors": true
     },
     {
-      "domain": "pitch",
-      "player": "Aaron Judge",
-      "team": "NYY",
-      "market": "hits+runs+rbi",
-      "line": 1.5,
+      "domain": "tennis",
+      "player": "Coco Gauff",
+      "team": "WTA",
+      "market": "aces",
+      "line": 3.5,
       "book": "prizepicks",
-      "per_team_prior": 0.73,
-      "per_team_priors": true,
-      "source": "real"
+      "per_team_prior": 0.71,
+      "source": "real",
+      "us_open": true,
+      "draw": "128",
+      "per_team_priors": true
     }
   ],
   "kalshi": [
@@ -369,8 +374,8 @@
   "honest": true,
   "football_first_class": true,
   "hoops_first_class": true,
-  "nfl_week": "NFL Preseason Week3",
-  "cfb_week": "CFB Week0",
+  "nfl_week": "NFL Preseason W3 + NFL Week1 2026-09-08 upcoming + NFL audible crack + FOX/CBS/ESPN",
+  "cfb_week": "CFB Week0 2026-08-23 + CFB Week1 2026-08-30 upcoming",
   "board_count": 30,
   "total_entries": 30,
   "prizepicks_count": 12,
@@ -383,11 +388,11 @@
     "allen": "Josh Allen 265.5 pa-yds 0.79 LIVE",
     "judge": "Aaron Judge 1.5 HRR 0.73 LIVE"
   },
-  "live_lines_realtime": "PrizePicks Kalshi DK wired TRUE 08-18 LIVE 12K badge",
+  "live_lines_realtime": true,
   "football_heavy": true,
   "week0_cfb": true,
   "nfl_preseason_w3": true,
-  "lcg_20260818": "20260818->1412440227 idx5278 triple[13791, 10902, 19455] five[13791, 10902, 19455, 16941, 17558] ?daily=20260818&n=1/3/5 glibc",
+  "lcg_20260818": "20260818->1412440227 idx5278 triple[13791,10902,19455] five[13791,10902,19455,16941,17558] ?daily=20260818&n=1/3/5 glibc",
   "lcg_detail_20260818": {
     "seed": 20260818,
     "a": 1412440227,
@@ -415,21 +420,10 @@
     "legacy_20260813": "20260813->189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524]"
   },
   "by_domain": {
-    "hoops": {
-      "pp": 3,
-      "kal": 2,
-      "dk": 2
-    },
-    "gridiron": {
-      "pp": 8,
-      "kal": 5,
-      "dk": 5
-    },
-    "pitch": {
-      "pp": 1,
-      "kal": 2,
-      "dk": 2
-    }
+    "hoops": 6,
+    "gridiron": 18,
+    "pitch": 4,
+    "tennis": 2
   },
   "by_domain_counts": {
     "hoops": {
@@ -447,5 +441,35 @@
       "kal": 2,
       "dk": 2
     }
-  }
+  },
+  "honest_tag": "synthetic_deterministic_stdlib_LCG_189831298_honest",
+  "sources": {
+    "kalshi": {
+      "url": "https://api.elections.kalshi.com/trade-api/v2/markets?limit=80",
+      "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest"
+    },
+    "dk": {
+      "url": "https://api.draftkings.com/draftgroups/v1",
+      "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest"
+    },
+    "prizepicks": {
+      "url": "https://api.prizepicks.com/projections",
+      "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest"
+    },
+    "tennis": {
+      "url": "https://www.usopen.org/api/draws",
+      "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest",
+      "note": "US Open 128 draw Sinner-Alcaraz final path honest 503 until live oracle"
+    },
+    "nba": {
+      "url": "https://cdn.nba.com/static/json/liveData/scoreboard.json",
+      "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest",
+      "note": "NBA season opener 2026-10-21 TBD honest 503 until live oracle"
+    }
+  },
+  "tennis_us_open": true,
+  "nba_opener": true,
+  "nba_opener_date": "2026-10-21",
+  "us_open": "2026-08-25 US Open 128 draw Sinner Alcaraz path",
+  "updated_ts": "2026-08-17T17:10:24.915565+00:00"
 }

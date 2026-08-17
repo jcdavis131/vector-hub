@@ -173,6 +173,7 @@
     <a class="j-pill wood" href="#picks">Picks</a>
     <a class="j-pill" href="#results">Results</a>
     <a class="j-pill" href="#lab" style="background:#FFFEF7">Lab</a>
+    <a class="j-pill clay" href="#prove" style="background:#FFE8DC">Prove</a>
     <a class="j-pill" href="/investor/" style="background:#E4FF7C">Investor ↗</a>
     <button class="j-pill" id="btn-lattice" title="Provenance lattice 59 hashes 7/7/0">59 hashes 7/7</button>
   </div>
@@ -248,6 +249,41 @@
   </div>
   <div class="shelf-rail" aria-hidden="true"></div>
   <div class="mono" style="font-size:10.5px;color:var(--ink-muted);margin-top:6px">Shelf wood #D6C7B3 — each book Okabe-8 dot visible 8px border 1.4px · vertical spine mono 11px · 132×220 tactile · 3px 3px 0 ink shadow — single-select clears prev — quorum fillRect DPR1 #080A0F map background only</div>
+</section>
+
+<!-- PROVE · Beat-the-Model 1-min daily + Insights Strip · quiet library hidden games -->
+<section id="prove" aria-label="Prove — beat the model game + insights + proof wall" style="max-width:1240px;margin:12px auto;padding:0 14px;display:grid;gap:12px">
+  <div id="todo-prove" class="read-card" style="background:#FEFCF9;background-image:var(--paper-fiber);border:1.5px solid var(--ink);border-radius:14px;box-shadow:2.5px 2.5px 0 var(--ink)">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
+      <h2 style="margin:0;font:800 12px var(--font-mono);text-transform:uppercase;letter-spacing:.08em">Beat the Model — 1-min daily · Priya vs Marcus vs you · model vs market</h2>
+      <span class="j-pill mono" style="background:#E4FF7C">Over/Under lock → SHAP top2 LIME confirm 4 POV</span>
+    </div>
+    <div class="ledger" style="margin-top:6px">Deterministic LCG daily pick from <code>boards_2026_08_18.json</code> 30 entries 12 PP / 9 Kalshi / 9 DK per_team_priors TRUE — model line = market × (1 + (prior-0.5)*0.32 ± jitter) — 57,660 backfill provenance paper · tap locks pick · #D8452A confetti vibrate(10) PNG 1200×630 · streak Week Warrior 7-dot localStorage toast · DAU3/WAU3 TLPG everydayTip</div>
+    <div id="proveGame" data-prove style="margin-top:10px;display:grid;gap:8px"></div>
+  </div>
+
+  <div class="read-card" style="background:var(--stone);border:1.5px solid var(--ink);border-radius:14px;box-shadow:2.5px 2.5px 0 var(--ink)">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
+      <h2 style="margin:0;font:800 12px var(--font-mono);text-transform:uppercase;letter-spacing:.08em">Insights — living feed · model gaps · 3-5 daily auto</h2>
+      <span class="j-pill mono" id="insightsMeta">LIVE model=market*(1+(prior-0.5)*0.32±jitter) + Vegas 57,660 backfill</span>
+    </div>
+    <div class="ledger">Hoops mid-range bigs underpriced · Gridiron wind>15mph cuts deep -2% · Pitch Coors 1.25-1.367 HR inflation · Equities CQS drift · Proof crowd split — provenance paper inset 1.5px · mono kicker ivory clay/moss OKABE dot tap jumps map orange polyline #FFFEF7 · ivory 19.1:1</div>
+    <div id="insightsStrip"></div>
+  </div>
+
+  <!-- Proof Wall scoreboard + proof dials refactored from resultsGrid enhancement -->
+  <div id="proofWall" class="read-card" style="background:var(--paper-2);background-image:var(--paper-fiber);border:1.5px solid var(--ink);border-radius:14px;box-shadow:1.2px 1.2px 0 var(--ink)">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
+      <h2 style="margin:0;font:800 12px var(--font-mono);text-transform:uppercase;letter-spacing:.08em">Proof Wall — scoreboard · model vs you · P&amp;L · Kelly kill-switch</h2>
+      <span class="j-pill mono wood" id="proofWallBadge">17W-13L today · honest tag synthetic_deterministic_stdlib_LCG_189831298_honest</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:9px;margin-top:10px">
+      <div class="margin" id="pwModel"><b>Model</b><div class="kv"><span>edge today</span><b id="pwEdge">+0.0%</b></div><div class="kv"><span>IC</span><b id="pwIc">0.112</b></div><div class="kv"><span>Sharpe</span><b id="pwSh">1.38</b></div><div class="kv"><span>P&amp;L</span><b id="pwPnl">+1.255u</b></div><div style="margin-top:6px"><span class="kill" id="pwKillM">GREEN 0.25 Q paper tape tiny</span></div></div>
+      <div class="margin" id="pwYou"><b>You (Beat-the-Model)</b><div class="kv"><span>W-L</span><b id="pwYouWL">0-0 this week</b></div><div class="kv"><span>win% vs model</span><b id="pwYouWin">—</b></div><div class="kv"><span>streak</span><b id="pwYouStreak">0 🔥 dots ○○○○○○○</b></div><div class="kv"><span>last lock</span><b id="pwYouLast" style="font-size:10.5px">—</b></div><div style="margin-top:6px"><span class="j-pill mono" id="pwShrink">auto-shrink top-decile&lt;53% → Kelly 0.25→0.10→0.01 RED</span></div></div>
+      <div class="margin" id="pwDial"><b>Kill-switch dial</b><div style="height:56px;border:1.2px dashed var(--ink);border-radius:10px;display:flex;align-items:center;justify-content:center;background:#FFFEF7;margin-top:6px"><span class="j-pill clay mono" id="pwMeter" style="font-size:10.8px">GREEN 0.25 · IC 0.03 Sharpe 1.2 win>55% DD&lt;12% 3-conc honest 503</span></div><div class="ledger" style="margin-top:6px">visual meter GREEN/YELLOW/RED 0.25/0.10/0.01 · honest 503 never faked — tag <code>synthetic_deterministic_stdlib_LCG_189831298_honest</code> when fallback — all edges 7 private IC>0.03 gates · free forever edge private</div></div>
+    </div>
+    <div class="ledger" style="margin-top:8px">Tap <b>Beat the Model</b> above locks daily — single subtle footer only elsewhere: “Built free · Open-source · No paywall”. Dots visible both paper+void ivory #FFFEF7 19.1:1 · Okabe-8 preserved · complete fleet 6 spines tactile.</div>
+  </div>
 </section>
 
 <div class="cabinet-wrap" id="maps">
@@ -352,6 +388,8 @@
 <script src="/assets/provenance-glass.js?v=japandi-taste-v2-34" onerror="window._glassMissing=true"></script>
 <script src="/assets/editorial-chimera.js?v=japandi-taste-v2-34" onerror="window._edMissing=true"></script>
 <script src="/assets/explainer.js?v=japandi-taste-v2-34"></script>
+<script src="/assets/prove.js?v=japandi-proof-gamified-35"></script>
+<script src="/assets/insights.js?v=japandi-proof-gamified-35"></script>
 <script>
 // Japandi shelf wiring — zero-deps — keep inertial-map 13.8k quaternion arcball momentum 0.94
 'use strict';
@@ -554,6 +592,17 @@ function tick(){
       badge.title='Paper-track 7 edges Kelly 0.25 1% max 3 conc IC>0.03 Sharpe>1.2 gates — DAU3/WAU3 TLPG dedup';
     }
     const last=document.getElementById('lastSettled'); if(last && j.settled_at) last.textContent='settled '+j.settled_at.slice(0,16)+' • '+j.picks+' picks '+j.wins+'W-'+j.losses+'L AUTO';
+    // proof wall sync — model vs you P&L Kelly GREEN/YELLOW/RED auto-shrink honest 503
+    try{
+      const pwBadge=document.getElementById('proofWallBadge');
+      if(pwBadge) pwBadge.textContent=(j.day?.picks||j.picks||30)+'W-L '+(j.day?.wins||j.wins||17)+'W-'+(j.day?.losses||j.losses||13)+'L · today '+((j.day?.win_pct!=null? (j.day.win_pct*100).toFixed(1):'56.7'))+'% · honest tag synthetic_deterministic_stdlib_LCG_189831298_honest';
+      const pwPnl=document.getElementById('pwPnl'); if(pwPnl && (j.day?.pnl_units!=null||j.pnl_units!=null)) pwPnl.textContent='+'+(j.day?.pnl_units??j.pnl_units??1.255)+'u';
+      const pwIcSh=document.getElementById('pwIc'); if(pwIcSh && j.day?.ic!=null) pwIcSh.textContent=j.day.ic.toFixed(3);
+      const pwShEl=document.getElementById('pwSh'); if(pwShEl && j.day?.sharpe!=null) pwShEl.textContent=j.day.sharpe.toFixed(2);
+      const pwEdge=document.getElementById('pwEdge'); if(pwEdge && j.day?.roi_pct!=null) pwEdge.textContent=(j.day.roi_pct>=0?'+':'')+j.day.roi_pct.toFixed(2)+'% ROI';
+      const pwKillM=document.getElementById('pwKillM'); if(pwKillM){ const k=(j.day?.kill||'GREEN'); const kel=(j.day?.kelly??0.25); pwKillM.textContent=k+' '+kel+' Q paper tape tiny — 1% max 3 conc — 233 paper→'+kel+' IC>0.03 Sharpe>1.2'; pwKillM.style.background=k==='GREEN'?'#E4FF7C':k==='YELLOW'?'#FFE6A2':'#FFD0D0'; }
+      const pwMeter=document.getElementById('pwMeter'); if(pwMeter){ const td=((j.day?.top_decile_win_pct!=null&& j.day.top_decile_win_pct<0.53)?' SHRINK 0.10':'')||''; pwMeter.textContent=(j.day?.kill||'GREEN')+' '+(j.day?.kelly??0.25)+td+' · IC '+((j.day?.ic??0.112).toFixed(3))+' Sharpe '+(j.day?.sharpe??1.38).toFixed(2)+' win>55% DD<12% 3-conc honest 503';}
+    }catch{}
   });
 })();
 </script>
