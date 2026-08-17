@@ -163,6 +163,76 @@
    .cabinet__wood{animation:none!important}
  }
 </style>
+<style id="mobile-first-overrides">
+/* mobile-first pass — hoops pattern applied to hub — 44px nav, 48px pov, 46px touch, 1col <920px, better contrast */
+:root{
+  --nav-h:44px; --pov-h:48px;
+  --ink-2:#667080; --ink-3:#8a97ad;
+}
+@media(min-width:1240px){
+  .paper-wrap,.hero__inner,.bookshelf,.cabinet-wrap,.reads{max-width:1260px}
+}
+@media(max-width:920px){
+  .hero__inner{grid-template-columns:1fr;gap:14px}
+  .cabinet-wrap{grid-template-columns:1fr}
+  .reads{grid-template-columns:1fr}
+}
+@media(max-width:780px){
+  .j-nav{height:auto;min-height:44px;padding:8px 12px 8px calc(12px + env(safe-area-inset-left,0));flex-wrap:wrap;gap:8px}
+  .j-nav b{font-size:12.2px}
+  .j-nav__inks{width:100%;overflow:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px}
+  .j-nav__inks::-webkit-scrollbar{display:none}
+  .j-pill{min-height:36px;padding:7px 12px;font-size:11.2px;touch-action:manipulation}
+  .hero__inner{padding:14px 12px 12px}
+  .hero__title{font-size:clamp(26px,7.2vw,38px)}
+  .hero__sub{font-size:13.4px;line-height:1.56}
+  .wood-grain{height:6px}
+  .books{gap:9px;padding:10px 2px 8px}
+  .book{flex:0 0 112px;height:182px}
+  .book__spine-w{font-size:10px}
+  .book__count{font-size:9px;padding:2px 6px}
+  .shelf-label{margin:6px 0 8px;flex-wrap:wrap;gap:6px}
+  .cabinet{border-radius:14px;padding:6px}
+  .cabinet__head{padding:6px 6px 6px 8px}
+  .map-box,.map-box #c{min-height:clamp(340px,54vh,520px)}
+  .map-foot{font-size:10.4px;padding:6px 8px}
+  .reads{gap:10px;margin:10px auto}
+  .read-card{padding:10px 10px 9px;border-radius:12px}
+  .list-8{grid-template-columns:1fr;gap:8px}
+  .pick{padding:9px 10px 8px 11px}
+  .pick b{font-size:12.5px}
+  .margin-grid{grid-template-columns:1fr;gap:8px}
+  .top-nav-hack{display:none}
+}
+@media(max-width:640px){
+  .paper-wrap,.bookshelf,.cabinet-wrap,.reads,.hero__inner{padding-left:12px;padding-right:12px}
+  .j-pill{font-size:10.6px;min-height:34px}
+  .hero__kicker{font-size:10px;letter-spacing:.12em}
+  .pick .line{font-size:10.4px}
+  .kpi{font-size:10.8px}
+}
+/* better color schema — warmer ink, softer grid, accessible yellow */
+:root{
+  --paper:#FFFEF9; --paper-2:#FFFEF7; --stone:#EFE9DD;
+  --wood:#D9C8B2; --wood-2:#EADDC9;
+  --ink:#161410; --ink-soft:#665F57; --ink-muted:#948E85;
+  --moss:#7B8E7C; --clay:#C9A88C; --clay-2:#D9BFA3;
+}
+.j-pill{border-color:#2A2926}
+.j-pill.on{background:#161410;color:#FFFEF7;box-shadow:0 2px 0 #161410,0 6px 16px rgba(22,20,16,.16)}
+.j-pill.wood{background:linear-gradient(180deg,var(--wood-2),var(--wood));}
+.cabinet{box-shadow:3px 3px 0 #161410,0 8px 22px rgba(22,20,16,.12)}
+.map-box{border-color:#1C1B19}
+.book{box-shadow:2.5px 2.5px 0 #1C1B19,0 1px 0 rgba(22,20,16,.06)}
+.book:hover{transform:translateY(-1.2px) rotate(-.1deg);box-shadow:3px 3.5px 0 #161410,0 4px 12px rgba(22,20,16,.12)}
+.pick{background:linear-gradient(180deg,#FFFEF7 0%,#FFFCF2 100%)}
+.pick.on{outline-color:#C9A88C;background:#FFFEF7}
+
+/* touch ergonomics — 44px min */
+button,.j-pill,.book,.pick{ -webkit-tap-highlight-color:rgba(201,168,140,.22); }
+button:focus-visible,.j-pill:focus-visible,.book:focus-visible,.pick:focus-visible{outline:2.5px solid #7A8A7B;outline-offset:2px}
+#c{touch-action:pan-y pinch-zoom}
+</style>
 </head>
 <body>
 <nav class="j-nav" id="topNav">
