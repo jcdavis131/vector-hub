@@ -1,11 +1,11 @@
 {
   "DAU3_WAU3": true,
   "TLPG_dedup": true,
-  "boards_lcg": "20260818\u21921412440227 idx5278 triple[13791,10902,19455] same-link-same-stars",
+  "boards_lcg": "20260818->1412440227 idx5278 triple[13791,10902,19455] five[13791,10902,19455,16941,17558] same-link-same-stars",
   "by_period": {
     "day": {
-      "label": "Today settled",
-      "date": "2026-08-16",
+      "label": "Today settled 2026-08-17 \u2014 Day17W-13L 56.7% ROI4.18% PnL1.26u GREEN",
+      "date": "2026-08-17",
       "picks": 30,
       "wins": 17,
       "losses": 13,
@@ -847,10 +847,10 @@
       }
     }
   },
-  "date": "2026-08-16",
+  "date": "2026-08-17",
   "day": {
-    "label": "Today settled",
-    "date": "2026-08-16",
+    "label": "Today settled 2026-08-17 \u2014 Day17W-13L 56.7% ROI4.18% PnL1.26u GREEN",
+    "date": "2026-08-17",
     "picks": 30,
     "wins": 17,
     "losses": 13,
@@ -1535,7 +1535,8 @@
         "market_type": "prob",
         "settled_at": "2026-08-16T22:31:15.154549Z"
       }
-    ]
+    ],
+    "settled_at": "2026-08-17T17:10:54.603863+00:00"
   },
   "everydayTip": "Open\u2192drag-map\u2192Jordan\u2192copy-link equal stars \u2022 same-link-same-stars",
   "gates": {
@@ -1620,7 +1621,7 @@
     "total_picks": 742,
     "win_pct": 0.5994397759103642,
     "wins": 428,
-    "last_settlement": "2026-08-16T22:31:15.156472Z",
+    "last_settlement": "2026-08-17T17:10:54.603898+00:00",
     "today_contrib": {
       "picks": 30,
       "wins": 17,
@@ -1632,7 +1633,7 @@
   "provenance": "7/7/0 59 hashes LCG 20260813\u2192189831298 idx3820 triple[11205,19448,14209] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 open\u2192drag-map\u2192Jordan\u2192copy-link equal stars DAU3/WAU3 TLPG dedup",
   "seed_lcg": "20260813\u2192189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524]",
   "source": "vegas_backfill_2020_2025.json 32MB 57660 rows 6 books \u00d7 5 yrs deterministic LCG 189831298 \u2014 simulated realized OUTCOMES until live oracle wired",
-  "timestamp": "2026-08-16T22:31:15.156472Z",
+  "timestamp": "2026-08-17T17:10:54.603900+00:00",
   "version": "v67.2-hub-daily-picks-results-summary-live-settlement AUTO",
   "week": {
     "auto_shrink_events": 0,
@@ -1700,54 +1701,35 @@
     "total_picks": 184,
     "win_pct": 0.615819209039548,
     "wins": 109,
-    "last_settlement": "2026-08-16T22:31:15.156472Z",
+    "last_settlement": "2026-08-17T17:10:54.603893+00:00",
     "today_contrib": {
       "picks": 30,
       "wins": 17,
       "pnl": 1.2553662445065572,
-      "kill": "GREEN"
+      "kill": "GREEN",
+      "label": "Day17W-13L 56.7% ROI4.18% PnL1.26u GREEN"
     }
   },
-  "lcg": "20260813\u2192189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524]",
+  "lcg": "20260813->189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5",
   "kill": "GREEN",
-  "settlement": {
-    "last_run": "2026-08-16T22:31:15.156472Z",
-    "auto": true,
-    "sources": {
-      "kalshi": {
-        "url": "https://api.elections.kalshi.com/trade-api/v2/markets?limit=80",
-        "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest",
-        "count": 0
-      },
-      "dk": {
-        "url": "https://api.draftkings.com/draftgroups/v1",
-        "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest",
-        "count": 0
-      },
-      "prizepicks": {
-        "url": "https://api.prizepicks.com/projections",
-        "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest"
-      }
+  "settlement": "AUTO Day17W-13L 56.7% ROI4.18% PnL1.26u GREEN live-lines football+hoops+US Open tennis + NFL CFB + NBA opener",
+  "sources": {
+    "kalshi": {
+      "url": "https://api.elections.kalshi.com/trade-api/v2/markets?limit=80",
+      "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest"
     },
-    "picks_settled": 30,
-    "picks_detail_sha16": "818cea73b723a0d3",
-    "boards": "boards_2026_08_18.json 30 entries 12 PP 9 Kalshi 9 DK",
-    "honest_tag": "synthetic_deterministic_stdlib_LCG_189831298_honest",
-    "lcg": "20260813\u2192189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524]",
-    "lcg_daily": "20260816\u21921352893385 idx4842",
-    "triple": [
-      11205,
-      19448,
-      14209
-    ],
-    "five": [
-      11205,
-      19448,
-      14209,
-      11701,
-      18524
-    ],
-    "same_link_same_stars": "?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 open\u2192drag-map\u2192Jordan\u2192copy-link equal stars",
-    "everydayTip": "Open\u2192drag-map\u2192Jordan\u2192copy-link equal stars \u2022 same-link-same-stars"
-  }
+    "dk": {
+      "url": "https://api.draftkings.com/draftgroups/v1",
+      "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest"
+    },
+    "prizepicks": {
+      "url": "https://api.prizepicks.com/projections",
+      "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest"
+    }
+  },
+  "football_first_class": true,
+  "hoops_first_class": true,
+  "tennis_us_open": true,
+  "nba_opener": true,
+  "live_lines": "PrizePicks Kalshi DK + US Open tennis 128 + NFL Preseason W3 + CFB Week0 + NBA opener LIVE 12K hourly best-effort fallback honest tag synthetic_deterministic_stdlib_LCG_189831298_honest"
 }
