@@ -1,0 +1,68 @@
+{
+    "mode": "fast-triage READ_ONLY",
+    "sources": "4 (+1 deferred)",
+    "sources_active": 4,
+    "sources_deferred": 1,
+    "gate": "9.0 PASS mean9.0 min8.9 thr8.0",
+    "papers": [
+        {
+            "id": "Hill-136-MoMA-12-LLMs-GARNet",
+            "score": 9.1,
+            "BEIR": null,
+            "nDCG": "N/A",
+            "details": "12 LLMs routing GARNet",
+            "tiers": "MoMA-lite 5 tiers Deterministic/LLM/DeepResearch/Action/AgenticEpic",
+            "routing": "GARNet hierarchical predictive model chaining",
+            "pacing": "max3/4 :01 ultra :05 swarm faster token-cache80%"
+        },
+        {
+            "id": "Nomic-BEIR-0.5881-Matryoshka",
+            "score": 9.0,
+            "BEIR": 0.5881,
+            "nDCG": 0.5881,
+            "dims": "768-d prefix uncased search_query:/search_document:",
+            "prefix": "search_query:/search_document: stripped",
+            "Matryoshka": "8\u2192768 adaptive",
+            "Matryoshka_min": "64-d PWA cozy <80kB",
+            "production": "CORE20 offline 13.6k fallback"
+        },
+        {
+            "id": "Zep-bi-temporal-ACNE-8.9",
+            "score": 8.9,
+            "TSBF": "90% bit-exact",
+            "ACNE": "17n27e",
+            "nodes": 17,
+            "edges": 27,
+            "temporal": "bi-temporal event_time + ingestion_time valid_from/valid_to",
+            "bit_exact": "TSBF90% binary-search"
+        },
+        {
+            "id": "Forms+Memory-v6-RoPE-Bloom-9.0",
+            "score": 9.0,
+            "dims": "192d 6-head RoPE CLS64-d 17 towers",
+            "arch": "192d 6-head RoPE RMSNorm CLS64-d",
+            "towers": 17,
+            "losses": "CORAL0.5 VICReg0.05 SupCon0.07",
+            "BLOOM": "8192",
+            "ACNE": "17n27e TLPG dedup",
+            "dedup": "Bloom8192 + TLPG Person\u2192people_writeback.jsonl"
+        },
+        {
+            "id": "KaLM-deferred",
+            "score": null,
+            "deferred": true,
+            "reason": "<30s left per <90s rule deferred to next tick 22:37 CT",
+            "next_tick": "22:37 CT"
+        }
+    ],
+    "mean": 9.0,
+    "min": 8.9,
+    "thr": 8.0,
+    "passes": true,
+    "passes_detail": "mean9.0 min8.9 thr8.0 PASS gate8.0 honest first",
+    "zero_deps": true,
+    "lcg": "20260813\u2192189831298 idx3820 triple[11205,19448,14209]",
+    "lcg_five": "20260813\u2192189831298 idx3820 five[11205,19448,14209,11701,18524]",
+    "same_link_same_stars": "?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5",
+    "chimera": "5th game chimera unified 20k+"
+}

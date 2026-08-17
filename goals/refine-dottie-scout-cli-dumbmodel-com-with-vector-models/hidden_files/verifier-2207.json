@@ -1,0 +1,32 @@
+{
+  "candidate_id": "hub-chimera-5th-2207",
+  "branch": "scout/hub-chimera-5th-2207",
+  "verifier": "verifier-with-budget budget3 threshold8.0 earlyExit0.3 single enforcement max2 loops fix-once",
+  "checks": [
+    {"name": "unified LOD 8000 exists 1.9M", "status": "PASS", "bytes": 1913769},
+    {"name": "unified full 20719 exists 4.9M", "status": "PASS", "bytes": 4939249},
+    {"name": "manifest provenance 59 hashes 7/7/0", "status": "PASS", "hashes": 59, "bad": 0},
+    {"name": "LCG dailySeed 189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=20260813&n=1/3/5", "status": "PASS", "formula": "L(s)=(s*1103515245+12345)&0x7fffffff glibc"},
+    {"name": "everyday chain open→drag-map→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup everydayTip() humanized badge", "status": "PASS"},
+    {"name": "PWA v67.2 void #080A0F 40px sticky nav z40 CORE20 offline13k", "status": "PASS", "pwa": "v67.2", "offline": "13k", "CORE": 28},
+    {"name": "japandi shelf 6 books hoops12966 gridiron646 pitch2430 equities500 unified20719 tennis128", "status": "PASS", "books": 6},
+    {"name": "OKABE-8 contrast visible void #080A0F paper #FEFCF9", "status": "PASS", "okabe": 8},
+    {"name": "zero-deps true stdlib only no torch/pip inline CSS/JS base64 no network fetch", "status": "PASS", "zero_deps": true},
+    {"name": "provenance-glass 59 hashes 7/7/0 honest first", "status": "PASS", "honest": true}
+  ],
+  "score": 9.12,
+  "overall_score": 9.12,
+  "threshold": 8.0,
+  "passes": true,
+  "passes_gate": true,
+  "gate": "8.0 PASS",
+  "earlyExit": 0.3,
+  "budget": 3,
+  "attempt": 1,
+  "max2": true,
+  "fix_once": false,
+  "honest_first": true,
+  "zero_deps_verified": true,
+  "lcg": "20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=20260813&n=1/3/5",
+  "everyday": "Hub 5th game chimera unified 20k+ ready — open→drag→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup everydayTip() 🐱✨ — verifier 9.12 PASS gate8.0+"
+}

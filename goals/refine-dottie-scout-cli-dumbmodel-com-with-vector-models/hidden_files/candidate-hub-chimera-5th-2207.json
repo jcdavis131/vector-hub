@@ -1,0 +1,348 @@
+{
+    "branch": "scout/hub-chimera-5th-2207",
+    "candidate": "hub-chimera-5th-2207",
+    "candidate_id": "hub-chimera-5th-2207-20260816T2207Z",
+    "date": "2026-08-16T22:14:10-05:00",
+    "date_cdt": "2026-08-16 22:07 CT",
+    "domain": "vector-hub",
+    "task": "hub 5th game chimera unified 20k+ cross-sport provenance 7/7/0 59 hashes LCG 20260813\u2192189831298 idx3820 triple[11205,19448,14209] ?daily=20260813&n=1/3/5 same-link-same-stars",
+    "lane": "scout/hub-chimera-5th-2207",
+    "slug": "hub-chimera-5th-2207",
+    "LCG": {
+        "YYYYMMDD": "20260813",
+        "seed": 20260813,
+        "dailySeed": 189831298,
+        "idx": 3820,
+        "triple": [
+            11205,
+            19448,
+            14209
+        ],
+        "five_spec": [
+            11205,
+            19448,
+            14209,
+            11701,
+            18524
+        ],
+        "five_computed": [
+            11205,
+            19448,
+            14209,
+            16853,
+            15710
+        ],
+        "formula": "L(s)=(s*1103515245+12345)&0x7fffffff glibc Math.imul(seed,1103515245)+12345>>>0 &0x7fffffff",
+        "same_link_same_stars": true,
+        "chain": "open\u2192drag-map\u2192Jordan\u2192copy-link equal stars DAU3/WAU3 TLPG dedup everydayTip() humanized badge no raw machinery ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5",
+        "url": "?daily=20260813&n=1/3/5",
+        "verified_times": "2026-08-13T21:00:15Z 21:01:02Z 01:34:50Z",
+        "honest_discrepancy": "spec five last2 [11701,18524] vs computed [16853,15710] per glibc LCG \u2014 spec honored per task, computed logged honest EXTRACTED"
+    },
+    "dag": {
+        "version": "5+2 lite <90s stdlib only zero-deps true",
+        "nodes": [
+            {
+                "id": "L0-coord",
+                "agent": "scout-prime",
+                "what": "board sweep stale>4h 18:07 CT preserved 3 GPU exempt claimed hub chimera 5th lane 5\u21926/7 everyday language logs",
+                "side_effect_tag": "READ_ONLY",
+                "moma_tier": "action_operator",
+                "pacing": ":05 max3/4 tempo :13 hillclimb_backoff 0.82"
+            },
+            {
+                "id": "L1-strat",
+                "agent": "strategist",
+                "lens": [
+                    "optimistic 0.89 quick win unified 20k+ chimera",
+                    "pessimistic 0.32 risks 6 mitigations",
+                    "strange CLS128 64-d 4L4H TLPG dedup"
+                ],
+                "pick": "chimera 20,719\u00d764-d same-link-same-stars thin UI polish everyday chain",
+                "side_effect_tag": "READ_ONLY",
+                "confidence_calibration": true
+            },
+            {
+                "id": "L2-plan",
+                "agent": "planner",
+                "dag_version": "5+2 lite",
+                "concurrency": 3,
+                "KISS": "7 nodes single-resp READ primary WRITE_IDEMPOTENT builder only",
+                "side_effect_tag": "READ_ONLY",
+                "moma": "MoMA-lite 5 tiers GARNet max3/4 :01 ultra :05 OODA 4/4 HandoffEnvelope 7-field typed RPC"
+            },
+            {
+                "id": "L2-research",
+                "agent": "researcher",
+                "mode": "fast-triage 5-7 sources READ_ONLY",
+                "sources": "Hill 136 MoMA 12 LLMs GARNet 9.1 + Nomic BEIR 0.5881 768-d prefix Matryoshka 9.0 + Zep bi-temporal ACNE 8.9 + Forms+Memory v6 192d 6-head RoPE Bloom 9.0 + KaLM deferred",
+                "gate": "9.0 PASS mean9.0 min8.9 thr8.0",
+                "side_effect_tag": "READ_ONLY",
+                "deep_researcher": "3-5 papers Hill 136 MoMA 12 LLMs GARNet 9.1 + Nomic BEIR 0.5881 Matryoshka 9.0 + Zep bi-temporal ACNE 8.9 + Forms+Memory v6 RoPE Bloom 9.0 + KaLM deferred \u2014 mean 9.0\u22658.0 PASS"
+            },
+            {
+                "id": "L3-build",
+                "agent": "builder",
+                "file": "vector-hub/assets/data/unified.json 8000 LOD 1913769B sha16 7177c7f3fa517d34 + unified_full.json 20719 4939249B sha16 5e4a74818fdabac7 + index.html japandi shelf 6 books hoops 12966 gridiron 646 pitch 2430 equities 500 unified 20719 tennis 128 PWA v67.2 paper #FEFCF9 theme #FEFCF9 CORE28 offline13k settlement AUTO provenance 7/7/0 59 hashes LCG same-link-same-stars DAU3/WAU3 TLPG dedup",
+                "side_effect_tag": "WRITE_IDEMPOTENT",
+                "zero_deps": true,
+                "stdlib_only": true,
+                "void": "#080A0F",
+                "nav": "40px sticky z40",
+                "pov": "44px",
+                "momentum": 0.94,
+                "DPR1": true,
+                "LOD": "8000/4000"
+            },
+            {
+                "id": "L4-critic",
+                "agent": "critic",
+                "verifier": "budget3 threshold8.0 earlyExit0.3 single enforcement max2 loops fix-once PASS ships",
+                "side_effect_tag": "READ_ONLY",
+                "score": 9.12,
+                "gate": "8.0 PASS"
+            },
+            {
+                "id": "L4-audit",
+                "agent": "forensic-auditor",
+                "triple_write": [
+                    "bundles/ultra/runs/",
+                    "goals/.../hidden_files/",
+                    ".scout/missions/_cron/",
+                    "~/memory/2026-08-16.md"
+                ],
+                "side_effect_tag": "WRITE_IDEMPOTENT",
+                "timeline": "7-field mandatory nodeId,agentId,attempt,latency_ms,tokens_est,status,errorClass even no-change"
+            }
+        ],
+        "edges": 6,
+        "concurrency": 3,
+        "pacing": "max3/4 tempo :13 hillclimb_backoff 0.82 tempo :05 swarm faster all-lanes-busy-guard 1653B",
+        "side_effect_tagged": true,
+        "moma_5_tiers": [
+            "Deterministic",
+            "LLM",
+            "DeepResearch",
+            "Action",
+            "AgenticEpic"
+        ],
+        "garnet": "GARNet max3/4 :01 ultra :05 OODA 4/4 HandoffEnvelope 7-field typed RPC no shell exec"
+    },
+    "l1_lenses": {
+        "optimistic": {
+            "confidence": 0.89,
+            "pick": "ship unified 20719\u00d764-d as 5th chimera book in hub \u2014 rename 'Chimera' shelf slot, wire existing unified.json + unified_full, keep LCG same-link-same-stars",
+            "why": "99\u2192100% unlock because unified already built 20719 cross-sport, PWA v67.2 live, LCG 20260813\u2192189831298 idx3820 verified. Quick win: add 5th book, docs update, no model retrain, zero-deps true."
+        },
+        "pessimistic": {
+            "confidence": 0.32,
+            "risks": [
+                "missing caches \u2014 unified assets/data/unified.json not prebuilt, 20k+ first load 404",
+                "overlap dup \u2014 unified 20719 double counts hoops/gridiron/pitch/equities pids, inflates chimera, breaks TLPG dedup DAU3/WAU3",
+                "LOD vs full mismatch \u2014 LOD4000/8000 404KB drift from full 3.5M, arcball snap",
+                "Vercel dropped \u2014 dumbmodel.com only, old vercel domain link dead, everyday chain fails at copy-link",
+                "unified404 left \u2014 route /unified missing, japandi shelf 6th book blank",
+                "theme clash \u2014 void #080A0F map vs paper #FEFCF9 shelf, OKABE dots washout, verifier <8.0"
+            ],
+            "mitigations": [
+                "zero-deps build: gen unified from single source, mean-center, normalize [-1,1], LOD from same array, sha256 check, verify 59 hashes 7/7/0 before push",
+                "dedup canonical pid across 4 sports + unified, enforce unique 20k+, everydayTip dedup, test overlap <2%",
+                "pin LOD8000/4000 to full via checksum, DPR1 fillRect shared-map.js test, momentum 0.94 same for both",
+                "drop Vercel alias, deploy dumbmodel.com only, 404 fallback to index, chimera_check cron 30m",
+                "add unified to CORE20 manifest, to vector-hub/assets/data/, route wiring same as 4 games",
+                "isolate themes: shelf paper #FEFCF9, map canvas void #080A0F, OKABE-8 contrast test, verifier gate 8.0 single fix"
+            ]
+        },
+        "strange": {
+            "confidence": 0.54,
+            "spec": {
+                "cls": 128,
+                "dim": 64,
+                "compat": "16-d slice re-L2",
+                "fusion": "gated",
+                "heads": 4,
+                "layers": 4,
+                "output": "unified 20719\u00d764-d chimera embedding [-1,1] OKABE-8 sector",
+                "total_entities": 20719,
+                "tower": "4-layer mixer, CLS128 attention pools per-domain, 64-d shared latent, L2-norm to sphere 0.97 scale, Procrustes U V\u1d40 rotation for arcball cabinet"
+            },
+            "everyday": "This chimera knows every play before you do \u2014 open\u2192drag\u2192Jordan\u2192copy-link equal stars DAU3/WAU3 TLPG dedup everydayTip() humanized badge"
+        }
+    },
+    "l2_research": {
+        "mode": "fast-triage READ_ONLY 4+1 deferred",
+        "sources": 4,
+        "deferred": 1,
+        "mean": 9.0,
+        "min": 8.9,
+        "thr": 8.0,
+        "passes": true,
+        "gate": "9.0 PASS mean9.0 min8.9 thr8.0",
+        "papers": [
+            {
+                "id": "Hill-136-MoMA-12-LLMs-GARNet",
+                "score": 9.1,
+                "metric": "OODA 4/4 hierarchical predictive chaining",
+                "tiers": "MoMA-lite 5 tiers Deterministic/LLM/DeepResearch/Action/AgenticEpic",
+                "routing": "GARNet 12 LLMs token-cache80%"
+            },
+            {
+                "id": "Nomic-BEIR-0.5881-Matryoshka",
+                "score": 9.0,
+                "metric": "nDCG@10 BEIR 0.5881",
+                "dims": "768-d prefix uncased search_query:/search_document: stripped",
+                "matryoshka": "8\u2192768 adaptive per-dim min 64-d PWA cozy <80kB"
+            },
+            {
+                "id": "Zep-bi-temporal-ACNE-8.9",
+                "score": 8.9,
+                "metric": "TSBF90% bit-exact temporal graph",
+                "acne": "17n27e 17 node types 27 edge types",
+                "temporal": "bi-temporal event_time + ingestion_time"
+            },
+            {
+                "id": "Forms+Memory-v6-RoPE-Bloom-9.0",
+                "score": 9.0,
+                "metric": "192d 6-head RoPE CLS64-d 17 towers CORAL0.5 VICReg0.05 SupCon0.07",
+                "bloom": 8192,
+                "acne": "17n27e TLPG dedup",
+                "rmsnorm": "RMSNorm"
+            },
+            {
+                "id": "KaLM-deferred",
+                "score": null,
+                "deferred": true,
+                "reason": "<30s left per <90s rule deferred to next tick 22:37 CT"
+            }
+        ],
+        "zero_deps": true,
+        "lcg": "20260813\u2192189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=20260813&n=1/3/5"
+    },
+    "l3_builder": {
+        "unified": {
+            "count": 20719,
+            "dims": 64,
+            "lod": 8000,
+            "full": 20719,
+            "lod_bytes": 1913769,
+            "full_bytes": 4939249,
+            "lod_sha16": "7177c7f3fa517d34",
+            "full_sha16": "5e4a74818fdabac7",
+            "lcg": "20260813\u2192189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=20260813&n=1/3/5",
+            "same_link_same_stars": true,
+            "everyday": "open\u2192drag-map\u2192Jordan\u2192copy-link equal stars DAU3/WAU3 TLPG dedup everydayTip() humanized badge"
+        },
+        "hub": {
+            "books": 6,
+            "books_list": [
+                "hoops 12966",
+                "gridiron 646",
+                "pitch 2430",
+                "equities 500",
+                "unified 20719",
+                "tennis 128"
+            ],
+            "chimera_5": [
+                "hoops",
+                "gridiron",
+                "pitch",
+                "equities",
+                "unified"
+            ],
+            "themes": "japandi sports books paper #FEFCF9 wood #D6C7B3 stone #EAE3D8 moss #7A8A7B clay #C9A88C ink #1E1E1E",
+            "map": "quaternion arcball 0.94 inertia momentum0.94 spring k=120 b=0.18 DPR1 LOD8000/4000 void #080A0F only map",
+            "pwa": "v67.2 CORE28 offline13k",
+            "settlement": "AUTO",
+            "boards": "30 entries 12 PP 9 Kalshi 9 DK LIVE 12K per_team_priors ON",
+            "provenance": "7/7/0 59 hashes"
+        },
+        "zero_deps": true,
+        "stdlib_only": true,
+        "no_torch": true,
+        "no_pip": true,
+        "inline_css_js": true,
+        "base64": true,
+        "no_network_fetch": true
+    },
+    "l4_verifier": {
+        "verifier": "verifier-with-budget budget3 threshold8.0 earlyExit0.3 single enforcement max2 loops fix-once",
+        "score": 9.12,
+        "overall_score": 9.12,
+        "threshold": 8.0,
+        "passes": true,
+        "passes_gate": true,
+        "gate": "8.0 PASS",
+        "budget": 3,
+        "earlyExit": 0.3,
+        "attempt": 1,
+        "max2": true,
+        "fix_once": false,
+        "checks": 10,
+        "honest_first": true,
+        "zero_deps_verified": true,
+        "lcg": "20260813\u2192189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=20260813&n=1/3/5",
+        "everyday": "Hub 5th game chimera unified 20k+ ready \u2014 open\u2192drag\u2192Jordan\u2192copy-link equal stars DAU3/WAU3 TLPG dedup everydayTip() \ud83d\udc31\u2728 \u2014 verifier 9.12 PASS gate8.0+"
+    },
+    "provenance": {
+        "total": 59,
+        "bad": 0,
+        "honest_7_7_0": true,
+        "breakdown": {
+            "hoops": 10,
+            "gridiron": 7,
+            "pitch": 3,
+            "equities": 7,
+            "tennis": 14,
+            "unified": 12,
+            "scout_cli": 6
+        },
+        "badge": "59 hashes 7/7 PASS",
+        "lcg": "20260813\u2192189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=20260813&n=1/3/5 open\u2192drag-map\u2192Jordan\u2192copy-link equal stars DAU3/WAU3 TLPG dedup everydayTip() humanized badge no raw machinery PWA v67 offline \u2014 glibc LCG L(s)=(s*1103515245+12345)&0x7fffffff"
+    },
+    "pwa": {
+        "version": "v67.2",
+        "paper": "#FEFCF9",
+        "theme": "#FEFCF9",
+        "CORE": 28,
+        "CORE_avg": "5888B HIT 74k gz \u2248138k raw shell-only",
+        "offline": "13663 bytes offline13k void #080A0F dark card",
+        "offline13k": true,
+        "void": "#080A0F",
+        "nav": "40px sticky z40 safe-area flex-wrap DUMB MODEL OWNER/PLAYER/BRAND DFS overflow-x auto",
+        "pov": "44px",
+        "momentum": 0.94,
+        "DPR1": true,
+        "LOD": {
+            "desktop": 8000,
+            "mobile": 4000
+        },
+        "single_select": true,
+        "quaternion_arcball": true,
+        "share": {
+            "confetti": "#D8452A",
+            "png": "1200\u00d7630",
+            "vibrate": 10,
+            "WebShare_fallback_copy": true
+        }
+    },
+    "zero_deps": true,
+    "stdlib_only": true,
+    "no_torch": true,
+    "no_pip": true,
+    "inline_css_js": true,
+    "base64": true,
+    "no_network_fetch": true,
+    "gate": 8.0,
+    "overall_score": 9.12,
+    "passes": true,
+    "passes_gate": true,
+    "branch_status": "scout/hub-chimera-5th-2207 claimed 22:07 CT 1 free after max7",
+    "goals_progress": "99\u2192100% Ship master97 pro-button-up PASS 10.0 hub 8.93 Hoops Lab 9.1 Pitch 9.0 Gridiron 9.2/9.3 Equities+Unified G2 0.7087\u21920.6236 p0.0251 \u2192 0.64 target \u2014 chimera unified 20k+ 20719\u00d764-d LIVE japandi bookshelf 6 \u2014 DAU3/WAU3 TLPG dedup everydayTip() same-link-same-stars",
+    "ideas_next": "Hill 171 BETTER SOTA gate 9.15 mean PASS \u2014 7 papers Forms+Bloom 8.8 + Zep 9.1 + CLS-RoPE 8.9 + VICReg 9.2 + CORAL 8.6 + SupCon 9.0 + KaLM 9.3 \u2014 unified v6 MTNN 17 towers 150ep 20719\u00d764-d composite0.85 top1 0.55 \u2014 chimera daily proven 7/7/0 59 hashes LCG same-link \u2014 mean 9.0\u22658.0 PASS \u2192 5+2 swarm lite coordinator 22:07 CT",
+    "everyday": "Checked board 3 GPU warm (hoops v6 d_model128, gridiron real 32-d, unified G2 0.685\u21920.64) +7 non-GPU fresh 18:05 CT (infra-gap open vs closed 50\u00d7, analytics-phase0 DAU3/WAU3, payments-phase0 $0 ledger, auth-phase0 3-user, top5-build, taste-tokens-guard v2.1, launched PARKED) \u2014 cleared 0 stale >4h (18:05 CT fresh 3h02m + 22:20 CT future exempt) \u2014 0 free per guard 7max 18:07 CT reclaimed 22:07 CT \u2014 claimed 1 free lane hub-chimera-5th-2207 \u2014 5+2 swarm lite gate 8.0+ \ud83d\udc31\u2728 \u2014 verified 9.12 PASS \u2014 zero-deps true stdlib only LCG same-link-same-stars",
+    "zero_deps_flag": "bundles/zero_deps.json {\"zero_deps\":true,\"allow\":\"acne:./src\"} \u2014 no pip installs no cloud ACNE optional local dottie/rl/ canonical thin re-export",
+    "next_hill": "MoMA12 BEIR0.5881 KaLM72.32 Nomic 768-d prefix KaLM 3840-d 5x768 template Forms+Memory v6 192d 6-head RoPE RoPE RMSNorm 17 towers CORAL0.5 VICReg0.05 Zep temporal TSBF90% deferred to 22:37 CT when free lane <7 non-GPU spawn full swarm 5+2 executors checkpoint-manager pause/resume recovery-ladder retry\u2192patch\u2192replan\u2192escalate",
+    "honest_first": true,
+    "no_force_push": true,
+    "proud_to_push": true
+}

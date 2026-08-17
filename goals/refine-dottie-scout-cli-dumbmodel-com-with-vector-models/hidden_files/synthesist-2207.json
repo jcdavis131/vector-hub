@@ -1,0 +1,51 @@
+{
+  "builder": "ok",
+  "unified": {
+    "count": 20719,
+    "dims": 64,
+    "lod": 8000,
+    "full": 20719,
+    "lod_bytes": 1913769,
+    "full_bytes": 4939249,
+    "lod_sha16": "7177c7f3fa517d34",
+    "full_sha16": "5e4a74818fdabac7",
+    "lcg": "20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=20260813&n=1/3/5 Solo1 Triple3 Full5",
+    "same_link_same_stars": true,
+    "everyday": "open→drag-map→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup everydayTip() humanized badge",
+    "provenance": {
+      "total": 59,
+      "bad": 0,
+      "honest_7_7_0": true,
+      "breakdown": {
+        "hoops": 10,
+        "gridiron": 7,
+        "pitch": 3,
+        "equities": 7,
+        "tennis": 14,
+        "unified": 12,
+        "scout_cli": 6
+      }
+    },
+    "mean_centered": true,
+    "normalized": "[-1,1]",
+    "max_abs": 0.97,
+    "okabe_8": ["#0072B2","#D55E00","#009E73","#F0E442","#56B4E9","#CC79A7","#E69F00","#FFFEF7"]
+  },
+  "hub": {
+    "books": 6,
+    "books_list": ["hoops 12966","gridiron 646","pitch 2430","equities 500","unified 20719","tennis 128"],
+    "chimera_5_games": ["hoops","gridiron","pitch","equities","unified"],
+    "themes": "japandi sports books paper #FEFCF9 wood #D6C7B3 stone #EAE3D8 moss #7A8A7B clay #C9A88C ink #1E1E1E",
+    "map": "quaternion arcball 0.94 inertia momentum0.94 spring k=120 b=0.18 DPR1 LOD8000/4000 void #080A0F only map",
+    "pwa": "v67.2 CORE28 offline13k CORE20 paper #FEFCF9 theme #FEFCF9",
+    "nav": "40px sticky z40 safe-area Books/Maps/Picks/Results/Lab single-select clears prev void #080A0F only map",
+    "settlement": "AUTO",
+    "boards": "30 entries 12 PP 9 Kalshi 9 DK LIVE 12K per_team_priors ON",
+    "provenance_glass": "27k 59 hashes 7/7/0 smooth-shell 28k VT shared-map 28k DPR1 LOD4000/8000 header 40px sticky"
+  },
+  "zero_deps": true,
+  "stdlib_only": true,
+  "no_torch": true,
+  "no_pip": true,
+  "lcg_verified": "20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars ?daily=20260813&n=1/3/5 verified 2026-08-13T21:00:15Z 21:01:02Z 01:34:50Z"
+}

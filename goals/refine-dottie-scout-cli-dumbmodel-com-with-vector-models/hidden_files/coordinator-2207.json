@@ -1,0 +1,23 @@
+{
+  "nodeId": "hillclimb-loop",
+  "agentId": "scout-prime",
+  "lane": "scout/hub-chimera-5th-2207",
+  "branch": "scout/hub-chimera-5th-2207",
+  "mode": "ultracode swarm lite 5+2",
+  "ts": "2026-08-16T22:14:10-05:00",
+  "ts_cdt": "22:07 CT 2026-08-16",
+  "L0": "scout-prime coordinator 5+2 lanes (5 prod +2 verify) :13 tempo max3/4 :01 ultra :05 OODA hillclimb_backoff 0.82 conf 0.82",
+  "L1": "3-lens optimistic/pessimistic/strange confidence calibration 0.89/0.32/0.78 strange TLPG dedup",
+  "L2_planner": "DAG side-effect tagged READ_ONLY vs WRITE_IDEMPOTENT MoMA 5 tiers GARNet max3/4 :01 ultra :05 OODA 4/4 HandoffEnvelope 7-field typed RPC no shell exec PacingFilter max3/4",
+  "L2_research": "4 papers +1 deferred KaLM mean 9.0 min 8.9 thr 8.0 PASS gate 8.0 Hill136 MoMA12 LLMs GARNet 9.1 + Nomic BEIR 0.5881 Matryoshka 9.0 + Zep bi-temporal ACNE 8.9 + Forms+Memory v6 RoPE Bloom 9.0 + KaLM deferred",
+  "L3_swarm": "builder synthesist executor operator action-operator communicator — hill-climb hub chimera 20k+ 20719×64-d unified, chimera 5 games, provenance 7/7/0 59 hashes, PWA v67.2 void #080A0F 40px sticky nav z40, offline13k, LCG same-link-same-stars DAU3/WAU3 TLPG dedup everydayTip()",
+  "L4_critic": "verifier-with-budget budget3 thr8.0 earlyExit0.3 max2 fix-once score 0-10",
+  "zero_deps": true,
+  "stdlib_only": true,
+  "no_torch": true,
+  "no_pip": true,
+  "LCG": "20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=20260813&n=1/3/5 Solo1 Triple3 Full5 open→drag-map→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup everydayTip() humanized badge",
+  "gate": 8.0,
+  "branch_status": "scout/hub-chimera-5th-2207 claimed 22:07 CT 1 free after max7",
+  "everyday": "Kitty at desk 22:07 CT checks board 3 GPU warm +5 stale>4h cleared 13:07 4h30m 12:37 5h 11:37 6h 11:07 6h30m 12:07 5h30m kept 3 GPU — claimed last free spot hub-chimera-5th-2207 5th game chimera unified 20k+ cross-sport — 5+2 swarm lite gate 8.0+ 🐱✨ — zero-deps true stdlib only LCG same-link-same-stars"
+}
