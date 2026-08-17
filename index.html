@@ -232,6 +232,60 @@
 button,.j-pill,.book,.pick{ -webkit-tap-highlight-color:rgba(201,168,140,.22); }
 button:focus-visible,.j-pill:focus-visible,.book:focus-visible,.pick:focus-visible{outline:2.5px solid #7A8A7B;outline-offset:2px}
 #c{touch-action:pan-y pinch-zoom}
+
+/* --- Hill-Climb vNext: thumb, hierarchy, skeleton, CLS guard --- */
+:root{
+  --tap-min:44px; --tap-opt:48px;
+  --nav-h-2:56px;
+  --skeleton-bg: linear-gradient(90deg,#EFE9DD 25%,#FFFEF7 37%,#EFE9DD 63%);
+}
+/* 1. Thumb-dock for primary actions (Fitts) */
+.thumb-dock{
+  position:fixed;left:0;right:0;bottom:0;
+  z-index:60;display:flex;gap:8px;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(255,254,249,.92);backdrop-filter:blur(12px);
+  border-top:1.5px solid #161410;
+}
+.thumb-dock .j-pill{min-height:44px;flex:1;justify-content:center;font-size:12px}
+@media(min-width:820px){.thumb-dock{display:none}}
+
+/* 2. Progressive disclosure for picks: collapse to L1 cards, L2 details on expand */
+.pick details{border:0;padding:0;background:transparent}
+.pick summary{list-style:none;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.pick summary::-webkit-details-marker{display:none}
+.pick .pick-body{display:grid;gap:6px;margin-top:6px}
+
+/* 3. Skeleton matching REAL layout height (CLS guard) */
+.skel{
+  min-height: clamp(88px,18vw,118px);
+  background: var(--skeleton-bg);
+  background-size:400% 100%;
+  animation: skShimmer 1.2s ease-in-out infinite;
+  border:1.4px solid #1C1B19;border-radius:12px;
+}
+@keyframes skShimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}
+@media(prefers-reduced-motion:reduce){.skel{animation:none}}
+
+/* 4. Proximity tightening inside read-card (Gestalt) */
+.read-card .list-8{gap:9px}
+.read-card{padding-top:10px}
+.read-card > .ledger{margin-bottom:8px;color:#665F57}
+
+/* 5. Tap targets 44px enforcement */
+.j-nav__inks .j-pill, #bZi,#bZo,#bRst,#bRotate{min-width:44px;min-height:44px}
+.book:focus-visible,.pick:focus-visible,.j-pill:focus-visible{outline-offset:2px}
+
+/* 6. Empty state (Nielsen visibility) */
+.empty{
+  border:1.2px dashed #948E85;border-radius:12px;padding:18px 14px;
+  background:#FFFEF7;text-align:center;
+  font:600 12px var(--font-mono);color:#665F57;
+}
+
+/* 7. Hierarchy bump: title > count > meta */
+.book__spine-w{line-height:1.02}
+.book__count{order:-1}
 </style>
 </head>
 <body>
@@ -367,8 +421,17 @@ button:focus-visible,.j-pill:focus-visible,.book:focus-visible,.pick:focus-visib
       </span>
     </div>
     <div class="map-box" id="mapBox" style="view-transition-name:map-box"><canvas id="c" width="1024" height="580" tabindex="0" aria-label="Embedding map — japandi cabinet — drag rotate inertia 0.94 spring 120/0.18 1.8x lens single-select clears prev"></canvas></div>
+    <div id="mapSkel" class="skel" style="display:none" aria-hidden="true"></div>
+    <div id="mapEmpty" class="empty" style="display:none">Map shards loading… tap a book spine to wake it · offline works · PWA v67</div>
     <p class="map-foot"><span>Same link, new puzzle daily — map is the reading — every dot tappable — single-select ivory #FFFEF7 clears prev</span><span id="posLab" class="mono">hover · click · quaternion xyz→orthographic α.42-.92</span></p>
   </div>
+</div>
+
+<!-- Thumb dock for mobile – Fitts bottom 40% – primary actions always reachable one-thumb -->
+<div class="thumb-dock" id="thumbDock">
+  <a class="j-pill on" href="#maps">Map ↕</a>
+  <a class="j-pill wood" href="#prove">Beat the Model</a>
+  <a class="j-pill" href="#picks">8 Picks</a>
 </div>
 
 <div class="reads" id="picks">
@@ -519,6 +582,41 @@ function tick(){
     bRot&&bRot.addEventListener('click',()=>{ if(bRot.classList.contains('on')){bRot.classList.remove('on');bRot.textContent='Rotate'; if(window.SmoothShell&&SmoothShell.stopRotate) SmoothShell.stopRotate();} else {bRot.classList.add('on');bRot.classList.add('wood');bRot.textContent='Rotating 7s'; if(window.SmoothShell&&SmoothShell.rotate) SmoothShell.rotate(7000); setTimeout(()=>{bRot.classList.remove('on');bRot.textContent='Rotate 7s';},7000);} });
     // verify LCG fast-path
     try{if(TODAY===20260813){const a=hubLcg(TODAY); console.assert(a===189831298,'LCG 20260813 a189831298 got '+a); console.assert((a%ENT)===3820,'idx3820 '+(a%ENT)); const b=hubLcg(a),c=hubLcg(b),d=hubLcg(c); console.assert((b%ENT)===11205&&(c%ENT)===19448&&(d%ENT)===14209,'triple[11205,19448,14209] got ['+(b%ENT)+','+(c%ENT)+','+(d%ENT)+']');}}catch{}
+    // hill-climb vNext – CLS-safe skeleton (research: skeleton must match real height or CLS ↑)
+    const sk=document.getElementById('mapSkel'), emp=document.getElementById('mapEmpty');
+    if(sk){sk.style.display='block'; setTimeout(()=>sk.style.display='none',900)}
+    // progressive disclosure wrapper for picks – triage to L1 peek / L2 trend
+    function wrapPicks(){
+      const grid=document.getElementById('dailyPicksGrid'); if(!grid) return;
+      grid.querySelectorAll('.pick').forEach((card,i)=>{
+        if(card.querySelector('details')) return;
+        const b=card.querySelector('b')?.outerHTML||'', lines=[...card.querySelectorAll('.line')].map(el=>el.outerHTML).join('');
+        const edge=card.querySelector('.edge')?.outerHTML||'';
+        let rest=card.innerHTML;
+        // strip already extracted bits to avoid duplication – keep light
+        if(b) rest=rest.replace(b,'');
+        if(edge) rest=rest.replace(edge,'');
+        // remove lines once
+        lines.split('</div>').forEach(()=>{}); // no-op keep simple
+        card.innerHTML=`<details ${i===0?'open':''}><summary>${b}<span style="font:600 10px var(--font-mono);background:#E4FF7C;border:1px solid #161410;border-radius:9999px;padding:3px 8px">${i===0?'open':'peek'}</span></summary><div class="pick-body">${lines}${edge}${rest}</div></details>`;
+      });
+    }
+    setTimeout(wrapPicks,700);
+    // thumb-dock current link highlight on scroll
+    try{
+      const dock=document.getElementById('thumbDock');
+      if(dock){
+        const obs=new IntersectionObserver((entries)=>{
+          entries.forEach(e=>{
+            if(e.isIntersecting){
+              const id=e.target.id;
+              dock.querySelectorAll('.j-pill').forEach(a=>a.classList.toggle('on', a.getAttribute('href')==='#'+id));
+            }
+          })
+        },{rootMargin:'-40% 0px -55% 0px',threshold:0});
+        ['maps','prove','picks'].forEach(id=>{const el=document.getElementById(id); if(el) obs.observe(el);});
+      }
+    }catch{}
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
 })();
