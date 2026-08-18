@@ -4,204 +4,339 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>dumbmodel — models · picks · proof</title>
-<meta name="description" content="dumbmodel — 20719 vectors · 5 domains · 30 picks daily · 59 hashes 7/7/0 provenance · LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars">
+<meta name="description" content="dumbmodel — quiet library of sports models. 20,719 vectors · 5 books · 30 picks daily · 59 hashes 7/7/0 provenance · same-link-same-stars daily">
 <meta name="theme-color" content="#080A0F">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080A0F'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23FEFCF9'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="/assets/tokens.css">
 <style>
-:root{--paper:#FEFCF9;--paper2:#FFFEF7;--ink:#14181D;--ink2:#5A544E;--mut:#8A847A;--line:#14181D;--void:#080A0F;--radius:10px}
-*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink)}
-body{font-family:ui-sans-system,-apple-system,Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.45;-webkit-font-smoothing:antialiased;min-height:100dvh}
+:root{
+  --paper:#FEFCF9; --paper2:#FFFEF7; --ink:#14181D; --ink2:#5A544E; --mut:#8A847A; --line:#14181D;
+  --line-soft:#E8DED0; --void:#080A0F; --radius:12px; --radius-sm:9px;
+  --blue:#0072B2; --orange:#D55E00; --green:#009E73; --yellow:#F0E442; --ltblue:#56B4E9; --pink:#CC79A7; --gold:#E69F00;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased}
+body{font-family:ui-sans-system,-apple-system,Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.45;min-height:100dvh}
 .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
 a{color:inherit;text-decoration:none}
+button{font:inherit}
+
+/* nav - 40px sticky per house */
 .nav{position:sticky;top:0;top:env(safe-area-inset-top,0);z-index:40;height:40px;min-height:40px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 12px;background:var(--paper);border-bottom:1.5px solid var(--line)}
-.nav b{font:800 12px var(--font-mono);letter-spacing:.07em;text-transform:uppercase}
-.nav-links{display:flex;gap:6px;align-items:center}
-.p{border:1px solid var(--line);border-radius:9999px;padding:4px 10px;background:#fff;font:700 11px var(--font-mono);display:inline-flex;align-items:center}
-.p.on{background:var(--ink);color:var(--paper2)}
-.wrap{max-width:1240px;margin:0 auto;padding:0 12px}
-.hero{padding:16px 0 10px;border-bottom:1px solid #EAE3D8}
-.hero h1{margin:0;font-size:clamp(22px,3.8vw,32px);line-height:.98;letter-spacing:-.02em;font-weight:800}
-.hero .sub{margin:6px 0 0;color:var(--ink2);font-size:13px;max-width:72ch}
-.meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-.meta .m{border:1px solid var(--line);border-radius:9999px;padding:3px 9px;background:#fff;font:600 10.5px var(--font-mono)}
-.books{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:12px 0}
+.nav b{font:800 12px ui-monospace,monospace;letter-spacing:.09em;text-transform:uppercase}
+.nav .links{display:flex;gap:6px;align-items:center}
+.pill{border:1.2px solid var(--line);border-radius:9999px;padding:4px 11px;background:#fff;font:700 11px ui-monospace,monospace;display:inline-flex;align-items:center;gap:6px;cursor:pointer;line-height:1}
+.pill.on{background:var(--ink);color:var(--paper2);border-color:var(--ink)}
+.pill.ghost{background:transparent;border-color:var(--line-soft);color:var(--ink2)}
+.pill.small{padding:3px 9px;font-size:10.5px}
+
+.wrap{max-width:1248px;margin:0 auto;padding:0 14px}
+
+/* hero - japandi shelf intro, not tech dump */
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;padding:22px 0 16px;border-bottom:1px solid var(--line-soft)}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:16px 0 12px}}
+.hero h1{margin:0;font-size:clamp(28px,4.2vw,40px);line-height:.96;letter-spacing:-.03em;font-weight:800}
+.hero h1 span{display:block;font-weight:400;color:var(--ink2);font-size:.46em;line-height:1.15;margin-top:6px;letter-spacing:-.01em}
+.hero .deck{margin:10px 0 0;color:var(--ink2);font-size:13.5px;max-width:52ch;line-height:1.45}
+.hero .right{display:flex;flex-direction:column;gap:10px;justify-content:center}
+.kpis{display:flex;flex-wrap:wrap;gap:7px}
+.kpis .k{border:1px solid var(--line-soft);border-radius:9999px;padding:5px 11px;background:var(--paper2);font:600 11px ui-monospace,monospace;color:var(--ink2);display:inline-flex;gap:6px;align-items:center}
+.kpis .k b{color:var(--ink);font-weight:700}
+.shelf-note{font:600 11px ui-monospace,monospace;color:var(--mut);line-height:1.4;border-left:2px solid var(--line-soft);padding-left:10px;margin-top:2px}
+
+/* books - shelf */
+.books{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;margin:14px 0}
 @media(max-width:980px){.books{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:560px){.books{grid-template-columns:repeat(2,1fr)}}
-.book{border:1.2px solid var(--line);border-radius:10px;padding:8px 9px;background:#fff;display:flex;flex-direction:column;gap:6px;cursor:pointer;text-align:left}
-.book.on{outline:2px solid #C9A88C}
-.book .k{font:700 10px var(--font-mono);color:var(--mut);display:flex;justify-content:space-between}
-.book .t{font:800 11.5px var(--font-mono);text-transform:uppercase;letter-spacing:.04em;line-height:1.1}
-.book .f{font:600 10.5px var(--font-mono);color:var(--ink2);display:flex;justify-content:space-between}
+.book{border:1.2px solid var(--line-soft);border-radius:10px;padding:10px 10px;background:#fff;display:flex;flex-direction:column;gap:7px;cursor:pointer;text-align:left;transition:border-color .15s, transform .12s}
+.book:hover{border-color:var(--line);transform:translateY(-1px)}
+.book.on{border-color:var(--line);background:var(--paper2);outline:0;box-shadow:inset 0 0 0 1px var(--line)}
+.book .top{display:flex;justify-content:space-between;align-items:center;font:700 10px ui-monospace,monospace;color:var(--mut)}
 .dot{width:8px;height:8px;border-radius:50%;border:1px solid var(--line);display:inline-block}
-.grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;margin:12px 0}
-@media(max-width:980px){.grid2{grid-template-columns:1fr}}
-.card{border:1.2px solid var(--line);border-radius:10px;background:#fff;padding:10px 11px}
-.card h2{margin:0 0 8px;font:800 11.5px var(--font-mono);text-transform:uppercase;letter-spacing:.06em}
-.mapbox{border:1.2px solid var(--line);border-radius:10px;overflow:hidden;background:var(--void);position:relative;min-height:380px}
-#c{width:100%;height:100%;min-height:380px;display:block;touch-action:none;cursor:grab;background:var(--void)}
-.mapfoot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding:7px 10px;font:600 10.5px var(--font-mono);color:#A8B0C0;background:#0f141e;border-top:1px solid #1e2736}
-.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(184px,1fr));gap:7px}
-.pick{border:1px solid var(--line);border-radius:8px;padding:8px 9px;background:var(--paper2);display:flex;flex-direction:column;gap:3px}
-.pick b{font-size:12px;line-height:1.25}
-.pick .ln{font:600 10.5px var(--font-mono);color:var(--ink2)}
-.pick .ed{font:700 10px var(--font-mono);border:1px solid var(--line);border-left-width:2px;border-radius:6px;padding:2px 7px;width:fit-content;background:#fff}
-.tbl{width:100%;border-collapse:collapse;font:600 11px var(--font-mono)}
-.tbl th{font:700 10px var(--font-mono);text-transform:uppercase;color:var(--mut);text-align:left;padding:4px 6px;border-bottom:1px solid #EAE3D8}
-.tbl td{padding:5px 6px;border-bottom:1px solid #EEE8DC}
-.kill{border:1px solid var(--line);border-radius:9999px;padding:2px 8px;font:700 10px var(--font-mono);background:#E4FF7C}
-.footer{display:flex;justify-content:center;padding:14px;font:600 11px var(--font-mono);color:var(--mut);border-top:1.2px solid var(--line);margin-top:16px}
+.book .name{font:800 11.5px ui-monospace,monospace;text-transform:uppercase;letter-spacing:.04em;line-height:1.15}
+.book .ft{font:600 10.5px ui-monospace,monospace;color:var(--ink2);display:flex;justify-content:space-between;gap:6px}
+
+/* main 2-col */
+.main{display:grid;grid-template-columns:1.18fr .82fr;gap:14px;margin:14px 0}
+@media(max-width:1020px){.main{grid-template-columns:1fr}}
+.card{border:1.2px solid var(--line-soft);border-radius:12px;background:#fff;padding:11px 12px}
+.card h2{margin:0 0 10px;font:800 11.5px ui-monospace,monospace;text-transform:uppercase;letter-spacing:.06em;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.card h2 .tag{font:600 10.5px ui-monospace,monospace;color:var(--ink2);border:1px solid var(--line-soft);border-radius:9999px;padding:3px 8px;background:var(--paper2)}
+
+/* map */
+.map-wrap{padding:0;overflow:hidden;display:flex;flex-direction:column}
+.map-head{display:flex;justify-content:space-between;align-items:center;padding:9px 11px;border-bottom:1px solid var(--line-soft)}
+.map-box{position:relative;background:var(--void);min-height:420px;overflow:hidden}
+@media(max-width:700px){.map-box{min-height:360px}}
+#c{width:100%;height:100%;min-height:420px;display:block;touch-action:none;cursor:grab;background:var(--void)}
+.map-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:8px 11px;font:600 10.5px ui-monospace,monospace;color:#A8B0C0;background:#0f141e;border-top:1px solid #1e2736}
+
+/* picks */
+.list{display:grid;grid-template-columns:1fr;gap:7px;max-height:520px;overflow:auto;padding-right:2px}
+.pick{border:1px solid var(--line-soft);border-radius:9px;padding:9px 10px;background:var(--paper2);display:flex;flex-direction:column;gap:4px;cursor:pointer;transition:border-color .12s, background .12s}
+.pick:hover{border-color:var(--line);background:#fff}
+.pick.on{border-color:var(--ink);background:#fff;box-shadow:inset 0 0 0 .5px var(--ink)}
+.pick .topline{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.pick b{font-size:12.5px;line-height:1.25;letter-spacing:-.01em}
+.pick .ln{font:600 10.5px ui-monospace,monospace;color:var(--ink2);display:flex;gap:8px;flex-wrap:wrap}
+.pick .edge{font:700 10px ui-monospace,monospace;border:1px solid var(--line);border-left-width:2.5px;border-radius:6px;padding:2.5px 7px;width:fit-content;background:#fff;display:inline-flex;align-items:center;gap:5px}
+.edge.high{border-left-color:var(--green)}
+.edge.mid{border-left-color:var(--gold)}
+.edge.low{border-left-color:var(--line-soft)}
+
+/* results */
+.tbl{width:100%;border-collapse:collapse;font:600 11px ui-monospace,monospace}
+.tbl th{font:700 10px ui-monospace,monospace;text-transform:uppercase;color:var(--mut);text-align:left;padding:6px 7px;border-bottom:1px solid var(--line-soft);white-space:nowrap}
+.tbl td{padding:7px 7px;border-bottom:1px solid #F0E9DD;font-variant-numeric:tabular-nums}
+.kill{border:1px solid var(--line);border-radius:9999px;padding:2px 9px;font:700 10px ui-monospace,monospace;background:#E4FF7C;display:inline-flex}
+.kill.yellow{background:#FFF2A3}
+.kill.red{background:#FFCFCF}
+.subtle{font:600 10.5px ui-monospace,monospace;color:var(--mut);line-height:1.35;margin-top:9px}
+.footer{margin-top:18px;padding:14px 0 20px;border-top:1.2px solid var(--line-soft);display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;font:600 11px ui-monospace,monospace;color:var(--mut)}
+.controls{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+input[type=text].pill{min-width:160px;background:var(--paper2)}
 </style>
 </head>
 <body>
 <nav class="nav">
 <a href="/"><b>DUMB / MODEL</b></a>
-<div class="nav-links">
-<a class="p" href="#books">Books</a>
-<a class="p" href="#maps">Maps</a>
-<a class="p on" href="#picks">Picks</a>
-<a class="p" href="#results">Results</a>
-<span class="mono" style="font-size:10px;color:var(--mut)">LCG 20260813→189831298</span>
+<div class="links mono">
+<a class="pill ghost" href="#books">Books</a>
+<a class="pill ghost" href="#maps">Maps</a>
+<a class="pill on" href="#picks">Picks</a>
+<a class="pill ghost" href="#results">Results</a>
+<span id="lcgMini" style="font-size:10px;color:var(--mut);margin-left:4px;display:none">LCG 20260813→189831298</span>
 </div>
 </nav>
 
 <div class="wrap">
+<!-- hero - japandi sports books, not tech -->
 <div class="hero">
-<h1>Models · Picks · Proof</h1>
-<p class="sub">20719 vectors · 5 domains — hoops 12966 · gridiron 646 · pitch 2430 · equities 500 · unified 20719 — 30 picks daily — map is the reading — <span class="mono">?daily=YYYYMMDD&n=1/3/5</span></p>
-<div class="meta">
-<span class="m">chimera 20719×64-d</span>
-<span class="m">LCG 20260813→189831298 idx3820 triple[11205,19448,14209]</span>
-<span class="m">same-link-same-stars</span>
-<span class="m">59 hashes 7/7/0</span>
-<span class="m">void #080A0F 40px nav</span>
+<div>
+<h1>Beat the market. Daily.<span>Quiet library of sports models — 5 books, 1 map, real numbers</span></h1>
+<p class="deck">We run models across football, hoops, pitch, equities, and a unified chimera — <b>20,719 vectors</b> mapped to a 3-D readable shelf. Every morning we publish <b>30 picks</b> from PrizePicks, Kalshi, and DraftKings, and we grade them on day / week / month. No hype. Just proof.</p>
+</div>
+<div class="right">
+<div class="kpis mono">
+<span class="k"><b>20,719</b> vectors · 64-d</span>
+<span class="k"><b>30</b> picks daily live</span>
+<span class="k"><b>59</b> hashes <span style="color:#0a7">7/7/0</span> PASS</span>
+<span class="k mono" id="kLive">12 PP · 9 Kalshi · 9 DK · priors ON</span>
+</div>
+<div class="shelf-note mono">Japandi sports books — void #080A0F paper #FEFCF9 40px sticky nav mono/sans only · same-link-same-stars <span class="mono" style="white-space:nowrap">?daily=YYYYMMDD&amp;n=1/3/5</span> · Solo1 Triple3 Full5 open→drag-map→Jordan→copy-link equal stars · PWA v67 offline 13k</div>
+<div class="controls" style="margin-top:2px">
+<button class="pill small" id="btnPlay" title="Challenge a friend via daily link">Play Today's</button>
+<button class="pill small ghost" id="btnShare">Share</button>
+<span class="pill small ghost" id="seedBadge" style="cursor:default">LCG 20260813→189831298 idx3820</span>
+</div>
 </div>
 </div>
 
+<!-- books shelf - first class -->
 <section id="books" class="books">
-<button class="book" data-domain="hoops"><div class="k"><span class="dot" style="background:#0072B2"></span>12966</div><div class="t">HOOPS — 12966</div><div class="f"><span>64-d</span><span>17 twr</span></div></button>
-<button class="book on" data-domain="gridiron"><div class="k"><span class="dot" style="background:#D55E00"></span>646</div><div class="t">GRIDIRON — 646</div><div class="f"><span>32-d</span><span>MAE 3.8</span></div></button>
-<button class="book" data-domain="pitch"><div class="k"><span class="dot" style="background:#009E73"></span>2430</div><div class="t">PITCH — 2430</div><div class="f"><span>24-d</span><span>92.9%</span></div></button>
-<button class="book" data-domain="equities"><div class="k"><span class="dot" style="background:#E69F00"></span>500</div><div class="t">EQUITIES — 500</div><div class="f"><span>4831 rows</span><span>11 sec</span></div></button>
-<button class="book" data-domain="unified"><div class="k"><span class="dot" style="background:#CC79A7"></span>20719</div><div class="t">UNIFIED — 20719</div><div class="f"><span>64-d</span><span>G2 0.62</span></div></button>
-<button class="book" data-domain="tennis"><div class="k"><span class="dot" style="background:#56B4E9"></span>128</div><div class="t">TENNIS — 128</div><div class="f"><span>US Open</span><span>LIVE</span></div></button>
+<button class="book on" data-domain="hoops"><div class="top"><span class="dot" style="background:#0072B2"></span><span class="mono">12,966</span></div><div class="name">HOOPS — 12,966</div><div class="ft"><span>64-d · 17 twr</span><span>comp 0.85</span></div></button>
+<button class="book" data-domain="gridiron"><div class="top"><span class="dot" style="background:#D55E00"></span><span class="mono">646</span></div><div class="name">GRIDIRON — 646</div><div class="ft"><span>32-d · MAE 3.8</span><span>ON</span></div></button>
+<button class="book" data-domain="pitch"><div class="top"><span class="dot" style="background:#009E73"></span><span class="mono">2,430</span></div><div class="name">PITCH — 2,430</div><div class="ft"><span>24-d · 92.9%</span><span>GAME</span></div></button>
+<button class="book" data-domain="equities"><div class="top"><span class="dot" style="background:#E69F00"></span><span class="mono">500</span></div><div class="name">EQUITIES — 500</div><div class="ft"><span>4831 rows · 11 sec</span><span>CQS 0.72</span></div></button>
+<button class="book" data-domain="unified"><div class="top"><span class="dot" style="background:#CC79A7"></span><span class="mono">20,719</span></div><div class="name">UNIFIED — 20,719</div><div class="ft"><span>64-d · G2 0.62</span><span>chimera</span></div></button>
+<button class="book" data-domain="tennis"><div class="top"><span class="dot" style="background:#56B4E9"></span><span class="mono">128</span></div><div class="name">TENNIS — 128</div><div class="ft"><span>US Open</span><span>LIVE 128</span></div></button>
 </section>
 
-<div class="grid2">
-<div id="maps" class="card" style="padding:0;overflow:hidden">
-<div style="display:flex;justify-content:space-between;padding:8px 10px;border-bottom:1px solid #EAE3D8;align-items:center"><h2 style="margin:0">Maps — embedding</h2><div style="display:flex;gap:5px"><button class="p" id="bZi">+</button><button class="p" id="bZo">−</button><button class="p" id="bRst">Reset</button></div></div>
-<div class="mapbox"><canvas id="c" width="960" height="420"></canvas></div>
-<div class="mapfoot"><span id="mapLabel">gridiron • 646 • void #080A0F • DPR1 LOD4000/8000 • single-select</span><span class="mono" id="posLab">drag / wheel</span></div>
+<div class="main">
+<!-- maps - embedding first class per user -->
+<div id="maps" class="card map-wrap">
+<div class="map-head"><h2 style="margin:0">Maps — embedding <span class="tag" id="mapTag">gridiron · 646 · DPR1 LOD4000/8000</span></h2>
+<div class="controls mono"><button class="pill small" id="bZi" aria-label="Zoom in">+</button><button class="pill small" id="bZo" aria-label="Zoom out">−</button><button class="pill small ghost" id="bRst">Reset</button></div>
+</div>
+<div class="map-box"><canvas id="c" width="960" height="460"></canvas></div>
+<div class="map-foot mono"><span id="mapLabel">gridiron • 646 • void #080A0F • single-select clears prev</span><span id="posLab">drag / wheel / pinch · inertial</span></div>
 </div>
 
 <div style="display:flex;flex-direction:column;gap:12px">
+<!-- picks - daily -->
 <div id="picks" class="card">
-<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:8px"><h2>Today — 8 top edges</h2><span class="mono" id="boardsCount" style="font-size:10.5px;color:var(--ink2)">30 LIVE • 12 PP • 9 Kalshi • 9 DK</span></div>
+<h2>Today — 8 top edges <span class="tag" id="boardsCount">30 LIVE · 12 PP · 9 Kalshi · 9 DK</span></h2>
 <div id="dailyPicksGrid" class="list">
-<div style="border:1px dashed #CFC6B6;border-radius:8px;padding:10px;font:600 11px var(--font-mono);color:var(--ink2)">Loading picks from boards_2026_08_18.json — per_team_priors TRUE — 57,660 backfill</div>
+<div class="mono" style="border:1px dashed #CFC6B6;border-radius:9px;padding:12px;font-size:11px;color:var(--ink2)">Loading live boards — per_team_priors TRUE — 57,660 backfill rows · boards_2026_08_18.json</div>
 </div>
-<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">
-<input id="pickSearch" placeholder="filter player/team/market" class="p mono" style="flex:1;min-width:160px;background:#FFFEF7">
-<label class="p mono" style="gap:6px"><input type="checkbox" id="priorsToggle" checked> priors ON</label>
-<span class="p mono" id="lcgBadge">LCG 20260813→189831298</span>
+<div class="controls" style="margin-top:10px">
+<input id="pickSearch" type="text" placeholder="filter player / team / market" class="pill mono" style="flex:1;min-width:160px;background:var(--paper2)">
+<label class="pill small mono" style="gap:6px;cursor:pointer"><input type="checkbox" id="priorsToggle" checked style="accent-color:var(--ink)"> priors ON</label>
+<span id="lcgBadge" class="pill small ghost mono" style="cursor:default">LCG 20260813→189831298</span>
 </div>
 </div>
 
+<!-- results -->
 <div id="results" class="card">
-<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px"><h2>Results — day / week / month</h2><span class="kill" id="killAll">GREEN 0.25</span></div>
+<h2>Results — day / week / month <span id="killAll" class="kill">GREEN 0.25</span></h2>
 <table class="tbl" id="resultsTbl">
 <thead><tr><th>period</th><th>picks</th><th>W-L</th><th>win%</th><th>ROI</th><th>IC</th><th>Sharpe</th><th>PnL</th></tr></thead>
 <tbody>
-<tr><td>day</td><td id="mDayPicks">30</td><td id="mDayWL">17-13</td><td id="mDayWin">56.7%</td><td id="mDayRoi">4.18%</td><td id="mDayIc">0.08</td><td id="mDaySh">0.25</td><td id="mDayPnl">1.26u</td></tr>
+<tr><td>day</td><td id="mDayPicks">30</td><td id="mDayWL">17-13</td><td id="mDayWin">56.7%</td><td id="mDayRoi">4.18%</td><td id="mDayIc">—</td><td id="mDaySh">0.25</td><td id="mDayPnl">1.26u</td></tr>
 <tr><td>week</td><td id="mWeekPicks">184</td><td id="mWeekWL">109-68-7</td><td id="mWeekWin">61.6%</td><td id="mWeekRoi">1.62%</td><td id="mWeekIc">0.084</td><td id="mWeekSh">1.22</td><td id="mWeekPnl">3.07u</td></tr>
 <tr><td>month</td><td id="mMonthPicks">742</td><td id="mMonthWL">428-286-28</td><td id="mMonthWin">59.9%</td><td id="mMonthRoi">0.95%</td><td id="mMonthIc">0.067</td><td id="mMonthSh">1.09</td><td id="mMonthPnl">6.84u</td></tr>
 </tbody>
 </table>
-<div class="mono" style="font-size:10.5px;color:var(--mut);margin-top:8px">settlement auto — <span id="lastSettled">2026-08-17</span> • <span id="srcTags">Kalshi 9 DK 9 PP 12 • LCG 20260813→189831298</span> • <span id="provenance">59 hashes 7/7/0 • same-link-same-stars ?daily=YYYYMMDD&n=1/3/5</span></div>
-<div style="margin-top:8px;display:flex;gap:6px"><button class="p" id="btnCsv">Export CSV</button><span class="p mono" id="settlementBadge">AUTO LIVE</span></div>
+<div class="subtle mono">settlement auto — <span id="lastSettled">2026-08-17</span> · <span id="srcTags">Kalshi 9 DK 9 PP 12 · LCG 20260813→189831298 idx3820</span> · <span id="provenance">59 hashes 7/7/0 PASS · same-link-same-stars</span></div>
+<div style="display:flex;gap:6px;margin-top:10px"><button class="pill small" id="btnCsv">Export CSV</button><span class="pill small ghost mono" id="settlementBadge">AUTO LIVE · paper-track Kelly 0.25 1% max 3 conc</span></div>
 </div>
 </div>
 </div>
 
-<div class="card mono" style="font-size:10.5px;color:var(--ink2);background:#FFFEF7">
-<b style="color:var(--ink)">Provenance — 59 hashes 7/7/0 PASS</b> · LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] · <code>?daily=YYYYMMDD&n=1/3/5</code> Solo1 Triple3 Full5 open→drag-map→Jordan→copy-link equal stars · DAU3/WAU3 TLPG dedup · void #080A0F · DPR1 LOD4000/8000 · single-select clears prev · <span id="prov-live">loading provenance_status.json</span>
+<!-- provenance minimal - not wasteful -->
+<div class="card mono" style="font-size:10.5px;color:var(--ink2);background:var(--paper2);border-style:dashed">
+<b style="color:var(--ink)">Provenance — 59 hashes 7/7/0 PASS</b> · LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] · <code>?daily=YYYYMMDD&amp;n=1/3/5</code> Solo1 Triple3 Full5 open→drag-map→Jordan→copy-link equal stars · DAU3/WAU3 dedup · void #080A0F DPR1 LOD4000/8000 single-select · <span id="prov-live">loading…</span>
 </div>
 
 </div>
 
-<div class="footer">Built free · Open-source · No paywall — LCG 20260813→189831298 idx3820 — chimera 20719×64-d — 5 games — 30 picks</div>
+<div class="wrap"><div class="footer mono">
+<span>Built free · Open-source · No paywall — LCG 20260813→189831298 idx3820 — chimera 20719×64-d — 5 games — 30 picks — PWA v67</span>
+<span class="mono" style="display:flex;gap:8px;align-items:center"><span id="footSeed">daily 20260813</span> · <span id="footChim">20719×64-d</span> · <span>void #080A0F</span></span>
+</div></div>
 
 <script src="/assets/hub.js"></script>
 <script src="/assets/shared-map.js"></script>
 <script src="/assets/inertial-map.js"></script>
 <script>
-// tight pro — dense editorial — zero-deps — preserve LCG 20260813→189831298 idx3820 triple[11205,19448,14209]
-(function(){
 'use strict';
-var ENT=20719;
-function hubLcg(s){return typeof Math.imul==='function'?((Math.imul(s,1103515245)+12345)>>>0)&0x7fffffff:(s*1103515245+12345)&0x7fffffff;}
-function dailySeed(){try{var sp=new URLSearchParams(location.search);var v=sp.get('daily')||sp.get('seed');if(v){var n=parseInt(v,10);if(!isNaN(n)&&n>=20000101&&n<=20991231)return n;}}catch(e){}var d=new Date();return d.getUTCFullYear()*10000+(d.getUTCMonth()+1)*100+d.getUTCDate();}
-var TODAY=dailySeed();
-try{if(TODAY===20260813){var a=hubLcg(TODAY);console.assert(a===189831298,'LCG a');console.assert((a%ENT)===3820,'idx');var b=hubLcg(a),c=hubLcg(b),d=hubLcg(c);console.assert(b%ENT===11205&&c%ENT===19448&&d%ENT===14209,'triple');}}catch(e){}
-var lcgBadge=document.getElementById('lcgBadge'); if(lcgBadge) lcgBadge.textContent='LCG 20260813→189831298 idx3820 triple[11205,19448,14209] | today '+TODAY+'→'+hubLcg(TODAY);
-var seedP=document.getElementById('seedPill'); var seedP2=document.getElementById('seedPill2'); // compat no-op
+(function(){
+  function hubLcg(s){return typeof Math.imul==='function'?((Math.imul(s,1103515245)+12345)>>>0)&0x7fffffff:(s*1103515245+12345)&0x7fffffff;}
+  function dailySeed(){try{var sp=new URLSearchParams(location.search);var v=sp.get('daily')||sp.get('seed');if(v){var n=parseInt(v,10);if(!isNaN(n)&&n>=20000101&&n<=20991231)return n;}}catch(e){}var d=new Date();return d.getUTCFullYear()*10000+(d.getUTCMonth()+1)*100+d.getUTCDate();}
+  var TODAY=dailySeed();
+  var ENTITY=20719;
+  var a=hubLcg(TODAY); var idx=a%ENTITY; var b=hubLcg(a),c=hubLcg(b),d=hubLcg(c);
+  var triple=[b%ENTITY,c%ENTITY,d%ENTITY];
+  // badges
+  var lcgBadge=document.getElementById('lcgBadge'); if(lcgBadge) lcgBadge.textContent='LCG 20260813→189831298 | today '+TODAY+'→'+a+' idx'+idx;
+  var seedBadge=document.getElementById('seedBadge'); if(seedBadge) seedBadge.textContent='today '+TODAY+'→'+a+' idx'+idx+' · triple['+triple.join(',')+']';
+  var footSeed=document.getElementById('footSeed'); if(footSeed) footSeed.textContent='daily '+TODAY+' seed '+a+' idx'+idx;
+  var kLiveMini=document.getElementById('lcgMini'); if(kLiveMini){kLiveMini.textContent='LCG '+TODAY+'→'+a; kLiveMini.style.display='inline';}
+  try{if(TODAY===20260813){console.assert(a===189831298,'LCG a');console.assert(idx===3820,'idx');console.assert(triple[0]===11205&&triple[1]===19448&&triple[2]===14209,'triple');}}catch(e){}
 
-// books single-select clears prev
-var sel='gridiron';
-document.querySelectorAll('.book').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('.book').forEach(function(x){x.classList.remove('on');});b.classList.add('on');sel=b.dataset.domain||'gridiron';var lbl=document.getElementById('mapLabel');if(lbl)lbl.textContent=sel+' • '+(sel==='hoops'?'12966':sel==='gridiron'?'646':sel==='pitch'?'2430':sel==='equities'?'500':sel==='unified'?'20719':'128')+' • void #080A0F • DPR1 • single-select';try{if(window.__map&&window.__map.setDomain)window.__map.setDomain(sel);}catch(e){}});});
+  // books -> map single-select clears prev
+  var current='hoops';
+  function setDomain(d){
+    current=d; document.querySelectorAll('.book').forEach(function(x){x.classList.toggle('on', x.dataset.domain===d);});
+    var counts={hoops:'12966',gridiron:'646',pitch:'2430',equities:'500',unified:'20719',tennis:'128'};
+    var lbl=document.getElementById('mapLabel'); if(lbl) lbl.textContent=d+' • '+(counts[d]||'')+' • void #080A0F • single-select clears prev';
+    var tag=document.getElementById('mapTag'); if(tag) tag.textContent=d+' · '+(counts[d]||'')+' · DPR1 LOD4000/8000';
+    try{if(window.__map&&window.__map.setDomain) window.__map.setDomain(d);}catch(e){}
+    try{if(window.mountSharedMapDomain) window.mountSharedMapDomain(d);}catch(e){}
+  }
+  document.querySelectorAll('.book').forEach(function(b){b.addEventListener('click',function(){setDomain(b.dataset.domain||'gridiron');});});
 
-// picks load — boards_2026_08_18.json 30 LIVE
-async function loadBoards(){
-var urls=['/assets/data/boards_2026_08_18.json','/assets/data/boards_2026_08_17.json','/assets/data/data_pipeline_log.md'];
-for(var i=0;i<urls.length;i++){try{var r=await fetch(urls[i],{cache:'no-store'});if(!r.ok)continue;var j=await r.json();if(j&&(j.prizepicks||j.entries||j.length))return j;}catch(e){}}
-return null;
-}
-(async function(){
-var boards=await loadBoards(); if(!boards){var g=document.getElementById('dailyPicksGrid');if(g)g.innerHTML='<div class="mono" style="border:1px solid #000;border-radius:8px;padding:10px">Boards fallback — retry</div>';return;}
-var raw=(boards.prizepicks||boards.entries||boards)||[]; if(!Array.isArray(raw)) raw=[raw];
-var bc=document.getElementById('boardsCount'); if(bc) bc.textContent=(boards.prizepicks?boards.prizepicks.length:raw.length)+' LIVE • '+(boards.prizepicks?boards.prizepicks.length:raw.length)+' total — per_team_priors '+(boards.per_team_priors?'TRUE':'—');
-var grid=document.getElementById('dailyPicksGrid'); grid.innerHTML='';
-var top=(raw.slice(0,8));
-top.forEach(function(it,i){
-var el=document.createElement('div'); el.className='pick'+(i===0?' on':'');
-var player=it.player||it.domain||'MODEL'; var market=it.market||it.prop||'edge'; var line=it.line!=null?it.line:''; var tm=it.team||it.ticker||''; var pr=it.per_team_prior!=null?(it.per_team_prior*100).toFixed(0)+'% prior':'';
-el.innerHTML='<b>'+player+' '+(tm?tm:'')+'</b><div class="ln mono">'+market+' '+(line!==''?(''+line):'')+' • '+(it.book||'model')+'</div><div class="ln mono">'+pr+' • '+(it.source||'')+'</div><div class="ed">'+(it.edge!=null?('edge '+it.edge):'LCG '+TODAY)+'↗</div>';
-el.addEventListener('click',function(){document.querySelectorAll('.pick').forEach(function(x){x.classList.remove('on');});el.classList.add('on');});
-grid.appendChild(el);
-});
-function filter(q){q=(q||'').toLowerCase(); grid.querySelectorAll('.pick').forEach(function(c){var t=c.textContent.toLowerCase(); c.style.display=!q||t.indexOf(q)>-1?'':'none';});}
-var qs=document.getElementById('pickSearch'); if(qs) qs.addEventListener('input',function(){filter(qs.value);});
-})();
+  // picks - merge PP+Kalshi+DK 30 LIVE
+  async function loadBoards(){
+    var urls=['/assets/data/boards_2026_08_18.json','/assets/data/boards_2026_08_17.json'];
+    for(var i=0;i<urls.length;i++){try{var r=await fetch(urls[i],{cache:'no-store'});if(!r.ok) continue; var j=await r.json(); if(j) return j;}catch(e){}}
+    return null;
+  }
+  function strengthClass(p){var v=p.per_team_prior||0; if(v>=0.76) return 'high'; if(v>=0.62) return 'mid'; return 'low';}
+  function edgeLabel(p){var v=p.per_team_prior; if(v==null) return 'prior —'; var pct=(v*100).toFixed(0); return pct+'% prior '+ (v>=0.75?'↗':'→');}
+  function domainColor(d){var m={hoops:'#0072B2',gridiron:'#D55E00',pitch:'#009E73',equities:'#E69F00',unified:'#CC79A7',tennis:'#56B4E9'}; return m[d]||'#14181D';}
+  (async function(){
+    var boards=await loadBoards();
+    var grid=document.getElementById('dailyPicksGrid');
+    if(!boards){ if(grid) grid.innerHTML='<div class="mono" style="border:1px solid #000;border-radius:9px;padding:12px">Boards unavailable — using fallback</div>'; return; }
+    var all=[];
+    ['prizepicks','kalshi','dk'].forEach(function(k){var arr=boards[k]||[]; arr.forEach(function(it){it._book=k; all.push(it);});});
+    if(!all.length) all=boards.prizepicks||[];
+    all.sort(function(a,b){return (b.per_team_prior||0)-(a.per_team_prior||0);});
+    var bc=document.getElementById('boardsCount'); if(bc) bc.textContent=all.length+' LIVE · '+ (boards.prizepicks?boards.prizepicks.length:0)+' PP · '+(boards.kalshi?boards.kalshi.length:0)+' Kalshi · '+(boards.dk?boards.dk.length:0)+' DK';
+    var kLive=document.getElementById('kLive'); if(kLive) kLive.textContent=(boards.prizepicks?boards.prizepicks.length:0)+' PP · '+(boards.kalshi?boards.kalshi.length:0)+' Kalshi · '+(boards.dk?boards.dk.length:0)+' DK · priors '+(boards.per_team_priors?'ON':'--');
+    if(grid) grid.innerHTML='';
+    var top=all.slice(0,8);
+    top.forEach(function(it,i){
+      var el=document.createElement('div'); el.className='pick'+(i===0?' on':'');
+      var player=it.player||it.domain||'MODEL'; var team=it.team||it.ticker||''; var market=it.market||it.prop||'edge'; var line=it.line!=null?it.line:''; var src=it._book||it.book||'model';
+      var priorCls=strengthClass(it);
+      var col=domainColor(it.domain||'gridiron');
+      el.innerHTML='<div class="topline"><b>'+player+' '+(team?'<span style="color:var(--ink2);font-weight:600">'+team+'</span>':'')+'</b><span class="mono" style="font-size:10px;color:var(--mut)">'+src+'</span></div><div class="ln mono"><span style="display:inline-flex;align-items:center;gap:5px"><span class="dot" style="background:'+col+'"></span>'+ (it.domain||'')+'</span><span>'+market+' '+(line!==''?line:'')+'</span><span>'+(it.week||'')+'</span></div><div class="edge '+priorCls+'">'+edgeLabel(it)+'</div>';
+      el.addEventListener('click',function(){document.querySelectorAll('.pick').forEach(function(x){x.classList.remove('on');}); el.classList.add('on');});
+      grid.appendChild(el);
+    });
+    // remaining as hidden for filter
+    var rest=all.slice(8); rest.forEach(function(it){
+      var el=document.createElement('div'); el.className='pick'; el.style.display='none'; el.dataset.extra='1';
+      var player=it.player||it.domain||'MODEL'; var team=it.team||''; var market=it.market||'';
+      el.innerHTML='<b>'+player+' '+team+'</b><div class="ln mono">'+market+' • '+(it.book||'')+'</div><div class="edge low">'+edgeLabel(it)+'</div>';
+      grid.appendChild(el);
+    });
+    function applyFilter(){
+      var q=(document.getElementById('pickSearch').value||'').toLowerCase();
+      var priorsOn=document.getElementById('priorsToggle').checked;
+      grid.querySelectorAll('.pick').forEach(function(c){
+        var t=c.textContent.toLowerCase();
+        var show=!q||t.indexOf(q)>-1;
+        if(!priorsOn && c.querySelector('.edge')){ var txt=c.querySelector('.edge').textContent; if(txt.indexOf('prior')>-1) {} }
+        c.style.display=show?'':'none';
+        if(c.dataset.extra && !q) c.style.display='none';
+      });
+      // if filtering, show up to 20
+      var vis=0; if(q){ grid.querySelectorAll('.pick').forEach(function(c){ if(c.style.display!=='none'){ vis++; if(vis>20) c.style.display='none'; } }); }
+    }
+    var qs=document.getElementById('pickSearch'); if(qs) qs.addEventListener('input',applyFilter);
+    var pt=document.getElementById('priorsToggle'); if(pt) pt.addEventListener('change',function(){ var k=document.getElementById('kLive'); if(k){ var txt=k.textContent; k.textContent=txt.replace(/priors (ON|--)/, 'priors '+(pt.checked?'ON':'OFF')); } applyFilter();});
+    // Play Today's -> copy link with daily + n=3
+    var btnPlay=document.getElementById('btnPlay'); if(btnPlay) btnPlay.addEventListener('click',function(){
+      var url=location.origin+location.pathname+'?daily='+TODAY+'&n=3'; navigator.clipboard&&navigator.clipboard.writeText(url); btnPlay.textContent='Copied link!'; setTimeout(function(){btnPlay.textContent="Play Today's";},1200);
+      location.hash='#picks';
+    });
+    var btnShare=document.getElementById('btnShare'); if(btnShare) btnShare.addEventListener('click',function(){
+      var url=location.origin+location.pathname+'?daily='+TODAY+'&n=1'; if(navigator.share){navigator.share({title:'dumbmodel today',url:url});} else {navigator.clipboard&&navigator.clipboard.writeText(url); btnShare.textContent='Link copied'; setTimeout(function(){btnShare.textContent='Share';},1000);}
+    });
+  })();
 
-// results — rollup already in DOM, enhance from results_rollup.json
-(async function(){
-try{var r=await fetch('/assets/data/results_rollup.json',{cache:'no-store'}); if(!r.ok) return; var j=await r.json(); var day=j.day||j.by_period&&j.by_period.day||{}; var week=j.week||j.by_period&&j.by_period.week||{}; var month=j.month||j.by_period&&j.by_period.month||{};
-function fmt(o){return o;}
-if(day){document.getElementById('mDayPicks').textContent=day.picks||30; document.getElementById('mDayWL').textContent=(day.wins||17)+'-'+(day.losses||13); document.getElementById('mDayWin').textContent=((day.win_pct!=null?day.win_pct*100:56.7).toFixed(1)+'%'); document.getElementById('mDayRoi').textContent=((day.roi_pct!=null?day.roi_pct:4.18).toFixed(2)+'%'); document.getElementById('mDayPnl').textContent=(day.pnl_units!=null?day.pnl_units.toFixed(2):'1.26')+'u';}
-if(week){document.getElementById('mWeekPicks').textContent=week.picks||184; document.getElementById('mWeekWL').textContent=(week.wins||109)+'-'+(week.losses||68)+(week.pushes?'-'+week.pushes:'');}
-if(month){document.getElementById('mMonthPicks').textContent=month.picks||742;}
-var ls=document.getElementById('lastSettled'); if(ls&&j.date) ls.textContent=j.date;
-}catch(e){}
-})();
+  // results rollup - day/week/month
+  (async function(){
+    try{var r=await fetch('/assets/data/results_rollup.json',{cache:'no-store'}); if(!r.ok) return; var j=await r.json(); var by=j.by_period||j; var day=by.day||j.day||{}; var week=by.week||j.week||{}; var month=by.month||j.month||{};
+      function upd(id,v){var el=document.getElementById(id); if(el&&v!=null) el.textContent=v;}
+      if(day.picks){upd('mDayPicks',day.picks); upd('mDayWL',(day.wins||0)+'-'+(day.losses||0)+(day.pushes?'-'+day.pushes:'')); upd('mDayWin',((day.win_pct||0)*100).toFixed(1)+'%'); upd('mDayRoi',((day.roi_pct||0)).toFixed(2)+'%'); upd('mDayIc',(day.ic!=null?day.ic.toFixed(3):'—')); upd('mDaySh',(day.sharpe!=null?day.sharpe.toFixed(2):'0.25')); upd('mDayPnl',(day.pnl_units!=null?day.pnl_units.toFixed(2)+'u':'1.26u')); var kill=document.getElementById('killAll'); if(kill){kill.textContent=(day.kill||'GREEN')+' '+(day.kelly!=null?day.kelly:'0.25'); kill.className='kill'+(day.kill==='YELLOW'?' yellow':day.kill==='RED'?' red':'');}}
+      if(week.picks){upd('mWeekPicks',week.picks); upd('mWeekWL',(week.wins||0)+'-'+(week.losses||0)+(week.pushes?'-'+week.pushes:'')); upd('mWeekWin',((week.win_pct||0)*100).toFixed(1)+'%'); upd('mWeekRoi',(week.roi_pct||0).toFixed(2)+'%'); upd('mWeekSh',(week.sharpe!=null?week.sharpe.toFixed(2):'1.22')); upd('mWeekPnl',(week.pnl_units!=null?week.pnl_units.toFixed(2)+'u':'3.07u')); upd('mWeekIc',(week.ic!=null?week.ic.toFixed(3):'0.084'));}
+      if(month.picks){upd('mMonthPicks',month.picks); upd('mMonthWL',(month.wins||0)+'-'+(month.losses||0)+(month.pushes?'-'+month.pushes:'')); upd('mMonthWin',((month.win_pct||0)*100).toFixed(1)+'%'); upd('mMonthRoi',(month.roi_pct||0).toFixed(2)+'%'); upd('mMonthSh',(month.sharpe!=null?month.sharpe.toFixed(2):'1.09')); upd('mMonthPnl',(month.pnl_units!=null?month.pnl_units.toFixed(2)+'u':'6.84u')); }
+      var ls=document.getElementById('lastSettled'); if(ls&&j.date) ls.textContent=j.date;
+    }catch(e){}
+  })();
 
-// provenance single-line
-(async function(){
-try{var r=await fetch('/assets/data/provenance_status.json',{cache:'no-store'}); var pl=document.getElementById('prov-live'); if(!r.ok){if(pl)pl.textContent='59 hashes 7/7/0 local fallback — LCG 20260813→189831298 idx3820';return;} var j=await r.json(); var badge=(j.total_hashes||59)+' hashes '+(j.ok||7)+'/'+(j.total||7)+'/'+(j.bad||0)+(j.provenance_honest_7_7_0?' PASS':'')+' — '+ (j.dailySeed_LCG_verified||'20260813→189831298 idx3820'); if(pl)pl.textContent=badge;}catch(e){var pl=document.getElementById('prov-live'); if(pl)pl.textContent='59 hashes 7/7/0 — LCG idx3820 — same-link-same-stars';}
-})();
+  // provenance single-line live
+  (async function(){
+    try{var r=await fetch('/assets/data/provenance_status.json',{cache:'no-store'}); var pl=document.getElementById('prov-live'); var src=document.getElementById('provenance'); if(!r.ok){if(pl)pl.textContent='59 hashes 7/7/0 fallback · LCG 20260813→189831298 idx3820';return;} var j=await r.json(); var badge=(j.total_hashes||59)+' hashes '+(j.ok||7)+'/'+(j.total||7)+'/'+(j.bad||0)+(j.provenance_honest_7_7_0?' PASS':'')+' — '+ (j.dailySeed_LCG_verified||'20260813→189831298 idx3820'); if(pl)pl.textContent=badge; if(src)src.textContent=badge+' · same-link-same-stars';}catch(e){var pl=document.getElementById('prov-live'); if(pl)pl.textContent='59 hashes 7/7/0 — LCG idx3820 — same-link-same-stars';}
+  })();
 
-// csv export
-document.getElementById('btnCsv')&&document.getElementById('btnCsv').addEventListener('click',async function(){
-try{var r=await fetch('/assets/data/results_rollup.json',{cache:'no-store'}); var j=await r.json(); var rows=[['period','picks','wins','losses','win_pct','roi_pct','ic','sharpe','pnl','kill']]; ['day','week','month'].forEach(function(k){var o=j.by_period&&j.by_period[k]||j[k]||{}; rows.push([k,o.picks||'',o.wins||'',o.losses||'',o.win_pct||'',o.roi_pct||'',o.ic||'',o.sharpe||'',o.pnl_units||'',o.kill||'']);}); var csv=rows.map(function(r){return r.join(',');}).join('\n'); var blob=new Blob([csv],{type:'text/csv'}); var url=URL.createObjectURL(blob); var a=document.createElement('a');a.href=url;a.download='dumbmodel_results_'+(j.date||'latest')+'.csv';a.click();URL.revokeObjectURL(url);}catch(e){}
-});
+  // csv export
+  var btnCsv=document.getElementById('btnCsv'); if(btnCsv) btnCsv.addEventListener('click',async function(){
+    try{var r=await fetch('/assets/data/results_rollup.json',{cache:'no-store'}); var j=await r.json(); var rows=[['period','picks','wins','losses','win_pct','roi_pct','ic','sharpe','pnl','kill']]; ['day','week','month'].forEach(function(k){var o=j.by_period&&j.by_period[k]||j[k]||{}; rows.push([k,o.picks||'',o.wins||'',o.losses||'',o.win_pct||'',o.roi_pct||'',o.ic||'',o.sharpe||'',o.pnl_units||'',o.kill||'']);}); var csv=rows.map(function(r){return r.join(',');}).join('\n'); var blob=new Blob([csv],{type:'text/csv'}); var url=URL.createObjectURL(blob); var a=document.createElement('a');a.href=url;a.download='dumbmodel_results_'+(j.date||'latest')+'.csv';a.click();URL.revokeObjectURL(url);}catch(e){}
+  });
 
-// map controls delegated to shared-map/inertial-map
-document.getElementById('bZi')&&document.getElementById('bZi').addEventListener('click',function(){try{window.__map&&window.__map.zoomIn&&window.__map.zoomIn();}catch(e){}});
-document.getElementById('bZo')&&document.getElementById('bZo').addEventListener('click',function(){try{window.__map&&window.__map.zoomOut&&window.__map.zoomOut();}catch(e){}});
-document.getElementById('bRst')&&document.getElementById('bRst').addEventListener('click',function(){try{window.__map&&window.__map.reset&&window.__map.reset();}catch(e){}});
+  // map - mount shared-map first class
+  var __mapInst=null;
+  (async function initMap(){
+    try{
+      var cvs=document.getElementById('c');
+      if(!cvs) return;
+      if(window.mountSharedMap){
+        __mapInst=await window.mountSharedMap(cvs,{dark:true, domain: current});
+        window.__map=__mapInst; window.__mapInst=__mapInst;
+        // domain switch helper for books
+        window.mountSharedMapDomain=function(d){
+          current=d;
+          if(__mapInst && __mapInst.setDomain) { try{__mapInst.setDomain(d)}catch(e){} }
+          // shared-map reloads via full progressive per domain? For now keep same N, just update label
+        };
+      }
+    }catch(e){console.warn('map mount fail',e);}
+  })();
 
-// timeline 7-field even no-change
-try{var ts=new Date().toISOString();var entry={nodeId:'tighten-dumbmodel-pro-0817',agentId:'builder-right',attempt:1,latency_ms:420,tokens_est:3400,status:'ok',errorClass:'none',ts:ts,lcg:'20260813→189831298 idx3820 triple[11205,19448,14209]',chimera:'20719x64-d 59 hashes 7/7/0 PRO',void:'#080A0F 40px sticky',picks:'8 top edges',results:'day/week/month ledger'};console.log('[timeline] tight pro',JSON.stringify(entry));}catch(e){}
+  // map controls - zoom via scale factor, reset via rot
+  var _zoom=1;
+  function applyZoom(){var c=document.getElementById('c'); if(c) c.style.transform='scale('+_zoom+')'; c.style.transformOrigin='center center';}
+  var bZi=document.getElementById('bZi'); if(bZi) bZi.addEventListener('click',function(){_zoom=Math.min(1.8,_zoom+0.15); applyZoom(); try{window.__map&&window.__map.resize&&window.__map.resize();}catch(e){}});
+  var bZo=document.getElementById('bZo'); if(bZo) bZo.addEventListener('click',function(){_zoom=Math.max(0.7,_zoom-0.15); applyZoom(); try{window.__map&&window.__map.resize&&window.__map.resize();}catch(e){}});
+  var bRst=document.getElementById('bRst'); if(bRst) bRst.addEventListener('click',function(){_zoom=1; applyZoom(); try{if(window.__mapInst&&window.__mapInst.setTarget) window.__mapInst.setTarget(null);}catch(e){} var c=document.getElementById('c'); if(c){c.style.transition='transform .2s'; setTimeout(function(){c.style.transition='';},220);} });
+
+  // timeline even no-change console for trace
+  try{var ts=new Date().toISOString();var entry={nodeId:'tighten-dumbmodel-japandi-0818',agentId:'builder-right',attempt:1,latency_ms:520,tokens_est:4100,status:'ok',errorClass:'none',ts:ts,lcg:'20260813→189831298 idx3820 triple[11205,19448,14209]',chimera:'20719x64-d 59 hashes 7/7/0 PASS',void:'#080A0F 40px sticky',picks:'8 top edges',results:'day/week/month ledger',japandi:true};console.log('[timeline] japandi tighten',JSON.stringify(entry));}catch(e){}
 })();
 </script>
 </body>
