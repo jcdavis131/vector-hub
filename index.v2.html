@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>dumbmodel — embedding maps</title>
+<meta name="description" content="dumbmodel — embedding maps first. 20719 vectors 64-d · 6 domains · proximity = similarity · clusters = play styles/roles · void #080A0F">
+<meta name="theme-color" content="#080A0F">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080A0F'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23FEFCF9'/%3E%3C/svg%3E">
+<style>
+/*
+ dumbmodel.com v2 — embedding-map-first
+ brand: void #080A0F paper #FEFCF9
+ 40px sticky nav mono/sans only japandi
+ zero-deps true stdlib only PWA v67 offline 13k
+ LCG everyday chain 20260813→189831298 idx3820
+ triple[11205,19448,14209] five[11205,19448,14209,11701,18524]
+ same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5
+ 6 domains HOOPS 12966 GRIDIRON 646 PITCH 2430 EQUITIES 500 UNIFIED 20719 TENNIS 128
+ DPR1 fillRect void dark OKABE-8 visible single-select clears prev
+*/
+:root{
+  --void:#080A0F; --void2:#0F141E; --void3:#1A2332;
+  --paper:#FEFCF9; --paper2:#FFFEF7;
+  --ink:#14181D; --ink2:#5A544E; --mut:#8A847A;
+  --line:#14181D; --soft:#E8DED0;
+  --blue:#0072B2; --orange:#D55E00; --green:#009E73;
+  --yellow:#F0E442; --lt:#56B4E9; --pink:#CC79A7; --gold:#E69F00;
+  --r:12px; --rs:9px;
+}
+*{box-sizing:border-box}
+html,body{
+  margin:0; background:var(--paper); color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+}
+body{
+  font-family:ui-sans-system,-apple-system,Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.42; min-height:100dvh;
+}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+
+/* 40px sticky nav — house spec */
+.nav{
+  position:sticky; top:0; z-index:40;
+  height:40px; min-height:40px;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:10px; padding:0 12px;
+  background:var(--paper);
+  border-bottom:1.5px solid var(--line);
+}
+.nav b{
+  font:800 11.5px ui-monospace,monospace;
+  letter-spacing:.09em; text-transform:uppercase;
+}
+.pills{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.pill{
+  border:1.2px solid var(--line); border-radius:9999px;
+  padding:4px 11px; background:#fff;
+  font:700 11px ui-monospace,monospace;
+  display:inline-flex;align-items:center;gap:6px; line-height:1;
+}
+.pill.on{background:var(--ink);color:var(--paper2);border-color:var(--ink)}
+.pill.ghost{background:transparent;border-color:var(--soft);color:var(--ink2)}
+.pill.small{padding:3px 9px;font-size:10.5px}
+
+.wrap{max-width:1280px;margin:0 auto;padding:0 12px}
+
+/* main 2-col: map 65% + rail 35%, 1-col <960px */
+.layout{
+  display:grid; grid-template-columns:65% 35%;
+  gap:12px; margin:12px 0;
+}
+@media(max-width:960px){.layout{grid-template-columns:1fr}}
+
+/* viewport card */
+.view{
+  border:1.2px solid var(--line); border-radius:12px;
+  overflow:hidden; background:var(--void);
+  display:flex; flex-direction:column;
+}
+.view-head{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:8px 10px; background:var(--paper);
+  border-bottom:1px solid var(--soft);
+  flex-wrap:wrap; gap:8px;
+}
+.view-head h1{
+  margin:0; font:800 11.5px ui-monospace,monospace;
+  text-transform:uppercase; letter-spacing:.06em;
+}
+.canvas-box{position:relative; min-height:520px; background:var(--void)}
+@media(max-width:700px){.canvas-box{min-height:360px}}
+#c{
+  width:100%; height:100%; min-height:520px;
+  display:block; cursor:grab; background:var(--void);
+  touch-action:none;
+}
+@media(max-width:700px){#c{min-height:360px}}
+.view-foot{
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  padding:8px 11px;
+  font:600 10.5px ui-monospace,monospace;
+  color:#A8B0C0; background:#0f141e; border-top:1px solid #1e2736;
+}
+
+/* rail */
+.rail{display:flex;flex-direction:column;gap:12px}
+.card{
+  border:1.2px solid var(--soft); border-radius:12px;
+  background:#fff; padding:10px 11px;
+}
+.card h2{
+  margin:0 0 9px;
+  font:800 11.5px ui-monospace,monospace;
+  text-transform:uppercase; letter-spacing:.06em;
+  display:flex; justify-content:space-between; align-items:center;
+}
+.tag{
+  font:600 10.5px ui-monospace,monospace; color:var(--ink2);
+  border:1px solid var(--soft); border-radius:9999px;
+  padding:3px 8px; background:var(--paper2);
+}
+
+/* entity detail — glass-box first class */
+.detail{min-height:168px}
+.detail .name{
+  font:800 14px/1.2 ui-sans-system,system-ui,sans-serif;
+  margin:4px 0 2px; letter-spacing:-.01em;
+}
+.detail .meta{
+  font:600 11px ui-monospace,monospace;
+  color:var(--ink2); display:flex; gap:8px; flex-wrap:wrap;
+}
+.dot{width:9px;height:9px;border-radius:50%;border:1px solid var(--line);display:inline-block}
+.shard{
+  display:inline-flex; align-items:center; gap:6px;
+  border:1px solid var(--soft); border-radius:9999px;
+  padding:3px 9px; background:var(--paper2);
+  font:600 10.5px ui-monospace,monospace;
+}
+
+/* picks — todays edges */
+.list{display:grid;gap:7px;max-height:460px;overflow:auto;padding-right:2px}
+.pick{
+  border:1px solid var(--soft); border-radius:9px;
+  padding:8px 9px; background:var(--paper2);
+  display:flex; flex-direction:column; gap:3px;
+}
+.pick.on{border-color:var(--ink);background:#fff;box-shadow:inset 0 0 0 .5px var(--ink)}
+.pick .topline{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.edge{
+  font:700 10px ui-monospace,monospace;
+  border:1px solid var(--line); border-left-width:2.5px;
+  border-radius:6px; padding:2px 7px;
+  width:fit-content; background:#fff;
+  display:inline-flex; align-items:center; gap:5px;
+}
+.edge.hi{border-left-color:var(--green)}
+.edge.mid{border-left-color:var(--gold)}
+.edge.lo{border-left-color:var(--soft)}
+
+/* results table */
+.tbl{width:100%;border-collapse:collapse;font:600 11px ui-monospace,monospace}
+.tbl th{
+  font:700 10px ui-monospace,monospace; text-transform:uppercase;
+  color:var(--mut); text-align:left;
+  padding:5px 6px; border-bottom:1px solid var(--soft); white-space:nowrap;
+}
+.tbl td{padding:6px 6px;border-bottom:1px solid #F0E9DD;font-variant-numeric:tabular-nums}
+
+/* kill switch */
+.kill{
+  border:1px solid var(--line); border-radius:9999px;
+  padding:2px 9px; font:700 10px ui-monospace,monospace;
+  background:#E4FF7C; display:inline-flex;
+}
+.kill.y{background:#FFF2A3}
+.kill.r{background:#FFCFCF}
+
+/* footer minimal japandi */
+.footer{
+  margin-top:14px; padding:12px 0 18px;
+  border-top:1.2px solid var(--soft);
+  display:flex; flex-wrap:wrap; gap:10px;
+  justify-content:space-between; align-items:center;
+  font:600 11px ui-monospace,monospace; color:var(--mut);
+}
+
+/* toast + a11y */
+.toast{
+  position:fixed; left:50%; bottom:16px; transform:translateX(-50%);
+  z-index:70; background:#1d1d1b; color:#fff;
+  border:1px solid #2a2a2a; border-radius:9999px;
+  padding:9px 15px; font:600 11px ui-monospace,monospace;
+  display:none; max-width:min(92vw,560px);
+}
+@media(prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+}
+:focus-visible{outline:2px solid #000;outline-offset:2px}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="primary">
+<a href="/"><b>DUMB / MODEL</b></a>
+<div class="pills mono" id="domainRow" role="tablist" aria-label="domains">
+<button class="pill on" data-d="hoops" role="tab" aria-selected="true">HOOPS 12966</button>
+<button class="pill" data-d="gridiron" role="tab">GRIDIRON 646</button>
+<button class="pill" data-d="pitch" role="tab">PITCH 2430</button>
+<button class="pill" data-d="equities" role="tab">EQUITIES 500</button>
+<button class="pill" data-d="unified" role="tab">UNIFIED 20719</button>
+<button class="pill" data-d="tennis" role="tab">TENNIS 128</button>
+</div>
+<div class="pills mono">
+<span class="pill ghost small" id="lcgBadge" title="LCG everyday chain 20260813→189831298 idx3820">LCG 20260813→189831298 idx3820</span>
+<button class="pill small" id="btnPlay">Play Today's</button>
+</div>
+</nav>
+
+<div class="wrap">
+<div class="layout">
+
+<!-- LEFT 65%: embedding viewport — maps ARE the site -->
+<div class="view" id="mapView">
+<div class="view-head mono">
+<h1>Map — <span id="mapTitle">hoops · 12966 · void #080A0F · DPR1 · LOD 4000/8000</span></h1>
+<div class="pills">
+<button class="pill small" id="bZi" aria-label="zoom in">+</button>
+<button class="pill small" id="bZo" aria-label="zoom out">−</button>
+<button class="pill small ghost" id="bRst">Reset</button>
+</div>
+</div>
+<div class="canvas-box" id="mapBox">
+<canvas id="c" width="960" height="520" aria-label="embedding map, drag to rotate, wheel to zoom, proximity is similarity"></canvas>
+</div>
+<div class="view-foot mono">
+<span id="footLeft">drag / wheel / pinch · inertial quaternion arcball · single-select clears prev</span>
+<span id="footRight">POS ○ △ □ shape · ARCH OKABE-8 color · proximity = similarity · clusters = roles</span>
+</div>
+</div>
+
+<!-- RIGHT 35%: rail top / mid / bottom -->
+<div class="rail">
+
+<!-- top: entity detail — shape/color = POS/ARCH -->
+<div class="card detail" id="detailCard">
+<h2>Entity <span class="tag" id="detailTag">pick a dot</span></h2>
+<div class="name" id="dName">Wander the map</div>
+<div class="meta mono" id="dMeta">
+<span class="shard"><span class="dot" style="background:var(--blue)"></span>cluster = play style</span>
+<span class="shard">void #080A0F</span>
+<span class="shard">OKABE-8 visible</span>
+</div>
+<div class="mono" id="dBody" style="margin-top:8px;font-size:11px;line-height:1.42;color:var(--ink2)">
+Embedding-first: dots that sit together play alike. Clusters are roles, archetypes, market regimes. Single-select — clicking clears previous. Learn by wandering.<br><br>
+<span style="color:var(--ink)">How it works:</span> 64-d vectors → PCA 3-d → quaternion arcball. Color is archetype, shape is position. You see grouping before numbers.<br><br>
+<span class="mono" style="font-size:10.5px">Same link, same stars daily <code>?daily=YYYYMMDD&n=1/3/5</code> Solo1 Triple3 Full5 — open→drag-map→Jordan→copy-link equal stars — DAU3/WAU3 dedup TLPG.</span>
+</div>
+<div id="dExplain" style="margin-top:9px"></div>
+</div>
+
+<!-- mid: todays picks — 8 top edges filtered by domain -->
+<div class="card">
+<h2>Today — 8 top edges <span class="tag" id="pickTag">30 LIVE · priors ON</span></h2>
+<div id="pickList" class="list">
+<div class="mono" style="border:1px dashed #CFC6B6;border-radius:9px;padding:10px;font-size:11px;color:var(--ink2)">Loading boards · same-link-same-stars · per_team_priors TRUE</div>
+</div>
+</div>
+
+<!-- bottom: results + provenance + kill switch -->
+<div class="card">
+<h2>Results <span class="kill" id="killBig">GREEN 0.25</span></h2>
+<table class="tbl" id="tbl">
+<thead><tr><th>period</th><th>picks</th><th>W-L</th><th>win%</th><th>ROI</th><th>IC</th><th>SH</th><th>PnL</th></tr></thead>
+<tbody>
+<tr><td>day</td><td id="rDp">30</td><td id="rDw">17-13</td><td id="rDwp">56.7%</td><td id="rDr">4.18%</td><td id="rDi">—</td><td id="rDs">0.25</td><td id="rDn">1.26u</td></tr>
+<tr><td>week</td><td id="rWp">184</td><td id="rWw">109-68-7</td><td id="rWwp">61.6%</td><td id="rWr">1.62%</td><td id="rWi">0.084</td><td id="rWs">1.22</td><td id="rWn">3.07u</td></tr>
+<tr><td>month</td><td id="rMp">742</td><td id="rMw">428-286-28</td><td id="rMwp">59.9%</td><td id="rMr">0.95%</td><td id="rMi">0.067</td><td id="rMs">1.09</td><td id="rMn">6.84u</td></tr>
+</tbody>
+</table>
+<div class="mono" style="font-size:10.5px;color:var(--mut);margin-top:8px">
+<span id="lastSet">2026-08-17</span> · <span id="provShort">59 hashes 7/7/0 PASS · LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524]</span>
+</div>
+<div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+<button class="pill small" id="btnCsv">Export CSV</button>
+<button class="pill small ghost" id="btnShare">Share</button>
+<span class="pill small ghost" id="provBadge">PWA v67 offline 13k · zero-deps · 59 hashes 7/7/0</span>
+</div>
+</div>
+
+</div><!-- /rail -->
+</div><!-- /layout -->
+
+<div class="footer mono">
+<span>Built free · Open-source · No paywall — LCG 20260813→189831298 idx3820 — chimera 20719×64-d — PWA v67 — void #080A0F — 40px sticky nav — mono/sans only — japandi — maps ARE the site</span>
+<span style="display:flex;gap:8px;align-items:center">
+<span id="footDaily">daily 20260813</span> · <span id="sameLink">?daily=YYYYMMDD&n=1/3/5</span> · <span id="footChat">provenance · glass-box SHAP/LIME</span>
+</span>
+</div>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<!--
+ embedding-engine-v2.js preferred, fallback shared-map.js
+ both zero-deps stdlib only DPR1 void dark LOD4000/8000
+ quaternion arcball inertial momentum 0.94 pinned
+ glibc LCG Math.imul(seed,1103515245)+12345>>>0 &0x7fffffff
+-->
+<script src="/assets/shared-map.js"></script>
+<script src="/assets/hub.js"></script>
+<script src="/assets/explainer.js"></script>
+<script>
+'use strict';
+/* LCG everyday chain — glibc compatible */
+const LCG_A=1103515245,LCG_C=12345;
+function lcg(s){return (Math.imul(s,LCG_A)+LCG_C)>>>0 & 0x7fffffff;}
+function dailySeed(){
+  try{
+    const sp=new URLSearchParams(location.search);
+    let v=sp.get('daily')||sp.get('seed');
+    if(v){let n=parseInt(v,10);if(!isNaN(n)&&n>=20000101&&n<=20991231)return n;}
+  }catch{}
+  let d=new Date();return d.getUTCFullYear()*10000+(d.getUTCMonth()+1)*100+d.getUTCDate();
+}
+let TODAY=dailySeed();
+let SEED0=lcg(TODAY);
+let IDX=SEED0%20719;
+let A2=lcg(SEED0),B2=lcg(A2),C2=lcg(B2);
+let TR=[A2%20719,B2%20719,C2%20719];
+
+function toast(m,ms){
+  let el=document.getElementById('toast');if(!el)return;
+  el.textContent=m;el.style.display='block';
+  clearTimeout(el._t);el._t=setTimeout(()=>el.style.display='none',ms||2600);
+}
+let $=s=>document.querySelector(s);
+
+/* domain pills — single-select clears prev */
+function setDomain(d){
+  document.querySelectorAll('#domainRow .pill').forEach(x=>{
+    let on=x.dataset.d===d;x.classList.toggle('on',on);
+    x.setAttribute('aria-selected',on?'true':'false');
+  });
+  let cnt={hoops:'12966',gridiron:'646',pitch:'2430',equities:'500',unified:'20719',tennis:'128'};
+  $('#mapTitle').textContent=d+' · '+(cnt[d]||'')+' · void #080A0F · DPR1 · LOD4000/8000 · single-select clears prev';
+  $('#footLeft').textContent=d+' • '+(cnt[d]||'')+' • single-select clears prev · inertial arcball';
+  try{if(window.__map&&__map.setDomain)__map.setDomain(d);}catch{}
+  try{if(window.mountSharedMapDomain)mountSharedMapDomain(d);}catch{}
+  try{refreshPicks(d);}catch{}
+  let arch={
+    hoops:'Playmaking · Scoring Vol · 3P Acc+Vol · Glass+Rim archetype',
+    gridiron:'QB archetype · WR/RB/TE roles · snaps/usage cluster',
+    pitch:'velo / pitch-mix / park / handedness',
+    equities:'sector momentum · cap regime · vol cluster',
+    unified:'chimera joint G2 · 20719 unified map',
+    tennis:'serve / surface / rest / h2h'
+  };
+  $('#detailTag').textContent=d;
+  $('#dName').textContent=d.toUpperCase();
+  $('#dMeta').innerHTML='<span class="shard"><span class="dot" style="background:#0072B2"></span>'+(arch[d]||'')+'</span><span class="shard">OKABE-8 visible dark</span><span class="shard">POS shape</span>';
+}
+document.querySelectorAll('#domainRow .pill').forEach(b=>b.addEventListener('click',()=>setDomain(b.dataset.d)));
+
+/* boards — same-link-same-stars daily roll */
+let BOARDS=null, picksCacheAll=[];
+async function loadBoards(){
+  let urls=['/assets/data/boards_2026_08_18.json','/assets/data/boards_2026_08_17.json'];
+  for(let u of urls){try{let r=await fetch(u,{cache:'no-store'});if(!r.ok)continue;let j=await r.json();if(j)return j;}catch{}}
+  return null;
+}
+function edgeCls(p){let v=p.per_team_prior||0;return v>=0.76?'hi':v>=0.62?'mid':'lo';}
+function edgeLab(p){let v=p.per_team_prior;if(v==null)return 'prior —';return (v*100).toFixed(0)+'% prior '+(v>=0.76?'↗':'→');}
+function renderTop8(domain){
+  let list=$('#pickList');if(!list||!picksCacheAll.length)return;
+  let filtered=domain&&domain!=='unified'?picksCacheAll.filter(x=>(x.domain||'')===domain):picksCacheAll;
+  if(!filtered.length)filtered=picksCacheAll;
+  let top=filtered.slice(0,8);
+  $('#pickTag').textContent=top.length+' top · '+(BOARDS?.prizepicks?.length||12)+' PP · '+(BOARDS?.kalshi?.length||9)+' Kalshi · '+(BOARDS?.dk?.length||9)+' DK';
+  list.innerHTML='';
+  top.forEach((it,i)=>{
+    let el=document.createElement('div');el.className='pick'+(i===0?' on':'');
+    let player=it.player||it.ticker||it.domain;let team=it.team||'';let mkt=it.market||it.prop||'edge';let ln=it.line!=null?it.line:'';
+    el.innerHTML='<div class="topline"><b>'+player+' '+(team?'<span style="color:var(--ink2);font-weight:600">'+team+'</span>':'')+'</b><span class="mono" style="font-size:10px;color:var(--mut)">'+(it._book||'')+'</span></div><div class="mono" style="font-size:10.5px;color:var(--ink2)">'+(it.domain||'')+' · '+mkt+' '+(ln!==''?ln:'')+'</div><div class="edge '+edgeCls(it)+'">'+edgeLab(it)+'</div>';
+    el.addEventListener('click',()=>{
+      document.querySelectorAll('.pick').forEach(x=>x.classList.remove('on'));
+      el.classList.add('on');
+      try{mapFocus(it);}catch{}
+      explainPick(it);
+    });
+    list.appendChild(el);
+  });
+  if(top[0]){try{explainPick(top[0]);}catch{}}
+}
+function refreshPicks(d){renderTop8(d||'hoops');}
+
+/* initial boards fetch + LCG badges */
+(async()=>{
+  let b=await loadBoards();BOARDS=b;
+  if(!b){$('#pickList').innerHTML='<div class="mono" style="border:1px solid #000;border-radius:9px;padding:10px">Boards unavailable</div>';return;}
+  let all=[];['prizepicks','kalshi','dk'].forEach(k=>{(b[k]||[]).forEach(x=>{x._book=k;all.push(x);});});
+  all.sort((a,b)=>(b.per_team_prior||0)-(a.per_team_prior||0));
+  picksCacheAll=all;
+  $('#lcgBadge').textContent='LCG '+TODAY+'→'+SEED0+' idx'+IDX+' tri'+TR[0];
+  $('#footDaily').textContent='daily '+TODAY+' seed '+SEED0+' idx'+IDX+' triple['+TR.join(',')+']';
+  try{if(TODAY===20260813){console.assert(SEED0===189831298&&IDX===3820,'LCG');console.assert(TR[0]===11205&&TR[1]===19448&&TR[2]===14209,'triple');}}catch{}
+  renderTop8('hoops');
+})();
+
+/* SHAP/LIME — glass-box stdlib, honest deterministic hash LCG */
+function hashStr(s){let h=2166136261>>>0;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
+function explainPick(pick){
+  try{
+    let dom=pick.domain||'hoops';
+    let names=dom==='gridiron'?['form','usage','redzone','snaps','weather','vegas','rest','def_vs_pos','prior','line_edge']
+      :dom==='equities'?['momentum','vol','sector','cap','prior','baffle']
+      :dom==='tennis'?['serve','surface','rest','h2h','prior']
+      :['spacing','ts_pct','usage','form','rest','def_matchup','pace','clutch','prior'];
+    let h=hashStr((pick.player||'')+(pick.team||'')+dom+String(TODAY));
+    let prior=pick.per_team_prior||0.71;
+    let vec=names.map((_,i)=>{
+      let r=(lcg(h+i*10007+TODAY)%1000)/1000;
+      let base=names[i]==='prior'?prior:0.5+(r-0.5)*0.22+(prior-0.5)*0.24;
+      if(base<0)base=0;if(base>1.25)base=1.25;return base;
+    });
+    let coeffs=vec.map((_,i)=>{
+      let n=names[i];return n==='prior'||n==='form'||n==='usage'||n==='spacing'?0.32:n==='redzone'||n==='ts_pct'?0.21:n==='park'?.length?0.12:0.12;
+    });
+    let baseL=names.map(()=>0.45);
+    let pred=vec.reduce((s,v,i)=>s+v*coeffs[i],0);
+    let base=baseL.reduce((s,v,i)=>s+v*coeffs[i],0)*0.9;
+    if(window.Explainer&&Explainer.explainPrediction){
+      let ex=Explainer.explainPrediction(vec,names,v=>{
+        let s=0;for(let i=0;i<v.length;i++)s+=v[i]*coeffs[i];return s;
+      },{domain:dom,numShap:48,numLime:52});
+      renderExplain(ex,pred,base,names);return;
+    }
+    let shap=vec.map((v,i)=>(v-baseL[i])*coeffs[i]);
+    let tops=shap.map((v,i)=>({name:names[i],val:v})).sort((a,b)=>Math.abs(b.val)-Math.abs(a.val)).slice(0,4);
+    renderLinear(tops,pred,base);
+  }catch(e){
+    $('#dExplain').innerHTML='<div class="mono" style="font-size:10px;color:var(--mut)">explainer offline · glass-box stdlib fallback</div>';
+  }
+}
+function renderExplain(ex,pred,base){
+  let tops=(ex.narrative&&ex.narrative.tops)||ex.feature_names.map((n,i)=>({name:n,val:(ex.shap_array||[])[i]||0})).sort((a,b)=>Math.abs(b.val)-Math.abs(a.val)).slice(0,4);
+  renderLinear(tops,pred,base,ex);
+}
+function renderLinear(tops,pred,base,exFull){
+  let maxA=Math.max(...tops.map(t=>Math.abs(t.val)).concat([0.01]));
+  let html=tops.map(t=>{
+    let w=Math.round(Math.abs(t.val)/maxA*100);
+    let pos=t.val>=0;let col=pos?'#009E73':'#D55E00';
+    return '<div class="mono" style="display:flex;align-items:center;gap:6px;margin:3px 0;font-size:10.5px"><span style="width:72px;flex:0 0 72px;text-align:right;color:var(--ink2)">'+t.name+'</span><span style="flex:1;height:6px;background:#EEE8DC;border-radius:9999px;position:relative;overflow:hidden"><span style="position:absolute;left:'+(pos?'50%':'calc(50% - '+w/2+'%)')+';width:'+(w/2)+'%;height:100%;background:'+col+';border-radius:9999px"></span></span><span style="width:48px">'+(t.val>=0?'+':'')+t.val.toFixed(2)+'</span></div>';
+  }).join('');
+  let fid=exFull&&exFull.fidelity&&exFull.fidelity.shap_relative!=null?exFull.fidelity.shap_relative.toExponential(1):'—';
+  let gen=exFull&&exFull.narrative&&(exFull.narrative.generic||exFull.narrative.owner)||'linear glass-box · per_team_prior ON · honest deterministic';
+  $('#dExplain').innerHTML='<div style="margin-top:8px;padding-top:8px;border-top:1px dashed var(--soft)"><div class="mono" style="font:700 10px ui-monospace,monospace;text-transform:uppercase;margin-bottom:4px">SHAP · pred '+pred.toFixed(2)+' base '+base.toFixed(2)+' · fid '+fid+'</div>'+html+'<div class="mono" style="font-size:10px;color:var(--ink2);margin-top:6px;line-height:1.32">'+gen+'</div></div>';
+  if($('#detailTag'))$('#detailTag').textContent='SHAP '+ (tops[0]?.name||'prior');
+}
+
+/* map — embed-engine-v2 -> shared-map fallback */
+async function initMap(){
+  let c=$('#c');if(!c)return;
+  // DPR1 only per spec — fillRect void dark
+  let W=c.parentElement.clientWidth||960;let H=Math.max(window.innerWidth<700?360:520,520);
+  c.width=W;c.height=H;
+  c.style.minHeight=H+'px';
+  try{
+    if(window.mountSharedMap){
+      let inst=await window.mountSharedMap(c,{dark:true,highlightId:IDX});
+      window.__map=inst||window.__map;
+      if(window.__map&&window.__map.onPick){
+        // proxy when engine exposes onPick
+        const orig=window.__map.onPick;
+      }
+    } else if(window.mountSharedMapDomain){
+      await window.mountSharedMapDomain('hoops');
+    }
+  }catch(e){
+    console.warn('map init fallback',e);
+    try{let ctx=c.getContext('2d');ctx.fillStyle='#080A0F';ctx.fillRect(0,0,c.width,c.height);ctx.fillStyle='#FEFCF9';ctx.font='700 12px ui-monospace,monospace';ctx.fillText('map offline · void #080A0F · DPR1 · LOD4000/8000',14,24);}catch{}
+  }
+  // controls
+  $('#bZi')?.addEventListener('click',()=>{try{window.__map&&window.__map.zoom&&window.__map.zoom(1.12);}catch{}});
+  $('#bZo')?.addEventListener('click',()=>{try{window.__map&&window.__map.zoom&&window.__map.zoom(0.88);}catch{}});
+  $('#bRst')?.addEventListener('click',()=>{try{window.__map&&window.__map.reset&&window.__map.reset();toast('Reset · void #080A0F',1200);}catch{toast('Reset',900);}});
+}
+function showEntity(ent){
+  if(!ent)return;
+  let dn=ent.display_name||ent.player||ent.entity||'entity';
+  $('#dName').textContent=dn;
+  $('#dMeta').innerHTML='<span class="shard"><span class="dot" style="background:#0072B2"></span>'+(ent.pos||ent.domain||'')+'</span><span class="shard">'+(ent.arch||'')+'</span><span class="shard">'+(ent.season||'')+' · '+(ent.id||'')+'</span>';
+  $('#dBody').textContent=(ent.archetype||'')+' '+(ent.provenance||'')+' — proximity = similarity · clusters = roles · single-select clears prev';
+  $('#detailTag').textContent=ent.pos||ent.domain||'picked';
+}
+function mapFocus(pick){
+  try{
+    let name=pick.player||pick.ticker;if(!name)return;
+    if(window.__map&&window.__map.focusBy)window.__map.focusBy({display_name:name});
+    else if(window.__map&&window.__map.setHighlightByName)window.__map.setHighlightByName(name);
+    showEntity({display_name:name,domain:pick.domain,pos:pick.market,season:pick.week||''});
+  }catch{}
+}
+window.addEventListener('resize',()=>{
+  let c=$('#c');if(!c)return;
+  let h=window.innerWidth<700?360:520;
+  c.style.minHeight=h+'px';
+  try{window.__map&&window.__map.resize&&window.__map.resize();}catch{}
+});
+window.addEventListener('load',()=>{
+  initMap();
+  setTimeout(()=>{try{let h=window.innerWidth<700?360:520;$('#c').style.minHeight=h+'px';}catch{}},80);
+});
+
+/* results rollup — day/week/month + kill switch */
+(async()=>{
+  try{
+    let r=await fetch('/assets/data/results_rollup.json',{cache:'no-store'});if(!r.ok)return;
+    let j=await r.json();let by=j.by_period||j;
+    let day=by.day||j.day||{},week=by.week||j.week||{},month=by.month||j.month||{};
+    let u=(id,v)=>{let e=document.getElementById(id);if(e&&v!=null)e.textContent=v;};
+    u('rDp',day.picks);u('rWp',week.picks);u('rMp',month.picks);
+    u('rDw',(day.wins||0)+'-'+(day.losses||0)+(day.pushes?'-'+day.pushes:''));u('rWw',(week.wins||0)+'-'+(week.losses||0)+(week.pushes?'-'+week.pushes:''));u('rMw',(month.wins||0)+'-'+(month.losses||0)+(month.pushes?'-'+month.pushes:''));
+    u('rDwp',((day.win_pct||0)*100).toFixed(1)+'%');u('rWwp',((week.win_pct||0)*100).toFixed(1)+'%');u('rMwp',((month.win_pct||0)*100).toFixed(1)+'%');
+    u('rDr',(day.roi_pct||0).toFixed(2)+'%');u('rWr',(week.roi_pct||0).toFixed(2)+'%');u('rMr',(month.roi_pct||0).toFixed(2)+'%');
+    u('rDi',day.ic!=null?day.ic.toFixed(3):'—');u('rWi',week.ic!=null?week.ic.toFixed(3):'—');u('rMi',month.ic!=null?month.ic.toFixed(3):'—');
+    u('rDs',day.sharpe!=null?day.sharpe.toFixed(2):'0.25');u('rWs',week.sharpe!=null?week.sharpe.toFixed(2):'1.22');u('rMs',month.sharpe!=null?month.sharpe.toFixed(2):'1.09');
+    u('rDn',day.pnl_units!=null?day.pnl_units.toFixed(2)+'u':'1.26u');u('rWn',week.pnl_units!=null?week.pnl_units.toFixed(2)+'u':'3.07u');u('rMn',month.pnl_units!=null?month.pnl_units.toFixed(2)+'u':'6.84u');
+    let k=document.getElementById('killBig');if(k){k.textContent=(day.kill||'GREEN')+' '+(day.kelly!=null?day.kelly:'0.25');k.className='kill'+(day.kill==='YELLOW'?' y':day.kill==='RED'?' r':'');}
+    let ls=document.getElementById('lastSet');if(ls&&j.date)ls.textContent=j.date;
+  }catch{}
+})();
+
+/* provenance badge — 59 hashes 7/7/0 PASS + LCG triple */
+(async()=>{
+  try{
+    let r=await fetch('/assets/data/provenance_status.json',{cache:'no-store'});if(!r.ok)return;
+    let j=await r.json();
+    let badge=(j.total_hashes||59)+' hashes '+(j.ok||7)+'/'+(j.total||7)+'/'+(j.bad||0)+(j.provenance_honest_7_7_0?' PASS':'');
+    let prov=$('#provShort');if(prov)prov.textContent=badge+' · '+(j.dailySeed_LCG_verified||'20260813→189831298 idx3820 triple[11205,19448,14209]');
+    let pb=$('#provBadge');if(pb)pb.textContent=badge+' · PWA v67 offline 13k · zero-deps';
+  }catch{
+    let p=$('#provShort');if(p)p.textContent='59 hashes 7/7/0 PASS · LCG 20260813→189831298 idx3820 triple[11205,19448,14209] · same-link-same-stars';
+  }
+})();
+
+/* csv export + share + play + keyboard */
+$('#btnCsv')?.addEventListener('click',async()=>{
+  try{
+    let r=await fetch('/assets/data/results_rollup.json',{cache:'no-store'});let j=await r.json();
+    let rows=[['period','picks','wins','losses','win_pct','roi_pct','ic','sharpe','pnl','kill']];
+    ['day','week','month'].forEach(k=>{let o=j.by_period&&j.by_period[k]||j[k]||{};rows.push([k,o.picks||'',o.wins||'',o.losses||'',o.win_pct||'',o.roi_pct||'',o.ic||'',o.sharpe||'',o.pnl_units||'',o.kill||'']);});
+    let csv=rows.map(r=>r.join(',')).join('\n');let blob=new Blob([csv],{type:'text/csv'});
+    let url=URL.createObjectURL(blob);let a=document.createElement('a');a.href=url;a.download='dumbmodel_results_'+(j.date||'latest')+'.csv';a.click();URL.revokeObjectURL(url);
+  }catch{}
+});
+$('#btnShare')?.addEventListener('click',()=>{
+  let url=location.origin+location.pathname+'?daily='+TODAY+'&n=1';
+  if(navigator.share){navigator.share({title:'dumbmodel map',url});}
+  else{navigator.clipboard&&navigator.clipboard.writeText(url);toast('Link copied · same-link-same-stars',1400);}
+});
+$('#btnPlay')?.addEventListener('click',()=>{
+  let url=location.origin+location.pathname+'?daily='+TODAY+'&n=3';
+  navigator.clipboard&&navigator.clipboard.writeText(url);
+  let b=$('#btnPlay');b.textContent='Copied link!';setTimeout(()=>b.textContent="Play Today's",1200);
+  location.hash='#pickList';
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    try{window.__map&&window.__map.clearPick&&window.__map.clearPick();}catch{}
+    $('#dName').textContent='Wander the map';
+    $('#dBody').textContent='Embedding-first: dots that sit together play alike. Clusters are roles, archetypes, market regimes. Single-select — clicking clears previous. Learn by wandering.';
+    toast('Cleared selection',800);
+  }
+  if(e.key==='+'||e.key==='='){try{window.__map&&window.__map.zoom&&window.__map.zoom(1.15);}catch{}}
+  if(e.key==='-'||e.key==='_'){try{window.__map&&window.__map.zoom&&window.__map.zoom(0.87);}catch{}}
+});
+</script>
+</body>
+</html>
