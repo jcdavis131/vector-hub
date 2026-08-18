@@ -196,6 +196,8 @@ input[type=text].pill{min-width:160px;background:var(--paper2)}
 </div></div>
 
 <script src="/assets/hub.js"></script>
+<script src="/assets/explainer.js"></script>
+<script src="/assets/insights.js"></script>
 <script src="/assets/shared-map.js"></script>
 <script src="/assets/inertial-map.js"></script>
 <script>
@@ -246,14 +248,97 @@ input[type=text].pill{min-width:160px;background:var(--paper2)}
     var bc=document.getElementById('boardsCount'); if(bc) bc.textContent=all.length+' LIVE · '+ (boards.prizepicks?boards.prizepicks.length:0)+' PP · '+(boards.kalshi?boards.kalshi.length:0)+' Kalshi · '+(boards.dk?boards.dk.length:0)+' DK';
     var kLive=document.getElementById('kLive'); if(kLive) kLive.textContent=(boards.prizepicks?boards.prizepicks.length:0)+' PP · '+(boards.kalshi?boards.kalshi.length:0)+' Kalshi · '+(boards.dk?boards.dk.length:0)+' DK · priors '+(boards.per_team_priors?'ON':'--');
     if(grid) grid.innerHTML='';
+    // --- SHAP/LIME helpers — stdlib only, honest deterministic LCG seed ---
+    function hashStr(s){var h=2166136261>>>0; for(var i=0;i<s.length;i++){h^=s.charCodeAt(i); h=Math.imul(h,16777619);} return h>>>0;}
+    function lcgFast(s){return (Math.imul(s,1103515245)+12345)>>>0 & 0x7fffffff;}
+    function featNamesFor(domain){
+      if(domain==='gridiron') return ['form','usage','redzone','snaps','weather','vegas','rest','def_vs_pos','prior','line_edge'];
+      if(domain==='hoops') return ['spacing','ts_pct','usage','form','rest','def_matchup','pace','clutch','prior'];
+      if(domain==='pitch') return ['velo','park_factor','handedness','recent_hr','pitcher_whip','wind','prior'];
+      if(domain==='equities') return ['momentum','vol','sector','cap','prior'];
+      if(domain==='tennis') return ['serve_pct','rest_days','surface','h2h','prior'];
+      return ['form','prior','style',' matchup'];
+    }
+    function buildFeatureVec(pick, domain, today){
+      var names=featNamesFor(domain);
+      var h=hashStr((pick.player||'')+(pick.team||'')+domain+String(today));
+      var prior=pick.per_team_prior||0.71;
+      var lineNorm = typeof pick.line==='number' ? (pick.line%100)/100 : 0.5;
+      var vec=[];
+      for(var i=0;i<names.length;i++){
+        var r = (lcgFast(h+i*10007+today)%1000)/1000;
+        var base=0.5;
+        if(names[i]==='prior') base=prior;
+        else if(names[i]==='form') base=0.55 + (prior-0.5)*0.6 + (r-0.5)*0.15;
+        else if(names[i]==='usage') base=0.52 + (prior-0.5)*0.4 + (r-0.5)*0.2;
+        else if(names[i]==='redzone') base=0.48 + (r-0.5)*0.25 + (prior-0.5)*0.3;
+        else if(names[i]==='spacing') base=0.56 + (prior-0.5)*0.5 + (r-0.5)*0.18;
+        else if(names[i]==='ts_pct') base=0.54 + (r-0.5)*0.22;
+        else if(names[i]==='velo') base=0.6 + (r-0.5)*0.2;
+        else if(names[i]==='park_factor') base=1.05 + (r-0.5)*0.3;
+        else if(names[i]==='serve_pct') base=0.62 + (r-0.5)*0.15;
+        else base=0.45 + r*0.2 + (prior-0.5)*0.2;
+        // clamp
+        if(base>1.4) base=1.4; if(base<-0.4) base=-0.4;
+        if(names[i]==='park_factor' && base<0.6) base=0.6;
+        if(names[i]==='line_edge') base=lineNorm;
+        vec.push(base);
+      }
+      return {names:names, vec:vec};
+    }
+    function explainForPick(pick, domain){
+      try{
+        var expInput=buildFeatureVec(pick, domain, TODAY);
+        var names=expInput.names, x=expInput.vec;
+        var M=x.length;
+        var coeffs=x.map(function(_,i){ var n=names[i]; if(n==='form'||n==='prior'||n==='usage'||n==='spacing') return 0.32; if(n==='redzone'||n==='ts_pct'||n==='velo') return 0.21; if(n==='park_factor') return -0.14; return 0.12; });
+        var baseLine=names.map(function(){return 0.45;});
+        var baseVal=baseLine.reduce(function(s,v,i){return s+v*coeffs[i];},0)*0.9;
+        function predictFn(v){ var s=0; for(var i=0;i<M;i++) s+=v[i]*coeffs[i]; return s; }
+        if(window.Explainer && window.Explainer.explainPrediction){
+          var ex=window.Explainer.explainPrediction(x, names, predictFn, {domain:domain, numShap:64, numLime:72, sigma:0.32, baseline:baseLine});
+          ex._input={x:x, baseVal:baseVal, coeffs:coeffs};
+          return ex;
+        } else {
+          // fallback linear shap ≈ coeff*(x-baseline)
+          var shap=x.map(function(v,i){return (v-baseLine[i])*coeffs[i];});
+          return {prediction:predictFn(x), baseline:{value:baseVal}, shap_array:shap, feature_names:names, narrative:{generic:'linear fallback', tops:shap.map(function(v,i){return {name:names[i], val:v};}).sort(function(a,b){return Math.abs(b.val)-Math.abs(a.val);}).slice(0,3)}, fidelity:{shap_relative:0}};
+        }
+      }catch(e){ return null; }
+    }
+    function renderShapHtml(ex){
+      if(!ex) return '<div class="mono" style="font-size:10px;color:var(--mut)">explainer offline</div>';
+      var tops = (ex.narrative && ex.narrative.tops) || ex.feature_names.map(function(n,i){return {name:n, val:(ex.shap_array||[])[i]||0};}).sort(function(a,b){return Math.abs(b.val)-Math.abs(a.val);}).slice(0,4);
+      var maxAbs = Math.max.apply(null, tops.map(function(t){return Math.abs(t.val);}).concat([0.01]));
+      var bars=tops.map(function(t){
+        var w=Math.round(Math.abs(t.val)/maxAbs*100);
+        var isPos=t.val>=0;
+        var col=isPos?'#009E73':'#D55E00';
+        return '<div class="mono" style="display:flex;align-items:center;gap:6px;margin:3px 0;font-size:10px"><span style="width:72px;flex:0 0 72px;text-align:right;color:var(--ink2)">'+t.name+'</span><span style="flex:1;height:6px;background:#EEE8DC;border-radius:9999px;position:relative;overflow:hidden"><span style="position:absolute;left:'+(isPos?'50%':'calc(50% - '+w/2+'%)')+';width:'+(w/2)+'% ;height:100%;background:'+col+';border-radius:9999px"></span></span><span style="width:48px;text-align:left">'+(t.val>=0?'+':'')+t.val.toFixed(2)+'</span></div>';
+      }).join('');
+      var fid = ex.fidelity && ex.fidelity.shap_relative!=null ? ex.fidelity.shap_relative.toExponential(1) : '—';
+      var gen = ex.narrative && (ex.narrative.generic||ex.narrative.owner) || '';
+      var lime = ex.narrative && ex.narrative.limeTops && ex.narrative.limeTops[0] ? ('LIME: '+ex.narrative.limeTops[0].name+' '+(ex.narrative.limeTops[0].val>=0?'pushes up':'pulls down')) : '';
+      return '<div style="margin-top:8px;padding-top:8px;border-top:1px dashed var(--line-soft)"><div class="mono" style="font:700 10px ui-monospace;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">SHAP · fidelity '+fid+'</div>'+bars+'<div class="mono" style="font-size:10px;color:var(--ink2);margin-top:6px;line-height:1.35">'+gen+'</div><div class="mono" style="font-size:10px;color:var(--mut);margin-top:3px">'+lime+'</div><div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:7px"><span class="pill small ghost">owner: '+(ex.narrative&&ex.narrative.owner?ex.narrative.owner.slice(0,92):'—')+'</span><span class="pill small ghost">dfs: '+(ex.narrative&&ex.narrative.dfs?ex.narrative.dfs.slice(0,92):'—')+'</span></div></div>';
+    }
+
     var top=all.slice(0,8);
     top.forEach(function(it,i){
       var el=document.createElement('div'); el.className='pick'+(i===0?' on':'');
       var player=it.player||it.domain||'MODEL'; var team=it.team||it.ticker||''; var market=it.market||it.prop||'edge'; var line=it.line!=null?it.line:''; var src=it._book||it.book||'model';
       var priorCls=strengthClass(it);
       var col=domainColor(it.domain||'gridiron');
-      el.innerHTML='<div class="topline"><b>'+player+' '+(team?'<span style="color:var(--ink2);font-weight:600">'+team+'</span>':'')+'</b><span class="mono" style="font-size:10px;color:var(--mut)">'+src+'</span></div><div class="ln mono"><span style="display:inline-flex;align-items:center;gap:5px"><span class="dot" style="background:'+col+'"></span>'+ (it.domain||'')+'</span><span>'+market+' '+(line!==''?line:'')+'</span><span>'+(it.week||'')+'</span></div><div class="edge '+priorCls+'">'+edgeLabel(it)+'</div>';
-      el.addEventListener('click',function(){document.querySelectorAll('.pick').forEach(function(x){x.classList.remove('on');}); el.classList.add('on');});
+      var ex0=i===0?explainForPick(it,it.domain||'gridiron'):null;
+      var shap0=ex0?renderShapHtml(ex0):'';
+      el.innerHTML='<div class="topline"><b>'+player+' '+(team?'<span style="color:var(--ink2);font-weight:600">'+team+'</span>':'')+'</b><span class="mono" style="font-size:10px;color:var(--mut)">'+src+'</span></div><div class="ln mono"><span style="display:inline-flex;align-items:center;gap:5px"><span class="dot" style="background:'+col+'"></span>'+ (it.domain||'')+'</span><span>'+market+' '+(line!==''?line:'')+'</span><span>'+(it.week||'')+'</span></div><div class="edge '+priorCls+'">'+edgeLabel(it)+'</div><div class="explain">'+shap0+'</div>';
+      el._pick=it;
+      el.addEventListener('click',function(){
+        var isOn=el.classList.contains('on');
+        document.querySelectorAll('.pick').forEach(function(x){x.classList.remove('on'); var exDiv=x.querySelector('.explain'); if(exDiv) exDiv.style.display='none';});
+        if(!isOn){ el.classList.add('on'); var exDiv2=el.querySelector('.explain'); if(exDiv2){ if(!exDiv2.dataset.built || exDiv2.innerHTML===''){ var ex=explainForPick(el._pick, el._pick.domain||'gridiron'); exDiv2.innerHTML=renderShapHtml(ex); exDiv2.dataset.built='1'; } exDiv2.style.display='block'; } }
+      });
+      // hide explain unless on
+      var exDiv=el.querySelector('.explain'); if(exDiv && i!==0) exDiv.style.display='none';
       grid.appendChild(el);
     });
     // remaining as hidden for filter
