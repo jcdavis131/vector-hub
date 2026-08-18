@@ -8,12 +8,13 @@ _Last sync: 16:21 CT 2026-08-18 — board sweep ACTIVE→DONE hoops & gridiron d
 
 | Agent | Repo / Area | Since CT | What / Why | Branch | Status |
 |---|---|---|---|---|---|
-| builder-prime | vector-equities / endgame pro | 09:17 CT 2026-08-18 | EQUITIES #3/4 greatness = great standalone pro site hoops-level everywhere — 500 tickers 4831 rows 11→8 OKABE curated not i%8 xyz [-1,1] max_abs0.90783 cap 5-1505B deterministic CQS0.725 IC0.012 sector0.7057 4POV Owner/Player/Brand/DFS — MTNN 10 towers 118d cap-eff/profit/foresight surplus + 4POV compliance — map void #080A0F 40px sticky z40 mono/sans DPR1 LOD8000/4000 momentum0.94 spring120 0.18 single-select clears prev pill strip 40px ?pov= sync PWA v67 offline13k CORE20 provenance 7/7/0 59 hashes — daily pipeline Kelly0.25 1% max3 GREEN gates IC>0.03 Sharpe>1.2 verifier≥8.0 — branch scout/equities-endgame-0818 | scout/equities-endgame-0818 | claimed |
 | LOCAL-GPU | vector-unified / unified G2 0.685→0.64 | 22:20 CT 2026-08-17 | FULL TRAIN: GRL λ0.3→0.5 + CORAL centroid, missing caches embedding_v3.npz / mtnn_best.pt / pitch_mtnn_embeddings.json restored 5.1M/4.5M/804k, torch OOM workaround → run train_stage2.py --smoke -> train_unified.py 60ep -> eval_unified.py on local GPU | local/unified-g2-gpu | claimed |
 | LOCAL-GPU | vector-hoops / v6 transformer 150ep | 22:20 CT 2026-08-17 | MTNN v6 d_model128 4-head CLS→64-d 17 towers, w-vicreg 0.05, target composite 0.7937→0.85 test top1 0.438→0.55 | local/hoops-v6-gpu | claimed |
 | LOCAL-GPU | vector-gridiron / real nflverse | 22:20 CT 2026-08-17 | nflreadpy 2020-2025 weather+Vegas, 32-d native training, MAE 4.268→3.8 | local/gridiron-real | claimed |
 
-## DONE recent (last 12, >24h archived)
+## DONE recent
+
+| STALE-CLEARED-1 | proactive-hillclimb-loop / stale >4h sweep 22:34 CT | 22:34 CT | Cleared 1 stale >4h (13h 13.3m): builder-prime@vector-equities / endgame pro 09:17 CT 2026-08-18 CT 13.3h >4h — preserved 3 LOCAL-GPU 22:20 CT — board now 0 active + 7 free — zero-deps true | hillclimb-loop | cleared | (last 12, >24h archived)
 
 | Agent | Repo / Area | Done CT | What / Why | Branch | Result |
 |---|---|---|---|---|---|
