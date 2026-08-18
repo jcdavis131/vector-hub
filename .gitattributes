@@ -1,0 +1,7 @@
+# Large binaries - LFS (business professional standard)
+assets/data/*.npz filter=lfs diff=lfs merge=lfs -text
+assets/data/vegas_backfill_2020_2025.json filter=lfs diff=lfs merge=lfs -text
+assets/data/vegas_ou_2020_2025.json filter=lfs diff=lfs merge=lfs -text
+assets/data/props_closing_lines_2020_2025.json filter=lfs diff=lfs merge=lfs -text
+assets/data/unified_full.json filter=lfs diff=lfs merge=lfs -text
+assets/data/unified.json filter=lfs diff=lfs merge=lfs -text

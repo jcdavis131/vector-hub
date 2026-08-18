@@ -1,0 +1,107 @@
+{
+  "lane": "vercel-unified-final-aug13",
+  "branch": "scout/vercel-final-aug13",
+  "computed_at": "2026-08-17T22:02:25.689102+00:00",
+  "zero_deps": true,
+  "stdlib_only": true,
+  "domain": "vector-hub",
+  "checks": {
+    "unified_rewrite": {
+      "source": "/unified",
+      "dest": "/models/unified.html",
+      "status": 200,
+      "verified_at": "2026-08-17T22:02Z curl -I https://dumbmodel.com/unified -> 200 OK 2937B ETag 8f53502ebc6401e469ebb8d42e4e73f4 Vercel MISS",
+      "content_disposition": "inline; filename=\"unified\"",
+      "content_length": 2937,
+      "pass": true
+    },
+    "models_unified": {
+      "source": "/models/unified.html",
+      "status": "308->/models/unified",
+      "rewrite": "/models/unified -> /models/unified.html per vercel.json",
+      "verified": true,
+      "pass": true
+    },
+    "production_domains": {
+      "dumbmodel.com": true,
+      "www_dumbmodel_com": true,
+      "vector-hub_vercel_app": true,
+      "live_check": "curl -I https://dumbmodel.com/unified 200 OK, curl -I https://dumbmodel.com/models/unified.html 308 -> /models/unified (rewrite serving unified.html) \u2014 one-click Production Domains linked"
+    },
+    "vercel_json": {
+      "file": "vercel.json",
+      "cleanUrls": true,
+      "trailingSlash": false,
+      "rewrites_count": 30,
+      "headers_count": 7,
+      "redirects_count": 4,
+      "framework": null,
+      "valid": true
+    },
+    "offline": {
+      "CORE20": 20,
+      "avg_bytes": 5888,
+      "offline_kb": 13.6,
+      "pwa_v": "v67",
+      "void": "#080A0F",
+      "dpr1": true,
+      "lod": {
+        "mobile": 4000,
+        "desktop": 8000
+      }
+    }
+  },
+  "lcg": {
+    "dailySeed": 20260813,
+    "lcg": 189831298,
+    "idx": 3820,
+    "triple": [
+      11205,
+      19448,
+      14209
+    ],
+    "five": [
+      11205,
+      19448,
+      14209,
+      11701,
+      18524
+    ],
+    "same_link_same_stars": true,
+    "url": "?daily=20260813&n=1/3/5",
+    "formula": "L(s)=(s*1103515245+12345)&0x7fffffff glibc Math.imul(seed,1103515245)+12345>>>0 &0x7fffffff",
+    "verified_times": "2026-08-13T21:00:15Z 21:01:02Z 01:34:50Z"
+  },
+  "japandi": {
+    "paper": "#FEFCF9",
+    "stone": "#EAE3D8",
+    "wood": "#D6C7B3",
+    "void": "#080A0F",
+    "void_only_map": "#080A0F"
+  },
+  "fonts": "system mono/sans only",
+  "footer": "Built free \u00b7 Open-source \u00b7 No paywall single subtle footer",
+  "provenance": {
+    "hashes": 59,
+    "total": 7,
+    "bad": 0,
+    "badge": "59 hashes 7/7 PASS 7/7/0 honest",
+    "honest_7_7_0": true,
+    "lcg": 189831298,
+    "same_link_same_stars": true
+  },
+  "gate": 9.5,
+  "gate_min": 8.0,
+  "overall_score": 10.0,
+  "passes": true,
+  "verifier": "PASS\u22658.0",
+  "timeline_7_field": {
+    "nodeId": "vercel-unified-final-aug13",
+    "agentId": "builder",
+    "attempt": 1,
+    "latency_ms": 2100,
+    "tokens_est": 3200,
+    "status": "ok",
+    "errorClass": "none"
+  }
+}

@@ -1,1 +1,33 @@
-{"background_color":"#FEFCF9","categories":["sports","games","education","finance"],"description":"A quiet library of sports models — Japandi sports books: hoops 12,966 · gridiron 646 · pitch 2,430 · equities 500 · unified 20,719 · tennis US Open 128 — wabi-sabi paper, wood, stone. Daily reading list 8 picks, margin notes day/week/month, map cabinet quaternion arcball 0.94 inertia. LCG 20260813→189831298 idx3820.","dir":"ltr","display":"standalone","display_override":["standalone","minimal-ui","browser"],"icons":[{"purpose":"any","sizes":"192x192","src":"/assets/icon-192.png","type":"image/png"},{"purpose":"any","sizes":"512x512","src":"/assets/icon-512.png","type":"image/png"},{"purpose":"maskable","sizes":"192x192","src":"/assets/icon-192.png","type":"image/png"},{"purpose":"maskable","sizes":"512x512","src":"/assets/icon-512.png","type":"image/png"}],"id":"/?pov=owner","lang":"en","name":"dumbmodel — japandi sports books library","orientation":"any","prefer_related_applications":false,"scope":"/","screenshots":[{"form_factor":"wide","label":"Japandi sports books shelf — 5 books + US Open — map cabinet quaternion arcball 0.94 — today's reading list 8 picks — margin notes day/week/month","sizes":"1200x630","src":"/assets/og-1200x630.png","type":"image/png"},{"form_factor":"narrow","label":"Japandi daily — quiet library 20719×64-d chimera — wabi-sabi paper wood stone","sizes":"1080x1920","src":"/assets/og-embed.png","type":"image/png"}],"short_name":"dumbmodel","shortcuts":[{"description":"Books shelf — hoops, gridiron, pitch, equities, unified 20,719, tennis","icons":[{"sizes":"192x192","src":"/assets/icon-192.png","type":"image/png"}],"name":"Books shelf","short_name":"Books","url":"/#books?utm_source=pwa_shortcut&utm_medium=books"},{"description":"Today's Reading List — 8 top edges daily — PrizePicks Kalshi DK per_team_priors ON","icons":[{"sizes":"192x192","src":"/assets/icon-192.png","type":"image/png"}],"name":"Today's Reading List 8 picks","short_name":"Picks","url":"/#picks?utm_source=pwa_shortcut&utm_medium=picks"},{"description":"Margin Notes — day/week/month ledger — IC Sharpe ROI calibration Kelly 0.25 kill-switch","icons":[{"sizes":"192x192","src":"/assets/icon-192.png","type":"image/png"}],"name":"Margin Notes — Results","short_name":"Notes","url":"/#results?utm_source=pwa_shortcut&utm_medium=results"},{"description":"Map cabinet — quaternion arcball inertia 0.94 spring 120/0.18 DPR1 LOD8000/4000 — 20,719 joint","icons":[{"sizes":"192x192","src":"/assets/icon-192.png","type":"image/png"}],"name":"Map cabinet","short_name":"Map","url":"/#maps?utm_source=pwa_shortcut&utm_medium=map"}],"start_url":"/?pov=owner","theme_color":"#FEFCF9"}
+{
+  "name": "dumbmodel — japandi sports books library · Chimera 20,719×64-d",
+  "short_name": "Chimera",
+  "description": "A quiet library of sports models — Japandi sports books: hoops 12,966 · gridiron 646 · pitch 2,430 · equities 500 · unified 20,719 · tennis 128 — wabi-sabi paper, wood, stone. Chimera 5th game map cabinet quaternion arcball 0.94 inertia. LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars ?daily=20260813&n=1/3/5 DAU3/WAU3 TLPG dedup.",
+  "id": "/?pov=owner",
+  "start_url": "/?pov=owner",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "any",
+  "theme_color": "#080A0F",
+  "background_color": "#080A0F",
+  "dir": "ltr",
+  "lang": "en",
+  "categories": ["sports", "games", "education", "finance"],
+  "prefer_related_applications": false,
+  "icons": [
+    {"src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable"},
+    {"src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ],
+  "screenshots": [
+    {"src": "/assets/og-1200x630.png", "sizes": "1200x630", "type": "image/png", "form_factor": "wide", "label": "Japandi sports books shelf — 5 books + chimera 20,719 — map cabinet quaternion arcball 0.94 — today's reading list 8 picks — margin notes day/week/month — Chimera 5th"},
+    {"src": "/assets/og-embed.png", "sizes": "1080x1920", "type": "image/png", "form_factor": "narrow", "label": "Japandi daily — quiet library 20719×64-d chimera — wabi-sabi paper wood stone — PWA v67 Chimera"}
+  ],
+  "shortcuts": [
+    {"name": "Books shelf", "short_name": "Books", "description": "Books shelf — hoops, gridiron, pitch, equities, unified 20,719, tennis — Chimera 5th", "url": "/#books?utm_source=pwa_shortcut&utm_medium=books", "icons": [{"src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png"}]},
+    {"name": "Today's Reading List 8 picks", "short_name": "Picks", "description": "Today's Reading List — 8 top edges daily — PrizePicks Kalshi DK per_team_priors ON — LCG same-link-same-stars", "url": "/#picks?utm_source=pwa_shortcut&utm_medium=picks", "icons": [{"src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png"}]},
+    {"name": "Margin Notes — Results", "short_name": "Notes", "description": "Margin Notes — day/week/month ledger — IC Sharpe ROI calibration Kelly 0.25 kill-switch", "url": "/#results?utm_source=pwa_shortcut&utm_medium=results", "icons": [{"src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png"}]},
+    {"name": "Map cabinet", "short_name": "Map", "description": "Map cabinet — quaternion arcball inertia 0.94 spring 120/0.18 DPR1 LOD8000/4000 — 20,719 joint Chimera", "url": "/#maps?utm_source=pwa_shortcut&utm_medium=map", "icons": [{"src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png"}]}
+  ]
+}
