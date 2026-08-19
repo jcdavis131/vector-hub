@@ -19,7 +19,13 @@ _Last sync: 21:22 UTC 2026-08-19 — churn-main8 claimed embedding_v3 20719x128 
 | pitch-swarm | vector-pitch / MTNN game difficulty retune 61%→92.9% + v4 GraphBFF dual TCA4+TAA128 32-d | 17:28 CT 2026-08-19 | MTNN game difficulty 61%→92.9% retune verify v4 32-d archetype8 TCN dil1,2,4 GraphBFF dual TCA4+TAA128 633ent 2430ctx 25k augmented_25k 2430 real_full+22570 jitter σ0.008 is_real tagged 2430 real 25000 total embeddings present 804k/874k/4.9MB void #080A0F 40px sticky nav z40 LOD4000/8000 DPR1 single-select map clear prev ?pov= strip — candidate.json v4 valid JSON 8.8 PASS verifier≥8.0 composite0.8512→0.90 pos0.797→0.84 knn0.7894→0.85 slope1.8→1.6 median2.6→2.2 — zero-deps true stdlib only torch optional honest503 — game/index.html present index.html offline13k CORE20 PWA v67 — unblocks pitch embeddings + front hoops-level — single_action_per_tick | scout/pitch-mtnn-game | claimed |
 
 
+| equities-swarm | vector-equities / MTNN IC eval 0.174→0.7057 day/week/month ledger | 17:30 CT 2026-08-19 | MTNN v4 IC eval day 0.174 week 0.22 month 0.31 sector_coherence 0.7057 DAX MSCI live 4831 rows 500 tickers 11 sectors OKABE-8 curated per_team_priors TRUE sector priors ON LCG 20260813→189831298 idx3820 triple[11205,19448,14209] ?daily=YYYYMMDD&n=1/3/5 same-link-same-stars provenance 7/7/0 59→73 hashes — highest ROI unlocks Sharpe/IC Launched 99→100% — zero-deps true stdlib only | scout/equities-mtnn-ic | claimed |
+
+
+
 ## DONE recent
+
+| dottie-lane | dottie / name collision __path__ merge inside package | 22:33 CT 2026-08-19 | Fix dottie name collision MEASURED 35 of 36 failures ModuleNotFoundError dottie.rl — pkgutil.extend_path inside both apps/dottie/dottie/__init__.py and apps/ava-factory/dottie/__init__.py, reaches subprocesses and harness included, preserves 1 main+1 churn+N swarms never archive, zero-deps true stdlib only single_action_per_tick Boyd Decide — unblocks 35 tests 36 failed->1 failed 286 passed + 5 harness tests same root — operator decision #2 HANDOFF.md | scout/dottie-name-collision-fix | PASS 9.6 |
 
 | STALE-CLEARED-1 | proactive-hillclimb-loop / stale >4h sweep 21:42 CT | 21:42 CT | Cleared 1 stale >4h (6h 6.5m): churn-main5@vector-gridiron / front polish hoops-level single-select PWA v67 15:15 CT 2026-08-19 CT 6.5h >4h — preserved 3 LOCAL-GPU 22:20 CT — board now 3 active + 4 free — zero-deps true | hillclimb-loop | cleared |
 
