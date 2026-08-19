@@ -8,9 +8,10 @@ _Last sync: 20:34 CT 2026-08-18 — board arch vNext 5 shards — hoops v8 trans
 
 | Agent | Repo / Area | Since CT | What / Why | Branch | Status |
 |---|---|---|---|---|---|
-| LOCAL-GPU | vector-unified / unified G2 0.685→0.64 | 22:20 CT 2026-08-17 | FULL TRAIN: GRL λ0.3→0.5 + CORAL centroid, missing caches embedding_v3.npz / mtnn_best.pt / pitch_mtnn_embeddings.json restored 5.1M/4.5M/804k, torch OOM workaround → run train_stage2.py --smoke -> train_unified.py 60ep -> eval_unified.py on local GPU | local/unified-g2-gpu | claimed |
-| LOCAL-GPU | vector-hoops / v6 transformer 150ep | 22:20 CT 2026-08-17 | MTNN v6 d_model128 4-head CLS→64-d 17 towers, w-vicreg 0.05, target composite 0.7937→0.85 test top1 0.438→0.55 | local/hoops-v6-gpu | claimed |
-| LOCAL-GPU | vector-gridiron / real nflverse | 22:20 CT 2026-08-17 | nflreadpy 2020-2025 weather+Vegas, 32-d native training, MAE 4.268→3.8 | local/gridiron-real | claimed |
+| LOCAL-GPU | vector-unified / unified G2 0.685→0.64 G3 GraphBFF upgrade | 22:20 CT 2026-08-17 | FULL TRAIN: GRL λ0.3→0.5 + CORAL centroid, missing caches embedding_v3.npz / mtnn_best.pt / pitch_mtnn_embeddings.json restored 5.1M/4.5M/804k, torch OOM workaround → run train_stage2.py --smoke -> train_unified.py 60ep -> eval_unified.py on local GPU — next GraphBFF G3 dual-stream TCA 7 heads 224-d 70% params per-type sparse softmax + TAA shared 128-d k=8 30% + KL batch 64 clusters + RR 32/type + masked link 15% BCE w0.5 + VicReg anti-collapse rank ≥32 target G2 0.685→0.639→0.615 silhouette 0.683→0.74 — teacher 12M distill 64-d 1.2M client — paper 2602.04768 αN0.703 αD0.188 | local/unified-g2-gpu | claimed |
+| LOCAL-GPU | vector-hoops / v6 transformer 150ep v8/v9 GraphBFF dual | 22:20 CT 2026-08-17 | MTNN v6 d_model128 4-head CLS→64-d 17 towers, w-vicreg 0.05, target composite 0.7937→0.85 test top1 0.438→0.55 — upgraded v8 RoPE RMSNorm SwiGLU VICReg SupCon slasso — v9 dual TCA 7 heads per family 224-d TAA twin k=8 0.7/0.3 masked link 15% BCE w0.5 — zero-deps ONNX 14/18 family shared | local/hoops-v6-gpu | claimed |
+| LOCAL-GPU | vector-gridiron / real nflverse GraphBFF TAA add | 22:20 CT 2026-08-17 | nflreadpy 2020-2025 weather+Vegas, 32-d native training, MAE 4.268→3.8 — shared TAA tower cat([x,m])→96h→24d k=8 temporal 2L season trajectory same-player early W1-6 vs late W13-18 — GraphBFF 2602.04768 | local/gridiron-real | claimed |
+| ride-loop-lead | bundles/ultra/runs/ride-loop / RIDE Scaffold Review Iterate Decide Execute | 15:57 CT 2026-08-19 | RIDE loop 4 domains scaffold+json review 3-lens optimistic/pessimistic/strange JSON clean iterate unified G3 GraphBFF doc-only 0.72 conf decide Boyd single_action_per_tick history-penalized triple-write 7-field even no-change | scout/ride-loop-0819 | DONE PASS 9.92 |
 
 ## DONE recent
 
@@ -45,3 +46,6 @@ _Last sync: 20:34 CT 2026-08-18 — board arch vNext 5 shards — hoops v8 trans
 - Board mirrored: `dottie/COORDINATION.md`, `vector-*/COORDINATION.md`, `apps/arxiviq/COORDINATION.md`, `COORDINATION.md` root
 
 > House rule v5 Prime: every cron / lane logs even no-change → 7-field timeline.jsonl nodeId,agentId,attempt,latency_ms,tokens_est,status,errorClass
+
+## UPDATE 2026-08-19 Scaffold Iterate Execute
+| builder-prime | vector-schools / MTNN v1 12k→4080 80/state GraphBFF dual | 08:55 CT 2026-08-19 | SCAFFOLD+ITERATE+EXEC: 12k raw NCES CCD 2023-24 LCG 189831298 → 51 states CA1252 TX630 FL658 cap 80/state 4080 lite 24799 core (20719+4080) 6.35M NPZ + 571K emb 2000 smoke 64-d L2 unit sphere 0.90783 OKABE-8 — train_schools_v1.py stdlib 92 feats 10 towers 240-d cat 96→64 0.7/0.3 TCA4+TAA1 VICReg var25 cov1 SupCon0.07 BCE link 15% w0.5 KL 64 RR 32/type — eval composite0.832 silhouette0.668 rank34.2 cross-district0.764 next_D1_R2 0.244 vs 0.022 naive — construct validity threats mitigations honest no PII — zero-deps true — PASS 8.35 | scout/schools-arch-v1 | DONE |

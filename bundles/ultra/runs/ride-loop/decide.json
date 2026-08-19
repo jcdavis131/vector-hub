@@ -1,0 +1,71 @@
+{
+  "nodeId": "L0-ride-loop-decide",
+  "agentId": "strategist-boyd",
+  "ts": "2026-08-19T15:57:19.310231Z",
+  "lcg": "20260813->189831298 idx3820 triple[11205,19448,14209] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5",
+  "actions_considered": [
+    {
+      "id": "nba_xyz_renorm",
+      "domain": "NBA",
+      "conf": 0.62,
+      "lens": "pessimistic",
+      "delta_expected": "+0.04 verifier to 9.39 + provenance fix [-1,1]",
+      "cost": "low 200ms",
+      "action": "recenter xyz mean-centered scale0.97 clip0.99 OKABE-8 preserve",
+      "risk": "low",
+      "adj_conf": 0.62,
+      "prior_runs": 0
+    },
+    {
+      "id": "nfl_cb1_shadow_label",
+      "domain": "NFL",
+      "conf": 0.58,
+      "lens": "strange",
+      "delta_expected": "+0.03 MAE 3.5->3.47 CB1 binary flag",
+      "cost": "low",
+      "action": "add cb1_shadow bool to vectors.json featureLabels + gridiron Lab fit finder pill",
+      "adj_conf": 0.58,
+      "prior_runs": 0
+    },
+    {
+      "id": "equities_tcn_proof_doc",
+      "domain": "EQUITIES",
+      "conf": 0.51,
+      "lens": "optimistic",
+      "delta_expected": "+0.02 doc -> verifier sustainable IC",
+      "cost": "low 100ms doc",
+      "action": "tighten assets/construct_validity_v3.json IC 0.174 day -> 0.045 sustainable TCN 3L dil1,2,4 proof snippet",
+      "adj_conf": 0.51,
+      "prior_runs": 0
+    },
+    {
+      "id": "unified_g3_graphbff_spec",
+      "domain": "UNIFIED",
+      "conf": 0.72,
+      "lens": "optimistic",
+      "delta_expected": "+0.05 silhouette 0.683->0.71 G2 0.639->0.615 target",
+      "cost": "med 5min GPU parent lane exempt",
+      "action": "write G3 GraphBFF dual-stream spec TCA7 224-d 70% + TAA 128-d k8 30% + KL RR masked link 15% BCE w0.5 + VicReg rank\u226532 + distill teacher12M->1.2M \u2014 doc only this tick not full train",
+      "risk": "low-doc-only",
+      "adj_conf": 0.72,
+      "prior_runs": 0
+    }
+  ],
+  "best": {
+    "id": "unified_g3_graphbff_spec",
+    "domain": "UNIFIED",
+    "conf": 0.72,
+    "lens": "optimistic",
+    "delta_expected": "+0.05 silhouette 0.683->0.71 G2 0.639->0.615 target",
+    "cost": "med 5min GPU parent lane exempt",
+    "action": "write G3 GraphBFF dual-stream spec TCA7 224-d 70% + TAA 128-d k8 30% + KL RR masked link 15% BCE w0.5 + VicReg rank\u226532 + distill teacher12M->1.2M \u2014 doc only this tick not full train",
+    "risk": "low-doc-only",
+    "adj_conf": 0.72,
+    "prior_runs": 0
+  },
+  "no_change": false,
+  "conf_threshold": 0.4,
+  "history_last20": 0,
+  "single_action_per_tick": true,
+  " Boyd_OODA": "Observe Orient Decide Act \u2014 loop"
+}

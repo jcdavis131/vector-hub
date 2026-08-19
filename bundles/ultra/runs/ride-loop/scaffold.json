@@ -1,0 +1,89 @@
+{
+  "nodeId": "L0-ride-loop-scaffold",
+  "agentId": "ride-loop-lead",
+  "attempt": 1,
+  "ts": "2026-08-19T15:56:55.254446Z",
+  "lcg": "20260813->189831298 idx3820 triple[11205,19448,14209] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5",
+  "zero_deps": true,
+  "stdlib_only": true,
+  "void": "#080A0F",
+  "paper": "#FEFCF7 ivory #FFFEF7 19.1:1",
+  "nav": "40px sticky z40 mono/sans",
+  "pov": "44px sticky z39",
+  "pwa": "v67 offline13k CORE20 LOD4000/8000 DPR1",
+  "okabe8_curated_not_i8": true,
+  "single_select_clears_prev": true,
+  "floor_manager_v3": {
+    "baseWIP": "4/2/3/2",
+    "EWMA": "0.6/0.4",
+    "tempo": ":13/:05",
+    "team_pairing": "2-3 specialists borrow health>0.5",
+    "healthScore": "cold-start 1.0 adjustWIP>2"
+  },
+  "domains": {
+    "nba": {
+      "path": "~/workspace/vector-hoops/candidate.json",
+      "score": 9.35,
+      "exists": true
+    },
+    "nfl": {
+      "path": "~/workspace/vector-gridiron/candidate.json",
+      "score": 9.7,
+      "exists": true
+    },
+    "equities": {
+      "path": "~/workspace/vector-equities/candidate.json",
+      "score": 9.7,
+      "exists": true
+    },
+    "unified": {
+      "path": "~/workspace/vector-unified/candidate.json",
+      "score": "unknown",
+      "exists": true
+    }
+  },
+  "timelines": {},
+  "verification": {
+    "unified_v4": {
+      "path": "~/workspace/bundles/ultra/runs/unified-endgame/verification_stage4.json",
+      "exists": true
+    },
+    "nba_timeline": {
+      "path": "~/workspace/bundles/ultra/runs/nba-endgame/timeline.jsonl",
+      "exists": true
+    },
+    "gridiron_timeline": {
+      "path": "~/workspace/bundles/ultra/runs/gridiron-endgame/timeline.jsonl",
+      "exists": true
+    },
+    "equities_timeline": {
+      "path": "~/workspace/bundles/ultra/runs/equities-endgame/timeline.jsonl",
+      "exists": true
+    },
+    "unified_timeline": {
+      "path": "~/workspace/bundles/ultra/runs/unified-endgame/timeline.jsonl",
+      "exists": true
+    }
+  },
+  "style_gate": "void #080A0F outer paper #FEFCF7 #FFFEF7 19.1:1 ivory 40px sticky nav z40 POV 44px z39 mono/sans only no dev pills OKABE-8 curated not i%8 single-select clears prev DPR1 LOD4000/8000 momentum0.94 spring120 0.18 PWA v67 offline13k CORE20 provenance 7/7/0 59 hashes LCG same-link-same-stars TLPG DAU3/WAU3 dedup everydayTip() 6-voice lock",
+  "cap": "7 non-GPU max, currently 3 LOCAL-GPU exempt + 0 non-GPU active, 7 free after sweep \u2014 boarding compliant",
+  "vegas": {
+    "rows": 57660,
+    "breakdown": "6x312x5 NFL9360 +6x1230x5 NBA36900 +6x380x5 MLB11400 =57660",
+    "lcg": 189831298
+  },
+  "iterate": {
+    "actions_considered": 4,
+    "best": "unified_g3_graphbff_spec",
+    "adj_conf": 0.72,
+    "conf_thr": 0.4,
+    "single_action_per_tick": true,
+    "history_last20": 0,
+    "doc_only_tick": true,
+    "file": "~/workspace/vector-unified/docs/MTNN_V3_UNIFIED_G3_GRAPHBFF_SPEC.md",
+    "domain": "UNIFIED",
+    "lens": "optimistic",
+    "delta_expected": "+0.05 silhouette 0.683->0.71 G2 0.639->0.615",
+    "zero_deps": true
+  }
+}
