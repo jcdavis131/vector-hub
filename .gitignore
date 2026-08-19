@@ -1,0 +1,12 @@
+
+datasets/nfl/clean/
+
+.venv/
+
+skills/unsloth-local/.venv/
+
+**/*.so
+
+workspace/datasets/
+
+vector-schools/data/quarantine_synthetic/
