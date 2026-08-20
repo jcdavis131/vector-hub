@@ -1,49 +1,8 @@
-/* tokens.css — japandi sports books taste v2 — zero-deps — 10/10 masterclass */
-:root{
-  /* base japandi — warm minimal, natural materials, wabi-sabi low contrast calm */
-  --paper:#FEFCF9;       /* warm paper base — main bg */
-  --paper-2:#FFFEF7;      /* ivory — second */
-  --paper-3:#FFFCF2;      /* fallback warm */
-  --wood:#D6C7B3;         /* light oak / hinoki */
-  --wood-2:#E8D9C5;       /* lighter ash */
-  --wood-3:#C7B299;       /* deeper walnut trim */
-  --stone:#EAE3D8;        /* stone shelf */
-  --stone-2:#D9D0C3;
-  --ink:#1E1E1E;          /* sumi ink, not pure black #000 */
-  --ink-soft:#5A544E;
-  --ink-muted:#8A847A;
-  --ink-faint:#B8B0A3;
-  --moss:#7A8A7B;         /* moss garden */
-  --moss-2:#A3B1A0;
-  --clay:#C9A88C;         /* clay / terracotta soft */
-  --clay-2:#E8C6A7;
-  /* layout — nav 40px sticky z40 safe-area */
-  --nav-h:40px;
-  --pov-h:44px;
-  --rail-w:84px;
-  --shelf-h:4px;
-  /* dynamics — inertial map preserved momentum 0.94 DPR1 LOD8000/4000 quaternion arcball */
-  --momentum:0.94;
-  --spring-stiff:120;
-  --spring-damp:0.18;
-  --decay-raf:0.94;
-  --spring-k:120;
-  --spring-b:0.18;
-  --lod-desktop:8000;
-  --lod-mobile:4000;
-  --dpr:1;
-  /* OKABE-8 — vivid dots on dark map inset, also as book edge dots — visible 8px border 1.4px */
-  --ok-0:#0072B2;
-  --ok-1:#D55E00;
-  --ok-2:#009E73;
-  --ok-3:#F0E442;
-  --ok-4:#56B4E9;
-  --ok-5:#CC79A7;
-  --ok-6:#E69F00;
-  --ok-7:#FFFEF7;
-  --okabe-0:var(--ok-0);
-  --okabe-1:var(--ok-1);
-:root{--paper:#FEFCF9;--paper2:#FFFEF7;--ink:#14181D;--ink2:#5A544E;--mut:#8A847A;--void:#080A0F;--line:#14181D;--radius:10px;--nav-h:40px}
-*{box-sizing:border-box}html{background:var(--paper);color:var(--ink)}
-:focus-visible{outline:2px solid #C9A88C;outline-offset:2px}
-.footer-subtle{font:600 11px ui-monospace,monospace;color:var(--mut)}
+/* tokens.css — agentic harness paper v3 — unified with agentic-harness-pair-programmer-north-star */
+:root{--paper:#FAFAF8;--paper-2:#FFF;--paper-3:#FFFEF7;--surface:#FFF;--ink:#111;--ink-soft:#52514E;--ink-muted:#878580;--void:#0A0C10;--void-2:#0f141e;--nav-h:40px;--pov-h:44px;--r:12px;--shadow:4px 4px 0 var(--ink);--shadow-sm:3px 3px 0 var(--ink);--ok0:#E69F00;--ok1:#56B4E9;--ok2:#009E73;--ok3:#F0E442;--ok4:#0072B2;--mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;--sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;--gutter:clamp(12px,3vw,22px)}
+*{box-sizing:border-box} html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.nav{position:sticky;top:0;top:env(safe-area-inset-top,0);z-index:40;height:40px;min-height:40px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 12px;background:var(--surface);border-bottom:2px solid var(--ink);font-family:var(--mono)}
+.pill{border:2px solid var(--ink);border-radius:9999px;padding:5px 11px;background:#fff;font:800 11px var(--mono);box-shadow:2px 2px 0 var(--ink);cursor:pointer}
+.pill.on{background:var(--ink);color:#fff}
+.pill.y{background:var(--ok3);transform:rotate(-1deg)}
+.card{border:2px solid var(--ink);border-radius:12px;background:#fff;padding:11px 12px;box-shadow:var(--shadow)}
