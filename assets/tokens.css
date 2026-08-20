@@ -1,13 +1,13 @@
-/* tokens.css — agentic harness paper v3 — SSOT paper #FAFAF8 / void #080A0F / ink 2px / shadow 4px 4px 0 / 40px sticky z40 / POV44px z39  — unified with agentic-harness-pair-programmer-north-star */
+/* tokens.css — SSOT warm paper #FEFCF9 — equities gate 9.1 PASS unify across suite — hoops+hub+gridiron+pitch+unified same --paper/--void/--ink/--shadow */
 :root{
-  --paper:#FAFAF8;
-  --paper-2:#FFF;
+  --paper:#FEFCF9;
+  --paper-2:#FFFFFF;
   --paper-3:#FFFEF7;
-  --surface:#FFF;
-  --ink:#111;
-  --ink-soft:#52514E;
-  --ink-muted:#878580;
-  --void:#0A0C10;
+  --surface:#FFFFFF;
+  --ink:#1E1E1E;
+  --ink-soft:#5A544E;
+  --ink-muted:#8A847A;
+  --void:#080A0F;
   --void-2:#0f141e;
   --orange:#EB6834;
   --blue:#2A78D6;
@@ -18,8 +18,8 @@
   --nav-h:40px;
   --pov-h:44px;
   --r:12px;
-  --shadow:4px 4px 0 var(--ink);
-  --shadow-sm:3px 3px 0 var(--ink);
+  --shadow:3px 3px 0 var(--ink),0 8px 22px #1E1E1E14;
+  --shadow-sm:2px 2px 0 var(--ink);
   --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
   --sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
   --gutter:clamp(12px,3vw,22px)
