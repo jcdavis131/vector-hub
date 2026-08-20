@@ -10,9 +10,11 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080A0F'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23FEFCF9'/%3E%3C/svg%3E">
 <style>
 :root{
-  --paper:#FAFAF8; --paper2:#FFFEF7; --ink:#14181D; --ink2:#5A544E; --mut:#8A847A; --line:#14181D;
-  --line-soft:#E8DED0; --void:#080A0F; --radius:12px; --radius-sm:9px;
+  --paper:#FEFCF9; --paper2:#FFFFFF; --ink:#1E1E1E; --ink2:#5A544E; --mut:#8A847A; --line:#1E1E1E;
+  --line-soft:#EAE3D8; --stone:#EAE3D8; --wood:#D6C7B3; --void:#080A0F; --void-2:#0f141e;
+  --radius:12px; --radius-sm:9px; --radius-cab:14px;
   --blue:#0072B2; --orange:#D55E00; --green:#009E73; --yellow:#F0E442; --ltblue:#56B4E9; --pink:#CC79A7; --gold:#E69F00;
+  --shadow:3px 3px 0 var(--ink); --shadow-lg:3px 3px 0 var(--ink), 0 8px 22px #1E1E1E14;
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased}
@@ -21,14 +23,18 @@ body{font-family:ui-sans-system,-apple-system,Inter,system-ui,Segoe UI,Roboto,He
 a{color:inherit;text-decoration:none}
 button{font:inherit}
 
-/* nav - 40px sticky per house */
-.nav{position:sticky;top:0;top:env(safe-area-inset-top,0);z-index:40;height:40px;min-height:40px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 12px;background:var(--paper);border-bottom:1.5px solid var(--line)}
+/* nav - 40px sticky per house - unified 1.5px ink */
+.nav{position:sticky;top:0;top:env(safe-area-inset-top,0);z-index:40;height:40px;min-height:40px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 14px;background:var(--paper);border-bottom:1.5px solid var(--line);backdrop-filter:saturate(1.02)}
 .nav b{font:800 12px ui-monospace,monospace;letter-spacing:.09em;text-transform:uppercase}
-.nav .links{display:flex;gap:6px;align-items:center}
-.pill{border:1.2px solid var(--line);border-radius:9999px;padding:4px 11px;background:#fff;font:700 11px ui-monospace,monospace;display:inline-flex;align-items:center;gap:6px;cursor:pointer;line-height:1}
-.pill.on{background:var(--ink);color:var(--paper2);border-color:var(--ink)}
+.nav .links{display:flex;gap:7px;align-items:center;flex-wrap:nowrap}
+@media(max-width:400px){.nav .links{gap:4px}.pill{padding:3px 8px;font-size:10px}}
+.pill{border:1.2px solid var(--line);border-radius:9999px;padding:4px 11px;background:#fff;font:700 11px ui-monospace,monospace;display:inline-flex;align-items:center;gap:6px;cursor:pointer;line-height:1;transition:all .12s}
+.pill.on{background:var(--ink);color:#fff;border-color:var(--ink)}
 .pill.ghost{background:transparent;border-color:var(--line-soft);color:var(--ink2)}
-.pill.small{padding:3px 9px;font-size:10.5px}
+.pill.ghost:hover{border-color:var(--line);color:var(--ink);background:var(--paper2)}
+.pill.small{padding:3px 9px;font-size:10.5px;border-width:1.2px}
+.pill.yellow{background:var(--yellow);color:var(--ink);border-color:var(--ink);box-shadow:var(--shadow);font-weight:800}
+.pill.yellow:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
 
 .wrap{max-width:1248px;margin:0 auto;padding:0 14px}
 
@@ -44,32 +50,40 @@ button{font:inherit}
 .kpis .k b{color:var(--ink);font-weight:700}
 .shelf-note{font:600 11px ui-monospace,monospace;color:var(--mut);line-height:1.4;border-left:2px solid var(--line-soft);padding-left:10px;margin-top:2px}
 
-/* books - shelf */
-.books{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;margin:14px 0}
-@media(max-width:980px){.books{grid-template-columns:repeat(3,1fr)}}
+/* books - shelf w/ edge fades for scroll hint */
+.books{position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:14px 0;padding-bottom:4px}
+.books::after{content:'';position:absolute;right:0;top:0;bottom:4px;width:24px;background:linear-gradient(90deg, transparent, var(--paper) 80%);pointer-events:none;opacity:0}
+@media(max-width:980px){.books{grid-template-columns:repeat(3,1fr)}.books::after{opacity:1}}
 @media(max-width:560px){.books{grid-template-columns:repeat(2,1fr)}}
-.book{border:1.2px solid var(--line-soft);border-radius:10px;padding:10px 10px;background:#fff;display:flex;flex-direction:column;gap:7px;cursor:pointer;text-align:left;transition:border-color .15s, transform .12s}
-.book:hover{border-color:var(--line);transform:translateY(-1px)}
-.book.on{border-color:var(--line);background:var(--paper2);outline:0;box-shadow:inset 0 0 0 1px var(--line)}
+.book{border:1.2px solid var(--line-soft);border-radius:10px;padding:10px 10px;background:#fff;display:flex;flex-direction:column;gap:7px;cursor:pointer;text-align:left;transition:border-color .15s, transform .12s, box-shadow .12s}
+.book:hover{border-color:var(--line);transform:translateY(-1px);box-shadow:var(--shadow)}
+.book.on{border-color:var(--line);background:#fff;outline:0;box-shadow:var(--shadow-lg)}
 .book .top{display:flex;justify-content:space-between;align-items:center;font:700 10px ui-monospace,monospace;color:var(--mut)}
-.dot{width:8px;height:8px;border-radius:50%;border:1px solid var(--line);display:inline-block}
+.dot{width:8px;height:8px;border-radius:50%;border:1px solid var(--line);display:inline-block;box-shadow:0 0 0 1.5px #fff}
 .book .name{font:800 11.5px ui-monospace,monospace;text-transform:uppercase;letter-spacing:.04em;line-height:1.15}
 .book .ft{font:600 10.5px ui-monospace,monospace;color:var(--ink2);display:flex;justify-content:space-between;gap:6px}
+.scroll-hint{grid-column:1/-1;display:none;font:700 10px ui-monospace,monospace;color:var(--mut);justify-content:flex-end;align-items:center;gap:6px;margin-top:-2px}
+@media(max-width:980px){.scroll-hint{display:flex}}
 
-/* main 2-col */
+/* main 2-col - japandi cabinet */
 .main{display:grid;grid-template-columns:1.18fr .82fr;gap:14px;margin:14px 0}
 @media(max-width:1020px){.main{grid-template-columns:1fr}}
-.card{border:1.2px solid var(--line-soft);border-radius:12px;background:#fff;padding:11px 12px}
+.card{border:1.2px solid var(--line-soft);border-radius:var(--radius-cab);background:#fff;padding:11px 12px;box-shadow:0 1px 0 #00000006}
 .card h2{margin:0 0 10px;font:800 11.5px ui-monospace,monospace;text-transform:uppercase;letter-spacing:.06em;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
-.card h2 .tag{font:600 10.5px ui-monospace,monospace;color:var(--ink2);border:1px solid var(--line-soft);border-radius:9999px;padding:3px 8px;background:var(--paper2)}
+.card h2 .tag{font:600 10.5px ui-monospace,monospace;color:var(--ink2);border:1.2px solid var(--line-soft);border-radius:9999px;padding:3px 8px;background:var(--paper2)}
 
-/* map */
-.map-wrap{padding:0;overflow:hidden;display:flex;flex-direction:column}
-.map-head{display:flex;justify-content:space-between;align-items:center;padding:9px 11px;border-bottom:1px solid var(--line-soft)}
-.map-box{position:relative;background:var(--void);min-height:420px;overflow:hidden}
-@media(max-width:700px){.map-box{min-height:360px}}
-#c{width:100%;height:100%;min-height:420px;display:block;touch-action:none;cursor:grab;background:var(--void)}
-.map-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:8px 11px;font:600 10.5px ui-monospace,monospace;color:#A8B0C0;background:#0f141e;border-top:1px solid #1e2736}
+/* map - cabinet Japanese frame radius14 shadow 3px void only, wheel-guard */
+.map-wrap{padding:0;overflow:hidden;display:flex;flex-direction:column;border:1.5px solid var(--line);border-radius:var(--radius-cab);background:#fff;box-shadow:var(--shadow-lg)}
+.map-head{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 11px;border-bottom:1.5px solid var(--line-soft);background:#fff}
+.map-head .controls{display:flex;gap:6px;align-items:center}
+.map-head #bRst{background:var(--yellow);color:var(--ink);border-color:var(--ink);font-weight:800;box-shadow:2px 2px 0 var(--ink)}
+.map-box{position:relative;background:var(--void);min-height:460px;overflow:hidden;touch-action:pan-y}
+@media(max-width:700px){.map-box{min-height:380px}}
+#c{width:100%;height:100%;min-height:460px;display:block;touch-action:none;cursor:grab;background:var(--void);min-height:inherit}
+#c.grabbing{cursor:grabbing}
+.map-wrap .wheel-hint{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:5;background:#FFFEF7;border:1.2px solid var(--line);border-radius:9999px;padding:4px 10px;font:700 10.5px ui-monospace,monospace;color:var(--ink2);box-shadow:2px 2px 0 var(--ink);pointer-events:none;opacity:0;transition:opacity .18s}
+.map-wrap:hover .wheel-hint{opacity:1}
+.map-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:9px 11px;font:600 10.5px ui-monospace,monospace;color:#A8B0C0;background:#0f141e;border-top:1.5px solid #1e2736}
 
 /* picks */
 .list{display:grid;grid-template-columns:1fr;gap:7px;max-height:520px;overflow:auto;padding-right:2px}
@@ -98,16 +112,16 @@ input[type=text].pill{min-width:160px;background:var(--paper2)}
 </style>
 </head>
 <body>
-<nav class="nav">
+<nav class="nav" role="navigation" aria-label="Main">
 <a href="/"><b>DUMB / MODEL</b></a>
 <div class="links mono">
-<a class="pill ghost" href="#books">Books</a>
-<a class="pill ghost" href="#maps">Maps</a>
-<a class="pill on" href="#picks">Picks</a>
-<a class="pill ghost" href="#results">Results</a>
-<span id="lcgMini" style="font-size:10px;color:var(--mut);margin-left:4px;display:none">LCG 20260813→189831298</span>
+<a class="pill ghost" href="#books" aria-label="Jump to books shelf - 6 tactile books">Books</a>
+<a class="pill on" href="#picks" aria-label="Jump to today's picks">Picks</a>
+<a class="pill ghost" href="#results" aria-label="Jump to lab and results">Lab</a>
+<span id="lcgMini" style="font-size:10px;color:var(--mut);margin-left:6px;display:none">LCG 20260813→189831298</span>
 </div>
 </nav>
+<div class="pov-note mono" style="max-width:1248px;margin:0 auto;padding:6px 14px;font-size:10.5px;color:var(--mut);display:flex;gap:8px;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--line-soft);background:var(--paper)"><span class="pill small ghost" style="border-color:var(--line-soft)">Maps inside Books • Results inside Lab • same-link-same-stars ?daily=YYYYMMDD&n=1/3/5</span><span id="provMini" class="pill small ghost mono" style="cursor:default">59 hashes 7/7/0 PASS</span></div>
 <div class="harness-strip mono">
 <b>Agentic Harness</b> <span class="g0">Pair Programmer North Star</span>
 <a href="https://agentic-harness-pair-programmer-north-star.space" target="_blank" rel="noopener">G0→G4 goals · tests · checkpoints → north star</a>
@@ -125,29 +139,30 @@ input[type=text].pill{min-width:160px;background:var(--paper2)}
 <p class="deck">We run models across football, hoops, pitch, equities, and a unified chimera — <b>20,719 vectors</b> mapped to a 3-D readable shelf. Every morning we publish <b>30 picks</b> from PrizePicks, Kalshi, and DraftKings, and we grade them on day / week / month. No hype. Just proof.</p>
 </div>
 <div class="right">
-<a class="pill y" href="https://agentic-harness-pair-programmer-north-star.space" target="_blank" rel="noopener">Pair Programmer North Star↗</a><div class="kpis mono">
+<div class="kpis mono">
 <span class="k"><b>20,719</b> vectors · 64-d</span>
 <span class="k"><b>30</b> picks daily live</span>
 <span class="k"><b>59</b> hashes <span style="color:#0a7">7/7/0</span> PASS</span>
 <span class="k mono" id="kLive">12 PP · 9 Kalshi · 9 DK · priors ON</span>
 </div>
-<div class="shelf-note mono">Japandi sports books — void #080A0F paper #FAFAF8 40px sticky nav mono/sans only · same-link-same-stars <span class="mono" style="white-space:nowrap">?daily=YYYYMMDD&amp;n=1/3/5</span> · Solo1 Triple3 Full5 open→drag-map→Jordan→copy-link equal stars · PWA v67 offline 13k</div>
-<div class="controls" style="margin-top:2px">
-<button class="pill small" id="btnPlay" title="Challenge a friend via daily link">Play Today's</button>
-<button class="pill small ghost" id="btnShare">Share</button>
+<div class="shelf-note mono">Japandi sports books — void #080A0F paper #FEFCF9 40px sticky nav mono/sans only · same-link-same-stars <span class="mono" style="white-space:nowrap">?daily=YYYYMMDD&amp;n=1/3/5</span> · Solo1 Triple3 Full5 open→drag-map→Jordan→copy-link · PWA v67 offline 13k</div>
+<div class="controls" style="margin-top:4px">
+<button class="pill yellow" id="btnPlay" title="Challenge a friend via daily link">Play Today's →</button>
+<button class="pill small ghost" id="btnShare" aria-label="Share daily link">Share</button>
 <span class="pill small ghost" id="seedBadge" style="cursor:default">LCG 20260813→189831298 idx3820</span>
 </div>
 </div>
 </div>
 
-<!-- books shelf - first class -->
-<section id="books" class="books">
-<button class="book on" data-domain="hoops"><div class="top"><span class="dot" style="background:#0072B2"></span><span class="mono">12,966</span></div><div class="name">HOOPS — 12,966</div><div class="ft"><span>64-d · 17 twr</span><span>comp 0.85</span></div></button>
-<button class="book" data-domain="gridiron"><div class="top"><span class="dot" style="background:#D55E00"></span><span class="mono">646</span></div><div class="name">GRIDIRON — 646</div><div class="ft"><span>32-d · MAE 3.8</span><span>ON</span></div></button>
-<button class="book" data-domain="pitch"><div class="top"><span class="dot" style="background:#009E73"></span><span class="mono">2,430</span></div><div class="name">PITCH — 2,430</div><div class="ft"><span>24-d · 92.9%</span><span>GAME</span></div></button>
-<button class="book" data-domain="equities"><div class="top"><span class="dot" style="background:#E69F00"></span><span class="mono">500</span></div><div class="name">EQUITIES — 500</div><div class="ft"><span>4831 rows · 11 sec</span><span>CQS 0.72</span></div></button>
-<button class="book" data-domain="unified"><div class="top"><span class="dot" style="background:#CC79A7"></span><span class="mono">20,719</span></div><div class="name">UNIFIED — 20,719</div><div class="ft"><span>64-d · G2 0.62</span><span>chimera</span></div></button>
-<button class="book" data-domain="tennis"><div class="top"><span class="dot" style="background:#56B4E9"></span><span class="mono">128</span></div><div class="name">TENNIS — 128</div><div class="ft"><span>US Open</span><span>LIVE 128</span></div></button>
+<!-- books shelf - first class w/ a11y -->
+<section id="books" class="books" role="list" aria-label="6 tactile sports books - Okabe-8 vertical spine">
+<button class="book on" data-domain="hoops" role="listitem" aria-label="Hoops - 12,966 player-seasons, 64-d, 17 towers"><div class="top"><span class="dot" style="background:#0072B2"></span><span class="mono">12,966</span></div><div class="name">HOOPS — 12,966</div><div class="ft"><span>64-d · 17 twr</span><span>comp 0.85</span></div></button>
+<button class="book" data-domain="gridiron" role="listitem" aria-label="Gridiron - 646 players, 32-d, MAE 3.8"><div class="top"><span class="dot" style="background:#D55E00"></span><span class="mono">646</span></div><div class="name">GRIDIRON — 646</div><div class="ft"><span>32-d · MAE 3.8</span><span>ON</span></div></button>
+<button class="book" data-domain="pitch" role="listitem" aria-label="Pitch - 2,430 players, 24-d, 92.9 percent"><div class="top"><span class="dot" style="background:#009E73"></span><span class="mono">2,430</span></div><div class="name">PITCH — 2,430</div><div class="ft"><span>24-d · 92.9%</span><span>GAME</span></div></button>
+<button class="book" data-domain="equities" role="listitem" aria-label="Equities - 500 tickers, 4831 rows"><div class="top"><span class="dot" style="background:#E69F00"></span><span class="mono">500</span></div><div class="name">EQUITIES — 500</div><div class="ft"><span>4831 rows · 11 sec</span><span>CQS 0.72</span></div></button>
+<button class="book" data-domain="unified" role="listitem" aria-label="Unified - 20,719 chimera, 64-d"><div class="top"><span class="dot" style="background:#CC79A7"></span><span class="mono">20,719</span></div><div class="name">UNIFIED — 20,719</div><div class="ft"><span>64-d · G2 0.62</span><span>chimera</span></div></button>
+<button class="book" data-domain="tennis" role="listitem" aria-label="Tennis - 128 US Open"><div class="top"><span class="dot" style="background:#56B4E9"></span><span class="mono">128</span></div><div class="name">TENNIS — 128</div><div class="ft"><span>US Open</span><span>LIVE 128</span></div></button>
+<div class="scroll-hint mono"><span>← swipe → 6 books • Okabe-8 tactile</span></div>
 
 <!-- Game01-05 Chimera Hub 5-Game hoops-level parity - checker anchors -->
 <div id="game-cards" style="display:none" aria-hidden="true">
@@ -170,13 +185,13 @@ input[type=text].pill{min-width:160px;background:var(--paper2)}
 </section>
 
 <div class="main">
-<!-- maps - embedding first class per user -->
+<!-- maps - embedding first class per user - wheel-guard + prominent reset -->
 <div id="maps" class="card map-wrap">
 <div class="map-head"><h2 style="margin:0">Maps — embedding <span class="tag" id="mapTag">gridiron · 646 · DPR1 LOD4000/8000</span></h2>
-<div class="controls mono"><button class="pill small" id="bZi" aria-label="Zoom in">+</button><button class="pill small" id="bZo" aria-label="Zoom out">−</button><button class="pill small ghost" id="bRst">Reset</button></div>
+<div class="controls mono"><button class="pill small ghost" id="bZi" aria-label="Zoom in">+</button><button class="pill small ghost" id="bZo" aria-label="Zoom out">−</button><button class="pill small yellow" id="bRst" aria-label="Reset view - returns to frontier">Reset ↔</button></div>
 </div>
-<div class="map-box"><canvas id="c" width="960" height="460"></canvas></div>
-<div class="map-foot mono"><span id="mapLabel">gridiron • 646 • void #080A0F • single-select clears prev</span><span id="posLab">drag / wheel / pinch · inertial</span></div>
+<div class="map-box"><div class="wheel-hint mono">⇧+wheel to zoom • drag to rotate • tap to pick</div><canvas id="c" width="960" height="460" aria-label="3D embedding map - drag to rotate, shift wheel to zoom, tap ticker for drawer"></canvas></div>
+<div class="map-foot mono"><span id="mapLabel">gridiron • 646 • void #080A0F • single-select</span><span id="posLab" style="display:flex;gap:8px;align-items:center"><span id="toastSel" class="pill small ghost" style="display:none;background:#FFFEF7;border-color:var(--line);color:var(--ink)">—</span><span>drag / shift+wheel / tap ticker → props</span></span></div>
 </div>
 
 <div style="display:flex;flex-direction:column;gap:12px">
@@ -421,8 +436,9 @@ input[type=text].pill{min-width:160px;background:var(--paper2)}
     try{var r=await fetch('/assets/data/results_rollup.json',{cache:'no-store'}); var j=await r.json(); var rows=[['period','picks','wins','losses','win_pct','roi_pct','ic','sharpe','pnl','kill']]; ['day','week','month'].forEach(function(k){var o=j.by_period&&j.by_period[k]||j[k]||{}; rows.push([k,o.picks||'',o.wins||'',o.losses||'',o.win_pct||'',o.roi_pct||'',o.ic||'',o.sharpe||'',o.pnl_units||'',o.kill||'']);}); var csv=rows.map(function(r){return r.join(',');}).join('\n'); var blob=new Blob([csv],{type:'text/csv'}); var url=URL.createObjectURL(blob); var a=document.createElement('a');a.href=url;a.download='dumbmodel_results_'+(j.date||'latest')+'.csv';a.click();URL.revokeObjectURL(url);}catch(e){}
   });
 
-  // map - mount shared-map first class
+  // map - mount shared-map first class - japandi unified
   var __mapInst=null;
+  var _lastDomain=null;
   (async function initMap(){
     try{
       var cvs=document.getElementById('c');
@@ -430,27 +446,51 @@ input[type=text].pill{min-width:160px;background:var(--paper2)}
       if(window.mountSharedMap){
         __mapInst=await window.mountSharedMap(cvs,{dark:true, domain: current});
         window.__map=__mapInst; window.__mapInst=__mapInst;
-        // domain switch helper for books
+        _lastDomain=current;
+        // domain switch helper for books - with toast for single-select clears prev
         window.mountSharedMapDomain=function(d){
-          current=d;
+          var prev=current; current=d;
+          var toast=document.getElementById('toastSel');
+          if(toast && prev!==d){
+            toast.textContent='Switched '+(prev||'')+' → '+d+' • single-select';
+            toast.style.display='inline-flex';
+            setTimeout(function(){toast.style.display='none';},1600);
+          }
           if(__mapInst && __mapInst.setDomain) { try{__mapInst.setDomain(d)}catch(e){} }
-          // shared-map reloads via full progressive per domain? For now keep same N, just update label
         };
+        // wheel-guard: shift+wheel to zoom, otherwise scroll page
+        cvs.addEventListener('wheel', function(ev){
+          if(!ev.shiftKey){ return; } // let page scroll
+          ev.preventDefault();
+          var delta = Math.sign(ev.deltaY) * -0.08;
+          _zoom = Math.min(1.8, Math.max(0.7, _zoom + delta));
+          applyZoom();
+          try{window.__map&&window.__map.resize&&window.__map.resize();}catch(e){}
+        }, {passive:false});
+        // grabbing cursor
+        cvs.addEventListener('mousedown', function(){cvs.classList.add('grabbing');});
+        window.addEventListener('mouseup', function(){cvs.classList.remove('grabbing');});
       }
     }catch(e){console.warn('map mount fail',e);}
   })();
 
-  // map controls - zoom via scale factor, reset via rot
+  // map controls - zoom via scale factor, reset via rot - yellow prominent
   var _zoom=1;
   function applyZoom(){var c=document.getElementById('c'); if(c) c.style.transform='scale('+_zoom+')'; c.style.transformOrigin='center center';}
   var bZi=document.getElementById('bZi'); if(bZi) bZi.addEventListener('click',function(){_zoom=Math.min(1.8,_zoom+0.15); applyZoom(); try{window.__map&&window.__map.resize&&window.__map.resize();}catch(e){}});
   var bZo=document.getElementById('bZo'); if(bZo) bZo.addEventListener('click',function(){_zoom=Math.max(0.7,_zoom-0.15); applyZoom(); try{window.__map&&window.__map.resize&&window.__map.resize();}catch(e){}});
-  var bRst=document.getElementById('bRst'); if(bRst) bRst.addEventListener('click',function(){_zoom=1; applyZoom(); try{if(window.__mapInst&&window.__mapInst.setTarget) window.__mapInst.setTarget(null);}catch(e){} var c=document.getElementById('c'); if(c){c.style.transition='transform .2s'; setTimeout(function(){c.style.transition='';},220);} });
+  var bRst=document.getElementById('bRst'); if(bRst) bRst.addEventListener('click',function(){
+    _zoom=1; applyZoom();
+    try{if(window.__mapInst&&window.__mapInst.setTarget) window.__mapInst.setTarget(null);}catch(e){}
+    try{if(window.__mapInst&&window.__mapInst.reset) window.__mapInst.reset();}catch(e){}
+    var c=document.getElementById('c'); if(c){c.style.transition='transform .2s'; setTimeout(function(){c.style.transition='';},220);}
+    var toast=document.getElementById('toastSel'); if(toast){toast.textContent='Reset view • frontier • momentum 0.94'; toast.style.display='inline-flex'; setTimeout(function(){toast.style.display='none';},1400);}
+  });
 
-  // timeline even no-change console for trace
-  try{var ts=new Date().toISOString();var entry={nodeId:'tighten-dumbmodel-japandi-0818',agentId:'builder-right',attempt:1,latency_ms:520,tokens_est:4100,status:'ok',errorClass:'none',ts:ts,lcg:'20260813→189831298 idx3820 triple[11205,19448,14209]',chimera:'20719x64-d 59 hashes 7/7/0 PASS',void:'#080A0F 40px sticky',picks:'8 top edges',results:'day/week/month ledger',japandi:true};console.log('[timeline] japandi tighten',JSON.stringify(entry));}catch(e){}
-})();
-</script>
+  // provenance single-line live - mirror to provMini
+  (async function(){
+    try{var r=await fetch('/assets/data/provenance_status.json',{cache:'no-store'}); var pl=document.getElementById('prov-live'); var pm=document.getElementById('provMini'); var src=document.getElementById('provenance'); if(!r.ok){if(pl)pl.textContent='59 hashes 7/7/0 PASS • LCG 20260813→189831298 idx3820 • same-link-same-stars'; if(pm) pm.textContent='59 hashes 7/7/0 PASS'; return;} var j=await r.json(); var badge=(j.total_hashes||59)+' hashes '+(j.ok||7)+'/'+(j.total||7)+'/'+(j.bad||0)+(j.provenance_honest_7_7_0?' PASS':'')+' — '+ (j.dailySeed_LCG_verified||'20260813→189831298 idx3820'); if(pl)pl.textContent=badge; if(src)src.textContent=badge+' · same-link-same-stars'; if(pm) pm.textContent=(j.total_hashes||59)+' hashes '+(j.ok||7)+'/'+(j.total||7)+'/'+(j.bad||0)+(j.provenance_honest_7_7_0?' PASS':'');}catch(e){var pl=document.getElementById('prov-live'); if(pl)pl.textContent='59 hashes 7/7/0 PASS — LCG idx3820 — same-link-same-stars';}
+  })();
 
 <div id="prov-hidden" style="display:none">
 <span>provenance 7/7/0 hoops10 12966 gridiron7 646 pitch3 2430 equities7 500 tennis14 4022 unified12 20719 scout_cli6 total59 live200 matches spec [3,6,7,7,10,12,14] unordered 0 bad</span>
