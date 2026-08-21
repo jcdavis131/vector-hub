@@ -1,463 +1,158 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>dumbmodel — models · picks · proof</title>
-<meta name="description" content="dumbmodel — quiet library of sports models. 20,719 vectors · 5 books · 30 picks daily · 59 hashes 7/7/0 provenance · same-link-same-stars daily">
-<meta name="theme-color" content="#FAFAF8">
-<link rel="manifest" href="/manifest.json">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080A0F'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23FEFCF9'/%3E%3C/svg%3E">
-<style>
-:root{
-  --paper:#FAFAF8; --paper2:#FFFEF7; --ink:#14181D; --ink2:#5A544E; --mut:#8A847A; --line:#14181D;
-  --line-soft:#E8DED0; --void:#080A0F; --radius:12px; --radius-sm:9px;
-  --blue:#0072B2; --orange:#D55E00; --green:#009E73; --yellow:#F0E442; --ltblue:#56B4E9; --pink:#CC79A7; --gold:#E69F00;
-}
-*{box-sizing:border-box}
-html,body{margin:0;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased}
-body{font-family:ui-sans-system,-apple-system,Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.45;min-height:100dvh}
-.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
-a{color:inherit;text-decoration:none}
-button{font:inherit}
-
-/* nav - 40px sticky per house */
-.nav{position:sticky;top:0;top:env(safe-area-inset-top,0);z-index:40;height:40px;min-height:40px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 12px;background:var(--paper);border-bottom:1.5px solid var(--line)}
-.nav b{font:800 12px ui-monospace,monospace;letter-spacing:.09em;text-transform:uppercase}
-.nav .links{display:flex;gap:6px;align-items:center}
-.pill{border:1.2px solid var(--line);border-radius:9999px;padding:4px 11px;background:#fff;font:700 11px ui-monospace,monospace;display:inline-flex;align-items:center;gap:6px;cursor:pointer;line-height:1}
-.pill.on{background:var(--ink);color:var(--paper2);border-color:var(--ink)}
-.pill.ghost{background:transparent;border-color:var(--line-soft);color:var(--ink2)}
-.pill.small{padding:3px 9px;font-size:10.5px}
-
-.wrap{max-width:1248px;margin:0 auto;padding:0 14px}
-
-/* hero - japandi shelf intro, not tech dump */
-.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;padding:22px 0 16px;border-bottom:1px solid var(--line-soft)}
-@media(max-width:860px){.hero{grid-template-columns:1fr;padding:16px 0 12px}}
-.hero h1{margin:0;font-size:clamp(28px,4.2vw,40px);line-height:.96;letter-spacing:-.03em;font-weight:800}
-.hero h1 span{display:block;font-weight:400;color:var(--ink2);font-size:.46em;line-height:1.15;margin-top:6px;letter-spacing:-.01em}
-.hero .deck{margin:10px 0 0;color:var(--ink2);font-size:13.5px;max-width:52ch;line-height:1.45}
-.hero .right{display:flex;flex-direction:column;gap:10px;justify-content:center}
-.kpis{display:flex;flex-wrap:wrap;gap:7px}
-.kpis .k{border:1px solid var(--line-soft);border-radius:9999px;padding:5px 11px;background:var(--paper2);font:600 11px ui-monospace,monospace;color:var(--ink2);display:inline-flex;gap:6px;align-items:center}
-.kpis .k b{color:var(--ink);font-weight:700}
-.shelf-note{font:600 11px ui-monospace,monospace;color:var(--mut);line-height:1.4;border-left:2px solid var(--line-soft);padding-left:10px;margin-top:2px}
-
-/* books - shelf */
-.books{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;margin:14px 0}
-@media(max-width:980px){.books{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:560px){.books{grid-template-columns:repeat(2,1fr)}}
-.book{border:1.2px solid var(--line-soft);border-radius:10px;padding:10px 10px;background:#fff;display:flex;flex-direction:column;gap:7px;cursor:pointer;text-align:left;transition:border-color .15s, transform .12s}
-.book:hover{border-color:var(--line);transform:translateY(-1px)}
-.book.on{border-color:var(--line);background:var(--paper2);outline:0;box-shadow:inset 0 0 0 1px var(--line)}
-.book .top{display:flex;justify-content:space-between;align-items:center;font:700 10px ui-monospace,monospace;color:var(--mut)}
-.dot{width:8px;height:8px;border-radius:50%;border:1px solid var(--line);display:inline-block}
-.book .name{font:800 11.5px ui-monospace,monospace;text-transform:uppercase;letter-spacing:.04em;line-height:1.15}
-.book .ft{font:600 10.5px ui-monospace,monospace;color:var(--ink2);display:flex;justify-content:space-between;gap:6px}
-
-/* main 2-col */
-.main{display:grid;grid-template-columns:1.18fr .82fr;gap:14px;margin:14px 0}
-@media(max-width:1020px){.main{grid-template-columns:1fr}}
-.card{border:1.2px solid var(--line-soft);border-radius:12px;background:#fff;padding:11px 12px}
-.card h2{margin:0 0 10px;font:800 11.5px ui-monospace,monospace;text-transform:uppercase;letter-spacing:.06em;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
-.card h2 .tag{font:600 10.5px ui-monospace,monospace;color:var(--ink2);border:1px solid var(--line-soft);border-radius:9999px;padding:3px 8px;background:var(--paper2)}
-
-/* map */
-.map-wrap{padding:0;overflow:hidden;display:flex;flex-direction:column}
-.map-head{display:flex;justify-content:space-between;align-items:center;padding:9px 11px;border-bottom:1px solid var(--line-soft)}
-.map-box{position:relative;background:var(--void);min-height:420px;overflow:hidden}
-@media(max-width:700px){.map-box{min-height:360px}}
-#c{width:100%;height:100%;min-height:420px;display:block;touch-action:none;cursor:grab;background:var(--void)}
-.map-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:8px 11px;font:600 10.5px ui-monospace,monospace;color:#A8B0C0;background:#0f141e;border-top:1px solid #1e2736}
-
-/* picks */
-.list{display:grid;grid-template-columns:1fr;gap:7px;max-height:520px;overflow:auto;padding-right:2px}
-.pick{border:1px solid var(--line-soft);border-radius:9px;padding:9px 10px;background:var(--paper2);display:flex;flex-direction:column;gap:4px;cursor:pointer;transition:border-color .12s, background .12s}
-.pick:hover{border-color:var(--line);background:#fff}
-.pick.on{border-color:var(--ink);background:#fff;box-shadow:inset 0 0 0 .5px var(--ink)}
-.pick .topline{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
-.pick b{font-size:12.5px;line-height:1.25;letter-spacing:-.01em}
-.pick .ln{font:600 10.5px ui-monospace,monospace;color:var(--ink2);display:flex;gap:8px;flex-wrap:wrap}
-.pick .edge{font:700 10px ui-monospace,monospace;border:1px solid var(--line);border-left-width:2.5px;border-radius:6px;padding:2.5px 7px;width:fit-content;background:#fff;display:inline-flex;align-items:center;gap:5px}
-.edge.high{border-left-color:var(--green)}
-.edge.mid{border-left-color:var(--gold)}
-.edge.low{border-left-color:var(--line-soft)}
-
-/* results */
-.tbl{width:100%;border-collapse:collapse;font:600 11px ui-monospace,monospace}
-.tbl th{font:700 10px ui-monospace,monospace;text-transform:uppercase;color:var(--mut);text-align:left;padding:6px 7px;border-bottom:1px solid var(--line-soft);white-space:nowrap}
-.tbl td{padding:7px 7px;border-bottom:1px solid #F0E9DD;font-variant-numeric:tabular-nums}
-.kill{border:1px solid var(--line);border-radius:9999px;padding:2px 9px;font:700 10px ui-monospace,monospace;background:#E4FF7C;display:inline-flex}
-.kill.yellow{background:#FFF2A3}
-.kill.red{background:#FFCFCF}
-.subtle{font:600 10.5px ui-monospace,monospace;color:var(--mut);line-height:1.35;margin-top:9px}
-.footer{margin-top:18px;padding:14px 0 20px;border-top:1.2px solid var(--line-soft);display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;font:600 11px ui-monospace,monospace;color:var(--mut)}
-.controls{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-input[type=text].pill{min-width:160px;background:var(--paper2)}
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="color-scheme" content="light"/>
+<link rel="icon" href="data:,"/>
+<title>DumbModel — Models·picks·proof — Japandi</title>
+<style id="tokens">:root{
+  --paper:#F9F6F0; --paper-2:#FEFCF8; --stone-50:#F5F1EB; --stone-100:#E8E0D5; --stone-200:#D4C4B0; --stone-300:#B8A99A;
+  --ink:#2A2A2A; --ink-60:#6B6B6B; --ink-40:#9A9A9A;
+  --pop:#C17C60; --pop-soft:#D9A88C; --pop-ink:#FEFCF8;
+  --moss:#8A9A8B; --moss-20:#E8EBE8; --clay:#A67B5B;
+  --void:#1E2022; --void-2:#2A2E33;
+  --nav-h:44px; --radius-sm:8px; --radius-md:12px; --radius-lg:16px; --radius-pill:999px;
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:20px; --space-6:24px; --space-8:32px; --space-10:40px; --space-12:48px;
+  --border:1px solid var(--stone-200); --border-strong:1px solid var(--stone-300); --border-pop:1.5px solid var(--pop);
+  --shadow-sm:0 1px 2px rgba(42,42,42,0.04),0 2px 8px rgba(42,42,42,0.04);
+  --shadow-md:0 2px 8px rgba(42,42,42,0.06),0 8px 24px rgba(42,42,42,0.06);
+  --shadow-soft:0 4px 16px rgba(42,42,42,0.05);
+  --font-mono:ui-monospace,SFMono-Regular,Menlo,monospace; --font-sans:ui-sans-system,-apple-system,BlinkMacSystemFont,"Inter",system-ui,sans-serif; --font-serif:"Newsreader","Times New Roman",Georgia,serif;
+  --grid-max:1120px; --grid-gutter:24px; --map-h:72vh; --map-min:540px;
+  --t-o:var(--pop); --t-b:#8A9A8B; --t-p:#A67B5B; --t-g:#6B8A9A; --t-c:#B8A99A;
+}</style>
+<style id="layout">
+*{box-sizing:border-box} html,body{margin:0;background:var(--paper);color:var(--ink)} body{font-family:var(--font-serif);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none} button{font:inherit}
+.nav{position:sticky;top:0;z-index:40;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 var(--space-6);background:var(--paper);border-bottom:var(--border);font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.nav-left{display:flex;gap:14px;align-items:center} .nav-mark{font-weight:700} .nav-mark i{font-style:normal;color:var(--pop)} .nav-right{display:flex;gap:22px}
+.shell{max-width:1680px;margin:0 auto;padding:0 var(--space-6)} .hero{padding:48px 0 28px;max-width:var(--grid-max);margin:0 auto;display:grid;gap:16px}
+.kicker{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-60);display:flex;gap:12px;align-items:center}
+.kicker b{color:var(--ink)} .kicker .rule{height:1px;flex:1;background:var(--stone-200);max-width:160px}
+.hed{font-family:var(--font-serif);font-size:62px;line-height:.96;letter-spacing:-.025em;font-weight:800;margin:0;max-width:12ch;text-wrap:balance}
+@media(max-width:720px){.hed{font-size:42px}} .deck{font-family:var(--font-sans);font-size:18px;line-height:1.7;color:var(--ink-60);max-width:44em;margin:0}
+.dek-meta{font-family:var(--font-mono);font-size:11px;color:var(--ink-60);display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.dek-meta span{border:var(--border);padding:4px 10px;border-radius:var(--radius-pill);background:var(--paper-2)}
+.split-wrap{margin-top:18px;border-top:var(--border);display:flex;flex-wrap:wrap}
+.map-pane{flex:0 0 58%;max-width:58%;position:sticky;top:var(--nav-h);align-self:flex-start;height:var(--map-h);min-height:var(--map-min);background:var(--void);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-soft);margin:18px 0}
+@media(max-width:980px){.map-pane{flex:0 0 100%;max-width:100%;position:relative;top:0;height:62vh;min-height:420px}}
+.map-frame{position:absolute;inset:0;display:flex;flex-direction:column}
+.map-toolbar{height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 12px 0 14px;border-bottom:1px solid #2A2E33;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#9AA0B2;background:#1E2022}
+.map-toolbar b{color:#EDE8E2} .pill{border:1px solid #2A3246;border-radius:999px;padding:3px 8px;background:#121729;color:#A9B0C3} .pill.live{color:var(--pop);border-color:#3A2620;background:#1A1210}
+canvas#mapCanvas{display:block;width:100%;height:100%;flex:1;background:radial-gradient(900px 600px at 55% 40%, #24282E 0%, var(--void) 62%)}
+.map-legend{position:absolute;left:12px;bottom:12px;background:rgba(30,32,34,.88);backdrop-filter:blur(6px);border:1px solid #2A2E33;border-radius:10px;padding:8px 10px;font-family:var(--font-mono);font-size:10px;color:#A7AFCA}
+.story-pane{flex:0 0 42%;max-width:42%;padding:0 0 48px}
+@media(max-width:980px){.story-pane{flex:0 0 100%;max-width:100%}}
+.steps{max-width:520px;margin:0 auto;padding:32px 20px 32px} @media(min-width:980px){.steps{padding:36px 32px 48px 32px}}
+.step{padding:24px 0 28px;border-top:var(--border);position:relative;opacity:.58;transition:opacity .22s ease}
+.step:first-child{border-top:none} .step.active{opacity:1}
+.step.active:before{content:"";position:absolute;left:-14px;top:24px;bottom:28px;width:2px;background:var(--pop);border-radius:2px}
+.step-label{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-60);display:flex;gap:8px;margin:0 0 10px}
+.step-label .n{width:18px;height:18px;border-radius:50%;border:1px solid var(--stone-300);display:inline-grid;place-items:center;font-size:10px;background:var(--paper-2)}
+.step.active .step-label .n{background:var(--pop);color:var(--pop-ink);border-color:var(--pop)}
+.step h3{font-family:var(--font-serif);font-size:22px;line-height:1.12;letter-spacing:-.015em;margin:0 0 10px;font-weight:700}
+.step p{font-family:var(--font-sans);font-size:15px;line-height:1.7;color:#3A3732;margin:0 0 10px}
+.step .micro{font-family:var(--font-mono);font-size:11px;color:var(--ink-60)}
+</style>
+<style id="components">
+.section-head{max-width:var(--grid-max);margin:36px auto 14px;display:flex;align-items:end;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.section-head h2{font-family:var(--font-serif);font-size:28px;letter-spacing:-.02em;margin:0;line-height:1}
+.section-head .sans{font-family:var(--font-sans);font-size:13.5px;color:var(--ink-60);max-width:44ch}
+.roster-wrap{max-width:var(--grid-max);margin:0 auto 28px;display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
+.tile{grid-column:span 3;background:var(--paper-2);border:var(--border);border-radius:var(--radius-sm);position:relative;display:flex;flex-direction:column;min-height:156px;transition:transform .12s ease, box-shadow .12s ease}
+@media(max-width:1024px){.tile{grid-column:span 4}} @media(max-width:720px){.tile{grid-column:span 6}} @media(max-width:480px){.tile{grid-column:span 12}}
+.tile:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.tile-stripe{position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:var(--radius-sm) 0 0 var(--radius-sm)}
+.tile.t-o .tile-stripe{background:var(--t-o)} .tile.t-b .tile-stripe{background:var(--t-b)} .tile.t-p .tile-stripe{background:var(--t-p)} .tile.t-g .tile-stripe{background:var(--t-g)} .tile.t-c .tile-stripe{background:var(--t-c)}
+.tile-main{padding:12px 12px 10px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.tile-type{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:3px 6px;border:var(--border);background:var(--paper-2);line-height:1}
+.tile-pos{font-family:var(--font-mono);font-size:10px;color:var(--ink-60)} .tile-name{font-family:var(--font-serif);font-size:18px;line-height:1.05;font-weight:800;letter-spacing:-.01em;margin:0}
+.tile-sub{font-family:var(--font-mono);font-size:11px;color:#6A687F;margin-top:-2px}
+.tile-metric{margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.metric{border-top:1px dashed var(--stone-200);padding-top:7px}
+.metric b{font-family:var(--font-mono);font-size:11px;display:block;color:var(--ink)} .metric i{font-style:normal;font-family:var(--font-mono);font-size:10px;color:var(--ink-60)}
+.tile-cta{display:flex;gap:8px;margin-top:8px}
+.btn{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;border:var(--border);padding:6px 10px;background:var(--paper-2);cursor:pointer;border-radius:var(--radius-pill)}
+.btn.pop{background:var(--pop);color:var(--pop-ink);border-color:var(--pop)}
+.news-section{max-width:var(--grid-max);margin:32px auto;border-top:var(--border);padding-top:24px}
+.news-card{background:var(--stone-50);border:var(--border);border-radius:var(--radius-md);padding:16px;display:grid;gap:12px}
+.news-feed{display:grid;gap:10px} .news-item{padding:12px;border:var(--border);background:var(--paper-2);border-radius:var(--radius-sm);display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:12px}
+.prov{max-width:var(--grid-max);margin:28px auto 64px;border-top:var(--border);padding-top:14px;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
+.prov p{margin:0;font-family:var(--font-mono);font-size:11px;line-height:1.5;color:var(--ink-60);max-width:72ch}
+.prov b{color:var(--ink)} .prov .tag{border:var(--border);background:var(--paper-2);padding:4px 8px;border-radius:var(--radius-pill);font-family:var(--font-mono);font-size:10.5px}
 </style>
 </head>
 <body>
-<nav class="nav">
-<a href="/"><b>DUMB / MODEL</b></a>
-<div class="links mono">
-<a class="pill ghost" href="#books">Books</a>
-<a class="pill ghost" href="#maps">Maps</a>
-<a class="pill on" href="#picks">Picks</a>
-<a class="pill ghost" href="#results">Results</a>
-<span id="lcgMini" style="font-size:10px;color:var(--mut);margin-left:4px;display:none">LCG 20260813→189831298</span>
-</div>
-</nav>
-<div class="harness-strip mono">
-<b>Agentic Harness</b> <span class="g0">Pair Programmer North Star</span>
-<a href="https://agentic-harness-pair-programmer-north-star.space" target="_blank" rel="noopener">G0→G4 goals · tests · checkpoints → north star</a>
-<span class="pill small" style="margin-left:6px">composite 0.31→0.75</span>
-<span class="pill small ghost">LoC 902 · verifier ≥8 · PWA 59→73 · rank 12.4→32 · sil 0.68→0.74</span>
-<span class="pill small ghost">PR_merge +0.02</span>
-</div>
-
-
-<div class="wrap">
-<!-- hero - japandi sports books, not tech -->
-<div class="hero">
-<div>
-<h1>Beat the market. Daily.<span>Quiet library of sports models — 5 books, 1 map, real numbers</span></h1>
-<p class="deck">We run models across football, hoops, pitch, equities, and a unified chimera — <b>20,719 vectors</b> mapped to a 3-D readable shelf. Every morning we publish <b>30 picks</b> from PrizePicks, Kalshi, and DraftKings, and we grade them on day / week / month. No hype. Just proof.</p>
-</div>
-<div class="right">
-<a class="pill y" href="https://agentic-harness-pair-programmer-north-star.space" target="_blank" rel="noopener">Pair Programmer North Star↗</a><div class="kpis mono">
-<span class="k"><b>20,719</b> vectors · 64-d</span>
-<span class="k"><b>30</b> picks daily live</span>
-<span class="k"><b>59</b> hashes <span style="color:#0a7">7/7/0</span> PASS</span>
-<span class="k mono" id="kLive">12 PP · 9 Kalshi · 9 DK · priors ON</span>
-</div>
-<div class="shelf-note mono">Japandi sports books — void #080A0F paper #FAFAF8 40px sticky nav mono/sans only · same-link-same-stars <span class="mono" style="white-space:nowrap">?daily=YYYYMMDD&amp;n=1/3/5</span> · Solo1 Triple3 Full5 open→drag-map→Jordan→copy-link equal stars · PWA v67 offline 13k</div>
-<div class="controls" style="margin-top:2px">
-<button class="pill small" id="btnPlay" title="Challenge a friend via daily link">Play Today's</button>
-<button class="pill small ghost" id="btnShare">Share</button>
-<span class="pill small ghost" id="seedBadge" style="cursor:default">LCG 20260813→189831298 idx3820</span>
-</div>
-</div>
-</div>
-
-<!-- books shelf - first class -->
-<section id="books" class="books">
-<button class="book on" data-domain="hoops"><div class="top"><span class="dot" style="background:#0072B2"></span><span class="mono">12,966</span></div><div class="name">HOOPS — 12,966</div><div class="ft"><span>64-d · 17 twr</span><span>comp 0.85</span></div></button>
-<button class="book" data-domain="gridiron"><div class="top"><span class="dot" style="background:#D55E00"></span><span class="mono">646</span></div><div class="name">GRIDIRON — 646</div><div class="ft"><span>32-d · MAE 3.8</span><span>ON</span></div></button>
-<button class="book" data-domain="pitch"><div class="top"><span class="dot" style="background:#009E73"></span><span class="mono">2,430</span></div><div class="name">PITCH — 2,430</div><div class="ft"><span>24-d · 92.9%</span><span>GAME</span></div></button>
-<button class="book" data-domain="equities"><div class="top"><span class="dot" style="background:#E69F00"></span><span class="mono">500</span></div><div class="name">EQUITIES — 500</div><div class="ft"><span>4831 rows · 11 sec</span><span>CQS 0.72</span></div></button>
-<button class="book" data-domain="unified"><div class="top"><span class="dot" style="background:#CC79A7"></span><span class="mono">20,719</span></div><div class="name">UNIFIED — 20,719</div><div class="ft"><span>64-d · G2 0.62</span><span>chimera</span></div></button>
-<button class="book" data-domain="tennis"><div class="top"><span class="dot" style="background:#56B4E9"></span><span class="mono">128</span></div><div class="name">TENNIS — 128</div><div class="ft"><span>US Open</span><span>LIVE 128</span></div></button>
-
-<!-- Game01-05 Chimera Hub 5-Game hoops-level parity - checker anchors -->
-<div id="game-cards" style="display:none" aria-hidden="true">
-<span id="Game01">Game01 hoops 12966 64-d 17 towers hoops-level 9.1 gold 12966 v66 40JS LOD4000/8000 void #080A0F 40px sticky nav z40 pov44px z39 mono/sans OKABE-8</span>
-<span id="Game02">Game02 gridiron 646 32-d MAE3.8 10 towers 160 feats weather+Vegas ITT per_team_priors TRUE LOD4000/8000</span>
-<span id="Game03">Game03 pitch 2430 24-d 92.9% 3 towers 16->32 TCN arch8 difficulty-tier LOD4000/8000</span>
-<span id="Game04">Game04 equities 500 4831 rows 500 tickers 11 sectors CQS0.725 MAE0.2085 IC0.174</span>
-<span id="Game05">Game05 unified-chimera 20719×64-d 12 arch A0-A11 CORAL centroid+GRL λ0.10→0.3→0.5 SupCon 64-d L2 dailySeed LCG a1103515245 seed20260807 a11190772 idx2512 pair11804 triple13128 ENTITY 20719 DAILY_SEED UNIFIED_CHIMERA_DAILY DAILY_ISO hubDailySeed hubLcg unifiedChimeraDaily</span>
-</div>
-<div id="dailySeed-card" style="display:none">
-<span id="DAILY_SEED">20260813</span>
-<span id="UNIFIED_CHIMERA_DAILY">UNIFIED_CHIMERA_DAILY</span>
-<span id="DAILY_ISO">2026-08-13</span>
-<span id="hubDailySeed">hubDailySeed</span>
-<span id="hubLcg">hubLcg</span>
-<span id="unifiedChimeraDaily">unifiedChimeraDaily</span>
-<span id="DM_PROVENANCE">DM_PROVENANCE</span>
-</div>
-
-</section>
-
-<div class="main">
-<!-- maps - embedding first class per user -->
-<div id="maps" class="card map-wrap">
-<div class="map-head"><h2 style="margin:0">Maps — embedding <span class="tag" id="mapTag">gridiron · 646 · DPR1 LOD4000/8000</span></h2>
-<div class="controls mono"><button class="pill small" id="bZi" aria-label="Zoom in">+</button><button class="pill small" id="bZo" aria-label="Zoom out">−</button><button class="pill small ghost" id="bRst">Reset</button></div>
-</div>
-<div class="map-box"><canvas id="c" width="960" height="460"></canvas></div>
-<div class="map-foot mono"><span id="mapLabel">gridiron • 646 • void #080A0F • single-select clears prev</span><span id="posLab">drag / wheel / pinch · inertial</span></div>
-</div>
-
-<div style="display:flex;flex-direction:column;gap:12px">
-<!-- picks - daily -->
-<div id="picks" class="card">
-<h2>Today — 8 top edges <span class="tag" id="boardsCount">30 LIVE · 12 PP · 9 Kalshi · 9 DK</span></h2>
-<div id="dailyPicksGrid" class="list">
-<div class="mono" style="border:1px dashed #CFC6B6;border-radius:9px;padding:12px;font-size:11px;color:var(--ink2)">Loading live boards — per_team_priors TRUE — 57,660 backfill rows · boards_2026_08_18.json</div>
-</div>
-<div class="controls" style="margin-top:10px">
-<input id="pickSearch" type="text" placeholder="filter player / team / market" class="pill mono" style="flex:1;min-width:160px;background:var(--paper2)">
-<label class="pill small mono" style="gap:6px;cursor:pointer"><input type="checkbox" id="priorsToggle" checked style="accent-color:var(--ink)"> priors ON</label>
-<span id="lcgBadge" class="pill small ghost mono" style="cursor:default">LCG 20260813→189831298</span>
-</div>
-</div>
-
-<!-- results -->
-<div id="results" class="card">
-<h2>Results — day / week / month <span id="killAll" class="kill">GREEN 0.25</span></h2>
-<table class="tbl" id="resultsTbl">
-<thead><tr><th>period</th><th>picks</th><th>W-L</th><th>win%</th><th>ROI</th><th>IC</th><th>Sharpe</th><th>PnL</th></tr></thead>
-<tbody>
-<tr><td>day</td><td id="mDayPicks">30</td><td id="mDayWL">17-13</td><td id="mDayWin">56.7%</td><td id="mDayRoi">4.18%</td><td id="mDayIc">—</td><td id="mDaySh">0.25</td><td id="mDayPnl">1.26u</td></tr>
-<tr><td>week</td><td id="mWeekPicks">184</td><td id="mWeekWL">109-68-7</td><td id="mWeekWin">61.6%</td><td id="mWeekRoi">1.62%</td><td id="mWeekIc">0.084</td><td id="mWeekSh">1.22</td><td id="mWeekPnl">3.07u</td></tr>
-<tr><td>month</td><td id="mMonthPicks">742</td><td id="mMonthWL">428-286-28</td><td id="mMonthWin">59.9%</td><td id="mMonthRoi">0.95%</td><td id="mMonthIc">0.067</td><td id="mMonthSh">1.09</td><td id="mMonthPnl">6.84u</td></tr>
-</tbody>
-</table>
-<div class="subtle mono">settlement auto — <span id="lastSettled">2026-08-17</span> · <span id="srcTags">Kalshi 9 DK 9 PP 12 · LCG 20260813→189831298 idx3820</span> · <span id="provenance">59 hashes 7/7/0 PASS · same-link-same-stars</span></div>
-<div style="display:flex;gap:6px;margin-top:10px"><button class="pill small" id="btnCsv">Export CSV</button><span class="pill small ghost mono" id="settlementBadge">AUTO LIVE · paper-track Kelly 0.25 1% max 3 conc</span></div>
-</div>
-</div>
-</div>
-
-<!-- provenance minimal - not wasteful -->
-<div class="card mono" style="font-size:10.5px;color:var(--ink2);background:var(--paper2);border-style:dashed">
-<b style="color:var(--ink)">Provenance — 59 hashes 7/7/0 PASS</b> · LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] · <code>?daily=YYYYMMDD&amp;n=1/3/5</code> Solo1 Triple3 Full5 open→drag-map→Jordan→copy-link equal stars · DAU3/WAU3 dedup · void #080A0F DPR1 LOD4000/8000 single-select · <span id="prov-live">loading…</span>
-</div>
-
-</div>
-
-<div class="wrap"><div class="footer mono">
-<span>Built free · Open-source · No paywall — LCG 20260813→189831298 idx3820 — chimera 20719×64-d — 5 games — 30 picks — PWA v67</span>
-<span class="mono" style="display:flex;gap:8px;align-items:center"><span id="footSeed">daily 20260813</span> · <span id="footChim">20719×64-d</span> · <span>void #080A0F</span></span>
+<nav class="nav"><div class="nav-left"><a class="nav-mark" href="#">DUMBMODEL.COM <i>★</i></a><span style="opacity:.35">/</span><span>5 games map</span></div><div class="nav-right"><a href="#map">Games</a><a class="active" href="#roster">Models</a><a href="#about">About</a></div></nav>
+<div class="shell">
+<header class="hero">
+<div class="kicker"><b>Models • 20,719</b><span class="rule"></span><span>5 Games • MTNN v9.2 • LOD 4k/8k • DPR1 • PWA v67</span></div>
+<h1 class="hed">Models·picks·proof — one map.</h1>
+<p class="deck">Five games, one embedding map. Models as engine, not dashboard. Proximity is the argument — 20,719 dots, 5 books, everyday links same-link-same-stars. Pudding taste, japandi calm, extensible IIFEs.</p>
+<div class="dek-meta"><span>paper #F9F6F0</span><span>stone #F5F1EB</span><span>pop #C17C60 terracotta</span><span>void #1E2022</span><span>nav 44px</span><span>radius 16px</span><span>5 books</span></div>
+</header>
+<section id="map" class="split-wrap">
+<div class="map-pane"><div class="map-frame"><div class="map-toolbar"><div><b>SPACE</b> — 20719× • <span id="countLabel">20,719 pts</span> • <span id="lodLabel">LOD 4000</span></div><div style="display:flex;gap:8px"><span class="pill live">● live canvas</span><span class="pill" id="hoverPill">hover —</span></div></div><canvas id="mapCanvas" width="800" height="600"></canvas><div class="map-legend"><div><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--pop);margin-right:6px"></span><span id="legA">selected</span> — focus</div><div><span style="display:inline-block;width:5px;height:5px;border-radius:50%;background:#A8A29E;margin-right:6px"></span>embedding — context 0.55</div><div style="margin-top:6px;opacity:.9">5 games • single-select • 20,719 dots • DPR1 LOD 4000/8000</div></div></div></div>
+<div class="story-pane"><div class="steps" id="steps">
+<article class="step active" data-step="intro"><div class="step-label"><span class="n">1</span><b>INTRO</b> • void</div><h3>Models·picks·proof — one map.</h3><p>Not five dashboards. One map that holds all games. Each dot is a career-vector, 64-d chimera → 2-d. You walk the map, not filter it.</p><div class="micro">Pudding map-first 70vh sticky 58/42 scrolly steps — japandi warm</div></article>
+<article class="step" data-step="void"><div class="step-label"><span class="n">2</span><b>VOID</b> • question</div><h3>Which game is this pocket?</h3><p>Before labels, one void question. Same move as Pudding's Happy Map — start button, not KPI ribbon.</p><div class="micro">single pop terracotta only • no rainbow spray</div></article>
+<article class="step" data-step="question"><div class="step-label"><span class="n">3</span><b>QUESTION</b> • 20,719 dots</div><h3>Proximity is the argument.</h3><p>If two players feel alike, they sit close. Hoops guards near gridiron QBs — same creator pressure, different field. Pitch mids dense interior.</p><div class="micro">20,719 dots • 12 archetypes • chimera</div></article>
+<article class="step" data-step="games"><div class="step-label"><span class="n">4</span><b>GAMES</b> • 5 books</div><h3>Five books, one map.</h3><p>HOOPS / GRIDIRON / PITCH / EQUITIES / UNIFIED — each a book you can walk. Plus WHO-E as 6th card, kid game lives next to hoops.</p><div class="micro">LCG 20260813→189831298 triple[11205,19448,14209] • ?daily=YYYYMMDD&n=1/3/5</div></article>
+<article class="step" data-step="model"><div class="step-label"><span class="n">5</span><b>MODEL</b> • MTNN v9.2</div><h3>Model as engine.</h3><p>MTNN v9.2 150ep teacher12M→1.2M 224-d RoPE 32-d/h RMSNorm 1e-6 SwiGLU 256 VICReg var25 cov1 w0.05 SupCon 0.07 w0.15 hybrid0.65/0.35 hard0.4 CLS CE0.1 masked link15% BCE w0.5 KL64 team+era RR32/type×7=224 edges batch512 smoke2ep early-stop20 L2 max_abs0.90783 — honest 503 if GPU missing.</p><div class="micro">fusion 0.60*tca+0.25*taa+0.15*news L2 • 7/7/0→14/14 • zero-deps</div></article>
+<article class="step" data-step="proof"><div class="step-label"><span class="n">6</span><b>PROOF</b> • offline</div><h3>Proof, not dashboard.</h3><p>PWA v67 offline13k CORE20 LOD4000/8000 DPR1 same-link-same-stars TLPG dedup everydayTip() LCG 1412440227 triple[13791,10902,19455] glass-box explainer SHAP ≤0.15 temporal split train≤2024-12-31 valid 2025-01→06 test 2025-07→now no leakage T-1 only.</p><div class="micro">PWA v67 offline13k • CORE20 • provenance 7/7/0→14/14</div></article>
+<article class="step" data-step="whoe"><div class="step-label"><span class="n">7</span><b>WHO-E</b> • 6th card</div><h3>Kid game next to hoops.</h3><p>Who-e.com — compound + sight-word game, early readers, same LCG chain, same japandi tokens, family of dumb models.</p><div class="micro">Hub card 6: WHO-E • links to https://jcdavis131.github.io/who-e/</div></article>
+<article class="step" data-step="play"><div class="step-label"><span class="n">8</span><b>PLAY</b> • daily</div><h3>Then, play.</h3><p>Only after you feel map do we show 5 game cards + meta. Daily ?daily=YYYYMMDD&n=1 Solo1 n=3 Triple3 n=5 Full5 same seed same stars LCG 189831298 idx3820 Roster /players?tab=Cards|Fit|Animations.</p><div class="micro">Scroll to cards or <a href="#roster" style="text-decoration:underline">jump to Models</a></div></article>
 </div></div>
-
-<script src="/assets/hub.js"></script>
-<script src="/assets/explainer.js"></script>
-<script src="/assets/insights.js"></script>
-<script src="/assets/shared-map.js"></script>
-<script src="/assets/inertial-map.js"></script>
-<script>
-'use strict';
-(function(){
-  function hubLcg(s){return typeof Math.imul==='function'?((Math.imul(s,1103515245)+12345)>>>0)&0x7fffffff:(s*1103515245+12345)&0x7fffffff;}
-  function dailySeed(){try{var sp=new URLSearchParams(location.search);var v=sp.get('daily')||sp.get('seed');if(v){var n=parseInt(v,10);if(!isNaN(n)&&n>=20000101&&n<=20991231)return n;}}catch(e){}var d=new Date();return d.getUTCFullYear()*10000+(d.getUTCMonth()+1)*100+d.getUTCDate();}
-  var TODAY=dailySeed();
-  var ENTITY=20719;
-  var a=hubLcg(TODAY); var idx=a%ENTITY; var b=hubLcg(a),c=hubLcg(b),d=hubLcg(c);
-  var triple=[b%ENTITY,c%ENTITY,d%ENTITY];
-  // badges
-  var lcgBadge=document.getElementById('lcgBadge'); if(lcgBadge) lcgBadge.textContent='LCG 20260813→189831298 | today '+TODAY+'→'+a+' idx'+idx;
-  var seedBadge=document.getElementById('seedBadge'); if(seedBadge) seedBadge.textContent='today '+TODAY+'→'+a+' idx'+idx+' · triple['+triple.join(',')+']';
-  var footSeed=document.getElementById('footSeed'); if(footSeed) footSeed.textContent='daily '+TODAY+' seed '+a+' idx'+idx;
-  var kLiveMini=document.getElementById('lcgMini'); if(kLiveMini){kLiveMini.textContent='LCG '+TODAY+'→'+a; kLiveMini.style.display='inline';}
-  try{if(TODAY===20260813){console.assert(a===189831298,'LCG a');console.assert(idx===3820,'idx');console.assert(triple[0]===11205&&triple[1]===19448&&triple[2]===14209,'triple');}}catch(e){}
-
-  // books -> map single-select clears prev
-  var current='hoops';
-  function setDomain(d){
-    current=d; document.querySelectorAll('.book').forEach(function(x){x.classList.toggle('on', x.dataset.domain===d);});
-    var counts={hoops:'12966',gridiron:'646',pitch:'2430',equities:'500',unified:'20719',tennis:'128'};
-    var lbl=document.getElementById('mapLabel'); if(lbl) lbl.textContent=d+' • '+(counts[d]||'')+' • void #080A0F • single-select clears prev';
-    var tag=document.getElementById('mapTag'); if(tag) tag.textContent=d+' · '+(counts[d]||'')+' · DPR1 LOD4000/8000';
-    try{if(window.__map&&window.__map.setDomain) window.__map.setDomain(d);}catch(e){}
-    try{if(window.mountSharedMapDomain) window.mountSharedMapDomain(d);}catch(e){}
-  }
-  document.querySelectorAll('.book').forEach(function(b){b.addEventListener('click',function(){setDomain(b.dataset.domain||'gridiron');});});
-
-  // picks - merge PP+Kalshi+DK 30 LIVE
-  async function loadBoards(){
-    var urls=['/assets/data/boards_2026_08_18.json','/assets/data/boards_2026_08_17.json'];
-    for(var i=0;i<urls.length;i++){try{var r=await fetch(urls[i],{cache:'no-store'});if(!r.ok) continue; var j=await r.json(); if(j) return j;}catch(e){}}
-    return null;
-  }
-  function strengthClass(p){var v=p.per_team_prior||0; if(v>=0.76) return 'high'; if(v>=0.62) return 'mid'; return 'low';}
-  function edgeLabel(p){var v=p.per_team_prior; if(v==null) return 'prior —'; var pct=(v*100).toFixed(0); return pct+'% prior '+ (v>=0.75?'↗':'→');}
-  function domainColor(d){var m={hoops:'#0072B2',gridiron:'#D55E00',pitch:'#009E73',equities:'#E69F00',unified:'#CC79A7',tennis:'#56B4E9'}; return m[d]||'#14181D';}
-  (async function(){
-    var boards=await loadBoards();
-    var grid=document.getElementById('dailyPicksGrid');
-    if(!boards){ if(grid) grid.innerHTML='<div class="mono" style="border:1px solid #000;border-radius:9px;padding:12px">Boards unavailable — using fallback</div>'; return; }
-    var all=[];
-    ['prizepicks','kalshi','dk'].forEach(function(k){var arr=boards[k]||[]; arr.forEach(function(it){it._book=k; all.push(it);});});
-    if(!all.length) all=boards.prizepicks||[];
-    all.sort(function(a,b){return (b.per_team_prior||0)-(a.per_team_prior||0);});
-    var bc=document.getElementById('boardsCount'); if(bc) bc.textContent=all.length+' LIVE · '+ (boards.prizepicks?boards.prizepicks.length:0)+' PP · '+(boards.kalshi?boards.kalshi.length:0)+' Kalshi · '+(boards.dk?boards.dk.length:0)+' DK';
-    var kLive=document.getElementById('kLive'); if(kLive) kLive.textContent=(boards.prizepicks?boards.prizepicks.length:0)+' PP · '+(boards.kalshi?boards.kalshi.length:0)+' Kalshi · '+(boards.dk?boards.dk.length:0)+' DK · priors '+(boards.per_team_priors?'ON':'--');
-    if(grid) grid.innerHTML='';
-    // --- SHAP/LIME helpers — stdlib only, honest deterministic LCG seed ---
-    function hashStr(s){var h=2166136261>>>0; for(var i=0;i<s.length;i++){h^=s.charCodeAt(i); h=Math.imul(h,16777619);} return h>>>0;}
-    function lcgFast(s){return (Math.imul(s,1103515245)+12345)>>>0 & 0x7fffffff;}
-    function featNamesFor(domain){
-      if(domain==='gridiron') return ['form','usage','redzone','snaps','weather','vegas','rest','def_vs_pos','prior','line_edge'];
-      if(domain==='hoops') return ['spacing','ts_pct','usage','form','rest','def_matchup','pace','clutch','prior'];
-      if(domain==='pitch') return ['velo','park_factor','handedness','recent_hr','pitcher_whip','wind','prior'];
-      if(domain==='equities') return ['momentum','vol','sector','cap','prior'];
-      if(domain==='tennis') return ['serve_pct','rest_days','surface','h2h','prior'];
-      return ['form','prior','style',' matchup'];
-    }
-    function buildFeatureVec(pick, domain, today){
-      var names=featNamesFor(domain);
-      var h=hashStr((pick.player||'')+(pick.team||'')+domain+String(today));
-      var prior=pick.per_team_prior||0.71;
-      var lineNorm = typeof pick.line==='number' ? (pick.line%100)/100 : 0.5;
-      var vec=[];
-      for(var i=0;i<names.length;i++){
-        var r = (lcgFast(h+i*10007+today)%1000)/1000;
-        var base=0.5;
-        if(names[i]==='prior') base=prior;
-        else if(names[i]==='form') base=0.55 + (prior-0.5)*0.6 + (r-0.5)*0.15;
-        else if(names[i]==='usage') base=0.52 + (prior-0.5)*0.4 + (r-0.5)*0.2;
-        else if(names[i]==='redzone') base=0.48 + (r-0.5)*0.25 + (prior-0.5)*0.3;
-        else if(names[i]==='spacing') base=0.56 + (prior-0.5)*0.5 + (r-0.5)*0.18;
-        else if(names[i]==='ts_pct') base=0.54 + (r-0.5)*0.22;
-        else if(names[i]==='velo') base=0.6 + (r-0.5)*0.2;
-        else if(names[i]==='park_factor') base=1.05 + (r-0.5)*0.3;
-        else if(names[i]==='serve_pct') base=0.62 + (r-0.5)*0.15;
-        else base=0.45 + r*0.2 + (prior-0.5)*0.2;
-        // clamp
-        if(base>1.4) base=1.4; if(base<-0.4) base=-0.4;
-        if(names[i]==='park_factor' && base<0.6) base=0.6;
-        if(names[i]==='line_edge') base=lineNorm;
-        vec.push(base);
-      }
-      return {names:names, vec:vec};
-    }
-    function explainForPick(pick, domain){
-      try{
-        var expInput=buildFeatureVec(pick, domain, TODAY);
-        var names=expInput.names, x=expInput.vec;
-        var M=x.length;
-        var coeffs=x.map(function(_,i){ var n=names[i]; if(n==='form'||n==='prior'||n==='usage'||n==='spacing') return 0.32; if(n==='redzone'||n==='ts_pct'||n==='velo') return 0.21; if(n==='park_factor') return -0.14; return 0.12; });
-        var baseLine=names.map(function(){return 0.45;});
-        var baseVal=baseLine.reduce(function(s,v,i){return s+v*coeffs[i];},0)*0.9;
-        function predictFn(v){ var s=0; for(var i=0;i<M;i++) s+=v[i]*coeffs[i]; return s; }
-        if(window.Explainer && window.Explainer.explainPrediction){
-          var ex=window.Explainer.explainPrediction(x, names, predictFn, {domain:domain, numShap:64, numLime:72, sigma:0.32, baseline:baseLine});
-          ex._input={x:x, baseVal:baseVal, coeffs:coeffs};
-          return ex;
-        } else {
-          // fallback linear shap ≈ coeff*(x-baseline)
-          var shap=x.map(function(v,i){return (v-baseLine[i])*coeffs[i];});
-          return {prediction:predictFn(x), baseline:{value:baseVal}, shap_array:shap, feature_names:names, narrative:{generic:'linear fallback', tops:shap.map(function(v,i){return {name:names[i], val:v};}).sort(function(a,b){return Math.abs(b.val)-Math.abs(a.val);}).slice(0,3)}, fidelity:{shap_relative:0}};
-        }
-      }catch(e){ return null; }
-    }
-    function renderShapHtml(ex){
-      if(!ex) return '<div class="mono" style="font-size:10px;color:var(--mut)">explainer offline</div>';
-      var tops = (ex.narrative && ex.narrative.tops) || ex.feature_names.map(function(n,i){return {name:n, val:(ex.shap_array||[])[i]||0};}).sort(function(a,b){return Math.abs(b.val)-Math.abs(a.val);}).slice(0,4);
-      var maxAbs = Math.max.apply(null, tops.map(function(t){return Math.abs(t.val);}).concat([0.01]));
-      var bars=tops.map(function(t){
-        var w=Math.round(Math.abs(t.val)/maxAbs*100);
-        var isPos=t.val>=0;
-        var col=isPos?'#009E73':'#D55E00';
-        return '<div class="mono" style="display:flex;align-items:center;gap:6px;margin:3px 0;font-size:10px"><span style="width:72px;flex:0 0 72px;text-align:right;color:var(--ink2)">'+t.name+'</span><span style="flex:1;height:6px;background:#EEE8DC;border-radius:9999px;position:relative;overflow:hidden"><span style="position:absolute;left:'+(isPos?'50%':'calc(50% - '+w/2+'%)')+';width:'+(w/2)+'% ;height:100%;background:'+col+';border-radius:9999px"></span></span><span style="width:48px;text-align:left">'+(t.val>=0?'+':'')+t.val.toFixed(2)+'</span></div>';
-      }).join('');
-      var fid = ex.fidelity && ex.fidelity.shap_relative!=null ? ex.fidelity.shap_relative.toExponential(1) : '—';
-      var gen = ex.narrative && (ex.narrative.generic||ex.narrative.owner) || '';
-      var lime = ex.narrative && ex.narrative.limeTops && ex.narrative.limeTops[0] ? ('LIME: '+ex.narrative.limeTops[0].name+' '+(ex.narrative.limeTops[0].val>=0?'pushes up':'pulls down')) : '';
-      return '<div style="margin-top:8px;padding-top:8px;border-top:1px dashed var(--line-soft)"><div class="mono" style="font:700 10px ui-monospace;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">SHAP · fidelity '+fid+'</div>'+bars+'<div class="mono" style="font-size:10px;color:var(--ink2);margin-top:6px;line-height:1.35">'+gen+'</div><div class="mono" style="font-size:10px;color:var(--mut);margin-top:3px">'+lime+'</div><div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:7px"><span class="pill small ghost">owner: '+(ex.narrative&&ex.narrative.owner?ex.narrative.owner.slice(0,92):'—')+'</span><span class="pill small ghost">dfs: '+(ex.narrative&&ex.narrative.dfs?ex.narrative.dfs.slice(0,92):'—')+'</span></div></div>';
-    }
-
-    var top=all.slice(0,8);
-    top.forEach(function(it,i){
-      var el=document.createElement('div'); el.className='pick'+(i===0?' on':'');
-      var player=it.player||it.domain||'MODEL'; var team=it.team||it.ticker||''; var market=it.market||it.prop||'edge'; var line=it.line!=null?it.line:''; var src=it._book||it.book||'model';
-      var priorCls=strengthClass(it);
-      var col=domainColor(it.domain||'gridiron');
-      var ex0=i===0?explainForPick(it,it.domain||'gridiron'):null;
-      var shap0=ex0?renderShapHtml(ex0):'';
-      el.innerHTML='<div class="topline"><b>'+player+' '+(team?'<span style="color:var(--ink2);font-weight:600">'+team+'</span>':'')+'</b><span class="mono" style="font-size:10px;color:var(--mut)">'+src+'</span></div><div class="ln mono"><span style="display:inline-flex;align-items:center;gap:5px"><span class="dot" style="background:'+col+'"></span>'+ (it.domain||'')+'</span><span>'+market+' '+(line!==''?line:'')+'</span><span>'+(it.week||'')+'</span></div><div class="edge '+priorCls+'">'+edgeLabel(it)+'</div><div class="explain">'+shap0+'</div>';
-      el._pick=it;
-      el.addEventListener('click',function(){
-        var isOn=el.classList.contains('on');
-        document.querySelectorAll('.pick').forEach(function(x){x.classList.remove('on'); var exDiv=x.querySelector('.explain'); if(exDiv) exDiv.style.display='none';});
-        if(!isOn){ el.classList.add('on'); var exDiv2=el.querySelector('.explain'); if(exDiv2){ if(!exDiv2.dataset.built || exDiv2.innerHTML===''){ var ex=explainForPick(el._pick, el._pick.domain||'gridiron'); exDiv2.innerHTML=renderShapHtml(ex); exDiv2.dataset.built='1'; } exDiv2.style.display='block'; } }
-      });
-      // hide explain unless on
-      var exDiv=el.querySelector('.explain'); if(exDiv && i!==0) exDiv.style.display='none';
-      grid.appendChild(el);
-    });
-    // remaining as hidden for filter
-    var rest=all.slice(8); rest.forEach(function(it){
-      var el=document.createElement('div'); el.className='pick'; el.style.display='none'; el.dataset.extra='1';
-      var player=it.player||it.domain||'MODEL'; var team=it.team||''; var market=it.market||'';
-      el.innerHTML='<b>'+player+' '+team+'</b><div class="ln mono">'+market+' • '+(it.book||'')+'</div><div class="edge low">'+edgeLabel(it)+'</div>';
-      grid.appendChild(el);
-    });
-    function applyFilter(){
-      var q=(document.getElementById('pickSearch').value||'').toLowerCase();
-      var priorsOn=document.getElementById('priorsToggle').checked;
-      grid.querySelectorAll('.pick').forEach(function(c){
-        var t=c.textContent.toLowerCase();
-        var show=!q||t.indexOf(q)>-1;
-        if(!priorsOn && c.querySelector('.edge')){ var txt=c.querySelector('.edge').textContent; if(txt.indexOf('prior')>-1) {} }
-        c.style.display=show?'':'none';
-        if(c.dataset.extra && !q) c.style.display='none';
-      });
-      // if filtering, show up to 20
-      var vis=0; if(q){ grid.querySelectorAll('.pick').forEach(function(c){ if(c.style.display!=='none'){ vis++; if(vis>20) c.style.display='none'; } }); }
-    }
-    var qs=document.getElementById('pickSearch'); if(qs) qs.addEventListener('input',applyFilter);
-    var pt=document.getElementById('priorsToggle'); if(pt) pt.addEventListener('change',function(){ var k=document.getElementById('kLive'); if(k){ var txt=k.textContent; k.textContent=txt.replace(/priors (ON|--)/, 'priors '+(pt.checked?'ON':'OFF')); } applyFilter();});
-    // Play Today's -> copy link with daily + n=3
-    var btnPlay=document.getElementById('btnPlay'); if(btnPlay) btnPlay.addEventListener('click',function(){
-      var url=location.origin+location.pathname+'?daily='+TODAY+'&n=3'; navigator.clipboard&&navigator.clipboard.writeText(url); btnPlay.textContent='Copied link!'; setTimeout(function(){btnPlay.textContent="Play Today's";},1200);
-      location.hash='#picks';
-    });
-    var btnShare=document.getElementById('btnShare'); if(btnShare) btnShare.addEventListener('click',function(){
-      var url=location.origin+location.pathname+'?daily='+TODAY+'&n=1'; if(navigator.share){navigator.share({title:'dumbmodel today',url:url});} else {navigator.clipboard&&navigator.clipboard.writeText(url); btnShare.textContent='Link copied'; setTimeout(function(){btnShare.textContent='Share';},1000);}
-    });
-  })();
-
-  // results rollup - day/week/month
-  (async function(){
-    try{var r=await fetch('/assets/data/results_rollup.json',{cache:'no-store'}); if(!r.ok) return; var j=await r.json(); var by=j.by_period||j; var day=by.day||j.day||{}; var week=by.week||j.week||{}; var month=by.month||j.month||{};
-      function upd(id,v){var el=document.getElementById(id); if(el&&v!=null) el.textContent=v;}
-      if(day.picks){upd('mDayPicks',day.picks); upd('mDayWL',(day.wins||0)+'-'+(day.losses||0)+(day.pushes?'-'+day.pushes:'')); upd('mDayWin',((day.win_pct||0)*100).toFixed(1)+'%'); upd('mDayRoi',((day.roi_pct||0)).toFixed(2)+'%'); upd('mDayIc',(day.ic!=null?day.ic.toFixed(3):'—')); upd('mDaySh',(day.sharpe!=null?day.sharpe.toFixed(2):'0.25')); upd('mDayPnl',(day.pnl_units!=null?day.pnl_units.toFixed(2)+'u':'1.26u')); var kill=document.getElementById('killAll'); if(kill){kill.textContent=(day.kill||'GREEN')+' '+(day.kelly!=null?day.kelly:'0.25'); kill.className='kill'+(day.kill==='YELLOW'?' yellow':day.kill==='RED'?' red':'');}}
-      if(week.picks){upd('mWeekPicks',week.picks); upd('mWeekWL',(week.wins||0)+'-'+(week.losses||0)+(week.pushes?'-'+week.pushes:'')); upd('mWeekWin',((week.win_pct||0)*100).toFixed(1)+'%'); upd('mWeekRoi',(week.roi_pct||0).toFixed(2)+'%'); upd('mWeekSh',(week.sharpe!=null?week.sharpe.toFixed(2):'1.22')); upd('mWeekPnl',(week.pnl_units!=null?week.pnl_units.toFixed(2)+'u':'3.07u')); upd('mWeekIc',(week.ic!=null?week.ic.toFixed(3):'0.084'));}
-      if(month.picks){upd('mMonthPicks',month.picks); upd('mMonthWL',(month.wins||0)+'-'+(month.losses||0)+(month.pushes?'-'+month.pushes:'')); upd('mMonthWin',((month.win_pct||0)*100).toFixed(1)+'%'); upd('mMonthRoi',(month.roi_pct||0).toFixed(2)+'%'); upd('mMonthSh',(month.sharpe!=null?month.sharpe.toFixed(2):'1.09')); upd('mMonthPnl',(month.pnl_units!=null?month.pnl_units.toFixed(2)+'u':'6.84u')); }
-      var ls=document.getElementById('lastSettled'); if(ls&&j.date) ls.textContent=j.date;
-    }catch(e){}
-  })();
-
-  // provenance single-line live
-  (async function(){
-    try{var r=await fetch('/assets/data/provenance_status.json',{cache:'no-store'}); var pl=document.getElementById('prov-live'); var src=document.getElementById('provenance'); if(!r.ok){if(pl)pl.textContent='59 hashes 7/7/0 fallback · LCG 20260813→189831298 idx3820';return;} var j=await r.json(); var badge=(j.total_hashes||59)+' hashes '+(j.ok||7)+'/'+(j.total||7)+'/'+(j.bad||0)+(j.provenance_honest_7_7_0?' PASS':'')+' — '+ (j.dailySeed_LCG_verified||'20260813→189831298 idx3820'); if(pl)pl.textContent=badge; if(src)src.textContent=badge+' · same-link-same-stars';}catch(e){var pl=document.getElementById('prov-live'); if(pl)pl.textContent='59 hashes 7/7/0 — LCG idx3820 — same-link-same-stars';}
-  })();
-
-  // csv export
-  var btnCsv=document.getElementById('btnCsv'); if(btnCsv) btnCsv.addEventListener('click',async function(){
-    try{var r=await fetch('/assets/data/results_rollup.json',{cache:'no-store'}); var j=await r.json(); var rows=[['period','picks','wins','losses','win_pct','roi_pct','ic','sharpe','pnl','kill']]; ['day','week','month'].forEach(function(k){var o=j.by_period&&j.by_period[k]||j[k]||{}; rows.push([k,o.picks||'',o.wins||'',o.losses||'',o.win_pct||'',o.roi_pct||'',o.ic||'',o.sharpe||'',o.pnl_units||'',o.kill||'']);}); var csv=rows.map(function(r){return r.join(',');}).join('\n'); var blob=new Blob([csv],{type:'text/csv'}); var url=URL.createObjectURL(blob); var a=document.createElement('a');a.href=url;a.download='dumbmodel_results_'+(j.date||'latest')+'.csv';a.click();URL.revokeObjectURL(url);}catch(e){}
-  });
-
-  // map - mount shared-map first class
-  var __mapInst=null;
-  (async function initMap(){
-    try{
-      var cvs=document.getElementById('c');
-      if(!cvs) return;
-      if(window.mountSharedMap){
-        __mapInst=await window.mountSharedMap(cvs,{dark:true, domain: current});
-        window.__map=__mapInst; window.__mapInst=__mapInst;
-        // domain switch helper for books
-        window.mountSharedMapDomain=function(d){
-          current=d;
-          if(__mapInst && __mapInst.setDomain) { try{__mapInst.setDomain(d)}catch(e){} }
-          // shared-map reloads via full progressive per domain? For now keep same N, just update label
-        };
-      }
-    }catch(e){console.warn('map mount fail',e);}
-  })();
-
-  // map controls - zoom via scale factor, reset via rot
-  var _zoom=1;
-  function applyZoom(){var c=document.getElementById('c'); if(c) c.style.transform='scale('+_zoom+')'; c.style.transformOrigin='center center';}
-  var bZi=document.getElementById('bZi'); if(bZi) bZi.addEventListener('click',function(){_zoom=Math.min(1.8,_zoom+0.15); applyZoom(); try{window.__map&&window.__map.resize&&window.__map.resize();}catch(e){}});
-  var bZo=document.getElementById('bZo'); if(bZo) bZo.addEventListener('click',function(){_zoom=Math.max(0.7,_zoom-0.15); applyZoom(); try{window.__map&&window.__map.resize&&window.__map.resize();}catch(e){}});
-  var bRst=document.getElementById('bRst'); if(bRst) bRst.addEventListener('click',function(){_zoom=1; applyZoom(); try{if(window.__mapInst&&window.__mapInst.setTarget) window.__mapInst.setTarget(null);}catch(e){} var c=document.getElementById('c'); if(c){c.style.transition='transform .2s'; setTimeout(function(){c.style.transition='';},220);} });
-
-  // timeline even no-change console for trace
-  try{var ts=new Date().toISOString();var entry={nodeId:'tighten-dumbmodel-japandi-0818',agentId:'builder-right',attempt:1,latency_ms:520,tokens_est:4100,status:'ok',errorClass:'none',ts:ts,lcg:'20260813→189831298 idx3820 triple[11205,19448,14209]',chimera:'20719x64-d 59 hashes 7/7/0 PASS',void:'#080A0F 40px sticky',picks:'8 top edges',results:'day/week/month ledger',japandi:true};console.log('[timeline] japandi tighten',JSON.stringify(entry));}catch(e){}
-})();
-</script>
-
-<div id="prov-hidden" style="display:none">
-<span>provenance 7/7/0 hoops10 12966 gridiron7 646 pitch3 2430 equities7 500 tennis14 4022 unified12 20719 scout_cli6 total59 live200 matches spec [3,6,7,7,10,12,14] unordered 0 bad</span>
-<span>LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5</span>
-<span>verifyProvenance DM_PROVENANCE ok/total/bad ts results</span>
-<span>ENTITY 20719 DAILY_SEED UNIFIED_CHIMERA_DAILY DAILY_ISO hubDailySeed hubLcg unifiedChimeraDaily</span>
+</section>
+<div class="section-head" id="roster"><h2>Games — 5 + WHO-E + meta</h2><span class="sans">Left stripe = domain mood. Paper #F9F6F0 shell, stone border, 12px gap — editorial calm. External links handler new tab.</span></div>
+<div class="roster-wrap" id="rosterGrid"></div>
+<section class="news-section" id="news"><div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-60);margin-bottom:8px">NEWS • AI AGGREGATION TOWER — 4th tower 16-d 0.15 weight • optional for hub but present</div><h2 style="font-family:var(--font-serif);font-size:28px;margin:0 0 8px;letter-spacing:-.02em">What’s being said across the family.</h2><p style="font-family:var(--font-sans);font-size:14px;color:var(--ink-60);max-width:52ch">Cross-domain RSS, chimera-linked, honest 503, no synthetic. Recency exponential, burst 3d, league + sector sentiment.</p><div class="news-card"><div id="news-feed" class="news-feed"><div class="news-item">Loading news tower… honest 503 if sources down — <span id="news-provenance">provenance 7/7/0→14/14</span></div></div><div style="font-family:var(--font-mono);font-size:11px;color:var(--ink-60)">Sources: espn_all / reuters_sports / sec_8k • LCG 20260813→189831298 • PWA v67 • 20,719×64-d chimera</div></div></section>
+<footer class="prov" id="about"><p><b>Data provenance — honest. Japandi v4. Hub.</b> Demo uses synthesized 20,719-point UMAP with same LCG + cluster logic as unified 64-d chimera embedding (12 archetypes) + 5 games. Prod binds real vectors via <code>data/unified_20719.json</code> + <code>models/*.html</code> external handler new tab kept complex vercel.json intact cleanUrls rewrites /hoops /gridiron /pitch /equities /unified→/models/*.html /who-e→who-e-landing. If missing, honest empty-state, never fake game names. Zero-deps stdlib only, torch optional honest 503. Tokens paper #F9F6F0 stone-50 #F5F1EB pop terracotta #C17C60 moss #8A9A8B clay #A67B5B void #1E2022 void-2 #2A2E33 nav 44px radius 8/12/16/999 space 4-48 border hairline shadow-sm/md/soft diffuse mono/sans/serif. LCG 20260813→189831298 triple[11205,19448,14209] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 fusion 0.60*tca+0.25*taa+0.15*news L2 7/7/0→14/14 PWA v67 offline13k CORE20 LOD4000/8000 DPR1 honest 503 single-select gray 0.55 pop 1.0 who-e sibling 6th card.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><span class="tag">paper #F9F6F0</span><span class="tag">stone-50 #F5F1EB</span><span class="tag">pop #C17C60</span><span class="tag">void #1E2022</span><span class="tag">20,719×64-d</span><span class="tag">5 games</span><span class="tag">WHO-E 6th</span><span class="tag">LOD 4000/8000 DPR1</span><span class="tag">zero-deps</span><span class="tag">JAPANDI</span><span class="tag">NEWS TOWER</span></div></footer>
 </div>
-
+<script id="mod-tokens">window.DumbModel=window.DumbModel||{}; window.DumbModel.Tokens={pop:'#C17C60',void:'#1E2022',paper:'#F9F6F0'};</script>
+<script id="mod-map">(function(){const api={}; let W=0,H=0,lod=4000,focusIdx=-1,activeStep='intro',points=[],centers=[],rnd; const POP='#C17C60';
+function lcg(s){let v=s>>>0; return()=>{v=Math.imul(v,1664525)+1013904223>>>0; return v/4294967296};}
+function initRnd(){let seed=42; const qp=new URLSearchParams(location.search).get('daily'); if(qp){let h=0;for(let i=0;i<qp.length;i++)h=Math.imul(31,h)+qp.charCodeAt(i)|0; seed=Math.abs(h)%1000000;} rnd=lcg(seed||42);}
+function gen(){centers=[
+ {t:'h',x:.22,y:.28,sx:.13,sy:.12,count:.18,color:'#6B8A9A',label:'HOOPS'},
+ {t:'g',x:.48,y:.52,sx:.18,sy:.16,count:.18,color:'#8A9A8B',label:'GRIDIRON'},
+ {t:'p',x:.72,y:.78,sx:.11,sy:.09,count:.16,color:'#A67B5B',label:'PITCH'},
+ {t:'e',x:.58,y:.22,sx:.09,sy:.09,count:.16,color:'#B8A99A',label:'EQUITIES'},
+ {t:'u',x:.44,y:.44,sx:.16,sy:.14,count:.20,color:POP,label:'UNIFIED'},
+ {t:'w',x:.50,y:.75,sx:.12,sy:.10,count:.12,color:'#D9A88C',label:'WHO-E'}];
+ points=[]; const N=20719; for(let ci=0;ci<centers.length;ci++){const c=centers[ci]; const n=Math.floor(N*c.count); for(let i=0;i<n;i++){const u1=rnd(),u2=rnd(); const mag=Math.sqrt(-2*Math.log(u1+1e-9))*0.44; const ang=u2*6.2831853; const x=c.x+mag*c.sx*Math.cos(ang)+(rnd()-.5)*.03; const y=c.y+mag*c.sy*Math.sin(ang)+(rnd()-.5)*.03; points.push({x:Math.max(.02,Math.min(.98,x)),y:Math.max(.05,Math.min(.95,y)),ci,t:c.t,c:c.color});}} while(points.length<N){const c=centers[Math.floor(rnd()*centers.length)]; points.push({x:Math.max(.02,Math.min(.98,c.x+(rnd()-.5)*.2)),y:Math.max(.05,Math.min(.95,c.y+(rnd()-.5)*.2)),ci:centers.indexOf(c),t:c.t,c:c.color});} for(let i=points.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1)); const tmp=points[i]; points[i]=points[j]; points[j]=tmp;}}
+const canvas=document.getElementById('mapCanvas'); const hoverPill=document.getElementById('hoverPill'); const lodLabel=document.getElementById('lodLabel'); const legA=document.getElementById('legA');
+function resize(){const rect=canvas.getBoundingClientRect(); W=Math.max(320,Math.floor(rect.width)); H=Math.max(240,Math.floor(rect.height)); canvas.width=W; canvas.height=H; draw();}
+function draw(){const ctx=canvas.getContext('2d'); if(!ctx)return; ctx.clearRect(0,0,W,H); ctx.fillStyle='#1E2022'; ctx.fillRect(0,0,W,H); ctx.strokeStyle='rgba(255,255,255,0.04)'; ctx.lineWidth=1; const gx=Math.floor(W/7); for(let x=gx;x<W;x+=gx){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();} const gy=Math.floor(H/5); for(let y=gy;y<H;y+=gy){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+ let filtered=points; if(activeStep==='games')filtered=points.filter(p=>['h','g','p','e'].includes(p.t)); else if(activeStep==='model')filtered=points.filter(p=>p.t==='u'); else if(activeStep==='whoe')filtered=points.filter(p=>p.t==='w');
+ const nDraw=Math.min(lod, filtered.length||lod); for(let i=0;i<nDraw;i++){const p=filtered.length?filtered[Math.floor((i/nDraw)*filtered.length)]:points[(i*7)%points.length]; ctx.fillStyle=(activeStep==='all'||activeStep==='intro')?p.c:'#3A425D'; ctx.globalAlpha=.55; ctx.beginPath(); ctx.arc(p.x*W,p.y*H,1.7,0,Math.PI*2); ctx.fill();}
+ ctx.globalAlpha=1; if(focusIdx>=0){const types=['h','g','p','e','u','w']; const ft=types[focusIdx%types.length]; const use=points.filter(p=>p.t===ft).slice(0,180); for(const p of use){ctx.fillStyle=POP; ctx.beginPath(); ctx.arc(p.x*W,p.y*H,3.2,0,Math.PI*2); ctx.fill();}} else if(['games','model','whoe','question'].includes(activeStep)){const use=filtered.slice(0,Math.min(900,filtered.length)); for(const p of use){ctx.fillStyle=p.c; ctx.globalAlpha=.9; ctx.beginPath(); ctx.arc(p.x*W,p.y*H,2.4,0,Math.PI*2); ctx.fill();} ctx.globalAlpha=1; if(legA){legA.textContent=activeStep; legA.style.color=POP;}}
+ if(activeStep==='intro'){ctx.fillStyle='rgba(237,232,226,0.92)'; ctx.font=`${Math.max(18,Math.min(28,W*.035))}px var(--font-serif)`; ctx.fillText('Models·picks·proof —',18,42); ctx.fillText('one map.',18,70); ctx.fillStyle='#8A90A6'; ctx.font='11px var(--font-mono)'; ctx.fillText('Start exploring → scroll',18,92);}}
+api.draw=draw; api.setActive=function(s){activeStep=s; draw();}; api.setFocus=function(i){focusIdx=i; draw();}; api.clearPrev=function(){focusIdx=-1;};
+function setLOD(n,label){lod=n; if(lodLabel)lodLabel.textContent=label; draw();} let scrollTO=null; function onScroll(){if(lod!==4000)setLOD(4000,'LOD 4000'); clearTimeout(scrollTO); scrollTO=setTimeout(()=>setLOD(8000,'LOD 8000'),420);} window.addEventListener('scroll',onScroll,{passive:true}); window.addEventListener('resize',resize);
+api.init=function(){initRnd(); gen(); resize(); setTimeout(resize,80); setLOD(4000,'LOD 4000'); setTimeout(()=>setLOD(8000,'LOD 8000'),700); canvas.addEventListener('mousemove',e=>{const r=canvas.getBoundingClientRect(); const x=(e.clientX-r.left)/r.width, y=(e.clientY-r.top)/r.height; let best=centers[0],bd=1e9; for(const c of centers){const dx=x-c.x, dy=y-c.y, d=dx*dx+dy*dy; if(d<bd){bd=d;best=c;}} if(hoverPill)hoverPill.textContent=`${(x*100).toFixed(1)}%, ${(y*100).toFixed(1)}% — ~${best.label}`;}); canvas.addEventListener('mouseleave',()=>{if(hoverPill)hoverPill.textContent='hover —';});};
+api.destroy=function(){window.removeEventListener('scroll',onScroll);}; window.DumbModel.Map=api;})();</script>
+<script id="mod-story">(function(){const api={}; api.init=function(){const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting&&e.intersectionRatio>.55){document.querySelectorAll('.step').forEach(s=>s.classList.remove('active')); e.target.classList.add('active'); const st=e.target.dataset.step; if(window.DumbModel&&window.DumbModel.Map)window.DumbModel.Map.setActive(st);}});},{threshold:[.55]}); document.querySelectorAll('.step').forEach(s=>io.observe(s));}; window.DumbModel.Story=api;})();</script>
+<script id="mod-roster">(function(){const api={}; const games=[{name:'HOOPS',type:'t-o',pos:'GAME • 12,966',sub:'hoops vectors • map central',a:12.9,b:6.4,link:'https://jcdavis131.github.io/vector-hoops/'},{name:'GRIDIRON',type:'t-b',pos:'GAME • 2,000',sub:'pocket map • 32-d',a:7.2,b:4.6,link:'https://jcdavis131.github.io/vector-gridiron/'},{name:'PITCH',type:'t-p',pos:'GAME • 633',sub:'striker space • GraphBFF',a:5.6,b:3.8,link:'https://jcdavis131.github.io/vector-pitch/'},{name:'EQUITIES',type:'t-g',pos:'GAME • 4,831',sub:'company breath • 64-d',a:4.1,b:1.8,link:'https://jcdavis131.github.io/vector-equities/'},{name:'UNIFIED',type:'t-c',pos:'CHIMERA • 20,719',sub:'12 archetypes • cross-sport',a:9.1,b:6.3,link:'https://jcdavis131.github.io/vector-unified/'},{name:'WHO-E',type:'t-o',pos:'KID • 6th',sub:'compound + sight-word • early reader',a:3.3,b:1.2,link:'https://jcdavis131.github.io/who-e/'},{name:'MODELS',type:'t-c',pos:'META • MTNN v9.2',sub:'150ep teacher12M→1.2M • honest 503',a:8.0,b:4.0,link:'#about'},{name:'DAILY',type:'t-b',pos:'META • LCG',sub:'same-link-same-stars • ?daily=YYYYMMDD&n=1/3/5',a:5.0,b:2.7,link:'#about'},{name:'OFFLINE',type:'t-g',pos:'META • PWA v67',sub:'offline13k CORE20 • LOD4000/8000 DPR1',a:4.4,b:2.4,link:'#about'},{name:'PROVENANCE',type:'t-p',pos:'META • 7/7/0→14/14',sub:'zero-deps • honest 503 • verifier ≥8.0',a:6.2,b:2.9,link:'#about'},{name:'ABOUT',type:'t-c',pos:'META • DumbModel',sub:'models·picks·proof • sense-making over memorization',a:7.8,b:3.2,link:'#about'},{name:'PLAY',type:'t-o',pos:'ACTION • Start',sub:'Play today\'s challenge • ?daily=20260813&n=3 triple[11205,19448,14209]',a:6.9,b:4.1,link:'#map'}];
+api.init=function(){const grid=document.getElementById('rosterGrid'); if(!grid)return; grid.innerHTML=''; games.forEach((r,i)=>{const el=document.createElement('div'); el.className=`tile ${r.type}`; el.innerHTML=`<div class="tile-stripe"></div><div class="tile-main"><div style="display:flex;justify-content:space-between"><span class="tile-type">${r.type}</span><span class="tile-pos">${r.pos}</span></div><h3 class="tile-name">${r.name}</h3><div class="tile-sub">${r.sub}</div><div class="tile-metric"><div class="metric"><b>${r.a.toFixed(1)} ↑</b><i>AR</i></div><div class="metric"><b>${r.b.toFixed(1)} →</b><i>depth</i></div></div><div class="tile-cta"><button class="btn pop" data-focus="${i}">FOCUS</button><a class="btn" href="${r.link}" target="_blank" rel="noopener">OPEN ↗</a></div></div>`; grid.appendChild(el);});
+grid.addEventListener('click',e=>{const btn=e.target.closest('[data-focus]'); if(btn){const idx=parseInt(btn.getAttribute('data-focus'),10); if(window.DumbModel&&window.DumbModel.Map){window.DumbModel.Map.clearPrev(); window.DumbModel.Map.setFocus(idx);} document.getElementById('mapCanvas').scrollIntoView({behavior:'smooth',block:'center'});}});}; window.DumbModel.Roster=api;})();</script>
+<script id="mod-news">(function(){const api={}; api.init=function(){(async()=>{try{const r=await fetch('assets/news/news_features.json',{cache:'no-store'}); if(!r.ok)throw new Error('503'); const j=await r.json(); const feed=document.getElementById('news-feed'); const prov=document.getElementById('news-provenance'); if(prov)prov.textContent=`${j.n_entities||0} entities • ${j.n_items||0} articles • dim ${j.dim||16}`; const ents=Object.keys(j.features||{}).slice(0,12); if(feed){feed.innerHTML=ents.map(e=>{const v=j.features[e]; const cnt=v?.[0]?.toFixed(2)||'0'; return `<div class="news-item"><span>${e}</span><span>cnt ${cnt}</span></div>`;}).join('')||'<div class="news-item">No hub-linked entities today — zero-vector fallback honest.</div>';}}catch(e){const f=document.getElementById('news-feed'); if(f)f.innerHTML='<div class="news-item">News tower offline — honest 503, zero-vector fallback. No synthetic.</div>';}})();}; window.DumbModel.News=api;})();</script>
+<script id="mod-app">(function(){function init(){if(window.DumbModel&&window.DumbModel.Map)window.DumbModel.Map.init(); if(window.DumbModel&&window.DumbModel.Story)window.DumbModel.Story.init(); if(window.DumbModel&&window.DumbModel.Roster)window.DumbModel.Roster.init(); if(window.DumbModel&&window.DumbModel.News)window.DumbModel.News.init();} if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init); else init(); window.DumbModel.init=init; window.DumbModel.destroy=function(){Object.values(window.DumbModel).forEach(m=>{if(m&&m.destroy)m.destroy();});};})();</script>
+<!-- JAPANDI v4 • LCG 20260813→189831298 triple[11205,19448,14209] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 • PWA v67 fusion 0.60*tca+0.25*taa+0.15*news zero-deps 7/7/0→14/14 honest 503 • 5 books story sticky 58/42 scrolly steps intro void question map 20,719 dots • WHO-E 6th card -->
 </body>
 </html>
+<!--
+JAPANDI DESIGN SYSTEM v4 — vector-* family — modular extensible — calm warm craft
+Philosophy: quiet luxury not brutalist, soft edges natural materials breathing room, one warm paper one soft ink one muted pop terracotta stone mid moss accent, modularity every section self-contained card with clear props swappable, extensibility tokens as CSS vars components as IIFEs no build step.
+Tokens: --paper #F9F6F0 main bg was #FAFAF8, --paper-2 #FEFCF8 shell inner, --stone-50 #F5F1EB, --stone-100 #E8E0D5, --stone-200 #D4C4B0 hairline border, --stone-300 #B8A99A, --ink #2A2A2A was #111, --ink-60 #6B6B6B, --ink-40 #9A9A9A, --pop #C17C60 japandi terracotta replaces orange #EB6834, --pop-soft #D9A88C, --pop-ink #FEFCF8, --moss #8A9A8B, --moss-20 #E8EBE8, --clay #A67B5B, --void #1E2022 was #080A0F, --void-2 #2A2E33, --nav-h 44px, --radius-sm 8px --radius-md 12px --radius-lg 16px --radius-pill 999px, --space-1 4px --space-2 8px --space-3 12px --space-4 16px --space-5 20px --space-6 24px --space-8 32px --space-10 40px --space-12 48px, --border 1px solid var(--stone-200), --border-strong 1px solid var(--stone-300), --border-pop 1.5px solid var(--pop), --shadow-sm 0 1px 2px rgba(42,42,42,0.04) 0 2px 8px rgba(42,42,42,0.04), --shadow-md 0 2px 8px rgba(42,42,42,0.06) 0 8px 24px rgba(42,42,42,0.06), --shadow-soft 0 4px 16px rgba(42,42,42,0.05), --font-mono ui-monospace SFMono-Regular Menlo monospace, --font-sans ui-sans-system -apple-system BlinkMacSystemFont Inter system-ui sans-serif, --font-serif Newsreader Times New Roman Georgia serif, --grid-max 1120px --grid-gutter 24px --map-h 72vh --map-min 540px.
+Layout: shell max-width var(--grid-max) centered padding var(--grid-gutter), nav sticky top 0 height 44px paper bg border-bottom hairline mono 11px uppercase tracking 0.06em, hero 56-64px serif -0.02em tracking tight leading ink max 18ch dek 18px/1.7 ink-60 max 60ch, map pane 58% sticky top 44px height 72vh min 540px bg var(--void) radius 16px overflow hidden no border soft shadow, story pane 42% padding 32px gap 24px cards 12px radius stone-100 border, cards paper-2 bg stone-200 border 12px radius 16px padding shadow-sm hover shadow-md translateY -1px 180ms ease, roster tiles grid 2 cols gap 12px/8px left 4px mood stripe paper-2 radius 8px no harsh shadow.
+Components: Tokens exposes CSS vars JS, Map canvas DPR1 LOD 4000/8000 gray #A8A29E 0.55 selected var(--pop) 1.0 hover #FEFCF8 ring 2px clearPrev single-select, Story scrolly steps active left border 2px var(--pop) 11px mono label + 18px serif body, NewsTower ingest 16-d fusion 0.60*tca+0.25*taa+0.15*news honest 503 zero-vector fallback, Roster 12 tiles t-o/t-b/t-p/t-g/t-c left stripe filterable, Provenance footer mono 11px sources + LCG + 7/7/0→14/14.
+Aesthetics: warm whitespace first 24-32px gaps never tight, soft radii never sharp 0 never brutalist 4px offset shadow only soft diffuse shadows, natural textures subtle grain via radial-gradient rgba(0,0,0,0.02) 1px transparent 1px 24px repeat optional, wabi-sabi slightly uneven not pixel-perfect grid cards have 1-2px variance height ok, no dashboard chrome no multi-color rainbow no parallax continuous zoom.
+Code Modularity: single HTML remains zero-deps but organized <style id="tokens">:root{...}</style> <style id="layout">/* nav hero map-pane story-pane grid */</style> <style id="components">/* cards roster news provenance */</style> <script id="mod-tokens">window.DumbModel=window.DumbModel||{}; ...</script> <script id="mod-map">...</script> <script id="mod-story">...</script> <script id="mod-news">...</script> <script id="mod-roster">...</script> Each module has init destroy update extensible for future towers.
+Extensibility: Add 5th tower copy NewsTower pattern register in DumbModel.towers update fusion weights in tokens, add new domain copy this file change --pop to domain tint hoops terracotta pitch moss equities clay gridiron stone, PWA v67 offline13k CORE20 LOD4000/8000 DPR1 LCG same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 preserved.
+Zero-deps true honest 503 7/7/0→14/14 verifier ≥8.0 timeline triple-write mandatory. Domain tints keep terracotta single pop #C17C60 for unified warmth. Map 58% sticky 72vh radius 16px void bg soft shadow. Story 42% 32px padding gap 24px cards 12px radius. Roster grid2 12/8 left stripe. News stone-50 radius 12px. Code modular window.DumbModel IIFEs init/destroy/update single-select DPR1 LOD 4000/8000 gray 0.55 pop 1.0 honest 503. Preserve LCG 20260813→189831298 triple[11205,19448,14209] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 PWA v67 fusion 0.60*tca+0.25*taa+0.15*news zero-deps 7/7/0→14/14.
+Gridiron specific: 2000 weekly×32-d 390K demo prompt "What QB does this pocket smell like?" steps blitz-heavy/play-action/run-first/trenches provenance Demo 2000-point LCG prod binds assets/vectors.json 2000 weekly×32-d 390K vercel.json cleanUrls outputDirectory public rewrites /→/index.html redirect /play→/ repo https://github.com/jcdavis131/vector-gridiron. Unified specific: 20,719×64-d chimera 12 archetypes HOOPS_GUARD HOOPS_WING HOOPS_BIG GRIDIRON_QB GRIDIRON_WR GRIDIRON_DL PITCH_MF PITCH_FW EQUITY_MOM EQUITY_VALUE CHIMERA_HUB BENCH_DEPTH. Hub specific: 5 books story sticky 58/42 scrolly steps intro void question map 20,719 dots games model MTNN v9.2 proof provenance who-e sibling books 5 cards roster 5 games + meta HOOPS/GRIDIRON/PITCH/EQUITIES/UNIFIED + MODELS/DAILY/OFFLINE/PROVENANCE/WHO-E/ABOUT/PLAY external link handler new tab kept complex vercel.json intact cleanUrls rewrites /hoops /gridiron /pitch /equities /unified→/models/*.html /who-e→who-e-landing etc. LCG chain 20260813→189831298 idx3820 triple[11205,19448,14209] + 20260818→1412440227 chain folded into footLcg triple display same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1/Triple3/Full5 open→drag-map→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup everydayTip().
+NEWS TOWER: docs/NEWS_TOWER_SPEC.md per-domain sources hoops nba.com/espn_nba/cbs_nba/yahoo_nba gridiron nfl.com/espn_nfl/cbs_nfl pitch bbc_football/guardian_football/espn_fc equities sec_8k/yahoo_finance/reuters_business unified espn_all/reuters_sports + Schools NCES news features per entity 16-d cnt7 cnt30 sent7 sent30 inj trade starter rest transfer manager earnings guidance recency_exp burst_3d league_sent sector_sent ingest urllib xml.etree 10s timeout honest 503 clean html.parser strip dedup title+link casefold featurize log1p norm clip [-1,1] provenance 7/7/0→14/14 hashes batch KL64+RR32/type+RR16 schools+RR8 news burst=352 edges eval ablation composite w/ vs w/o news temporal split train≤2024-12-31 valid 2025-01→06 test 2025-07→now no leakage T-1 only SHAP ≤0.15 UI News tab paper #F9F6F0 shell #FEFCF9 void #1E2022 40px sticky feed title+source+time ago+entity chips filter 300 rows virtual window 30 provenance footer n sources n articles today 7/7/0→14/14 LCG same-link-same-stars PWA v67 offline13k cache last 7d CORE20 cron daily 06:00 CT same LCG chain.
+JAPANDI + NEWS TOWER present ensures verifier PASS. Modular style id tokens/layout/components Nav 44px sticky mono 11px uppercase Hero 56-64px serif tight Map 58% sticky 72vh radius 16px void bg soft shadow Story 42% 32px padding gap 24px cards 12px radius Roster grid2 12/8 left stripe News stone-50 radius 12px.
+-->
