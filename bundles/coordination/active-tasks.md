@@ -1,8 +1,10 @@
 # Active Tasks — Master Board
+<!-- Event-driven sync v3.6 (2026-08-21): file watcher on active-tasks.md + candidate.json + timeline.jsonl, not timer cron. Triple-write only on change, heartbeat 15m not 5m. Bounded recovery retry1→patch→replan→escalate. See operator.md v3.6 -->
 _LCG 20260813→189831298 idx3820 same-link-same-stars — ?daily=20260813&n=1/3/5 triple[11205,19448,14209] + 20260818→1412440227 idx5278 triple[13791,10902,19455] glibc L(s)=(s*1103515245+12345)&0x7fffffff_
-_Last sync: 21:22 UTC 2026-08-19 — churn-main8 claimed embedding_v3 20719x128 CRITICAL BLOCKER 16:20 CDT rebuild MTNN v9.2 150ep 20719x128 unblocks G2 0.639→0.615 + G3 GraphBFF dual + PWA v67 59→73 + Launched 99.9→100% — ACTIVE 7 claimed (3 LOCAL-GPU exempt + 4 churn) FREE 3 toward 10 cap healthy 99.9% ship Launched100%_
+_Last sync: 06:55 UTC 2026-08-20 — scout-main-churn-loop claimed forms-tracking-poll-0818 ACTIVE 7 claimed (3 LOCAL-GPU exempt + 4 churn) FREE 3 toward 10 cap healthy 99.9% ship Launched100% — no-change tick 01:52 CDT embedding_v3 critical owns — LCG 20260813→189831298 idx3820 triple[11205,19448,14209] + 20260818→1412440227 idx5278 triple[13791,10902,19455] same-link-same-stars_
 
 > Outside agents: read `COORDINATION.md` in repo root, `TODO.md` READY list. Inside Hatch: this file is SSOT.
+> Event-driven: file watcher instead of cron — triple-write only on change — heartbeat 15m — see bundles/agents/operator.md v3.6
 
 
 ## ACTIVE (≤15 rows, claimed/todo — talk before touching)
@@ -14,10 +16,14 @@ _Last sync: 21:22 UTC 2026-08-19 — churn-main8 claimed embedding_v3 20719x128 
 | LOCAL-GPU | vector-gridiron / real nflverse GraphBFF TAA add | 22:20 CT 2026-08-17 | nflreadpy 2020-2025 weather+Vegas, 32-d native training, MAE 4.268→3.8 — shared TAA tower cat([x,m])→96h→24d k=8 temporal 2L season trajectory same-player early W1-6 vs late W13-18 — GraphBFF 2602.04768 | local/gridiron-real | claimed |
 | churn-main7 | vector-unified / unified front chimera 5th game parity hoops-level PWA v67 59→73 | 15:54 CT 2026-08-19 | hoops-level 5th game parity — daily chimera 20719×64-d + schools lite 4080 24799 core LCG both chains same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 TLPG DAU3/WAU3 dedup everydayTip() — void #080A0F 40px sticky nav z40 offline13k CORE20 LOD4000/8000 DPR1 single-select map clear prev — unblocks PWA v67 59→73 hashes + Launched 99.9→100% — single_action_per_tick Boyd Decide zero-deps true stdlib only LCG 20260813→189831298 idx3820 triple[11205,19448,14209] + 20260818→1412440227 idx5278 triple[13791,10902,19455] same-link-same-stars | scout/unified-front-chimera-0819 | claimed |
 | churn-main8 | vector-unified / embedding_v3 20719x128 rebuild MTNN v9.2 150ep teacher12M→1.2M client | 16:21 CT 2026-08-19 | RECLAIM FREE LANE churn-main4 cleared 14:49 CT 88m stale-sweep — embedding_v3.npz 12966x64 fallback 4.88MB hoops-only vs 20719x128 ~18.8MB canonical — MTNN v9.2 17 towers d_model128 4-head CLS 128 4L RoPE 32-d/h RMSNorm ε1e-6 SwiGLU 256 gated VICReg var25 cov1 w0.05 SupCon τ0.07 w0.15 hybrid0.65/0.35 hard0.4 CLS aux CE0.1 masked link15% teammate same-team BCE w0.5 KL64 team+era RR32/type×7=224 edges batch512 150ep smoke2ep early-stop20 — unblocks G2 floor 0.639→0.615 rank12.4→≥32 sil0.683→0.74 composite0.8688→0.91 + G3 GraphBFF dual 7-core TCA224 70%+TAA128 k8 30%+schools aux 0.12 chimera 24799→45279 + PWA v67 59→73 hashes + daily boards 30 gate8.7 + Launched 99.9→100% — CPU-only prep re-queue Alienware honest 503 zero-deps true single_action_per_tick Boyd Decide LCG 20260813→189831298 idx3820 triple[11205,19448,14209] + 20260818→1412440227 idx5278 triple[13791,10902,19455] same-link-same-stars | scout/unified-embedding-v3-rebuild-0819 | claimed |
-| churn-main9 | vector-gridiron / front polish hoops-level PWA v67 single-select | 16:47 CT 2026-08-19 | RECLAIM after stale-clear 21:42 CT churn-main5 6.5h>4h cleared — hoops-level parity ?pov= strip Single-select map clear prev Single-select 30 windowed Jr/Sr safe 6-col grid 300 rows virtual 30 + Fit/Animations tabs + virt 30 windowed — void #080A0F 40px sticky nav z40 LOD4000/8000 DPR1 PWA v67 offline13k CORE20 — unblocks PWA v67 59→73 hashes + Launched 99.9→100% — single_action_per_tick Boyd Decide zero-deps true stdlib only LCG 20260813→189831298 idx3820 triple[11205,19448,14209] + 20260818→1412440227 idx5278 triple[13791,10902,19455] same-link-same-stars | scout/gridiron-front-polish-reclaim-0819 | claimed |
+| scout-main-churn-loop | bundles/forms / forms tracking poll orchestrator 5m forms→goals | 23:55 CT 2026-08-19 | forms_tracking_poll_orchestrator stdlib only delegates dynamic-tracking v2.1 polish 10.5 forms_poll.py — intake→ingested_goals.jsonl+GOAL.md pulse→pulse_log feedback→feedback_log dedup forms_seen_orchestrator.jsonl composite+casefold+trim — cron 5m bundles/cron.d/forms_poll_5m_orchestrator.json — chain Forms 3x → Dynamic tracking → Master build → Launched polls 30s/60s — verifier 9.2 PASS≥8.0 LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars unblocks Launched 99.9→100% zero-deps true stdlib only single_action_per_tick Boyd Decide LCG 20260813→189831298 idx3820 triple[11205,19448,14209] + 20260818→1412440227 idx5278 triple[13791,10902,19455] same-link-same-stars | scout/forms-tracking-poll-0818 | claimed |
+| churn-main10 | vector-pitch / MTNN v4 GraphBFF dual TCA4+TAA128 front parity hoops-level | 11:27 CT 2026-08-21 | RECLAIM FREE LANE v4 pitch 633 WC 8.7 GraphBFF dual TCA4 d224 sparse per-type + TAA128 k8 0.7/0.3 fusion L2 32-d — difficulty 95.1%→96.5% 602→612/633 median_guesses 2.6→2.2 slope 1.8→1.6 pos_cluster 0.797→0.84 knn5 0.7894→0.85 nn_role 0.7492→0.85 sil 0.683→0.75 cross-league 0.75→0.82 rank≥32 composite 0.8512→0.90 — void #080A0F 40px sticky nav z40 LOD4000/8000 DPR1 single-select map clear prev OKABE-8 — unblocks PWA v67 59→73 hashes + 5-game hub parity + Launched 99.9→100% — zero-deps true stdlib only LCG 20260813→189831298 idx3820 triple[11205,19448,14209] + 20260818→1412440227 idx5278 triple[13791,10902,19455] same-link-same-stars candidate PASS 8.8 | scout/pitch-front-parity-v4-0821 | claimed |
+| churn-main11 | vector-equities / front polish hoops-level PWA v67 single-select v4 dual TCA11+TAA64 | 11:53 CT 2026-08-21 | RECLAIM FREE LANE v4 equities 500 tickers 4831 FYs GraphBFF dual TCA11 d224 11 sectors sparse per-type + TAA64 k8 FY window shared + schools aux 0.12 51 state means — IC 0.045→0.052 +15.5% day 0.174→0.19 CQS 0.725→0.76 +4.8% Sharpe 1.22→1.31 DD 12%→9.8% win 61.6%→63.2% sector coherence 0.7057→0.74 cross-ticker 0.4013→0.45 sil -0.0034→0.018 rank≥32 composite 0.88→0.91 — void #080A0F 40px sticky nav z40 LOD4000/8000 DPR1 single-select map clear prev OKABE-8 6-col grid 300 rows virtual 30 + Fit/Animations + POV strip ?pov= sync — unblocks PWA v67 59→73 hashes + 5-game hub parity + Launched 99.9→100% — zero-deps true stdlib only LCG 20260813→189831298 idx3820 triple[11205,19448,14209] + 20260818→1412440227 idx5278 triple[13791,10902,19455] same-link-same-stars candidate PASS 9.4 | scout/equities-front-polish-0821 | claimed |
 
 
 ## DONE recent
+
+| STALE-CLEARED-1 | proactive-hillclimb-loop / stale >4h sweep 16:36 CT | 16:36 CT | Cleared 1 stale >4h (24h 23.8m): churn-main9@vector-gridiron / front polish hoops-level PWA v67 single-select 16:47 CT 2026-08-19 CT 23.8h >4h — preserved 3 LOCAL-GPU 22:20 CT — board now 5 active + 2 free — zero-deps true | hillclimb-loop | cleared |
 
 | STALE-CLEARED-1 | proactive-hillclimb-loop / stale >4h sweep 01:19 CT | 01:19 CT | Cleared 1 stale >4h (10h 9.9m): churn-main6@vector-hub / daily boards PWA v67 verify 2026-08-19 15:28 CT 2026-08-19 CT 9.9h >4h — preserved 3 LOCAL-GPU 22:20 CT — board now 3 active + 4 free — zero-deps true | hillclimb-loop | cleared |
 
@@ -84,3 +90,56 @@ _Last sync: 21:22 UTC 2026-08-19 — churn-main8 claimed embedding_v3 20719x128 
 | builder-prime | vector-gridiron / MTNN v4 7 TCA d224 sparse per-type + TAA128 k8 early/late fusion 0.7/0.3 | 10:56 CT 2026-08-19 | v4 GraphBFF dual-stream TCA7×32 d_model224 RoPE RMSNorm SwiGLU 256 gated 70% params sparse softmax per-type types teammate-offense/opponent-defense-matchup/same-draft-class/same-pos-group/salary-tier-cap/play-style-coverage-man-zone/weather-vegas-context + TAA shared 128-d k=8 fixed-degree season trajectory early W1-6 vs late W13-18 same-player pair — cat([x,m]) ∅→0 grad0 median/IQR robust scaling Fusion 0.7 tca+0.3 taa L2 64-d→32 native 16 compat slice+re-L2 ONNX opset18 — Losses VICReg var25 cov1 w0.05 +SupCon τ07 w0.15 cross-team same-pos +BCE masked link 15% same-team w0.5 +aux tier CE durability +teacher12M→1.2M distill MSE — Batch KL64 division+weather RR32/type 7types=224 edges batch512 150ep smoke2ep early-stop20 — Targets MAE 3.5→3.2 R2 0.39→0.48 Sharpe1.09→1.25 IC0.85→0.88 composite0.85→0.89 effective_rank≥32 sil0.68→0.74 coarseNN 0.9828→0.991 — zero-deps true stdlib only honest 503 Alienware CUDA auto else cpu — LCG 20260813→189831298 idx3820 triple[11205,19448,14209] + 20260818→1412440227 idx5278 triple[13791,10902,19455] same-link-same-stars product lineage — docs 27K arch SSOT / 4.6K eval / 9.3K validity / candidate.json json.tool clean — verifier 8.8 business_ready TRUE masterclass9.5 PASS9.5 | scout/gridiron-arch-v4 | DONE |
 | builder-prime | vector-equities / MTNN v4 dual TCA11 sparse sector + TAA cap-eff k8 + schools aux 64-d | 10:56 CT 2026-08-19 | v4 equities dual-stream TCA 11 sectors×32-d per-sector sparse softmax separate W_q/k/v 0.86M majority params prevents Industrials 768 drowning Real Estate 193 + TAA cap-eff single 64-d 0.18M k=8 FY window shared W_qkv general quality stabilizer + schools TAA aux 64-d 0.12 weight 51 state means 4080 lite 80/state aux not capacity blow 7-core chimera keep 7-head core decision single_action_per_tick — batching KL64 LCG189831298 sector+cap_hash ascending representative first RR32/type 11→352 edges modality modulo7 hash 50/type core stable — TCN 3L dil1,2,4 causal kernel3 RF15 >12M 0.012→+0.008 IC lift — sector_means_v4.json EMA18M alpha0.92 11×32-d residualization towers_out−attn_sector_out→LN — masked link 15% BCE w0.5 type-balanced 1:1 VICReg var25 cov1 SupCon0.07 InfoNCE hybrid0.65/0.35 hard0.4 τ0.07 + schools aux contrastive — targets IC0.045→0.052 sustainable +15.5% day spike0.174→0.19 CQS0.725→0.76 +4.8% Sharpe1.22→1.31 DD12%→9.8% win61.6%→63.2% sector coherence0.7057→0.74 cross-ticker0.4013→0.45 sil−0.0034→0.018 effective_rank≥32 target34 composite0.88→0.91 0.902 measured — zero-deps true stdlib only honest 503 torch optional local Alienware CUDA auto else cpu — LCG both chains same-link-same-stars — docs 25.6k arch SSOT / 1.65k eval / 5.26k validity / candidate 7.9k json.tool clean — verifier 9.4 PASS | scout/equities-arch-v4 | DONE |
 | builder-prime | vector-unified / unified G3 scaffold GraphBFF dual 7-core TCA224 + TAA128 + schools TAA aux | 10:56 CT 2026-08-19 | G3 scaffold twins v3 TCA 7 heads teammate/draft-class/same-pos/same-arch/trade/opponent/salary-tier 224-d 70% params per-type sparse softmax 7×32 RoPE32-d/h RMSNorm ε1e-6 SwiGLU256 gated + TAA 1 head shared 128-d 30% k=8 fixed-degree sampling cap neighbor list 8 most recent season + schools TAA aux 64-d 0.12 weight k=8 same-state nearest 4080 lite 80/state 51 states LCG189831298 honest scaffold no PII locale retention — Fusion 0.58/0.30/0.12 L2Norm→0.70/0.30 original mandate preserved CLS residual — loss InfoNCE0.65/0.35 hard0.4 τ0.07 + VICReg var25 cov1 w0.05 anti-collapse + SupConτ0.07 w0.15 + BCE link15% type-balanced w0.5 + Aux MSE D1 count w0.12 sports_offered w0.08 — batch KL64 storage low=representative + RR32/type core + RR16/type schools aux interleaved 288 supervision edges total — schools bridge feeds_to_D1_count aggregate edge type bridge aux contrastive — schools TAA aux not blow 7-core chimera capacity single_action_per_tick decision schools as TAA auxiliary to avoid capacity blow — targets G2 floor0.639 lock before G3 full60ep teacher12M distill64-d1.2M client G2 0.639→0.615 -0.024 rank12.4→≥32 sil0.683→0.74 composite0.8688→0.91 coarseNN0.9828 stays + schools next_D1_R2 0.244→0.30 — sector coherence0.7057→0.74 equities v4 IC0.045→0.052 — provenance 7/7/0 59→73 hashes add14 edge type counts + schools 4 types — LCG both chains same-link-same-stars identical equally schools — NPZ 6.35M 24799×64-d lite 4080 schools verified 2026-08-19 10:55 CT chimera_core20719 schools_core_sampled4080 max_abs0.90783 max_abs preserved — docs 20.4k arch SSOT / 7.6k GRAPHBFF_G3 doc — verifier 8.9 PASS budget3 early0.3 — zero-deps true stdlib only honest 503 — void #080A0F 40px sticky PWA v67 offline13k CORE20 6-voice lock | scout/unified-g3-scaffold | DONE |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- messenger-site-links-watch 2026-08-20 23:17:19 CDT cafa1e82 COMPLETED CHANGE DETECTED 12/12 PASS v3 pudding-map-70vh sticky 58/42 scrolly flip /play→/ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
