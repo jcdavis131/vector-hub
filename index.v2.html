@@ -21,13 +21,19 @@
  DPR1 fillRect void dark OKABE-8 visible single-select clears prev
 */
 :root{
+  /* O'GORMAN FUNCTIONALIST — volcanic tezontle #080A0F, paper warm #FEFCF9, ink #14181D */
+  /* Aztec temple red #D32F2F Rivera, Kahlo blue #1A56A0, Barragán pink #E93E8C, golden yellow #FFD54F, baked clay #A67B5B, stone charcoal #2B2420 */
   --void:#080A0F; --void2:#0F141E; --void3:#1A2332;
   --paper:#FEFCF9; --paper2:#FFFEF7;
   --ink:#14181D; --ink2:#5A544E; --mut:#8A847A;
   --line:#14181D; --soft:#E8DED0;
   --blue:#0072B2; --orange:#D55E00; --green:#009E73;
   --yellow:#F0E442; --lt:#56B4E9; --pink:#CC79A7; --gold:#E69F00;
+  /* O'Gorman accents */
+  --aztec:#D32F2F; --kahlo:#1A56A0; --barragan:#E93E8C; --ocre:#FFD54F; --clay:#A67B5B; --tezontle:#2B2420;
   --r:12px; --rs:9px;
+  /* O'Gorman tokens: flat roof, pilotis, saw-tooth, ribbon */
+  --nav-h:40px; --pov-h:44px;
 }
 *{box-sizing:border-box}
 html,body{
@@ -106,11 +112,40 @@ button{font:inherit;cursor:pointer}
   color:#A8B0C0; background:#0f141e; border-top:1px solid #1e2736;
 }
 
+/* O'GORMAN FUNCTIONALIST — tokens & components */
+.ogorman-bar{
+  height:3px; background:linear-gradient(90deg,var(--aztec) 0% 22%,var(--kahlo) 22% 44%,var(--barragan) 44% 66%,var(--ocre) 66% 88%,var(--clay) 88% 100%);
+  border:0;
+}
+.sawtooth{
+  position:relative;
+}
+.sawtooth::before{
+  content:""; position:absolute; left:0; top:-6px; right:0; height:6px;
+  background: repeating-linear-gradient( -45deg, var(--line) 0 8px, transparent 8px 16px );
+  opacity:.18;
+}
+.pilotis{
+  border-left:3px solid var(--aztec);
+  padding-left:10px;
+}
+.ribbon{
+  display:flex; gap:6px; overflow-x:auto; scrollbar-width:none;
+  padding:6px 0 2px; border-top:1px solid var(--soft); border-bottom:1px solid var(--soft);
+  background:linear-gradient(180deg,var(--paper2),var(--paper));
+}
+.flat-roof{ border-radius:12px 12px 0 0; }
+.bridge{ text-decoration:underline; text-decoration-style:dotted; text-underline-offset:3px; }
+.bridge:hover{ text-decoration-style:solid; }
+
 /* rail */
 .rail{display:flex;flex-direction:column;gap:12px}
 .card{
   border:1.2px solid var(--soft); border-radius:12px;
   background:#fff; padding:10px 11px;
+}
+.card.ogorman{
+  border-left-width:3px; border-left-color:var(--aztec);
 }
 .card h2{
   margin:0 0 9px;
@@ -205,7 +240,7 @@ button{font:inherit;cursor:pointer}
 </head>
 <body>
 <nav class="nav" aria-label="primary">
-<a href="/"><b>DUMB / MODEL</b></a>
+<a href="/"><b>DUMB / MODEL</b> <span style="font:600 9px ui-monospace,monospace;color:var(--aztec);letter-spacing:.08em">OGORMAN • 1929</span></a>
 <div class="pills mono" id="domainRow" role="tablist" aria-label="domains">
 <button class="pill on" data-d="hoops" role="tab" aria-selected="true" data-href="/models/hoops.html" title="hoops.dumbmodel.com → vector-hoops">HOOPS 12966</button>
 <button class="pill" data-d="gridiron" role="tab" data-href="/models/gridiron.html">GRIDIRON 646</button>
@@ -220,6 +255,7 @@ button{font:inherit;cursor:pointer}
 <a class="pill small ghost" href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener" title="vector-hoops repo">HOOPS REPO ↗</a>
 </div>
 </nav>
+<div class="ogorman-bar" aria-hidden="true"></div>
 
 <div class="wrap">
 <div class="layout">
