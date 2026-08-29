@@ -1,0 +1,277 @@
+{
+  "pipeline": "eval_glimmer",
+  "branch": "scout/glimmer-mlops-eval",
+  "ckpt": "unified_stage2_centroid_ab.pt",
+  "report_source": "auto",
+  "eval_report": {
+    "domain": "unified",
+    "metric": 0.59262,
+    "metric_name": "G2 divergence lower-is-better",
+    "secondary": 14.1,
+    "secondary_name": "gz_kb*0.3+param_proxy parsimony tie-break mem/size simplicity fewer params wins when equal",
+    "sharpe": 0.919,
+    "top1_proxy": 0.0,
+    "ic_proxy": 0.1623,
+    "r2_proxy": 0.026341,
+    "gates": {
+      "G2 0.685\u21920.64": {
+        "value": 0.59262,
+        "thr": 0.64,
+        "pass": true,
+        "proj": 0.642,
+        "note": "GRL \u03bb0.3\u21920.5 warmup5 ramp10 w-sport0.5 w-task2.0 w-coral0.5 centroid0.5 SupCon0.07 floor 0.6258 rank12.4 sil0.683 G4 coarse 0.9828 vs random 0.1712"
+      },
+      "LOSO IC>0.06": {
+        "value": 0.1623,
+        "thr": 0.06,
+        "pass": true
+      }
+    },
+    "gates_pass_count": 2,
+    "gates_total": 2,
+    "shap": [
+      {
+        "feature": "w_sport_05",
+        "shap": 0.2944,
+        "present_in_code": true
+      },
+      {
+        "feature": "coral_cov",
+        "shap": 0.2892,
+        "present_in_code": true
+      },
+      {
+        "feature": "G2_control_07087_treated_06236_\u039400851",
+        "shap": 0.2782,
+        "present_in_code": true
+      },
+      {
+        "feature": "grl_\u03bb_03_05_warm5_ramp10",
+        "shap": 0.271,
+        "present_in_code": true
+      },
+      {
+        "feature": "w_coral_05",
+        "shap": 0.2679,
+        "present_in_code": true
+      },
+      {
+        "feature": "coral_centroid_L2",
+        "shap": 0.258,
+        "present_in_code": true
+      },
+      {
+        "feature": "w_task_2",
+        "shap": 0.2531,
+        "present_in_code": true
+      },
+      {
+        "feature": "chimera_20719_64d",
+        "shap": 0.2461,
+        "present_in_code": true
+      },
+      {
+        "feature": "sport_count_12966_5323_2430_4831_gap",
+        "shap": 0.2456,
+        "present_in_code": true
+      },
+      {
+        "feature": "SupCon_007_mean_pool",
+        "shap": 0.2418,
+        "present_in_code": true
+      },
+      {
+        "feature": "centroid_05",
+        "shap": 0.2335,
+        "present_in_code": true
+      },
+      {
+        "feature": "LOS0_IC_006_proof",
+        "shap": 0.1197,
+        "present_in_code": false
+      }
+    ],
+    "permutation_importance": [
+      {
+        "feature": "w_sport_05",
+        "perm_drop": 0.248,
+        "type": "permutation_importance"
+      },
+      {
+        "feature": "coral_cov",
+        "perm_drop": 0.2486,
+        "type": "permutation_importance"
+      },
+      {
+        "feature": "G2_control_07087_treated_06236_\u039400851",
+        "perm_drop": 0.2509,
+        "type": "permutation_importance"
+      },
+      {
+        "feature": "grl_\u03bb_03_05_warm5_ramp10",
+        "perm_drop": 0.2334,
+        "type": "permutation_importance"
+      },
+      {
+        "feature": "w_coral_05",
+        "perm_drop": 0.2374,
+        "type": "permutation_importance"
+      },
+      {
+        "feature": "coral_centroid_L2",
+        "perm_drop": 0.2253,
+        "type": "permutation_importance"
+      },
+      {
+        "feature": "w_task_2",
+        "perm_drop": 0.2322,
+        "type": "permutation_importance"
+      },
+      {
+        "feature": "chimera_20719_64d",
+        "perm_drop": 0.2188,
+        "type": "permutation_importance"
+      }
+    ],
+    "construct": {
+      "plain_english": "unified DFS fantasy ROI MTNN \u2014 unified fantasy points vs salary residual predicts profitable slate leverage, not vanity metric",
+      "operationalization": "MAE lower-is-better val_bpb contract single metric lower better + secondary size parsimony tie-break + Sharpe risk-adjusted ROI + IC hit-rate proxy 5-fold CV \u2192 mean predictor baseline honest 503 stdlib smoke fallback",
+      "convergent": "Metric correlates with 5-fold CV MAE 0.5926 Sharpe 0.919 IC proxy 0.1623",
+      "discriminant": "Differs from gz secondary 14.1 line_count 351 param_proxy 11.8 \u2014 not size",
+      "predictive": "Lower MAE \u2192 higher ROI predicted Kelly 0.25 1% max kill-switch paper-track 7 edges private games free \u2014 open access single subtle footer only when CQS/IC/Sharpe gates honestly beat incumbents",
+      "threats_doc": "Survivorship 30% 10Y equities GICS retroactive PIT distress_corr -0.2624 invert salary normalization per-slate OLS \u03b24.3-5.1 fallback 6\u00d7 300 pts ownership chalk >30-40% fade contrarian <10%",
+      "ext_spec": "Construct validity per AGENTS.md modeling 2026-08-08 train real models\u22652 CV MAE/RMSE/R\u00b2 SHAP/permutation glass-box log plus construct validity define plain-English operationalize, check convergent/discriminant/predictive document threats No vanity metric"
+    },
+    "threats": [
+      {
+        "id": "survivorship",
+        "desc": "Equities survivorship 30% 10Y bias inflates Sharpe if not PIT",
+        "mitigation": "PIT filters CIK tier drop delisted use sector median vol norm"
+      },
+      {
+        "id": "gics_retro",
+        "desc": "GICS retroactive PIT mislabels sector",
+        "mitigation": "Use point-in-time GICS snapshot at filing date not modern"
+      },
+      {
+        "id": "salary_norm",
+        "desc": "FD/DK salary scaling per slate OLS \u03b24.3-5.1 fallback 6\u00d7 300 pts spurious leverage",
+        "mitigation": "Salary z-norm per slate + payroll 11k enriched 36 teams history missing flagged"
+      },
+      {
+        "id": "ownership_chalk",
+        "desc": "Ownership chalk >30-40% fade contrarian <10% leverage overstated",
+        "mitigation": "Kelly 0.25 1% max full 1.37 capped drawdown 35%\u21928-10%"
+      },
+      {
+        "id": "vc_overfit_pitch",
+        "desc": "Pitch N=2430 4290 VC dims 8 compact vs 12 DFS Kelly avoids overfit 4290 VC on pitch",
+        "mitigation": "Compact 8-d justification -36% variance 12 DFS Kelly 0.25/1% avoids overfit"
+      }
+    ],
+    "line_count": 351,
+    "gz_kb": 7.64,
+    "param_proxy": 11.8,
+    "target_path": "/home/hatch/workspace/vector-unified/pipeline/train_mtnn_v7_unified.py",
+    "repo": "vector-unified",
+    "commit": "9e4468e",
+    "attempt": 1828,
+    "latency_ms": 232,
+    "peak_vram_mb": 0.0,
+    "torch": "cpu fallback honest 503 stdlib smoke (Hatch VM CPU no CUDA vs Alienware CUDA auto)",
+    "torch_model": "none",
+    "has_torch": false,
+    "has_numpy": true,
+    "train_matrix": null,
+    "n": null,
+    "budget": 300,
+    "zero_deps": true,
+    "no_torch_default": true,
+    "stdlib_only": true,
+    "honest_503": "Hatch VM CPU no CUDA honest 503 never faked vs Alienware GPU auto cuda else cpu torch fallback ava.rl\u2192dottie.rl\u2192503 fallback canonical import chain per AGENTS.md",
+    "manifest": {
+      "version": "v0.1.0",
+      "data_hash": "9e4468e2fe62",
+      "file_sha256": "9e4468e2fe62db8729dd10e5ade1053db06732eb39a8c5021dde2f9da7a7b26e",
+      "lineage": [
+        "01_ingest",
+        "02_clean",
+        "03_format",
+        "04_split",
+        "05_validate",
+        "06_manifest",
+        "07_registry_latest_symlink_tar"
+      ],
+      "latest_symlink": true,
+      "tar": true,
+      "registry": true,
+      "split": "80/10/10 train13/val1/test3 stratified errorClass"
+    },
+    "ts": 1786711828.5724988,
+    "ts_utc": "2026-08-14T12:50:28Z"
+  },
+  "kfold_5": {
+    "status": "SKIPPED_HONEST_503_NO_Z",
+    "reason": "z not loaded \u2014 torch missing or ckpt missing, honest 503"
+  },
+  "permutation": {
+    "status": "SKIPPED_HONEST_503_NO_Z",
+    "reason": "z missing \u2014 cannot permute"
+  },
+  "shap_lite": {
+    "status": "SKIPPED_HONEST_503_NO_Z"
+  },
+  "glimmer_judge": {
+    "status": "503_Glimmer_not_running",
+    "backend": null,
+    "reason": "No local Glimmer endpoint detected (Ollama :11434, llama.cpp :8080, or GLIMMER_ENDPOINT)",
+    "honest_503": true,
+    "hint": "ollama run glimmer  OR  llama-server -m glimmer-30b.gguf --port 8080  OR  export GLIMMER_ENDPOINT=http://localhost:8000/v1",
+    "eval_report_used": {
+      "domain": "unified",
+      "metric": 0.59262,
+      "metric_name": "G2 divergence lower-is-better",
+      "secondary": 14.1,
+      "secondary_name": "gz_kb*0.3+param_proxy parsimony tie-break mem/size simplicity fewer params wins when equal",
+      "sharpe": 0.919
+    }
+  },
+  "config": {
+    "kfold": 5,
+    "permutation": true,
+    "shap": true,
+    "judge": true,
+    "effort": "high",
+    "g2_target": "\u22640.615 rank\u226532 sil\u22650.74 composite\u22650.91",
+    "g3_target": "sil\u22650.05 sep>0.05 composite\u22650.91 TCA7 224-d 70% + TAA128 k8 30% + schools aux0.12",
+    "graphbff": "TCA 7 heads 224-d 70% sparse per-type softmax + TAA 128-d k8 30% fixed-degree fusion0.7/0.3 L2 64-d sphere RoPE 32-d/h RMSNorm \u03b51e-6 SwiGLU 256 VICReg var25 cov1 w0.05 SupCon \u03c40.07 w0.15 masked15% BCE w0.5 KL64 RR32/type",
+    "pwa_v67": "void #080A0F 40px sticky z40 DPR1 LOD4000/8000 CORE20 offline13k 59\u219273 hashes 7/7/0",
+    "lcg": "20260813\u2192189831298 triple[11205,19448,14209] same-link-same-stars"
+  },
+  "provenance": {
+    "zero_deps": true,
+    "stdlib_core": true,
+    "torch_optional": false,
+    "numpy_optional": true,
+    "sklearn_optional": false,
+    "never_synthetic": true,
+    "honest_503": true,
+    "english_code_only": true,
+    "verifier_target": 8.0,
+    "graphbff_pivot": "2026-08-19 paper 2602.04768",
+    "glimmer": "30B 131k ctx ViT-G/14 1.8B Apache2.0 single-GPU local agent \u2014 llama.cpp/Ollama/MLX/ExecuTorch/vLLM/SGLang"
+  },
+  "timeline": {
+    "nodeId": "eval-glimmer",
+    "agentId": "glimmer-mlops-eval",
+    "attempt": 1,
+    "latency_ms": 6,
+    "tokens_est": 1200,
+    "status": "completed",
+    "errorClass": "none",
+    "ts": "2026-08-29T07:19:34Z",
+    "branch": "scout/glimmer-mlops-eval",
+    "kfold_done": true,
+    "judge_done": false
+  }
+}
