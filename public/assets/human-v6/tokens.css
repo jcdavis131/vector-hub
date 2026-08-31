@@ -1,0 +1,25 @@
+:root{
+  --paper:#FFFEFB;
+  --paper-raised:#FEFFFD;
+  --ink:#0A0A0F;
+  --ink-muted:#6B6B77;
+  --hairline:#E6DED3;
+  --stone-soft:#F3EEE6;
+  --void:#080A0F;
+  --human-blue:#2A5BD7;
+  --human-blue-wash:#EEF2FF;
+  --accent:#C17C60;
+  --focus:#A4553D;
+  --font-serif:"Fraunces","Newsreader",Georgia,serif;
+  --font-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --font-human:"Caveat","Bradley Hand","Segoe Script",cursive;
+  --text-mono:11px;
+  --nav-height:40px;
+  --radius-control:8px;
+  --radius-card:12px;
+  --radius-panel:16px;
+  --content-max:1180px;
+  --reading-max:68ch;
+  --shadow-raised:0 12px 32px rgb(10 10 15 / 0.08);
+}

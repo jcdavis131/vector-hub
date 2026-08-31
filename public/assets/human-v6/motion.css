@@ -1,0 +1,4 @@
+@media(prefers-reduced-motion:no-preference){
+  .hv6-card{transition:transform 160ms cubic-bezier(.2,.8,.2,1),border-color 160ms,box-shadow 160ms}
+  .hv6-human{transition:transform 180ms}
+}

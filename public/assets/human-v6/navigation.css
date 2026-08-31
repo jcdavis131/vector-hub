@@ -1,0 +1,6 @@
+.hv6-nav{position:sticky;top:0;z-index:40;height:var(--nav-height);display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:var(--paper);border-bottom:1px solid var(--hairline);font-family:var(--font-mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase}
+.hv6-nav__brand{font-weight:800;color:var(--ink);text-decoration:none;letter-spacing:0.06em}
+.hv6-nav__brand b{color:var(--human-blue);font-family:var(--font-human);font-size:15px;transform:rotate(-1deg);display:inline-block;margin-left:2px}
+.hv6-nav__links{display:flex;gap:22px;align-items:center}
+.hv6-nav__link{color:var(--ink-muted);text-decoration:none;padding:2px 0;position:relative;transition:color 150ms}
+.hv6-nav__link:hover{color:var(--ink)} .hv6-nav__link.is-active{color:var(--ink)} .hv6-nav__link.is-active::after{content:"";position:absolute;left:0;right:0;bottom:-5px;height:2px;background:var(--human-blue);border-radius:1px}
