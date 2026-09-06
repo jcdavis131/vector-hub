@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Only pages verified live (200, byte-matched against this ref) are listed here.
+     /play /model /trends /lab /dfs /players are vercel.json rewrite targets that
+     404 live (a separate, undeployed dashboard-config defect, D1) and are
+     intentionally omitted until that's fixed -- a sitemap entry that 404s is
+     itself a false claim. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://dumbmodel.com/</loc>
+  </url>
+  <url>
+    <loc>https://dumbmodel.com/game</loc>
+  </url>
+</urlset>

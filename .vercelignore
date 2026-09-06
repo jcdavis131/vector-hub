@@ -1,7 +1,9 @@
 # Skip heavy ML / data folders for Vercel static deploy
-pipeline/
-data/
-datasets/
+# Anchored to repo root (leading /) so these don't also match nested dirs of the
+# same name that ARE meant to deploy, e.g. public/assets/data/ (D2, 2026-09-06).
+/pipeline/
+/data/
+/datasets/
 __pycache__/
 *.pyc
 *.pyo
