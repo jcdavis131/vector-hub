@@ -1,0 +1,64 @@
+{
+  "products": [
+    {
+      "slug": "hoops",
+      "name": "Hoops",
+      "description": "Explore basketball players through a dedicated vector product.",
+      "url": "https://hoops.dumbmodel.com/",
+      "availability": "available",
+      "availability_checked_at": "2026-09-09T03:48:23Z",
+      "availability_method": "GET",
+      "availability_http_status": 200,
+      "evidence_url": "https://github.com/jcdavis131/vector-hoops",
+      "pushed_at": "2026-09-07T16:33:45Z"
+    },
+    {
+      "slug": "gridiron",
+      "name": "Gridiron",
+      "description": "Explore American football players through a dedicated vector product.",
+      "url": "https://gridiron.dumbmodel.com/",
+      "availability": "available",
+      "availability_checked_at": "2026-09-09T03:48:23Z",
+      "availability_method": "GET",
+      "availability_http_status": 200,
+      "evidence_url": "https://github.com/jcdavis131/vector-gridiron",
+      "pushed_at": "2026-09-07T18:22:53Z"
+    },
+    {
+      "slug": "pitch",
+      "name": "Pitch",
+      "description": "Explore football teams and tournaments through a dedicated vector product.",
+      "url": "https://pitch.dumbmodel.com/",
+      "availability": "available",
+      "availability_checked_at": "2026-09-09T03:48:23Z",
+      "availability_method": "GET",
+      "availability_http_status": 200,
+      "evidence_url": "https://github.com/jcdavis131/vector-pitch",
+      "pushed_at": "2026-09-07T18:03:28Z"
+    },
+    {
+      "slug": "equities",
+      "name": "Equities",
+      "description": "Explore public companies through a dedicated vector product.",
+      "url": "https://equities.dumbmodel.com/",
+      "availability": "available",
+      "availability_checked_at": "2026-09-09T03:48:23Z",
+      "availability_method": "GET",
+      "availability_http_status": 200,
+      "evidence_url": "https://github.com/jcdavis131/vector-equities",
+      "pushed_at": "2026-09-07T16:59:39Z"
+    },
+    {
+      "slug": "unified",
+      "name": "Unified",
+      "description": "Explore connections across the sports products in one dedicated experience.",
+      "url": "https://unified.dumbmodel.com/",
+      "availability": "unavailable",
+      "availability_checked_at": "2026-09-09T03:48:23Z",
+      "availability_method": "GET",
+      "availability_http_status": 404,
+      "evidence_url": "https://github.com/jcdavis131/vector-unified",
+      "pushed_at": "2026-09-07T17:49:48Z"
+    }
+  ]
+}
