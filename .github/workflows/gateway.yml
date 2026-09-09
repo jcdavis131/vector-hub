@@ -6,6 +6,7 @@ on:
     paths:
       - "public/**"
       - "vercel.json"
+      - ".vercelignore"
       - "README.md"
       - "spec/vector-hub-real-product-gateway.md"
       - "scripts/check_gateway.py"
@@ -15,6 +16,7 @@ on:
     paths:
       - "public/**"
       - "vercel.json"
+      - ".vercelignore"
       - "README.md"
       - "spec/vector-hub-real-product-gateway.md"
       - "scripts/check_gateway.py"

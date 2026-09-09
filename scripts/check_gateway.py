@@ -5,7 +5,9 @@ from __future__ import annotations
 
 import json
 import re
+import subprocess
 import sys
+import tempfile
 from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
@@ -13,6 +15,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "public" / "index.html"
 PRODUCTS = ROOT / "public" / "assets" / "data" / "products.json"
+VERCELIGNORE = ROOT / ".vercelignore"
+PRODUCTS_DEPLOY_PATH = "public/assets/data/products.json"
+HEAVY_PUBLIC_DATA_PROBES = (
+    "public/assets/data/hoops.json",
+    "public/assets/data/boards_2026_08_18.json",
+)
 EXPECTED = ("hoops", "gridiron", "pitch", "equities", "unified")
 AVAILABILITY = {"available", "unavailable", "unknown", "stale"}
 AVAILABILITY_CHECKED_AT = "2026-09-09T03:48:23Z"
@@ -205,6 +213,76 @@ class GatewayParser(HTMLParser):
 
 def fail(errors: list[str], message: str) -> None:
     errors.append(message)
+
+
+def path_ignored_by_vercelignore(rules_text: str, relative_path: str) -> bool:
+    """Return True if gitignore-style .vercelignore rules ignore relative_path.
+
+    Vercel applies .vercelignore with gitignore semantics. Using git
+    check-ignore in an ephemeral repo keeps the gate stdlib-only and faithful.
+    """
+    normalized = relative_path.replace("\\", "/")
+    with tempfile.TemporaryDirectory() as directory:
+        root = Path(directory)
+        (root / ".gitignore").write_text(rules_text, encoding="utf-8")
+        target = root.joinpath(*normalized.split("/"))
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text("", encoding="utf-8")
+        init = subprocess.run(
+            ["git", "init", "-q"],
+            cwd=root,
+            capture_output=True,
+            text=True,
+        )
+        if init.returncode != 0:
+            raise RuntimeError(
+                f"git init failed while probing .vercelignore: {init.stderr.strip()}"
+            )
+        probe = subprocess.run(
+            ["git", "check-ignore", "-q", normalized],
+            cwd=root,
+            capture_output=True,
+            text=True,
+        )
+        if probe.returncode == 0:
+            return True
+        if probe.returncode == 1:
+            return False
+        raise RuntimeError(
+            f"git check-ignore failed for {normalized!r}: {probe.stderr.strip()}"
+        )
+
+
+def check_vercelignore(errors: list[str]) -> None:
+    if not VERCELIGNORE.exists():
+        fail(errors, "deploy packaging: .vercelignore is missing")
+        return
+    try:
+        rules = VERCELIGNORE.read_text(encoding="utf-8")
+    except OSError as exc:
+        fail(errors, f"deploy packaging: .vercelignore is unreadable: {exc}")
+        return
+    try:
+        products_ignored = path_ignored_by_vercelignore(rules, PRODUCTS_DEPLOY_PATH)
+        heavy_results = {
+            probe: path_ignored_by_vercelignore(rules, probe)
+            for probe in HEAVY_PUBLIC_DATA_PROBES
+        }
+    except RuntimeError as exc:
+        fail(errors, f"deploy packaging: {exc}")
+        return
+    if products_ignored:
+        fail(
+            errors,
+            "deploy packaging: public/assets/data/products.json must not be "
+            "ignored by .vercelignore (bare data/ strips the gateway JSON)",
+        )
+    for probe, ignored in heavy_results.items():
+        if not ignored:
+            fail(
+                errors,
+                f"deploy packaging: {probe} must remain ignored by .vercelignore",
+            )
 
 
 def parse_timestamp(value: object) -> datetime | None:
@@ -604,6 +682,7 @@ def main() -> int:
     errors: list[str] = []
     products = check_products(errors)
     check_page(errors, products)
+    check_vercelignore(errors)
     if errors:
         print(f"GATEWAY CHECK FAILED ({len(errors)} invariant(s))")
         for error in errors:
@@ -613,6 +692,7 @@ def main() -> int:
     print("PASS: exactly five evidence-backed product records")
     print("PASS: content-first served journey excludes generated/specification claims")
     print("PASS: semantic, loading/error, focus, motion, target, contrast, and overflow contracts")
+    print("PASS: .vercelignore keeps products.json while ignoring heavy public datasets")
     return 0
 
 

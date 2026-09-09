@@ -1,6 +1,9 @@
-# Skip heavy ML / data folders for Vercel static deploy
+# Skip heavy ML / data folders for Vercel static deploy.
+# Anchor /data/ to repo root only — bare `data/` also matches
+# public/assets/data/ and strips the gateway products.json (404).
 pipeline/
-data/
+/data/
+/assets/data/
 datasets/
 __pycache__/
 *.pyc
@@ -17,3 +20,6 @@ venv/
 exports/
 bundles/
 *.log
+# Heavy public datasets stay out of the deploy; keep products.json.
+public/assets/data/*
+!public/assets/data/products.json
