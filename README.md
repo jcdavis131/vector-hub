@@ -1,11 +1,29 @@
 # vector-hub
 
-Landing page for [dumbmodel.com](https://dumbmodel.com) — a hub linking four daily vector-guessing games built on multi-task embedding models:
+Landing page for [dumbmodel.com](https://dumbmodel.com) — a gateway to five
+vector products:
 
-- Hoops — NBA player-seasons (48-d)
-- Gridiron — NFL (32-d)
-- Pitch — World Cup (24-d)
-- Equities — public companies (96-d)
+- Hoops
+- Gridiron
+- Pitch
+- Equities
+- Unified
+
+The served gateway publishes product destinations, point-in-time HTTP
+availability with `availability_checked_at`, `availability_method`, and
+numeric `availability_http_status`, evidence sources, and distinct repository
+`pushed_at` timestamps from
+[`public/assets/data/products.json`](public/assets/data/products.json). Validate
+the served contract and its adversarial regression cases with:
+
+```console
+python -B scripts/check_gateway.py
+$env:PYTHONDONTWRITEBYTECODE='1'; python -B -m unittest discover -s tests -p "test_gateway*.py" -v
+```
+
+Availability is not continuously monitored. At `2026-09-09T03:48:23Z`, direct
+HTTP GET checks returned 200 for Hoops, Gridiron, Pitch, and Equities, and 404
+for Unified; the gateway therefore offers no Unified product link.
 
 Static HTML/CSS/JS, no build step. The repo is git-connected to the Vercel project `vector-hub` and serves the dumbmodel.com apex; pushes to `main` deploy automatically.
 
