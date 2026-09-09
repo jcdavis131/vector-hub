@@ -424,6 +424,78 @@ class GatewayCheckerAdversarialTests(unittest.TestCase):
         )
         self.assertTrue(any("dynamic associations" in error for error in errors), errors)
 
+    def test_live_vercelignore_packages_products_json(self) -> None:
+        errors: list[str] = []
+        check_gateway.check_vercelignore(errors)
+        self.assertEqual(errors, [])
+
+    def test_bare_data_rule_would_strip_products_json(self) -> None:
+        """Adversarial: the production-breaking pattern must fail the gate."""
+        broken = (
+            "# adversarial regression fixture\n"
+            "pipeline/\n"
+            "data/\n"
+            "datasets/\n"
+        )
+        self.assertTrue(
+            check_gateway.path_ignored_by_vercelignore(
+                broken, check_gateway.PRODUCTS_DEPLOY_PATH
+            ),
+            "bare data/ must ignore public/assets/data/products.json",
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            fake = Path(directory) / ".vercelignore"
+            fake.write_text(broken, encoding="utf-8")
+            with patch.object(check_gateway, "VERCELIGNORE", fake):
+                errors: list[str] = []
+                check_gateway.check_vercelignore(errors)
+        self.assertTrue(
+            any("products.json must not be ignored" in error for error in errors),
+            errors,
+        )
+
+    def test_fixed_rules_keep_heavy_public_dataset_ignored(self) -> None:
+        rules = (ROOT / ".vercelignore").read_text(encoding="utf-8")
+        self.assertFalse(
+            check_gateway.path_ignored_by_vercelignore(
+                rules, check_gateway.PRODUCTS_DEPLOY_PATH
+            )
+        )
+        for probe in check_gateway.HEAVY_PUBLIC_DATA_PROBES:
+            self.assertTrue(
+                check_gateway.path_ignored_by_vercelignore(rules, probe),
+                probe,
+            )
+
+    def test_products_only_ignore_leaves_heavy_datasets_exposed(self) -> None:
+        """Adversarial: packaging products while leaving hoops unignored must fail."""
+        weak = (
+            "# adversarial: products kept, but bulk datasets not ignored\n"
+            "pipeline/\n"
+            "/data/\n"
+            "datasets/\n"
+        )
+        self.assertFalse(
+            check_gateway.path_ignored_by_vercelignore(
+                weak, check_gateway.PRODUCTS_DEPLOY_PATH
+            )
+        )
+        self.assertFalse(
+            check_gateway.path_ignored_by_vercelignore(
+                weak, check_gateway.HEAVY_PUBLIC_DATA_PROBES[0]
+            )
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            fake = Path(directory) / ".vercelignore"
+            fake.write_text(weak, encoding="utf-8")
+            with patch.object(check_gateway, "VERCELIGNORE", fake):
+                errors: list[str] = []
+                check_gateway.check_vercelignore(errors)
+        self.assertTrue(
+            any("hoops.json must remain ignored" in error for error in errors),
+            errors,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

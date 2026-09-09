@@ -21,6 +21,10 @@ python -B scripts/check_gateway.py
 $env:PYTHONDONTWRITEBYTECODE='1'; python -B -m unittest discover -s tests -p "test_gateway*.py" -v
 ```
 
+`.vercelignore` must package that JSON (do not use a bare `data/` rule — it also
+matches `public/assets/data/` and 404s the refresh fetch) while still excluding
+heavy public datasets such as `hoops.json`.
+
 Availability is not continuously monitored. At `2026-09-09T03:48:23Z`, direct
 HTTP GET checks returned 200 for Hoops, Gridiron, Pitch, and Equities, and 404
 for Unified; the gateway therefore offers no Unified product link.
