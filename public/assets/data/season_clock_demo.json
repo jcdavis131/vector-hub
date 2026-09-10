@@ -1,0 +1,144 @@
+{
+  "meta": {
+    "demo": true,
+    "title": "Season Clock demo",
+    "description": "Small committed sample for offline and CI. Not a full as-of join.",
+    "range": {
+      "start_year": 2015,
+      "end_year": 2025
+    },
+    "honesty": "Named-window co-occurrence is not endorsement, NIL, partnership, or sponsorship proof."
+  },
+  "products": {
+    "hoops": {
+      "name": "Hoops",
+      "url": "https://hoops.dumbmodel.com/"
+    },
+    "gridiron": {
+      "name": "Gridiron",
+      "url": "https://gridiron.dumbmodel.com/"
+    },
+    "equities": {
+      "name": "Equities",
+      "url": "https://equities.dumbmodel.com/"
+    }
+  },
+  "tracks": [
+    {
+      "id": "hoops_seasons",
+      "label": "Athlete seasons — hoops",
+      "kind": "athlete_season",
+      "product": "hoops",
+      "events": [
+        {
+          "id": "hoops-alpha-2018",
+          "label": "Sample guard · 2018–19",
+          "entity": "Sample guard A",
+          "start": "2018-10-16",
+          "end": "2019-06-13"
+        },
+        {
+          "id": "hoops-alpha-2021",
+          "label": "Sample guard · 2021–22",
+          "entity": "Sample guard A",
+          "start": "2021-10-19",
+          "end": "2022-06-16"
+        },
+        {
+          "id": "hoops-beta-2023",
+          "label": "Sample forward · 2023–24",
+          "entity": "Sample forward B",
+          "start": "2023-10-24",
+          "end": "2024-06-17"
+        }
+      ]
+    },
+    {
+      "id": "gridiron_seasons",
+      "label": "Athlete seasons — gridiron",
+      "kind": "athlete_season",
+      "product": "gridiron",
+      "events": [
+        {
+          "id": "grid-alpha-2016",
+          "label": "Sample QB · 2016",
+          "entity": "Sample quarterback C",
+          "start": "2016-09-08",
+          "end": "2017-02-05"
+        },
+        {
+          "id": "grid-alpha-2019",
+          "label": "Sample QB · 2019",
+          "entity": "Sample quarterback C",
+          "start": "2019-09-05",
+          "end": "2020-02-02"
+        },
+        {
+          "id": "grid-beta-2022",
+          "label": "Sample WR · 2022",
+          "entity": "Sample receiver D",
+          "start": "2022-09-08",
+          "end": "2023-02-12"
+        }
+      ]
+    },
+    {
+      "id": "sponsor_windows",
+      "label": "Sponsor naming windows",
+      "kind": "sponsor_naming",
+      "product": null,
+      "events": [
+        {
+          "id": "sponsor-arena-2017",
+          "label": "Sample Arena naming",
+          "entity": "Sample Arena Co.",
+          "start": "2017-07-01",
+          "end": "2022-06-30"
+        },
+        {
+          "id": "sponsor-field-2020",
+          "label": "Sample Field naming",
+          "entity": "Sample Field LLC",
+          "start": "2020-01-01",
+          "end": "2025-12-31"
+        },
+        {
+          "id": "sponsor-practice-2015",
+          "label": "Sample practice facility",
+          "entity": "Sample Facility Inc.",
+          "start": "2015-03-01",
+          "end": "2018-12-31"
+        }
+      ]
+    },
+    {
+      "id": "equities_fy",
+      "label": "Equities fiscal-year band",
+      "kind": "equities_fy",
+      "product": "equities",
+      "events": [
+        {
+          "id": "eq-fy2019",
+          "label": "Sample issuer FY2019",
+          "entity": "Sample Issuer X",
+          "start": "2019-01-01",
+          "end": "2019-12-31"
+        },
+        {
+          "id": "eq-fy2020",
+          "label": "Sample issuer FY2020",
+          "entity": "Sample Issuer X",
+          "start": "2020-01-01",
+          "end": "2020-12-31"
+        },
+        {
+          "id": "eq-fy2024",
+          "label": "Sample issuer FY2024",
+          "entity": "Sample Issuer Y",
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        }
+      ]
+    }
+  ]
+}

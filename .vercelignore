@@ -20,6 +20,7 @@ venv/
 exports/
 bundles/
 *.log
-# Heavy public datasets stay out of the deploy; keep products.json.
+# Heavy public datasets stay out of the deploy; keep gateway JSON assets.
 public/assets/data/*
 !public/assets/data/products.json
+!public/assets/data/season_clock_demo.json
