@@ -6,7 +6,7 @@
       "description": "Explore basketball players through a dedicated vector product.",
       "url": "https://hoops.dumbmodel.com/",
       "availability": "available",
-      "availability_checked_at": "2026-09-09T03:48:23Z",
+      "availability_checked_at": "2026-09-10T11:53:58Z",
       "availability_method": "GET",
       "availability_http_status": 200,
       "evidence_url": "https://github.com/jcdavis131/vector-hoops",
@@ -18,7 +18,7 @@
       "description": "Explore American football players through a dedicated vector product.",
       "url": "https://gridiron.dumbmodel.com/",
       "availability": "available",
-      "availability_checked_at": "2026-09-09T03:48:23Z",
+      "availability_checked_at": "2026-09-10T11:53:58Z",
       "availability_method": "GET",
       "availability_http_status": 200,
       "evidence_url": "https://github.com/jcdavis131/vector-gridiron",
@@ -30,7 +30,7 @@
       "description": "Explore football teams and tournaments through a dedicated vector product.",
       "url": "https://pitch.dumbmodel.com/",
       "availability": "available",
-      "availability_checked_at": "2026-09-09T03:48:23Z",
+      "availability_checked_at": "2026-09-10T11:53:58Z",
       "availability_method": "GET",
       "availability_http_status": 200,
       "evidence_url": "https://github.com/jcdavis131/vector-pitch",
@@ -42,7 +42,7 @@
       "description": "Explore public companies through a dedicated vector product.",
       "url": "https://equities.dumbmodel.com/",
       "availability": "available",
-      "availability_checked_at": "2026-09-09T03:48:23Z",
+      "availability_checked_at": "2026-09-10T11:53:58Z",
       "availability_method": "GET",
       "availability_http_status": 200,
       "evidence_url": "https://github.com/jcdavis131/vector-equities",
@@ -53,12 +53,12 @@
       "name": "Unified",
       "description": "Explore connections across the sports products in one dedicated experience.",
       "url": "https://unified.dumbmodel.com/",
-      "availability": "unavailable",
-      "availability_checked_at": "2026-09-09T03:48:23Z",
+      "availability": "available",
+      "availability_checked_at": "2026-09-10T11:53:58Z",
       "availability_method": "GET",
-      "availability_http_status": 404,
+      "availability_http_status": 200,
       "evidence_url": "https://github.com/jcdavis131/vector-unified",
-      "pushed_at": "2026-09-07T17:49:48Z"
+      "pushed_at": "2026-09-10T11:51:34Z"
     }
   ]
 }

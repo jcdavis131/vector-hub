@@ -25,20 +25,20 @@ HEAVY_PUBLIC_DATA_PROBES = (
 GATEWAY_JSON_KEEP = (PRODUCTS_DEPLOY_PATH, SEASON_CLOCK_DEPLOY_PATH)
 EXPECTED = ("hoops", "gridiron", "pitch", "equities", "unified")
 AVAILABILITY = {"available", "unavailable", "unknown", "stale"}
-AVAILABILITY_CHECKED_AT = "2026-09-09T03:48:23Z"
+AVAILABILITY_CHECKED_AT = "2026-09-10T11:53:58Z"
 MEASURED_AVAILABILITY = {
     "hoops": "available",
     "gridiron": "available",
     "pitch": "available",
     "equities": "available",
-    "unified": "unavailable",
+    "unified": "available",
 }
 MEASURED_HTTP_STATUS = {
     "hoops": 200,
     "gridiron": 200,
     "pitch": 200,
     "equities": 200,
-    "unified": 404,
+    "unified": 200,
 }
 URLS = {
     slug: {
@@ -571,8 +571,8 @@ def check_page(errors: list[str], products: list[dict[str, object]]) -> None:
                 errors,
                 f"direct navigation anchors: {slug} has forbidden or missing anchors",
             )
-    if 'data-product="unified">Unified — unavailable</span>' not in text:
-        fail(errors, "direct navigation: Unified must be unavailable text, not a link")
+    if 'data-product="unified"><a href="https://unified.dumbmodel.com/">Unified</a>' not in text:
+        fail(errors, "direct navigation: Unified must be an available product link")
 
     if 'id="product-list"' not in lower:
         fail(errors, "loading outcome: product list contract is missing")

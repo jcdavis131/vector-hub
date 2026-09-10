@@ -268,26 +268,27 @@ class GatewayCheckerAdversarialTests(unittest.TestCase):
             errors,
         )
 
-    def test_unified_static_record_forbids_product_link(self) -> None:
+    def test_unified_static_record_requires_product_link(self) -> None:
         errors = self.page_errors(
             lambda page: page.replace(
-                '<span class="product-unavailable">Product unavailable</span>',
                 '<a class="action action--primary product-link" '
                 'href="https://unified.dumbmodel.com/">Open Unified</a>',
+                '<span class="product-unavailable">Product unavailable</span>',
                 1,
             )
         )
         self.assertTrue(
-            any("unavailable product link" in error for error in errors),
+            any("static product truth" in error for error in errors),
             errors,
         )
 
-    def test_unified_direct_navigation_is_not_a_link(self) -> None:
+    def test_unified_direct_navigation_is_a_link(self) -> None:
         errors = self.page_errors(
             lambda page: page.replace(
-                '<span class="direct-unavailable" data-product="unified">'
-                "Unified — unavailable</span>",
-                '<a href="https://unified.dumbmodel.com/">Unified</a>',
+                '<li data-product="unified">'
+                '<a href="https://unified.dumbmodel.com/">Unified</a></li>',
+                '<li data-product="unified"><span class="direct-unavailable" '
+                'data-product="unified">Unified — unavailable</span></li>',
                 1,
             )
         )
@@ -300,8 +301,8 @@ class GatewayCheckerAdversarialTests(unittest.TestCase):
         errors = self.page_errors(
             lambda page: page.replace(
                 '<time class="availability-checked" '
-                'datetime="2026-09-09T03:48:23Z">'
-                "Availability checked: 2026-09-09T03:48:23Z</time>",
+                'datetime="2026-09-10T11:53:58Z">'
+                "Availability checked: 2026-09-10T11:53:58Z</time>",
                 "",
                 1,
             )
@@ -346,45 +347,67 @@ class GatewayCheckerAdversarialTests(unittest.TestCase):
         )
         self.assertTrue(any("availability_http_status" in error for error in errors), errors)
 
-    def test_rejects_alternate_class_absolute_anchor_in_unified_product(self) -> None:
+    def test_rejects_extra_absolute_anchor_in_unified_product(self) -> None:
         errors = self.page_errors(
             lambda page: page.replace(
-                '<span class="product-unavailable">Product unavailable</span>',
-                '<span class="product-unavailable">Product unavailable</span>'
+                '<a class="action action--primary product-link" '
+                'href="https://unified.dumbmodel.com/">Open Unified</a>',
+                '<a class="action action--primary product-link" '
+                'href="https://unified.dumbmodel.com/">Open Unified</a>'
                 '<a class="other-link" href="https://unified.dumbmodel.com">'
                 "Unexpected Unified link</a>",
                 1,
             )
         )
-        self.assertTrue(any("unavailable product anchors" in error for error in errors), errors)
+        self.assertTrue(
+            any(
+                "static product truth" in error or "available product" in error
+                for error in errors
+            ),
+            errors,
+        )
 
-    def test_rejects_relative_anchor_in_unified_product(self) -> None:
+    def test_rejects_relative_extra_anchor_in_unified_product(self) -> None:
         errors = self.page_errors(
             lambda page: page.replace(
-                '<span class="product-unavailable">Product unavailable</span>',
-                '<span class="product-unavailable">Product unavailable</span>'
+                '<a class="action action--primary product-link" '
+                'href="https://unified.dumbmodel.com/">Open Unified</a>',
+                '<a class="action action--primary product-link" '
+                'href="https://unified.dumbmodel.com/">Open Unified</a>'
                 '<a href="/unified">Unexpected Unified link</a>',
                 1,
             )
         )
-        self.assertTrue(any("unavailable product anchors" in error for error in errors), errors)
+        self.assertTrue(
+            any(
+                "static product truth" in error or "available product" in error
+                for error in errors
+            ),
+            errors,
+        )
 
-    def test_rejects_alternate_class_absolute_anchor_in_unified_direct_nav(self) -> None:
+    def test_rejects_extra_absolute_anchor_in_unified_direct_nav(self) -> None:
         errors = self.page_errors(
             lambda page: page.replace(
-                "Unified — unavailable</span>",
-                'Unified — unavailable</span><a class="other-link" '
-                'href="https://unified.dumbmodel.com">Unexpected Unified link</a>',
+                '<li data-product="unified">'
+                '<a href="https://unified.dumbmodel.com/">Unified</a></li>',
+                '<li data-product="unified">'
+                '<a href="https://unified.dumbmodel.com/">Unified</a>'
+                '<a class="other-link" href="https://unified.dumbmodel.com">'
+                "Unexpected Unified link</a></li>",
                 1,
             )
         )
         self.assertTrue(any("direct navigation anchors" in error for error in errors), errors)
 
-    def test_rejects_relative_anchor_in_unified_direct_nav(self) -> None:
+    def test_rejects_relative_extra_anchor_in_unified_direct_nav(self) -> None:
         errors = self.page_errors(
             lambda page: page.replace(
-                "Unified — unavailable</span>",
-                'Unified — unavailable</span><a href="/unified">Unexpected Unified link</a>',
+                '<li data-product="unified">'
+                '<a href="https://unified.dumbmodel.com/">Unified</a></li>',
+                '<li data-product="unified">'
+                '<a href="https://unified.dumbmodel.com/">Unified</a>'
+                '<a href="/unified">Unexpected Unified link</a></li>',
                 1,
             )
         )
@@ -405,10 +428,12 @@ class GatewayCheckerAdversarialTests(unittest.TestCase):
     def test_rejects_earlier_duplicate_unified_direct_nav_entry(self) -> None:
         errors = self.page_errors(
             lambda page: page.replace(
-                '<li data-product="unified"><span class="direct-unavailable"',
+                '<li data-product="unified">'
+                '<a href="https://unified.dumbmodel.com/">Unified</a>',
                 '<li data-product="unified"><a href="/unified">'
                 "Forbidden duplicate CTA</a></li>"
-                '<li data-product="unified"><span class="direct-unavailable"',
+                '<li data-product="unified">'
+                '<a href="https://unified.dumbmodel.com/">Unified</a>',
                 1,
             )
         )
