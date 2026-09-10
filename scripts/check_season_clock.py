@@ -32,6 +32,7 @@ PRODUCT_URLS = {
     "hoops": "https://hoops.dumbmodel.com/",
     "gridiron": "https://gridiron.dumbmodel.com/",
     "equities": "https://equities.dumbmodel.com/",
+    "unified": "https://unified.dumbmodel.com/",
 }
 FORBIDDEN = {
     "generated map": (r"<canvas\b", r"\b20[,\s]?719\b", r"\bgenerated layout\b"),
@@ -221,8 +222,8 @@ def check_page(errors: list[str]) -> None:
     for url in PRODUCT_URLS.values():
         if url not in text:
             fail(errors, f"season clock page: product link {url} is missing")
-    if "unified.dumbmodel.com" in lower and 'href="https://unified.dumbmodel.com/' in lower:
-        fail(errors, "season clock page: must not link Unified while unavailable")
+    if 'href="https://unified.dumbmodel.com/"' not in text:
+        fail(errors, "season clock page: Unified product link is required now that Unified is available")
     if "<canvas" in lower:
         fail(errors, "season clock page: canvas map claims are forbidden")
     if "@media (prefers-reduced-motion: reduce)" not in lower:

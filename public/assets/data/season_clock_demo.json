@@ -21,6 +21,10 @@
     "equities": {
       "name": "Equities",
       "url": "https://equities.dumbmodel.com/"
+    },
+    "unified": {
+      "name": "Unified",
+      "url": "https://unified.dumbmodel.com/"
     }
   },
   "tracks": [

@@ -24,7 +24,7 @@
 - [x] Unknown and unavailable data states remain explicit.
 - [x] Point-in-time HTTP availability includes its check timestamp.
 - [x] Availability provenance records exact GET and numeric HTTP status.
-- [x] Unified's measured 404 state exposes evidence but no product CTA.
+- [x] Unified's measured 200 state exposes product CTA + evidence.
 
 **Verification**
 - [x] `python scripts/check_gateway.py`
