@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#F9F6F0">
+<meta name="description" content="Season Clock — align athlete seasons, sponsor naming windows, and equities fiscal years. Co-occurrence is not endorsement.">
+<link rel="icon" href="data:,">
+<title>Dumbmodel — Season Clock</title>
+<style>
+:root {
+  --paper:#F9F6F0;
+  --paper-2:#FEFCF8;
+  --stone-50:#F5F1EB;
+  --stone-100:#E8E0D5;
+  --stone-200:#D4C4B0;
+  --stone-300:#B8A99A;
+  --ink:#2A2A2A;
+  --ink-60:#6B6B6B;
+  --pop:#C17C60;
+  --moss:#667968;
+  --clay:#91674C;
+  --blue:#617A8D;
+  --font-sans:ui-sans-system,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --font-serif:"Times New Roman",Georgia,serif;
+  --font-mono:ui-monospace,SFMono-Regular,Consolas,monospace;
+  --content:70rem;
+  --year-start:2015;
+  --year-end:2025;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0;
+  background:
+    radial-gradient(rgba(42,42,42,.025) 1px,transparent 1px) 0 0/24px 24px,
+    var(--paper);
+  color:var(--ink);
+  font-family:var(--font-sans);
+  line-height:1.6;
+}
+a { color:inherit; }
+.skip-link {
+  min-width:44px;
+  min-height:44px;
+  position:fixed;
+  z-index:10;
+  top:.5rem;
+  left:.5rem;
+  padding:.75rem 1rem;
+  background:var(--ink);
+  color:var(--paper-2);
+  transform:translateY(-150%);
+}
+.skip-link:focus { transform:translateY(0); }
+:focus-visible {
+  outline:3px solid var(--pop);
+  outline-offset:3px;
+  border-radius:.25rem;
+}
+.site-header {
+  border-bottom:1px solid var(--stone-200);
+  background:rgba(249,246,240,.96);
+}
+.nav {
+  max-width:var(--content);
+  min-height:4rem;
+  margin:0 auto;
+  padding:.5rem clamp(1rem,4vw,2rem);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+}
+.brand {
+  min-width:44px;
+  min-height:44px;
+  display:inline-flex;
+  align-items:center;
+  font:700 .78rem/1 var(--font-mono);
+  letter-spacing:.12em;
+  text-decoration:none;
+  text-transform:uppercase;
+}
+.nav-trail {
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+.nav-secondary {
+  min-width:44px;
+  min-height:44px;
+  display:inline-flex;
+  align-items:center;
+  color:var(--ink-60);
+  font-size:.9rem;
+  text-underline-offset:.25rem;
+}
+.nav-note { color:var(--ink-60); font-size:.9rem; }
+main, footer { width:min(100% - 2rem,var(--content)); margin-inline:auto; }
+.hero {
+  padding:clamp(3.5rem,8vw,7rem) 0 clamp(2rem,5vw,3.5rem);
+  max-width:42rem;
+}
+.eyebrow {
+  margin:0 0 1rem;
+  color:var(--clay);
+  font:700 .75rem/1.4 var(--font-mono);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  opacity:0;
+  animation:rise-in .7s ease .05s forwards;
+}
+h1 {
+  margin:0;
+  font:700 clamp(3rem,7.5vw,5.6rem)/.94 var(--font-serif);
+  letter-spacing:-.04em;
+  text-wrap:balance;
+  opacity:0;
+  animation:rise-in .75s ease .12s forwards;
+}
+.hero-copy {
+  margin:1.25rem 0 0;
+  padding-left:1.25rem;
+  border-left:3px solid var(--pop);
+  color:var(--ink-60);
+  font-size:clamp(1rem,2vw,1.15rem);
+  overflow-wrap:anywhere;
+  opacity:0;
+  animation:rise-in .75s ease .22s forwards;
+}
+.honesty {
+  margin:clamp(1.5rem,4vw,2.5rem) 0 0;
+  padding:1rem 0 0;
+  border-top:1px solid var(--stone-200);
+  color:var(--ink-60);
+  font-size:.95rem;
+  max-width:46rem;
+}
+.honesty strong {
+  color:var(--ink);
+  font-weight:700;
+}
+.scrubber {
+  margin:clamp(2rem,5vw,3.5rem) 0;
+  padding:1.25rem 0 1.5rem;
+  border-block:1px solid var(--stone-200);
+}
+.scrubber-head {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:.75rem 1.5rem;
+  margin-bottom:1rem;
+}
+.section-label {
+  margin:0;
+  color:var(--clay);
+  font:700 .75rem/1.4 var(--font-mono);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.year-readout {
+  font:700 clamp(1.6rem,4vw,2.4rem)/1 var(--font-serif);
+  letter-spacing:-.03em;
+  tabular-nums:lining-nums;
+  font-variant-numeric:tabular-nums;
+}
+.year-readout[data-pulse="1"] {
+  animation:year-pulse .45s ease;
+}
+.scrubber-range {
+  width:100%;
+  min-height:44px;
+  accent-color:var(--pop);
+  cursor:pointer;
+}
+.year-ticks {
+  display:flex;
+  justify-content:space-between;
+  margin-top:.35rem;
+  color:var(--ink-60);
+  font:700 .68rem/1 var(--font-mono);
+  letter-spacing:.04em;
+}
+.product-links {
+  display:flex;
+  flex-wrap:wrap;
+  gap:.75rem;
+  margin:0 0 clamp(2rem,5vw,3rem);
+  padding:0;
+  list-style:none;
+}
+.product-links a,
+.product-links .unavailable {
+  min-width:44px;
+  min-height:44px;
+  padding:.65rem .9rem;
+  display:inline-flex;
+  align-items:center;
+  border:1px solid var(--stone-300);
+  border-radius:.5rem;
+  background:var(--paper-2);
+  font-weight:700;
+  text-decoration:none;
+  text-underline-offset:.2rem;
+}
+.product-links a:hover { border-color:var(--ink); }
+.product-links a[data-accent="hoops"] { border-left:3px solid var(--pop); }
+.product-links a[data-accent="gridiron"] { border-left:3px solid var(--blue); }
+.product-links a[data-accent="equities"] { border-left:3px solid var(--clay); }
+.tracks { padding-bottom:clamp(3rem,6vw,5rem); }
+.track {
+  --track-accent:var(--stone-300);
+  padding:1.25rem 0 1.5rem;
+  border-bottom:1px solid var(--stone-200);
+}
+.track--hoops { --track-accent:var(--pop); }
+.track--gridiron { --track-accent:var(--blue); }
+.track--sponsor { --track-accent:var(--moss); }
+.track--equities { --track-accent:var(--clay); }
+.track-label {
+  margin:0 0 .75rem;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:.5rem 1rem;
+}
+.track-label h2 {
+  margin:0;
+  font:700 clamp(1.25rem,3vw,1.85rem)/1.15 var(--font-serif);
+  letter-spacing:-.02em;
+}
+.track-meta {
+  color:var(--ink-60);
+  font:700 .72rem/1.4 var(--font-mono);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+.rail {
+  position:relative;
+  height:3.25rem;
+  border-radius:.35rem;
+  background:linear-gradient(90deg,var(--stone-50),var(--paper-2));
+  border:1px solid var(--stone-200);
+  overflow:hidden;
+}
+.rail-grid {
+  position:absolute;
+  inset:0;
+  display:grid;
+  grid-template-columns:repeat(11,minmax(0,1fr));
+  pointer-events:none;
+}
+.rail-grid span {
+  border-right:1px solid rgba(212,196,176,.55);
+}
+.rail-grid span:last-child { border-right:0; }
+.event-bar {
+  position:absolute;
+  top:50%;
+  height:1.15rem;
+  transform:translateY(-50%) scaleX(.92);
+  transform-origin:left center;
+  border-radius:99px;
+  background:var(--track-accent);
+  opacity:.82;
+  min-width:4px;
+  cursor:default;
+  transition:opacity .2s ease, transform .45s ease;
+  animation:bar-in .55s ease both;
+}
+.event-bar:hover,
+.event-bar:focus-visible {
+  opacity:1;
+  z-index:2;
+}
+.event-bar.is-dim {
+  opacity:.22;
+}
+.event-bar.is-focus {
+  opacity:1;
+  box-shadow:0 0 0 2px var(--paper-2), 0 0 0 4px var(--track-accent);
+}
+.playhead {
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:2px;
+  background:var(--ink);
+  transform:translateX(-1px);
+  pointer-events:none;
+  transition:left .18s ease;
+  z-index:3;
+}
+.playhead::after {
+  content:"";
+  position:absolute;
+  top:0;
+  left:50%;
+  width:0;
+  height:0;
+  border-left:5px solid transparent;
+  border-right:5px solid transparent;
+  border-top:7px solid var(--ink);
+  transform:translateX(-50%);
+}
+.event-list {
+  margin:1rem 0 0;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:.5rem;
+}
+.event-list li {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:.5rem 1rem;
+  align-items:baseline;
+  color:var(--ink-60);
+  font-size:.92rem;
+  overflow-wrap:anywhere;
+}
+.event-list li.is-dim { opacity:.35; }
+.event-list li.is-focus { color:var(--ink); font-weight:600; }
+.event-list time {
+  font:700 .72rem/1.4 var(--font-mono);
+  letter-spacing:.04em;
+  white-space:nowrap;
+}
+.status {
+  margin:0 0 1.5rem;
+  padding:.75rem 1rem;
+  border-left:3px solid var(--stone-300);
+  background:var(--stone-50);
+  color:var(--ink-60);
+}
+.status[data-state="ready"] { border-left-color:var(--moss); }
+.status[data-state="error"] { border-left-color:var(--clay); }
+footer {
+  padding:1.5rem 0 3rem;
+  border-top:1px solid var(--stone-200);
+  color:var(--ink-60);
+  font-size:.85rem;
+}
+[hidden] { display:none !important; }
+@keyframes rise-in {
+  from { opacity:0; transform:translateY(.6rem); }
+  to { opacity:1; transform:translateY(0); }
+}
+@keyframes bar-in {
+  from { opacity:0; transform:translateY(-50%) scaleX(.2); }
+  to { opacity:.82; transform:translateY(-50%) scaleX(.92); }
+}
+@keyframes year-pulse {
+  0% { transform:scale(1); }
+  40% { transform:scale(1.04); color:var(--pop); }
+  100% { transform:scale(1); }
+}
+@media (max-width:40rem) {
+  .nav-note { display:none; }
+  .event-list li { grid-template-columns:minmax(0,1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior:auto; }
+  *, *::before, *::after {
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to Season Clock</a>
+<header class="site-header">
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="/">Dumbmodel</a>
+    <div class="nav-trail">
+      <a class="nav-secondary" href="/">Gateway</a>
+      <span class="nav-note" aria-current="page">Season Clock</span>
+    </div>
+  </nav>
+</header>
+<main id="main">
+  <section class="hero" aria-labelledby="clock-title">
+    <p class="eyebrow">Sponsor bridge · timeline demo</p>
+    <h1 id="clock-title">Season Clock</h1>
+    <p class="hero-copy">Scrub a decade of sample athlete seasons, naming windows, and fiscal-year bands. Open each product when you want the live space.</p>
+    <p class="honesty" id="honesty-note"><strong>Honesty:</strong> named-window co-occurrence is not endorsement, NIL, partnership, or sponsorship proof. This page ships a small demo dataset, not a full as-of join.</p>
+  </section>
+
+  <p id="clock-status" class="status" role="status" aria-live="polite" data-state="ready">Loading the committed Season Clock demo…</p>
+
+  <ul class="product-links" aria-label="Product destinations">
+    <li><a data-accent="hoops" href="https://hoops.dumbmodel.com/">Open Hoops</a></li>
+    <li><a data-accent="gridiron" href="https://gridiron.dumbmodel.com/">Open Gridiron</a></li>
+    <li><a data-accent="equities" href="https://equities.dumbmodel.com/">Open Equities</a></li>
+  </ul>
+
+  <section class="scrubber" aria-labelledby="scrubber-label">
+    <div class="scrubber-head">
+      <p class="section-label" id="scrubber-label">Year scrubber</p>
+      <p class="year-readout" id="year-readout" aria-live="polite">2020</p>
+    </div>
+    <label class="visually-hidden" for="year-scrub" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;">Focus year from 2015 to 2025</label>
+    <input
+      class="scrubber-range"
+      id="year-scrub"
+      type="range"
+      min="2015"
+      max="2025"
+      step="1"
+      value="2020"
+      aria-valuemin="2015"
+      aria-valuemax="2025"
+      aria-valuenow="2020"
+      aria-describedby="honesty-note"
+    >
+    <div class="year-ticks" aria-hidden="true">
+      <span>2015</span><span>2017</span><span>2019</span><span>2021</span><span>2023</span><span>2025</span>
+    </div>
+  </section>
+
+  <section class="tracks" id="tracks" aria-label="Timeline tracks"></section>
+  <noscript>
+    <p class="status">JavaScript is off. Open <code>assets/data/season_clock_demo.json</code> for the sample events, or enable scripts to scrub the timeline.</p>
+  </noscript>
+</main>
+<footer>
+  <p>Dumbmodel Season Clock · Demo timeline only · Static, dependency-free, no visitor tracking.</p>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  const START = 2015;
+  const END = 2025;
+  const SPAN = END - START;
+  const status = document.getElementById("clock-status");
+  const tracksRoot = document.getElementById("tracks");
+  const scrub = document.getElementById("year-scrub");
+  const readout = document.getElementById("year-readout");
+  const KIND_CLASS = {
+    athlete_season: "track--hoops",
+    sponsor_naming: "track--sponsor",
+    equities_fy: "track--equities"
+  };
+
+  function parseDay(value) {
+    const stamp = Date.parse(value + "T00:00:00Z");
+    return Number.isFinite(stamp) ? stamp : null;
+  }
+
+  function yearFraction(isoDay) {
+    const stamp = parseDay(isoDay);
+    if (stamp === null) {
+      return 0;
+    }
+    const year = new Date(stamp).getUTCFullYear()
+      + (new Date(stamp).getUTCMonth() / 12)
+      + (new Date(stamp).getUTCDate() / 365);
+    return Math.min(1, Math.max(0, (year - START) / SPAN));
+  }
+
+  function eventTouchesYear(event, year) {
+    const start = parseDay(event.start);
+    const end = parseDay(event.end);
+    if (start === null || end === null) {
+      return false;
+    }
+    const yearStart = Date.parse(year + "-01-01T00:00:00Z");
+    const yearEnd = Date.parse(year + "-12-31T23:59:59Z");
+    return start <= yearEnd && end >= yearStart;
+  }
+
+  function trackClass(track) {
+    if (track.product === "gridiron") {
+      return "track--gridiron";
+    }
+    if (track.product === "hoops") {
+      return "track--hoops";
+    }
+    if (track.product === "equities") {
+      return "track--equities";
+    }
+    return KIND_CLASS[track.kind] || "track--sponsor";
+  }
+
+  function formatSpan(event) {
+    return event.start.slice(0, 4) + "–" + event.end.slice(0, 4);
+  }
+
+  function render(payload) {
+    const tracks = payload.tracks;
+    if (!Array.isArray(tracks) || tracks.length === 0) {
+      throw new Error("Demo tracks missing.");
+    }
+    tracksRoot.textContent = "";
+    tracks.forEach((track, trackIndex) => {
+      const section = document.createElement("article");
+      section.className = "track " + trackClass(track);
+      section.dataset.track = track.id;
+
+      const label = document.createElement("div");
+      label.className = "track-label";
+      const title = document.createElement("h2");
+      title.textContent = track.label;
+      const meta = document.createElement("p");
+      meta.className = "track-meta";
+      meta.textContent = (track.events || []).length + " sample windows";
+      label.appendChild(title);
+      label.appendChild(meta);
+
+      const rail = document.createElement("div");
+      rail.className = "rail";
+      rail.setAttribute("role", "img");
+      rail.setAttribute(
+        "aria-label",
+        track.label + " from " + START + " through " + END
+      );
+
+      const grid = document.createElement("div");
+      grid.className = "rail-grid";
+      grid.setAttribute("aria-hidden", "true");
+      for (let i = 0; i < 11; i += 1) {
+        grid.appendChild(document.createElement("span"));
+      }
+      rail.appendChild(grid);
+
+      const playhead = document.createElement("div");
+      playhead.className = "playhead";
+      playhead.dataset.playhead = "1";
+      rail.appendChild(playhead);
+
+      (track.events || []).forEach((event, eventIndex) => {
+        const left = yearFraction(event.start) * 100;
+        const right = yearFraction(event.end) * 100;
+        const width = Math.max(0.4, right - left);
+        const bar = document.createElement("button");
+        bar.type = "button";
+        bar.className = "event-bar";
+        bar.style.left = left + "%";
+        bar.style.width = width + "%";
+        bar.style.animationDelay = (0.05 * trackIndex + 0.04 * eventIndex) + "s";
+        bar.dataset.eventId = event.id;
+        bar.title = event.label + " · " + formatSpan(event);
+        bar.setAttribute("aria-label", event.label + ", " + formatSpan(event));
+        rail.appendChild(bar);
+      });
+
+      const list = document.createElement("ul");
+      list.className = "event-list";
+      (track.events || []).forEach((event) => {
+        const item = document.createElement("li");
+        item.dataset.eventId = event.id;
+        const name = document.createElement("span");
+        name.textContent = event.label + " · " + event.entity;
+        const when = document.createElement("time");
+        when.dateTime = event.start;
+        when.textContent = formatSpan(event);
+        item.appendChild(name);
+        item.appendChild(when);
+        list.appendChild(item);
+      });
+
+      section.appendChild(label);
+      section.appendChild(rail);
+      section.appendChild(list);
+      tracksRoot.appendChild(section);
+    });
+  }
+
+  function applyYear(year) {
+    const fraction = ((year - START) / SPAN) * 100;
+    const eventsById = applyYear.eventsById || {};
+    readout.textContent = String(year);
+    readout.dataset.pulse = "1";
+    window.setTimeout(function () {
+      readout.dataset.pulse = "0";
+    }, 450);
+    scrub.setAttribute("aria-valuenow", String(year));
+    document.querySelectorAll("[data-playhead]").forEach((node) => {
+      node.style.left = fraction + "%";
+    });
+    document.querySelectorAll(".event-bar, .event-list li").forEach((node) => {
+      const event = eventsById[node.dataset.eventId];
+      if (!event) {
+        return;
+      }
+      const active = eventTouchesYear(event, year);
+      node.classList.toggle("is-focus", active);
+      node.classList.toggle("is-dim", !active);
+    });
+  }
+
+  status.dataset.state = "loading";
+  status.textContent = "Loading the committed Season Clock demo…";
+  fetch("assets/data/season_clock_demo.json", { cache: "no-store" })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Demo dataset request failed.");
+      }
+      return response.json();
+    })
+    .then((payload) => {
+      if (!payload || !payload.meta || payload.meta.demo !== true) {
+        throw new Error("Demo meta missing.");
+      }
+      const eventsById = {};
+      (payload.tracks || []).forEach((track) => {
+        (track.events || []).forEach((event) => {
+          eventsById[event.id] = event;
+        });
+      });
+      applyYear.eventsById = eventsById;
+      render(payload);
+      const honesty = document.getElementById("honesty-note");
+      if (payload.meta.honesty && honesty) {
+        honesty.textContent = "";
+        const lead = document.createElement("strong");
+        lead.textContent = "Honesty:";
+        honesty.appendChild(lead);
+        honesty.appendChild(
+          document.createTextNode(
+            " " + payload.meta.honesty
+              + " This page ships a small demo dataset, not a full as-of join."
+          )
+        );
+      }
+      applyYear(Number(scrub.value));
+      status.dataset.state = "ready";
+      status.textContent = "Demo dataset loaded. Scrub a year to highlight co-occurring windows.";
+    })
+    .catch(() => {
+      status.dataset.state = "error";
+      status.textContent = "Could not load the Season Clock demo. The honesty note above still applies.";
+    });
+
+  scrub.addEventListener("input", function () {
+    applyYear(Number(scrub.value));
+  });
+}());
+</script>
+</body>
+</html>

@@ -10,6 +10,7 @@ on:
       - "README.md"
       - "spec/vector-hub-real-product-gateway.md"
       - "scripts/check_gateway.py"
+      - "scripts/check_season_clock.py"
       - "tests/**"
       - ".github/workflows/gateway.yml"
   pull_request:
@@ -20,6 +21,7 @@ on:
       - "README.md"
       - "spec/vector-hub-real-product-gateway.md"
       - "scripts/check_gateway.py"
+      - "scripts/check_season_clock.py"
       - "tests/**"
       - ".github/workflows/gateway.yml"
 
@@ -36,6 +38,9 @@ jobs:
 
       - name: Check served gateway
         run: python scripts/check_gateway.py
+
+      - name: Check Season Clock
+        run: python scripts/check_season_clock.py
 
       - name: Test gateway checker
         run: python -m unittest discover -s tests -p "test_gateway*.py" -v

@@ -20,6 +20,7 @@ game, soft-mirror, domain, and production-deployment surfaces are out of scope.
 ## Commands
 
 - Static contract: `python -B scripts/check_gateway.py`
+- Season Clock contract: `python -B scripts/check_season_clock.py`
 - Checker regressions:
   `$env:PYTHONDONTWRITEBYTECODE='1'; python -B -m unittest discover -s tests -p "test_gateway*.py" -v`
 - Local server: `python -m http.server 4173 --directory public`
@@ -31,8 +32,11 @@ game, soft-mirror, domain, and production-deployment surfaces are out of scope.
 ## Project Structure
 
 - `public/index.html` — served gateway UI
+- `public/season-clock.html` — Season Clock / sponsor-bridge timeline demo
 - `public/assets/data/products.json` — verified product truth record
+- `public/assets/data/season_clock_demo.json` — small committed Season Clock sample
 - `scripts/check_gateway.py` — deterministic static acceptance gate
+- `scripts/check_season_clock.py` — Season Clock page + demo JSON gate
 - `tests/test_gateway_checker.py` — adversarial standard-library gate tests
 - `.github/workflows/gateway.yml` — CI gate for served-site changes
 - `docs/JAPANDI_DESIGN_SYSTEM.md` — family visual conventions

@@ -17,10 +17,12 @@ PAGE = ROOT / "public" / "index.html"
 PRODUCTS = ROOT / "public" / "assets" / "data" / "products.json"
 VERCELIGNORE = ROOT / ".vercelignore"
 PRODUCTS_DEPLOY_PATH = "public/assets/data/products.json"
+SEASON_CLOCK_DEPLOY_PATH = "public/assets/data/season_clock_demo.json"
 HEAVY_PUBLIC_DATA_PROBES = (
     "public/assets/data/hoops.json",
     "public/assets/data/boards_2026_08_18.json",
 )
+GATEWAY_JSON_KEEP = (PRODUCTS_DEPLOY_PATH, SEASON_CLOCK_DEPLOY_PATH)
 EXPECTED = ("hoops", "gridiron", "pitch", "equities", "unified")
 AVAILABILITY = {"available", "unavailable", "unknown", "stale"}
 AVAILABILITY_CHECKED_AT = "2026-09-09T03:48:23Z"
@@ -263,7 +265,10 @@ def check_vercelignore(errors: list[str]) -> None:
         fail(errors, f"deploy packaging: .vercelignore is unreadable: {exc}")
         return
     try:
-        products_ignored = path_ignored_by_vercelignore(rules, PRODUCTS_DEPLOY_PATH)
+        keep_results = {
+            path: path_ignored_by_vercelignore(rules, path)
+            for path in GATEWAY_JSON_KEEP
+        }
         heavy_results = {
             probe: path_ignored_by_vercelignore(rules, probe)
             for probe in HEAVY_PUBLIC_DATA_PROBES
@@ -271,12 +276,13 @@ def check_vercelignore(errors: list[str]) -> None:
     except RuntimeError as exc:
         fail(errors, f"deploy packaging: {exc}")
         return
-    if products_ignored:
-        fail(
-            errors,
-            "deploy packaging: public/assets/data/products.json must not be "
-            "ignored by .vercelignore (bare data/ strips the gateway JSON)",
-        )
+    for path, ignored in keep_results.items():
+        if ignored:
+            fail(
+                errors,
+                f"deploy packaging: {path} must not be ignored by .vercelignore "
+                "(bare data/ strips gateway JSON)",
+            )
     for probe, ignored in heavy_results.items():
         if not ignored:
             fail(
@@ -692,7 +698,7 @@ def main() -> int:
     print("PASS: exactly five evidence-backed product records")
     print("PASS: content-first served journey excludes generated/specification claims")
     print("PASS: semantic, loading/error, focus, motion, target, contrast, and overflow contracts")
-    print("PASS: .vercelignore keeps products.json while ignoring heavy public datasets")
+    print("PASS: .vercelignore keeps products.json and season_clock_demo.json while ignoring heavy public datasets")
     return 0
 
 
