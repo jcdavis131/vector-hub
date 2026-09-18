@@ -3,265 +3,190 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="color-scheme" content="light">
-<meta name="theme-color" content="#F9F6F0">
-<meta name="description" content="The truthful gateway to five Dumbmodel vector products.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0C110D">
+<meta name="description" content="Dumbmodel: the vector product family. Each product is an embedding map — players, teams, or companies placed so similar ones sit near each other.">
 <link rel="icon" href="data:,">
-<title>Dumbmodel — five vector products</title>
+<title>Dumbmodel — the vector product family</title>
 <style>
 :root {
-  --paper:#F9F6F0;
-  --paper-2:#FEFCF8;
-  --stone-50:#F5F1EB;
-  --stone-100:#E8E0D5;
-  --stone-200:#D4C4B0;
-  --stone-300:#B8A99A;
-  --ink:#2A2A2A;
-  --ink-60:#6B6B6B;
-  --pop:#C17C60;
-  --moss:#667968;
-  --clay:#91674C;
-  --blue:#617A8D;
+  --void:#0C110D;
+  --void-2:#10160F;
+  --card:#121812;
+  --moss:#8A9A8B;
+  --moss-bright:#B9CFBB;
+  --moss-deep:#263026;
+  --blue:#7FA3B8;
+  --terra:#C17C60;
+  --paper:#F2EFE4;
+  --paper-dim:#A9AC9F;
+  --hairline:#2A332A;
   --font-sans:ui-sans-system,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --font-serif:"Times New Roman",Georgia,serif;
   --font-mono:ui-monospace,SFMono-Regular,Consolas,monospace;
-  --content:70rem;
+  --content:72rem;
 }
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body {
   margin:0;
   background:
-    radial-gradient(rgba(42,42,42,.025) 1px,transparent 1px) 0 0/24px 24px,
-    var(--paper);
-  color:var(--ink);
+    radial-gradient(60rem 30rem at 85% -5%, rgba(138,154,139,.10), transparent 60%),
+    radial-gradient(50rem 26rem at 8% 4%, rgba(127,163,184,.07), transparent 60%),
+    var(--void);
+  color:var(--paper);
   font-family:var(--font-sans);
   line-height:1.6;
+  min-height:100vh;
 }
 a { color:inherit; }
 .skip-link {
-  min-width:44px;
-  min-height:44px;
-  position:fixed;
-  z-index:10;
-  top:.5rem;
-  left:.5rem;
+  min-width:44px; min-height:44px;
+  position:fixed; z-index:10; top:.5rem; left:.5rem;
   padding:.75rem 1rem;
-  background:var(--ink);
-  color:var(--paper-2);
+  background:var(--paper); color:var(--void);
   transform:translateY(-150%);
 }
 .skip-link:focus { transform:translateY(0); }
-:focus-visible {
-  outline:3px solid var(--pop);
-  outline-offset:3px;
-  border-radius:.25rem;
-}
-.site-header {
-  border-bottom:1px solid var(--stone-200);
-  background:rgba(249,246,240,.96);
-}
+:focus-visible { outline:3px solid var(--terra); outline-offset:3px; border-radius:.25rem; }
+
+.site-header { border-bottom:1px solid var(--hairline); }
 .nav {
-  max-width:var(--content);
+  max-width:var(--content); margin:0 auto;
+  padding:.75rem clamp(1rem,4vw,2rem);
+  display:flex; align-items:center; justify-content:space-between; gap:1rem;
   min-height:4rem;
-  margin:0 auto;
-  padding:.5rem clamp(1rem,4vw,2rem);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:1rem;
 }
 .brand {
-  min-width:44px;
-  min-height:44px;
-  display:inline-flex;
-  align-items:center;
-  font:700 .78rem/1 var(--font-mono);
-  letter-spacing:.12em;
-  text-decoration:none;
-  text-transform:uppercase;
+  min-width:44px; min-height:44px;
+  display:inline-flex; align-items:center;
+  font:700 .82rem/1 var(--font-mono); letter-spacing:.22em;
+  text-decoration:none; text-transform:uppercase;
+  color:var(--moss-bright);
 }
-.nav-trail {
-  display:flex;
-  align-items:center;
-  gap:1rem;
-  flex-wrap:wrap;
-  justify-content:flex-end;
-}
-.nav-secondary {
-  min-width:44px;
-  min-height:44px;
-  display:inline-flex;
-  align-items:center;
-  color:var(--ink-60);
-  font-size:.9rem;
-  text-underline-offset:.25rem;
-}
-.nav-note { color:var(--ink-60); font-size:.9rem; }
-main, footer { width:min(100% - 2rem,var(--content)); margin-inline:auto; }
-.hero {
-  padding:clamp(4rem,9vw,8rem) 0 clamp(3rem,7vw,6rem);
-  display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(14rem,.42fr);
-  gap:clamp(2rem,7vw,6rem);
-  align-items:end;
-}
-.eyebrow, .section-label {
-  margin:0 0 1rem;
-  color:var(--clay);
-  font:700 .75rem/1.4 var(--font-mono);
-  letter-spacing:.12em;
-  text-transform:uppercase;
+.nav-note { color:var(--paper-dim); font-size:.9rem; }
+
+main, footer { width:min(100% - 2rem, var(--content)); margin-inline:auto; }
+
+.hero { padding:clamp(4rem,10vw,8rem) 0 clamp(2.5rem,6vw,4rem); }
+.eyebrow {
+  margin:0 0 1.25rem;
+  color:var(--moss);
+  font:700 .75rem/1.4 var(--font-mono); letter-spacing:.18em; text-transform:uppercase;
 }
 h1 {
-  max-width:12ch;
-  margin:0;
-  font:700 clamp(3.25rem,8vw,6.7rem)/.92 var(--font-serif);
-  letter-spacing:-.045em;
+  margin:0 0 1.5rem;
+  max-width:16ch;
+  font:700 clamp(2.6rem,7vw,5.2rem)/1.02 var(--font-serif);
+  letter-spacing:-.02em;
   text-wrap:balance;
 }
+h1 .moss { color:var(--moss-bright); }
 .hero-copy {
-  margin:0;
-  padding-left:1.25rem;
-  border-left:3px solid var(--pop);
-  color:var(--ink-60);
-  font-size:clamp(1rem,2vw,1.2rem);
-  overflow-wrap:anywhere;
+  max-width:44rem; margin:0;
+  color:var(--paper-dim);
+  font-size:clamp(1.05rem,2.2vw,1.3rem);
 }
-.direct-links {
-  border-block:1px solid var(--stone-200);
-  padding:1rem 0;
+
+.family { padding:0 0 clamp(3rem,7vw,5rem); }
+.section-label {
+  margin:0 0 .75rem;
+  color:var(--moss);
+  font:700 .75rem/1.4 var(--font-mono); letter-spacing:.18em; text-transform:uppercase;
 }
-.direct-links ul {
-  margin:0;
-  padding:0;
-  display:flex;
-  flex-wrap:wrap;
-  gap:.5rem 1.25rem;
-  list-style:none;
-}
-.direct-links a {
-  min-width:44px;
-  min-height:44px;
-  display:inline-flex;
-  align-items:center;
-  font-weight:700;
-  text-underline-offset:.25rem;
-}
-.products { padding:clamp(4rem,8vw,7rem) 0; }
-.section-intro {
-  max-width:44rem;
-  margin-bottom:clamp(2rem,6vw,4rem);
-}
-h2 {
-  margin:0 0 1rem;
-  font:700 clamp(2rem,5vw,3.7rem)/1 var(--font-serif);
-  letter-spacing:-.025em;
-}
-.section-intro p { color:var(--ink-60); }
 .status {
-  margin:1.5rem 0 0;
-  padding:.75rem 1rem;
-  border-left:3px solid var(--stone-300);
-  background:var(--stone-50);
-  color:var(--ink-60);
+  margin:0 0 1.75rem; padding:.75rem 1rem;
+  border-left:3px solid var(--hairline);
+  background:var(--void-2);
+  color:var(--paper-dim); font-size:.95rem;
+  border-radius:0 .5rem .5rem 0;
 }
 .status[data-state="ready"] { border-left-color:var(--moss); }
-.status[data-state="error"] { border-left-color:var(--clay); }
-.product-list { margin:0; padding:0; list-style:none; border-top:1px solid var(--stone-200); }
+.status[data-state="error"] { border-left-color:var(--terra); }
+
+.product-grid {
+  margin:0; padding:0; list-style:none;
+  display:grid; gap:1rem;
+  grid-template-columns:repeat(2, minmax(0,1fr));
+}
 .product {
-  --product-accent:var(--stone-300);
+  --accent:var(--moss);
   position:relative;
-  padding:clamp(1.5rem,4vw,3rem) 0 clamp(1.5rem,4vw,3rem) clamp(1rem,3vw,2rem);
-  display:grid;
-  grid-template-columns:minmax(0,.28fr) minmax(0,1fr) minmax(12rem,.42fr);
-  gap:clamp(1rem,4vw,3rem);
-  align-items:start;
-  border-bottom:1px solid var(--stone-200);
+  padding:1.5rem 1.5rem 1.35rem;
+  background:linear-gradient(180deg, var(--card), var(--void-2));
+  border:1px solid var(--hairline);
+  border-top:3px solid var(--accent);
+  border-radius:.9rem;
+  display:flex; flex-direction:column; gap:.6rem;
+  min-width:0;
 }
-.product::before {
-  content:"";
-  position:absolute;
-  inset:clamp(1.5rem,4vw,3rem) auto clamp(1.5rem,4vw,3rem) 0;
-  width:4px;
-  border-radius:99px;
-  background:var(--product-accent);
-}
-.product--hoops { --product-accent:var(--pop); }
-.product--gridiron { --product-accent:var(--blue); }
-.product--pitch { --product-accent:var(--moss); }
-.product--equities { --product-accent:var(--clay); }
-.product--unified { --product-accent:var(--ink); }
-.product-index {
-  color:var(--ink-60);
-  font:700 .75rem/1.4 var(--font-mono);
-  letter-spacing:.08em;
-}
+.product--flagship { grid-column:1 / -1; }
+.product--hoops { --accent:var(--terra); }
+.product--gridiron { --accent:var(--blue); }
+.product--pitch { --accent:var(--moss); }
+.product--equities { --accent:#C9A86A; }
+.product--arcade { --accent:var(--moss-bright); }
+.product--unified { --accent:var(--paper-dim); }
+
+.product-top { display:flex; align-items:baseline; justify-content:space-between; gap:1rem; }
 .product h3 {
-  margin:0 0 .5rem;
-  font:700 clamp(1.7rem,4vw,2.7rem)/1 var(--font-serif);
+  margin:0;
+  font:700 clamp(1.5rem,3.4vw,2.1rem)/1.1 var(--font-serif);
+  letter-spacing:-.01em;
 }
-.product-description { max-width:42rem; margin:0; color:var(--ink-60); overflow-wrap:anywhere; }
-.product-meta { min-width:0; }
+.flag {
+  flex:none;
+  font:700 .68rem/1 var(--font-mono); letter-spacing:.14em; text-transform:uppercase;
+  color:var(--void); background:var(--terra);
+  padding:.45rem .7rem; border-radius:99px;
+}
+.product-description { margin:0; color:var(--paper-dim); max-width:46rem; }
+.product-description strong { color:var(--paper); font-weight:600; }
 .availability {
-  display:inline-flex;
-  gap:.5rem;
-  align-items:center;
-  margin:0 0 .75rem;
-  font:700 .75rem/1.4 var(--font-mono);
-  letter-spacing:.06em;
-  text-transform:uppercase;
+  margin:.25rem 0 0;
+  font:700 .72rem/1.5 var(--font-mono); letter-spacing:.08em; text-transform:uppercase;
+  color:var(--paper-dim);
+  display:flex; align-items:center; gap:.5rem;
 }
-.availability::before { content:"—"; font-size:1rem; }
-.availability[data-state="available"]::before { content:"✓"; color:var(--moss); }
-.availability[data-state="unavailable"]::before { content:"×"; color:var(--clay); }
-.availability[data-state="stale"]::before { content:"!"; color:var(--clay); }
-.availability-checked, .pushed-at { display:block; color:var(--ink-60); font-size:.82rem; overflow-wrap:anywhere; }
-.actions { display:flex; flex-wrap:wrap; gap:.75rem; margin-top:1rem; }
+.availability::before { content:""; width:.55rem; height:.55rem; border-radius:99px; background:var(--paper-dim); flex:none; }
+.availability[data-state="available"] { color:var(--moss-bright); }
+.availability[data-state="available"]::before { background:var(--moss); box-shadow:0 0 .5rem var(--moss); }
+.availability[data-state="unavailable"]::before { background:var(--terra); }
+.availability-checked, .pushed-at { display:block; color:var(--paper-dim); font-size:.8rem; opacity:.75; }
+.actions { display:flex; flex-wrap:wrap; gap:.6rem; margin-top:.6rem; }
 .action {
-  min-width:44px;
-  min-height:44px;
-  padding:.65rem .9rem;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  border:1px solid var(--stone-300);
-  border-radius:.5rem;
-  background:var(--paper-2);
-  font-weight:700;
-  text-underline-offset:.2rem;
+  min-width:44px; min-height:44px;
+  padding:.65rem 1rem;
+  display:inline-flex; align-items:center; justify-content:center; gap:.4rem;
+  border:1px solid var(--hairline); border-radius:.6rem;
+  background:transparent; color:var(--paper);
+  font-weight:600; text-decoration:none;
 }
-.action--primary { border-color:var(--ink); background:var(--ink); color:var(--paper-2); }
-.product-unavailable {
-  display:inline-flex;
-  align-items:center;
-  padding:.65rem .9rem;
-  border:1px solid var(--stone-300);
-  border-radius:.5rem;
-  background:var(--stone-50);
-  color:var(--ink-60);
-  font-weight:700;
-}
+.action--primary { background:var(--moss-deep); border-color:var(--moss); color:var(--moss-bright); }
+.action:hover { border-color:var(--moss); }
+.evidence-link { color:var(--paper-dim); }
+
 .about {
-  margin-bottom:4rem;
-  padding:clamp(2rem,5vw,4rem);
-  border-radius:1rem;
-  background:var(--stone-100);
+  margin:0 0 4rem; padding:clamp(1.75rem,5vw,3rem);
+  border:1px solid var(--hairline); border-radius:1rem;
+  background:var(--void-2);
 }
-.about p { max-width:48rem; color:var(--ink-60); }
+.about h2 {
+  margin:0 0 .75rem;
+  font:700 clamp(1.6rem,4vw,2.4rem)/1.1 var(--font-serif); letter-spacing:-.01em;
+}
+.about p { margin:0; max-width:48rem; color:var(--paper-dim); }
+
 footer {
   padding:1.5rem 0 3rem;
-  border-top:1px solid var(--stone-200);
-  color:var(--ink-60);
-  font-size:.85rem;
+  border-top:1px solid var(--hairline);
+  color:var(--paper-dim); font-size:.85rem;
 }
 [hidden] { display:none !important; }
+
 @media (max-width:48rem) {
-  .hero, .product { grid-template-columns:minmax(0,1fr); }
-  .hero { align-items:start; }
+  .product-grid { grid-template-columns:minmax(0,1fr); }
   .nav-note { display:none; }
-  .nav-secondary { font-size:.85rem; }
-  .product-meta { padding-top:.5rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior:auto; }
@@ -274,87 +199,96 @@ footer {
 <header class="site-header">
   <nav class="nav" aria-label="Primary">
     <a class="brand" href="/">Dumbmodel</a>
-    <div class="nav-trail">
-      <a class="nav-secondary" href="/season-clock.html">Season Clock</a>
-      <span class="nav-note">Five products. Evidence attached.</span>
-    </div>
+    <span class="nav-note">Six products. The map is the game.</span>
   </nav>
 </header>
 <main id="main">
   <section class="hero" aria-labelledby="gateway-title">
-    <div>
-      <p class="eyebrow">Vector product gateway</p>
-      <h1 id="gateway-title">Find the space you want to explore.</h1>
-    </div>
-    <p class="hero-copy">Five focused products connect people, teams, and companies through similarity. Choose a domain, review its source, then continue to its own site.</p>
+    <p class="eyebrow">The vector product family</p>
+    <h1 id="gateway-title">Similar things, <span class="moss">placed near each other.</span></h1>
+    <p class="hero-copy">Every Dumbmodel product is an embedding map: players, teams, or companies positioned so the ones alike sit close together. Pick a map and explore it.</p>
   </section>
 
-  <nav class="direct-links" aria-label="Direct product links">
-    <ul>
-      <li data-product="hoops"><a href="https://hoops.dumbmodel.com/">Hoops</a></li>
-      <li data-product="gridiron"><a href="https://gridiron.dumbmodel.com/">Gridiron</a></li>
-      <li data-product="pitch"><a href="https://pitch.dumbmodel.com/">Pitch</a></li>
-      <li data-product="equities"><a href="https://equities.dumbmodel.com/">Equities</a></li>
-      <li data-product="unified"><a href="https://unified.dumbmodel.com/">Unified</a></li>
-    </ul>
-  </nav>
-
-  <section class="products" aria-labelledby="products-title">
-    <div class="section-intro">
-      <p class="section-label">The family</p>
-      <h2 id="products-title">Five ways into the work.</h2>
-      <p>Availability comes from a point-in-time HTTP check, not continuous monitoring. A later visit may produce a different result.</p>
-      <p id="products-status" class="status" role="status" aria-live="polite" data-state="ready">Complete built-in product records are shown.</p>
-    </div>
-    <ol id="product-list" class="product-list" aria-describedby="products-status">
-      <li class="product product--hoops" data-product="hoops">
-        <span class="product-index" aria-hidden="true">01</span>
-        <div><h3>Hoops</h3><p class="product-description">Explore basketball players through a dedicated vector product.</p></div>
-        <div class="product-meta">
+  <section class="family" aria-labelledby="products-title">
+    <p class="section-label" id="products-title">The family</p>
+    <p id="products-status" class="status" role="status" aria-live="polite" data-state="ready">Complete built-in product records are shown.</p>
+    <ol id="product-list" class="product-grid" aria-describedby="products-status">
+      <li class="product product--flagship product--hoops" data-product="hoops">
+        <div class="product-top"><h3>Hoops</h3><span class="flag">Flagship</span></div>
+        <p class="product-description"><strong>12,966 NBA player-seasons on one 64-dimension map.</strong> Guess any player in Twenty Questions, play the Daily Court slate, open packs in Pack Battle.</p>
+        <div>
           <p class="availability" data-state="available">Available — GET returned HTTP 200 at check time</p>
-          <time class="availability-checked" datetime="2026-09-10T11:53:58Z">Availability checked: 2026-09-10T11:53:58Z</time>
-          <time class="pushed-at" datetime="2026-09-07T16:33:45Z">Repository last pushed: 2026-09-07T16:33:45Z</time>
-          <div class="actions"><a class="action action--primary product-link" href="https://hoops.dumbmodel.com/">Open Hoops</a><a class="action evidence-link" href="https://github.com/jcdavis131/vector-hoops">View Hoops evidence</a></div>
+          <time class="availability-checked" datetime="2026-09-18T12:50:00Z">Availability checked: 2026-09-18T12:50:00Z</time>
+          <time class="pushed-at" datetime="2026-09-18T04:39:46Z">Repository last pushed: 2026-09-18T04:39:46Z</time>
+        </div>
+        <div class="actions">
+          <a class="action action--primary product-link" href="https://hoops.dumbmodel.com/">Open Hoops</a>
+          <a class="action evidence-link" href="https://github.com/jcdavis131/vector-hoops">Evidence</a>
         </div>
       </li>
       <li class="product product--gridiron" data-product="gridiron">
-        <span class="product-index" aria-hidden="true">02</span>
-        <div><h3>Gridiron</h3><p class="product-description">Explore American football players through a dedicated vector product.</p></div>
-        <div class="product-meta">
+        <div class="product-top"><h3>Gridiron</h3></div>
+        <p class="product-description"><strong>NFL player-seasons on an embedding map.</strong> Find the players whose games resemble each other.</p>
+        <div>
           <p class="availability" data-state="available">Available — GET returned HTTP 200 at check time</p>
-          <time class="availability-checked" datetime="2026-09-10T11:53:58Z">Availability checked: 2026-09-10T11:53:58Z</time>
+          <time class="availability-checked" datetime="2026-09-18T12:50:00Z">Availability checked: 2026-09-18T12:50:00Z</time>
           <time class="pushed-at" datetime="2026-09-07T18:22:53Z">Repository last pushed: 2026-09-07T18:22:53Z</time>
-          <div class="actions"><a class="action action--primary product-link" href="https://gridiron.dumbmodel.com/">Open Gridiron</a><a class="action evidence-link" href="https://github.com/jcdavis131/vector-gridiron">View Gridiron evidence</a></div>
+        </div>
+        <div class="actions">
+          <a class="action action--primary product-link" href="https://gridiron.dumbmodel.com/">Open Gridiron</a>
+          <a class="action evidence-link" href="https://github.com/jcdavis131/vector-gridiron">Evidence</a>
         </div>
       </li>
       <li class="product product--pitch" data-product="pitch">
-        <span class="product-index" aria-hidden="true">03</span>
-        <div><h3>Pitch</h3><p class="product-description">Explore football teams and tournaments through a dedicated vector product.</p></div>
-        <div class="product-meta">
+        <div class="product-top"><h3>Pitch</h3></div>
+        <p class="product-description"><strong>Football clubs and tournaments on an embedding map.</strong> See which clubs play like which.</p>
+        <div>
           <p class="availability" data-state="available">Available — GET returned HTTP 200 at check time</p>
-          <time class="availability-checked" datetime="2026-09-10T11:53:58Z">Availability checked: 2026-09-10T11:53:58Z</time>
+          <time class="availability-checked" datetime="2026-09-18T12:50:00Z">Availability checked: 2026-09-18T12:50:00Z</time>
           <time class="pushed-at" datetime="2026-09-07T18:03:28Z">Repository last pushed: 2026-09-07T18:03:28Z</time>
-          <div class="actions"><a class="action action--primary product-link" href="https://pitch.dumbmodel.com/">Open Pitch</a><a class="action evidence-link" href="https://github.com/jcdavis131/vector-pitch">View Pitch evidence</a></div>
+        </div>
+        <div class="actions">
+          <a class="action action--primary product-link" href="https://pitch.dumbmodel.com/">Open Pitch</a>
+          <a class="action evidence-link" href="https://github.com/jcdavis131/vector-pitch">Evidence</a>
         </div>
       </li>
       <li class="product product--equities" data-product="equities">
-        <span class="product-index" aria-hidden="true">04</span>
-        <div><h3>Equities</h3><p class="product-description">Explore public companies through a dedicated vector product.</p></div>
-        <div class="product-meta">
+        <div class="product-top"><h3>Equities</h3></div>
+        <p class="product-description"><strong>Public companies on an embedding map.</strong> Find companies that behave alike, whatever their sector label says.</p>
+        <div>
           <p class="availability" data-state="available">Available — GET returned HTTP 200 at check time</p>
-          <time class="availability-checked" datetime="2026-09-10T11:53:58Z">Availability checked: 2026-09-10T11:53:58Z</time>
-          <time class="pushed-at" datetime="2026-09-07T16:59:39Z">Repository last pushed: 2026-09-07T16:59:39Z</time>
-          <div class="actions"><a class="action action--primary product-link" href="https://equities.dumbmodel.com/">Open Equities</a><a class="action evidence-link" href="https://github.com/jcdavis131/vector-equities">View Equities evidence</a></div>
+          <time class="availability-checked" datetime="2026-09-18T12:50:00Z">Availability checked: 2026-09-18T12:50:00Z</time>
+          <time class="pushed-at" datetime="2026-09-09T22:40:42Z">Repository last pushed: 2026-09-09T22:40:42Z</time>
+        </div>
+        <div class="actions">
+          <a class="action action--primary product-link" href="https://equities.dumbmodel.com/">Open Equities</a>
+          <a class="action evidence-link" href="https://github.com/jcdavis131/vector-equities">Evidence</a>
+        </div>
+      </li>
+      <li class="product product--arcade" data-product="arcade">
+        <div class="product-top"><h3>Arcade</h3></div>
+        <p class="product-description"><strong>Short games built on the vector maps.</strong> Quick plays, same similarity engine underneath.</p>
+        <div>
+          <p class="availability" data-state="available">Available — GET returned HTTP 200 at check time</p>
+          <time class="availability-checked" datetime="2026-09-18T12:50:00Z">Availability checked: 2026-09-18T12:50:00Z</time>
+          <time class="pushed-at" datetime="2026-09-07T03:10:10Z">Repository last pushed: 2026-09-07T03:10:10Z</time>
+        </div>
+        <div class="actions">
+          <a class="action action--primary product-link" href="https://arcade.dumbmodel.com/">Open Arcade</a>
+          <a class="action evidence-link" href="https://github.com/jcdavis131/vector-arcade">Evidence</a>
         </div>
       </li>
       <li class="product product--unified" data-product="unified">
-        <span class="product-index" aria-hidden="true">05</span>
-        <div><h3>Unified</h3><p class="product-description">Explore connections across the sports products in one dedicated experience.</p></div>
-        <div class="product-meta">
+        <div class="product-top"><h3>Unified</h3></div>
+        <p class="product-description"><strong>One doorway across the sports maps.</strong> Start here if you don't know which map you want yet.</p>
+        <div>
           <p class="availability" data-state="available">Available — GET returned HTTP 200 at check time</p>
-          <time class="availability-checked" datetime="2026-09-10T11:53:58Z">Availability checked: 2026-09-10T11:53:58Z</time>
+          <time class="availability-checked" datetime="2026-09-18T12:50:00Z">Availability checked: 2026-09-18T12:50:00Z</time>
           <time class="pushed-at" datetime="2026-09-10T11:51:34Z">Repository last pushed: 2026-09-10T11:51:34Z</time>
-          <div class="actions"><a class="action action--primary product-link" href="https://unified.dumbmodel.com/">Open Unified</a><a class="action evidence-link" href="https://github.com/jcdavis131/vector-unified">View Unified evidence</a></div>
+        </div>
+        <div class="actions">
+          <a class="action action--primary product-link" href="https://unified.dumbmodel.com/">Open Unified</a>
+          <a class="action evidence-link" href="https://github.com/jcdavis131/vector-unified">Evidence</a>
         </div>
       </li>
     </ol>
@@ -363,122 +297,89 @@ footer {
 
   <section class="about" aria-labelledby="truth-title">
     <p class="section-label">How to read this page</p>
-    <h2 id="truth-title">Product truth, kept small.</h2>
-    <p>Each destination carries a source link and its repository’s last-pushed timestamp. That timestamp describes repository activity, not a promise of site uptime. This gateway deliberately omits scores, entity totals, and model claims it cannot establish here.</p>
+    <h2 id="truth-title">Honest by construction.</h2>
+    <p>Each product links to its own site and its source repository. Availability is a point-in-time HTTP check, not live monitoring — a later visit may differ. This page shows no scores, entity totals, or model claims it can't establish here.</p>
   </section>
 </main>
 <footer>
-  <p>Dumbmodel product gateway · Static, dependency-free, and built without visitor tracking.</p>
+  <p>Dumbmodel product gateway · Static, dependency-free, no visitor tracking.</p>
 </footer>
 
 <script>
 (function () {
   "use strict";
-  const expected = ["hoops", "gridiron", "pitch", "equities", "unified"];
-  const productKeys = ["availability", "availability_checked_at", "availability_http_status", "availability_method", "description", "evidence_url", "name", "pushed_at", "slug", "url"];
-  const pushedAtPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/;
-  const measured = {
+  var expected = ["hoops", "gridiron", "pitch", "equities", "arcade", "unified"];
+  var productKeys = ["availability", "availability_checked_at", "availability_http_status", "availability_method", "description", "evidence_url", "name", "pushed_at", "slug", "url"];
+  var pushedAtPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/;
+  var measured = {
     hoops: { availability: "available", status: 200 },
     gridiron: { availability: "available", status: 200 },
     pitch: { availability: "available", status: 200 },
     equities: { availability: "available", status: 200 },
+    arcade: { availability: "available", status: 200 },
     unified: { availability: "available", status: 200 }
   };
-  const list = document.getElementById("product-list");
-  const status = document.getElementById("products-status");
+  var list = document.getElementById("product-list");
+  var status = document.getElementById("products-status");
 
-  function validProduct(product) {
-    if (!product || typeof product !== "object" || Array.isArray(product)) {
-      return false;
-    }
-    const keys = Object.keys(product).sort();
-    if (keys.length !== productKeys.length
-        || !keys.every((key, index) => key === productKeys[index])) {
-      return false;
-    }
-    return typeof product.slug === "string"
-      && product.slug.trim().length > 0
-      && typeof product.name === "string"
-      && product.name.trim().length > 0
-      && typeof product.description === "string"
-      && product.description.trim().length > 0
-      && typeof product.url === "string"
-      && product.url.trim().length > 0
-      && typeof product.availability === "string"
-      && product.availability.trim().length > 0
-      && typeof product.availability_checked_at === "string"
-      && product.availability_checked_at.trim().length > 0
-      && typeof product.availability_method === "string"
-      && product.availability_method.trim().length > 0
-      && typeof product.evidence_url === "string"
-      && product.evidence_url.trim().length > 0
-      && typeof product.pushed_at === "string"
-      && product.pushed_at.trim().length > 0
-      && Number.isInteger(product.availability_http_status)
-      && expected.includes(product.slug)
-      && Object.prototype.hasOwnProperty.call(measured, product.slug)
-      && product.availability === measured[product.slug].availability
-      && product.availability_method === "GET"
-      && product.availability_http_status === measured[product.slug].status
-      && pushedAtPattern.test(product.availability_checked_at)
-      && pushedAtPattern.test(product.pushed_at)
-      && Date.parse(product.availability_checked_at) <= Date.now()
-      && Date.parse(product.pushed_at) <= Date.now();
+  function validProduct(p) {
+    if (!p || typeof p !== "object" || Array.isArray(p)) return false;
+    var keys = Object.keys(p).sort();
+    if (keys.length !== productKeys.length ||
+        !keys.every(function (k, i) { return k === productKeys[i]; })) return false;
+    return typeof p.slug === "string" && p.slug.trim().length > 0 &&
+      typeof p.name === "string" && p.name.trim().length > 0 &&
+      typeof p.description === "string" && p.description.trim().length > 0 &&
+      typeof p.url === "string" && p.url.trim().length > 0 &&
+      typeof p.availability === "string" && p.availability.trim().length > 0 &&
+      typeof p.availability_checked_at === "string" && p.availability_checked_at.trim().length > 0 &&
+      typeof p.availability_method === "string" && p.availability_method.trim().length > 0 &&
+      typeof p.evidence_url === "string" && p.evidence_url.trim().length > 0 &&
+      typeof p.pushed_at === "string" && p.pushed_at.trim().length > 0 &&
+      Number.isInteger(p.availability_http_status) &&
+      expected.indexOf(p.slug) !== -1 &&
+      Object.prototype.hasOwnProperty.call(measured, p.slug) &&
+      p.availability === measured[p.slug].availability &&
+      p.availability_method === "GET" &&
+      p.availability_http_status === measured[p.slug].status &&
+      pushedAtPattern.test(p.availability_checked_at) &&
+      pushedAtPattern.test(p.pushed_at) &&
+      Date.parse(p.availability_checked_at) <= Date.now() &&
+      Date.parse(p.pushed_at) <= Date.now();
   }
 
   function refresh(products) {
-    if (!Array.isArray(products)
-        || products.length !== expected.length
-        || new Set(products.map((product) => product.slug)).size !== expected.length
-        || !expected.every((slug) => products.some((product) => product.slug === slug))
-        || !products.every(validProduct)) {
+    if (!Array.isArray(products) || products.length !== expected.length ||
+        new Set(products.map(function (p) { return p.slug; })).size !== expected.length ||
+        !expected.every(function (s) { return products.some(function (p) { return p.slug === s; }); }) ||
+        !products.every(validProduct)) {
       throw new Error("Product record failed validation.");
     }
-    products.forEach((product) => {
-      const matches = list.querySelectorAll(`[data-product="${product.slug}"]`);
-      if (matches.length !== 1) {
-        throw new Error("Product association must be unique.");
-      }
-      const item = matches[0];
-      const productLink = item.querySelector(".product-link");
-      const evidenceLink = item.querySelector(".evidence-link");
-      const unavailableLabel = item.querySelector(".product-unavailable");
-      const anchors = Array.from(item.querySelectorAll("a"));
-      if (!evidenceLink
-          || evidenceLink.getAttribute("href") !== product.evidence_url) {
+    products.forEach(function (product) {
+      var items = list.querySelectorAll('[data-product="' + product.slug + '"]');
+      if (items.length !== 1) throw new Error("Product association must be unique.");
+      var item = items[0];
+      var productLink = item.querySelector(".product-link");
+      var evidenceLink = item.querySelector(".evidence-link");
+      if (!evidenceLink || evidenceLink.getAttribute("href") !== product.evidence_url) {
         throw new Error("Product evidence association failed validation.");
       }
-      if (product.availability === "available") {
-        if (anchors.length !== 2
-            || !anchors.includes(productLink)
-            || !anchors.includes(evidenceLink)
-            || !productLink
-            || productLink.getAttribute("href") !== product.url
-            || unavailableLabel) {
-          throw new Error("Available product association failed validation.");
-        }
-      } else if (product.availability === "unavailable") {
-        if (anchors.length !== 1 || anchors[0] !== evidenceLink
-            || productLink || !unavailableLabel) {
-          throw new Error("Unavailable product association failed validation.");
-        }
+      if (!productLink || productLink.getAttribute("href") !== product.url) {
+        throw new Error("Product link association failed validation.");
       }
       item.querySelector("h3").textContent = product.name;
-      item.querySelector(".product-description").textContent = product.description;
-      const availability = item.querySelector(".availability");
+      var availability = item.querySelector(".availability");
       availability.dataset.state = product.availability;
-      const stateLabel = product.availability === "available" ? "Available" : "Unavailable";
-      availability.textContent = stateLabel + " — " + product.availability_method
-        + " returned HTTP " + product.availability_http_status + " at check time";
-      const checkedTime = item.querySelector(".availability-checked");
+      var stateLabel = product.availability === "available" ? "Available" : "Unavailable";
+      availability.textContent = stateLabel + " — " + product.availability_method +
+        " returned HTTP " + product.availability_http_status + " at check time";
+      var checkedTime = item.querySelector(".availability-checked");
       checkedTime.dateTime = product.availability_checked_at;
       checkedTime.textContent = "Availability checked: " + product.availability_checked_at;
-      const pushedTime = item.querySelector(".pushed-at");
+      var pushedTime = item.querySelector(".pushed-at");
       pushedTime.dateTime = product.pushed_at;
       pushedTime.textContent = "Repository last pushed: " + product.pushed_at;
-      if (productLink) {
-        productLink.setAttribute("aria-label", "Open " + product.name + " product");
-      }
+      productLink.setAttribute("aria-label", "Open " + product.name + " product");
       evidenceLink.setAttribute("aria-label", "View evidence for " + product.name);
     });
     status.dataset.state = "ready";
@@ -488,14 +389,12 @@ footer {
   status.dataset.state = "loading";
   status.textContent = "Checking the local product record…";
   fetch("assets/data/products.json", { cache: "no-store" })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Product record request failed.");
-      }
+    .then(function (response) {
+      if (!response.ok) throw new Error("Product record request failed.");
       return response.json();
     })
-    .then((payload) => refresh(payload.products))
-    .catch(() => {
+    .then(function (payload) { refresh(payload.products); })
+    .catch(function () {
       status.dataset.state = "error";
       status.textContent = "Could not refresh product details. The built-in point-in-time availability record remains visible.";
     });
