@@ -1,1 +1,76 @@
-{"products":[{"availability":"available","availability_checked_at":"2026-09-18T17:49:00Z","availability_http_status":200,"availability_method":"GET","description":"Hoops: 12,966 NBA player-seasons on one 64-dimension map.","evidence_url":"https://github.com/jcdavis131/vector-hoops","name":"Hoops","pushed_at":"2026-09-18T04:39:46Z","slug":"hoops","url":"https://hoops.dumbmodel.com/"},{"availability":"available","availability_checked_at":"2026-09-18T17:49:00Z","availability_http_status":200,"availability_method":"GET","description":"Gridiron: NFL player-seasons on an embedding map.","evidence_url":"https://github.com/jcdavis131/vector-gridiron","name":"Gridiron","pushed_at":"2026-09-07T18:22:53Z","slug":"gridiron","url":"https://gridiron.dumbmodel.com/"},{"availability":"available","availability_checked_at":"2026-09-18T17:49:00Z","availability_http_status":200,"availability_method":"GET","description":"Pitch: football clubs and tournaments on an embedding map.","evidence_url":"https://github.com/jcdavis131/vector-pitch","name":"Pitch","pushed_at":"2026-09-07T18:03:28Z","slug":"pitch","url":"https://pitch.dumbmodel.com/"},{"availability":"available","availability_checked_at":"2026-09-18T17:49:00Z","availability_http_status":200,"availability_method":"GET","description":"Equities: public companies on an embedding map.","evidence_url":"https://github.com/jcdavis131/vector-equities","name":"Equities","pushed_at":"2026-09-09T22:40:42Z","slug":"equities","url":"https://equities.dumbmodel.com/"},{"availability":"available","availability_checked_at":"2026-09-18T17:49:00Z","availability_http_status":200,"availability_method":"GET","description":"Arcade: short games built on the vector maps.","evidence_url":"https://github.com/jcdavis131/vector-arcade","name":"Arcade","pushed_at":"2026-09-07T03:10:10Z","slug":"arcade","url":"https://arcade.dumbmodel.com/"},{"availability":"available","availability_checked_at":"2026-09-18T17:49:00Z","availability_http_status":200,"availability_method":"GET","description":"Unified: one doorway across the sports maps.","evidence_url":"https://github.com/jcdavis131/vector-unified","name":"Unified","pushed_at":"2026-09-10T11:51:34Z","slug":"unified","url":"https://unified.dumbmodel.com/"}]}
+{
+ "products": [
+  {
+   "slug": "hoops",
+   "name": "Hoops",
+   "description": "12,966 NBA player-seasons on one interactive map. Play Twenty Questions, the Daily Court slate, or open packs in Pack Battle.",
+   "url": "https://hoops.dumbmodel.com/",
+   "evidence_url": "https://github.com/jcdavis131/vector-hoops",
+   "availability": "available",
+   "availability_checked_at": "2026-10-07T22:56:47Z",
+   "availability_http_status": 200,
+   "availability_method": "GET",
+   "pushed_at": "2026-10-07T20:45:51Z"
+  },
+  {
+   "slug": "gridiron",
+   "name": "Gridiron",
+   "description": "Every NFL player-season mapped by playing style. Find the quarterbacks, receivers, and defenders whose games mirror each other.",
+   "url": "https://gridiron.dumbmodel.com/",
+   "evidence_url": "https://github.com/jcdavis131/vector-gridiron",
+   "availability": "available",
+   "availability_checked_at": "2026-10-07T22:56:47Z",
+   "availability_http_status": 200,
+   "availability_method": "GET",
+   "pushed_at": "2026-09-06T21:36:56Z"
+  },
+  {
+   "slug": "pitch",
+   "name": "Pitch",
+   "description": "Clubs and tournaments mapped by how they actually play. Discover stylistic twins across leagues you thought had nothing in common.",
+   "url": "https://pitch.dumbmodel.com/",
+   "evidence_url": "https://github.com/jcdavis131/vector-pitch",
+   "availability": "available",
+   "availability_checked_at": "2026-10-07T22:56:47Z",
+   "availability_http_status": 200,
+   "availability_method": "GET",
+   "pushed_at": "2026-09-06T21:36:59Z"
+  },
+  {
+   "slug": "equities",
+   "name": "Equities",
+   "description": "Thousands of public companies mapped by behavior. Spot lookalikes hiding in different sectors.",
+   "url": "https://equities.dumbmodel.com/",
+   "evidence_url": "https://github.com/jcdavis131/vector-equities",
+   "availability": "available",
+   "availability_checked_at": "2026-10-07T22:56:47Z",
+   "availability_http_status": 200,
+   "availability_method": "GET",
+   "pushed_at": "2026-09-07T15:39:05Z"
+  },
+  {
+   "slug": "arcade",
+   "name": "Arcade",
+   "description": "Quick games on the same similarity engine. Five-minute plays, no learning curve.",
+   "url": "https://arcade.dumbmodel.com/",
+   "evidence_url": "https://github.com/jcdavis131/vector-arcade",
+   "availability": "available",
+   "availability_checked_at": "2026-10-07T22:56:47Z",
+   "availability_http_status": 200,
+   "availability_method": "GET",
+   "pushed_at": "2026-08-21T02:52:27Z"
+  },
+  {
+   "slug": "unified",
+   "name": "Unified",
+   "description": "One front door to every sports map. Start here and follow your curiosity.",
+   "url": "https://unified.dumbmodel.com/",
+   "evidence_url": "https://github.com/jcdavis131/vector-unified",
+   "availability": "available",
+   "availability_checked_at": "2026-10-07T22:56:47Z",
+   "availability_http_status": 200,
+   "availability_method": "GET",
+   "pushed_at": "2026-09-10T11:22:17Z"
+  }
+ ]
+}
