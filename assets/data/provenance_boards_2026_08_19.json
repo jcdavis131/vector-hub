@@ -1,0 +1,150 @@
+{
+  "date": "2026-08-19",
+  "boards_file": "boards_2026_08_19.json",
+  "dailySeed": 20260819,
+  "lcg": "20260813->189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars",
+  "idx": 3820,
+  "triple": [
+    11205,
+    19448,
+    14209
+  ],
+  "five": [
+    11205,
+    19448,
+    14209,
+    11701,
+    18524
+  ],
+  "triple_str": "triple[11205, 19448, 14209]",
+  "five_str": "five[11205, 19448, 14209, 11701, 18524]",
+  "same_link_same_stars": true,
+  "url_pattern": "?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 open->drag-map->Jordan->copy-link equal stars DAU3/WAU3 TLPG dedup",
+  "formula": "L(s)=(s*1103515245+12345)&0x7fffffff glibc",
+  "honest": true,
+  "stdlib_only": true,
+  "zero_deps": true,
+  "deterministic": "synthetic_deterministic_stdlib_LCG_189831298_honest",
+  "board_count": 30,
+  "per_team_priors": true,
+  "football_first_class": true,
+  "hoops_first_class": true,
+  "nfl_week3_preseason": true,
+  "cfb_week0": true,
+  "sample_lines": {
+    "Josh_Allen_265_5": 0.79,
+    "Mahomes_275_5": 0.82,
+    "Lamar_45_5": 0.81,
+    "Shedeur_295_5": 0.72
+  },
+  "gate": 8.5,
+  "provenance_badge": "8.5 PASS honest LCG 20260813->189831298 idx3820 triple[11205,19448,14209] same-link-same-stars",
+  "built": "2026-08-16T18:37:35.674688Z",
+  "sources_best_effort": {
+    "kalshi": {
+      "ok": true,
+      "bytes": 20000,
+      "status": 200,
+      "url": "https://api.elections.kalshi.com/trade-api/v2/markets?limit=80",
+      "honest": true
+    },
+    "dk": {
+      "ok": false,
+      "error": "HTTP 403 Forbidden",
+      "url": "https://api.draftkings.com/draftgroups/v1",
+      "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest",
+      "status": 403,
+      "honest_fallback": true,
+      "mode": "no_key_honest_fallback",
+      "key_present": false,
+      "note": "DK_API_KEY missing \u2014 honest 403 not faked as success"
+    },
+    "prizepicks": {
+      "ok": false,
+      "error": "HTTP 403 Forbidden",
+      "url": "https://api.prizepicks.com/projections",
+      "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest",
+      "status": 403,
+      "honest_fallback": true,
+      "mode": "timeout_honest_fallback_5s",
+      "timeout": 5
+    },
+    "tennis": {
+      "ok": false,
+      "error": "The read operation timed out",
+      "url": "https://www.usopen.org/api/draws",
+      "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest",
+      "honest_fallback": true,
+      "draw": 128,
+      "us_open": "2026-08-25 128 draw Sinner vs Alcaraz path honest 503",
+      "note": "US Open 128 honest fallback until oracle live"
+    },
+    "nba": {
+      "ok": false,
+      "error": "The read operation timed out",
+      "url": "https://cdn.nba.com/static/json/liveData/scoreboard.json",
+      "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest",
+      "honest_fallback": true,
+      "alt_attempt": {
+        "ok": false,
+        "error": "The read operation timed out",
+        "url": "https://stats.nba.com/stats/scoreboardV2?DayOffset=0&LeagueID=00",
+        "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest",
+        "honest_fallback": true
+      },
+      "nba_opener": "2026-10-21",
+      "note": "NBA opener 2026-10-21 honest 503 until live oracle"
+    }
+  },
+  "honest_tag": "synthetic_deterministic_stdlib_LCG_189831298_honest",
+  "real_oracle_stub": "when KALSHI_API_KEY/DK_API_KEY/PP_API_KEY env present, swap tag to real_authed_verified_LCG_189831298 hourly + cache to unified_matrix.npz 18M READY \u2014 503 until then never faked \u2014 honest fallback logged, 403 not faked as success",
+  "updated": "2026-08-17T22:04:06.014437+00:00",
+  "dk_honest": {
+    "ok": false,
+    "error": "HTTP 403 Forbidden",
+    "url": "https://api.draftkings.com/draftgroups/v1",
+    "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest",
+    "status": 403,
+    "honest_fallback": true,
+    "mode": "no_key_honest_fallback",
+    "key_present": false,
+    "note": "DK_API_KEY missing \u2014 honest 403 not faked as success"
+  },
+  "prizepicks_5s": {
+    "ok": false,
+    "error": "HTTP 403 Forbidden",
+    "url": "https://api.prizepicks.com/projections",
+    "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest",
+    "status": 403,
+    "honest_fallback": true,
+    "mode": "timeout_honest_fallback_5s",
+    "timeout": 5
+  },
+  "us_open_128": {
+    "ok": false,
+    "error": "The read operation timed out",
+    "url": "https://www.usopen.org/api/draws",
+    "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest",
+    "honest_fallback": true,
+    "draw": 128,
+    "us_open": "2026-08-25 128 draw Sinner vs Alcaraz path honest 503",
+    "note": "US Open 128 honest fallback until oracle live"
+  },
+  "nba_opener": {
+    "ok": false,
+    "error": "The read operation timed out",
+    "url": "https://cdn.nba.com/static/json/liveData/scoreboard.json",
+    "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest",
+    "honest_fallback": true,
+    "alt_attempt": {
+      "ok": false,
+      "error": "The read operation timed out",
+      "url": "https://stats.nba.com/stats/scoreboardV2?DayOffset=0&LeagueID=00",
+      "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest",
+      "honest_fallback": true
+    },
+    "nba_opener": "2026-10-21",
+    "note": "NBA opener 2026-10-21 honest 503 until live oracle"
+  },
+  "lcg_20260819": "20260819->368471824 idx2014 triple[5128, 10606, 5049]"
+}

@@ -1,0 +1,820 @@
+{
+  "schema_version": "1.1",
+  "domain": "synthetic_markets",
+  "primary_task_type": "prediction",
+  "description": "Synthetic in-repo domain (seeded). Demonstrates multi-target scoring: a forward return, a forward realized volatility, and a binary drawdown-exceedance flag, each on its own temporal split.",
+  "aggregate": {
+    "targets_total": 4,
+    "targets_scored": 3,
+    "targets_spec_only": 1,
+    "targets_errored": 0,
+    "targets_judged": 0,
+    "mtnn_target_wins": 0,
+    "baseline_target_wins": 0,
+    "primary_metric_verdicts": {
+      "forward_return": null,
+      "forward_realized_vol": null,
+      "drawdown_exceedance": null
+    },
+    "headline": "3/4 targets scored, none judged (no MTNN rung present); baseline ladder only",
+    "built": "2026-08-09T21:23:06"
+  },
+  "targets": [
+    {
+      "target": {
+        "name": "forward_return",
+        "kind": "regression",
+        "horizon": "next_period",
+        "split": "temporal",
+        "primary_metric": "spearman_ic",
+        "status": "scored"
+      },
+      "note": "",
+      "scorecard": {
+        "schema_version": "1.0",
+        "domain": "synthetic_markets",
+        "task": "synthetic_markets::forward_return",
+        "task_type": "prediction",
+        "split": "temporal",
+        "seed": 7,
+        "k_values": [
+          1,
+          5,
+          10
+        ],
+        "summary": {
+          "metrics_judged": 0,
+          "mtnn_wins": 0,
+          "baseline_wins": 0,
+          "headline": "no MTNN rung present — baseline ladder only",
+          "built": "2026-08-09T21:23:05",
+          "n_train": 720,
+          "n_test": 360
+        },
+        "methods": [
+          {
+            "name": "dummy_mean",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.0,
+              "mae": 2.946496,
+              "rmse": 3.669291,
+              "r2": -0.047689
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.77551,
+              "mae": 2.039897,
+              "rmse": 2.531977,
+              "r2": 0.50113
+            },
+            "note": ""
+          },
+          {
+            "name": "ridge",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.985931,
+              "mae": 0.506366,
+              "rmse": 0.638798,
+              "r2": 0.968246
+            },
+            "note": ""
+          },
+          {
+            "name": "pca_ridge(n=16)",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.985931,
+              "mae": 0.506366,
+              "rmse": 0.638798,
+              "r2": 0.968246
+            },
+            "note": ""
+          },
+          {
+            "name": "knn(k=10)",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.925412,
+              "mae": 1.246441,
+              "rmse": 1.574999,
+              "r2": 0.806968
+            },
+            "note": ""
+          },
+          {
+            "name": "hist_gbm",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.961356,
+              "mae": 0.827916,
+              "rmse": 1.0575,
+              "r2": 0.912978
+            },
+            "note": ""
+          },
+          {
+            "name": "mlp",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.982144,
+              "mae": 0.583011,
+              "rmse": 0.725231,
+              "r2": 0.959072
+            },
+            "note": ""
+          }
+        ],
+        "metrics": {
+          "spearman_ic": {
+            "higher_is_better": true,
+            "ranking": [
+              {
+                "method": "ridge",
+                "value": 0.985931
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.985931
+              },
+              {
+                "method": "mlp",
+                "value": 0.982144
+              },
+              {
+                "method": "hist_gbm",
+                "value": 0.961356
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.925412
+              },
+              {
+                "method": "persistence",
+                "value": 0.77551
+              },
+              {
+                "method": "dummy_mean",
+                "value": 0.0
+              }
+            ],
+            "best_method": "ridge",
+            "best_baseline": "ridge",
+            "best_baseline_value": 0.985931,
+            "mtnn_value": null,
+            "mtnn_delta": null,
+            "mtnn_beats_best_baseline": null
+          },
+          "mae": {
+            "higher_is_better": false,
+            "ranking": [
+              {
+                "method": "ridge",
+                "value": 0.506366
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.506366
+              },
+              {
+                "method": "mlp",
+                "value": 0.583011
+              },
+              {
+                "method": "hist_gbm",
+                "value": 0.827916
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 1.246441
+              },
+              {
+                "method": "persistence",
+                "value": 2.039897
+              },
+              {
+                "method": "dummy_mean",
+                "value": 2.946496
+              }
+            ],
+            "best_method": "ridge",
+            "best_baseline": "ridge",
+            "best_baseline_value": 0.506366,
+            "mtnn_value": null,
+            "mtnn_delta": null,
+            "mtnn_beats_best_baseline": null
+          },
+          "rmse": {
+            "higher_is_better": false,
+            "ranking": [
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.638798
+              },
+              {
+                "method": "ridge",
+                "value": 0.638798
+              },
+              {
+                "method": "mlp",
+                "value": 0.725231
+              },
+              {
+                "method": "hist_gbm",
+                "value": 1.0575
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 1.574999
+              },
+              {
+                "method": "persistence",
+                "value": 2.531977
+              },
+              {
+                "method": "dummy_mean",
+                "value": 3.669291
+              }
+            ],
+            "best_method": "pca_ridge(n=16)",
+            "best_baseline": "pca_ridge(n=16)",
+            "best_baseline_value": 0.638798,
+            "mtnn_value": null,
+            "mtnn_delta": null,
+            "mtnn_beats_best_baseline": null
+          },
+          "r2": {
+            "higher_is_better": true,
+            "ranking": [
+              {
+                "method": "ridge",
+                "value": 0.968246
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.968246
+              },
+              {
+                "method": "mlp",
+                "value": 0.959072
+              },
+              {
+                "method": "hist_gbm",
+                "value": 0.912978
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.806968
+              },
+              {
+                "method": "persistence",
+                "value": 0.50113
+              },
+              {
+                "method": "dummy_mean",
+                "value": -0.047689
+              }
+            ],
+            "best_method": "ridge",
+            "best_baseline": "ridge",
+            "best_baseline_value": 0.968246,
+            "mtnn_value": null,
+            "mtnn_delta": null,
+            "mtnn_beats_best_baseline": null
+          }
+        },
+        "notes": {
+          "target": "forward_return",
+          "kind": "regression",
+          "horizon": "next_period",
+          "primary_metric": "spearman_ic",
+          "construction": "y = next-period return; features from period t only; temporal cut."
+        }
+      }
+    },
+    {
+      "target": {
+        "name": "forward_realized_vol",
+        "kind": "regression",
+        "horizon": "next_period",
+        "split": "temporal",
+        "primary_metric": "spearman_ic",
+        "status": "scored"
+      },
+      "note": "",
+      "scorecard": {
+        "schema_version": "1.0",
+        "domain": "synthetic_markets",
+        "task": "synthetic_markets::forward_realized_vol",
+        "task_type": "prediction",
+        "split": "temporal",
+        "seed": 7,
+        "k_values": [
+          1,
+          5,
+          10
+        ],
+        "summary": {
+          "metrics_judged": 0,
+          "mtnn_wins": 0,
+          "baseline_wins": 0,
+          "headline": "no MTNN rung present — baseline ladder only",
+          "built": "2026-08-09T21:23:05",
+          "n_train": 720,
+          "n_test": 360
+        },
+        "methods": [
+          {
+            "name": "dummy_mean",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.0,
+              "mae": 0.744381,
+              "rmse": 0.91165,
+              "r2": -0.000127
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.57,
+              "mae": 0.582908,
+              "rmse": 0.769703,
+              "r2": 0.287074
+            },
+            "note": ""
+          },
+          {
+            "name": "ridge",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.138429,
+              "mae": 0.732396,
+              "rmse": 0.894382,
+              "r2": 0.037403
+            },
+            "note": ""
+          },
+          {
+            "name": "pca_ridge(n=16)",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.138429,
+              "mae": 0.732396,
+              "rmse": 0.894382,
+              "r2": 0.037403
+            },
+            "note": ""
+          },
+          {
+            "name": "knn(k=10)",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.807025,
+              "mae": 0.381367,
+              "rmse": 0.473738,
+              "r2": 0.729931
+            },
+            "note": ""
+          },
+          {
+            "name": "hist_gbm",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.772555,
+              "mae": 0.346276,
+              "rmse": 0.448791,
+              "r2": 0.757626
+            },
+            "note": ""
+          },
+          {
+            "name": "mlp",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.977054,
+              "mae": 0.114432,
+              "rmse": 0.143364,
+              "r2": 0.975267
+            },
+            "note": ""
+          }
+        ],
+        "metrics": {
+          "spearman_ic": {
+            "higher_is_better": true,
+            "ranking": [
+              {
+                "method": "mlp",
+                "value": 0.977054
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.807025
+              },
+              {
+                "method": "hist_gbm",
+                "value": 0.772555
+              },
+              {
+                "method": "persistence",
+                "value": 0.57
+              },
+              {
+                "method": "ridge",
+                "value": 0.138429
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.138429
+              },
+              {
+                "method": "dummy_mean",
+                "value": 0.0
+              }
+            ],
+            "best_method": "mlp",
+            "best_baseline": "mlp",
+            "best_baseline_value": 0.977054,
+            "mtnn_value": null,
+            "mtnn_delta": null,
+            "mtnn_beats_best_baseline": null
+          },
+          "mae": {
+            "higher_is_better": false,
+            "ranking": [
+              {
+                "method": "mlp",
+                "value": 0.114432
+              },
+              {
+                "method": "hist_gbm",
+                "value": 0.346276
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.381367
+              },
+              {
+                "method": "persistence",
+                "value": 0.582908
+              },
+              {
+                "method": "ridge",
+                "value": 0.732396
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.732396
+              },
+              {
+                "method": "dummy_mean",
+                "value": 0.744381
+              }
+            ],
+            "best_method": "mlp",
+            "best_baseline": "mlp",
+            "best_baseline_value": 0.114432,
+            "mtnn_value": null,
+            "mtnn_delta": null,
+            "mtnn_beats_best_baseline": null
+          },
+          "rmse": {
+            "higher_is_better": false,
+            "ranking": [
+              {
+                "method": "mlp",
+                "value": 0.143364
+              },
+              {
+                "method": "hist_gbm",
+                "value": 0.448791
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.473738
+              },
+              {
+                "method": "persistence",
+                "value": 0.769703
+              },
+              {
+                "method": "ridge",
+                "value": 0.894382
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.894382
+              },
+              {
+                "method": "dummy_mean",
+                "value": 0.91165
+              }
+            ],
+            "best_method": "mlp",
+            "best_baseline": "mlp",
+            "best_baseline_value": 0.143364,
+            "mtnn_value": null,
+            "mtnn_delta": null,
+            "mtnn_beats_best_baseline": null
+          },
+          "r2": {
+            "higher_is_better": true,
+            "ranking": [
+              {
+                "method": "mlp",
+                "value": 0.975267
+              },
+              {
+                "method": "hist_gbm",
+                "value": 0.757626
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.729931
+              },
+              {
+                "method": "persistence",
+                "value": 0.287074
+              },
+              {
+                "method": "ridge",
+                "value": 0.037403
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.037403
+              },
+              {
+                "method": "dummy_mean",
+                "value": -0.000127
+              }
+            ],
+            "best_method": "mlp",
+            "best_baseline": "mlp",
+            "best_baseline_value": 0.975267,
+            "mtnn_value": null,
+            "mtnn_delta": null,
+            "mtnn_beats_best_baseline": null
+          }
+        },
+        "notes": {
+          "target": "forward_realized_vol",
+          "kind": "regression",
+          "horizon": "next_period",
+          "primary_metric": "spearman_ic",
+          "construction": "y = next-period realized vol; features from period t; temporal cut."
+        }
+      }
+    },
+    {
+      "target": {
+        "name": "drawdown_exceedance",
+        "kind": "binary_classification",
+        "horizon": "next_period",
+        "split": "temporal",
+        "primary_metric": "roc_auc",
+        "status": "scored"
+      },
+      "note": "",
+      "scorecard": {
+        "schema_version": "1.0",
+        "domain": "synthetic_markets",
+        "task": "synthetic_markets::drawdown_exceedance",
+        "task_type": "prediction",
+        "split": "temporal",
+        "seed": 7,
+        "k_values": [
+          1,
+          5,
+          10
+        ],
+        "summary": {
+          "metrics_judged": 0,
+          "mtnn_wins": 0,
+          "baseline_wins": 0,
+          "headline": "no MTNN rung present — baseline ladder only",
+          "built": "2026-08-09T21:23:06",
+          "n_train": 720,
+          "n_test": 360
+        },
+        "methods": [
+          {
+            "name": "dummy_mean",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "roc_auc": 0.5,
+              "spearman_ic": 0.0
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "roc_auc": 0.795019,
+              "spearman_ic": 0.552363
+            },
+            "note": ""
+          },
+          {
+            "name": "ridge",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "roc_auc": 0.936104,
+              "spearman_ic": 0.674556
+            },
+            "note": ""
+          },
+          {
+            "name": "pca_ridge(n=16)",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "roc_auc": 0.936104,
+              "spearman_ic": 0.674556
+            },
+            "note": ""
+          },
+          {
+            "name": "knn(k=10)",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "roc_auc": 0.945722,
+              "spearman_ic": 0.70354
+            },
+            "note": ""
+          },
+          {
+            "name": "hist_gbm",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "roc_auc": 0.934905,
+              "spearman_ic": 0.6727
+            },
+            "note": ""
+          },
+          {
+            "name": "mlp",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "roc_auc": 0.974419,
+              "spearman_ic": 0.73382
+            },
+            "note": ""
+          }
+        ],
+        "metrics": {
+          "roc_auc": {
+            "higher_is_better": true,
+            "ranking": [
+              {
+                "method": "mlp",
+                "value": 0.974419
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.945722
+              },
+              {
+                "method": "ridge",
+                "value": 0.936104
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.936104
+              },
+              {
+                "method": "hist_gbm",
+                "value": 0.934905
+              },
+              {
+                "method": "persistence",
+                "value": 0.795019
+              },
+              {
+                "method": "dummy_mean",
+                "value": 0.5
+              }
+            ],
+            "best_method": "mlp",
+            "best_baseline": "mlp",
+            "best_baseline_value": 0.974419,
+            "mtnn_value": null,
+            "mtnn_delta": null,
+            "mtnn_beats_best_baseline": null
+          },
+          "spearman_ic": {
+            "higher_is_better": true,
+            "ranking": [
+              {
+                "method": "mlp",
+                "value": 0.73382
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.70354
+              },
+              {
+                "method": "ridge",
+                "value": 0.674556
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.674556
+              },
+              {
+                "method": "hist_gbm",
+                "value": 0.6727
+              },
+              {
+                "method": "persistence",
+                "value": 0.552363
+              },
+              {
+                "method": "dummy_mean",
+                "value": 0.0
+              }
+            ],
+            "best_method": "mlp",
+            "best_baseline": "mlp",
+            "best_baseline_value": 0.73382,
+            "mtnn_value": null,
+            "mtnn_delta": null,
+            "mtnn_beats_best_baseline": null
+          }
+        },
+        "notes": {
+          "target": "drawdown_exceedance",
+          "kind": "binary_classification",
+          "horizon": "next_period",
+          "primary_metric": "roc_auc",
+          "construction": "y = 1 if next-period drawdown score in top third else 0; features from period t; temporal cut; scored by roc_auc."
+        }
+      }
+    },
+    {
+      "target": {
+        "name": "long_horizon_return",
+        "kind": "regression",
+        "horizon": "t+3",
+        "split": "temporal",
+        "primary_metric": "spearman_ic",
+        "status": "spec-only"
+      },
+      "note": "no data wired",
+      "scorecard": null
+    }
+  ],
+  "notes": {
+    "provenance": "synthetic seeded data generated in build_synthetic_multitarget.py; no MTNN rung supplied (baseline-only); thesis UNPROVEN pending real runs"
+  }
+}

@@ -101,6 +101,7 @@ a:focus-visible, button:focus-visible{
 /* ---------- shared top nav (mirrors the games' .site-nav) ---------- */
 
 .site-nav{
+  z-index:40;
   display: flex;
   align-items: center;
   justify-content: space-between;

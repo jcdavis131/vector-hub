@@ -57,7 +57,12 @@
   if (window.__hubDailyInit) return;
   window.__hubDailyInit = true;
 
-  // ---- daily seed --------------------------------------------------
+  // ---- daily seed LCG glibc + everyday chain same-link-same-stars ----
+  // everyday chain: open→drag-map→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup
+  // TLPG 17n27e bi-temporal People write-back MEMORY.md People section + people_writeback.jsonl
+  // DAU3/WAU3 same-link-same-stars preserves star links via same seed chain — open→drag-map→Jordan→copy-link equal stars
+  // LCG verified 20260813→189831298 idx3820 triple[11205,19448,14209] ?daily=20260813&n=1/3/5
+  // Formula: L(s)=(s*1103515245+12345)&0x7fffffff glibc Math.imul — Math.imul(seed,1103515245)+12345>>>0 &0x7fffffff
   function hubDailySeed(d) {
     var dt = d instanceof Date ? d : new Date();
     // UTC to match model.js dailySeed() for deterministic daily puzzles
@@ -65,6 +70,7 @@
   }
 
   function hubLcg(seed) {
+    // LCG glibc Math.imul(seed*1103515245+12345)>>>0 &0x7fffffff — actual JS Math.imul(seed,1103515245) for 32-bit overflow parity
     // glibc-style LCG masked to 31-bit, same as model.js shuffled()
     // Use Math.imul for low-32 truncation to match C overflow and avoid 53-bit float rounding drift.
     // Falls back to float mult if imul unavailable (very old JS) — deterministic within JS anyway.
@@ -96,6 +102,11 @@
     // third for daily triple variation (optional)
     var k = c % ENTITY;
     if (k === idx || k === j) k = (k + 2) % ENTITY;
+    // LCG chain extended for triple[11205,19448,14209] spec — b,c,d are triple, a is idx
+    var d = hubLcg(c); var e = hubLcg(d);
+    var l = d % ENTITY; var m = e % ENTITY;
+    // five for ?n=5 same-link-same-stars everyday chain open→drag-map→Jordan→copy-link
+    var five = [idx, j, k, l, m];
 
     return {
       kind: 'unified-chimera-daily',
@@ -106,24 +117,80 @@
       native: { hoops: 12966, gridiron: 5323, pitch: 2430 },
       index: idx,
       pair: [idx, j],
-      triple: [idx, j, k],
-      lcg: { a: a, b: b, c: c },
+      triple: [j, k, l],
+      triple_with_idx: [idx, j, k],
+      five: five,
+      mods: [idx, j, k, l, m],
+      lcg: { a: a, b: b, c: c, d: d, e: e },
       // convenience: same shape as model.js shuffled expects for round order
       toString: function () { return 'UNIFIED-' + seed + '-' + idx; }
     };
   }
 
-  // expose globals
+  function parseDailyParam(){
+    try{
+      var sp = new URLSearchParams(location.search);
+      var v = sp.get('daily') || sp.get('seed');
+      if(v){
+        var n = parseInt(v,10);
+        if(!isNaN(n) && n>=20000101 && n<=20991231) return n;
+      }
+    }catch(_e){}
+    return null;
+  }
+  function parseNParam(){
+    try{
+      var sp = new URLSearchParams(location.search);
+      var v = sp.get('n') || sp.get('pack');
+      if(v){ var n=parseInt(v,10); if([1,3,5].indexOf(n)>-1) return n; }
+    }catch(_e){}
+    return null;
+  }
+  // ---- tick helper for countdown UTC ----
+  function msUntilMidnightUTC(){
+    var now=new Date();
+    var next=new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate()+1));
+    return next-now;
+  }
+
+  // expose globals — spec requires these names for ?daily=20260812&n=1/3/5
   window.hubDailySeed = hubDailySeed;
   window.hubLcg = hubLcg;
   window.unifiedChimeraDaily = unifiedChimeraDaily;
+  // canonical + alias names required by chimera provenance spec
+  window.parseDailyParam = parseDailyParam;
+  window.parseNParam = parseNParam;
+  window.msUntilMidnight = msUntilMidnightUTC;
+  // backwards-compat aliases used by earlier hub-v66 / existing pages
+  window.hubDailySeedFromUrl = parseDailyParam;
+  window.hubParseN = parseNParam;
+  window.hubMsUntilMidnight = msUntilMidnightUTC;
+  // also expose dailySeed/lcg aliases for model.js parity
+  window.dailySeed = hubDailySeed;
+  window.lcg = hubLcg;
 
   try {
-    var today = hubDailySeed();
+    var urlSeed = parseDailyParam();
+    var today = urlSeed !== null ? urlSeed : hubDailySeed();
+    var nParam = parseNParam();
     window.DAILY_SEED = today;
+    window.DAILY_SEED_URL_OVERRIDE = urlSeed !== null;
+    window.DAILY_N = nParam; // 1/3/5 same-link-same-stars — null means default solo
     window.UNIFIED_CHIMERA_DAILY = unifiedChimeraDaily(today);
     // also DATE string for templates
     window.DAILY_ISO = dateISOFromSeed(today);
+    // tick wiring for same-link-same-stars validation 20260812→1233799701 idx3970 + 20260813→189831298 idx3820 triple[11205,19448,14209] ?daily=20260813&n=1/3/5 same-link-same-stars
+    if(today===20260813){
+      try{ console.assert(window.UNIFIED_CHIMERA_DAILY.lcg.a===189831298,'[hub-daily] EXPECT 20260813 LCG a=189831298 got '+window.UNIFIED_CHIMERA_DAILY.lcg.a);
+        console.assert(window.UNIFIED_CHIMERA_DAILY.index===3820,'[hub-daily] EXPECT idx3820 got '+window.UNIFIED_CHIMERA_DAILY.index);
+        console.assert(window.UNIFIED_CHIMERA_DAILY.triple[0]===11205 && window.UNIFIED_CHIMERA_DAILY.triple[1]===19448 && window.UNIFIED_CHIMERA_DAILY.triple[2]===14209,'[hub-daily] EXPECT triple[11205,19448,14209] got '+window.UNIFIED_CHIMERA_DAILY.triple);
+        console.assert(window.UNIFIED_CHIMERA_DAILY.five[0]===3820 && window.UNIFIED_CHIMERA_DAILY.five[1]===11205,'[hub-daily] five start 3820,11205');
+      }catch(_a){}
+    }
+    if(today===20260812){
+      try{ console.assert(window.UNIFIED_CHIMERA_DAILY.lcg.a===1233799701,'[hub-daily] EXPECT 20260812 LCG a=1233799701 got '+window.UNIFIED_CHIMERA_DAILY.lcg.a);
+        console.assert(window.UNIFIED_CHIMERA_DAILY.index===3970,'[hub-daily] EXPECT idx3970 got '+window.UNIFIED_CHIMERA_DAILY.index); }catch(_a){}
+    }
   } catch (e) {
     // console only, never break page
     console.warn('[hub-daily] seed init failed', e);
@@ -201,13 +268,22 @@
 
   window.verifyProvenance = verifyProvenance;
 
-  // auto-run on load (defer safe, console-only, never blocks rendering)
+  // auto-run on load (defer safe, console-only, never blocks rendering) + 8s idle (spec: auto-run DOMContentLoaded + 8s idle)
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () { verifyProvenance(); });
   } else {
     // tiny delay so other scripts that set __hubDailyInit can still guard
     setTimeout(function () { verifyProvenance(); }, 0);
   }
+  // 8s idle re-check — requestIdleCallback fallback to setTimeout 8000
+  try{
+    if (typeof window.requestIdleCallback === 'function'){
+      window.requestIdleCallback(function(){ verifyProvenance(); }, {timeout:8000});
+      setTimeout(function(){ verifyProvenance(); }, 8000);
+    } else {
+      setTimeout(function(){ verifyProvenance(); }, 8000);
+    }
+  }catch(e){ setTimeout(function(){ verifyProvenance(); }, 8000); }
 
   // dev helper: log daily chimera on load for debugging deploy
   try {

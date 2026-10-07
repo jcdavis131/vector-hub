@@ -1,0 +1,23 @@
+1
+00:00:00,000 --> 00:00:03,500
+Six models live on dumbmodel.com — hoops, gridiron, pitch, tennis, equities, unified.
+
+2
+00:00:03,500 --> 00:00:07,000
+Five of them are daily puzzles you can play right now.
+
+3
+00:00:07,000 --> 00:00:11,500
+Hoops 12,966 player-seasons. Gridiron 646 for 2026, 5,323 in the joint.
+
+4
+00:00:11,500 --> 00:00:15,000
+Pitch 2,430 seasons. Equities 500 tickers, 4,831 company-years.
+
+5
+00:00:15,000 --> 00:00:21,000
+Tennis 4,022 player-seasons, 315 features, 32-d — model card and probe only, no daily yet.
+
+6
+00:00:21,000 --> 00:00:28,000
+Tagline: Five daily vector puzzles — NBA, NFL, World Cup, public companies, and joint cross-sport chimera (20,719×64-d, dailySeed LCG)

@@ -1,0 +1,95 @@
+{
+  "bundle": "alienware_cache_bundle.json",
+  "version": "5.0K",
+  "zero_deps": true,
+  "stdlib_only": true,
+  "honest": true,
+  "dailySeed": 20260813,
+  "lcg": 189831298,
+  "idx": 3820,
+  "triple": [
+    11205,
+    19448,
+    14209
+  ],
+  "five": [
+    11205,
+    19448,
+    14209,
+    11701,
+    18524
+  ],
+  "caches": [
+    {
+      "file": "embedding_v3.npz",
+      "expected_bytes": 18874368,
+      "expected_shape": [
+        20719,
+        128
+      ],
+      "dtype": "float32",
+      "status": "MISSING",
+      "placeholder_bytes": 2012,
+      "exists": false,
+      "honest_503": true,
+      "reason": "Alienware GPU cache not yet built \u2014 placeholder 2012B honest 503 \u2014 blocking LOCAL-GPU unified G2 0.685->0.64 MTNN v9.2 150ep d_model128 4-head CLS128 4L RoPE RMSNorm SupCon0.07 VICReg0.05 CORAL0.5 centroid0.5 GRL \u03bb0.3\u21920.5"
+    },
+    {
+      "file": "mtnn_best.pt",
+      "expected_bytes": 3879731,
+      "expected_mb": 3.7,
+      "status": "MISSING",
+      "placeholder_bytes": 519,
+      "exists": false,
+      "honest_503": true,
+      "reason": "MTNN best ckpt missing \u2014 LOCAL-GPU training needed \u2014 placeholder 519B json.tool PASS? actually binary placeholder honest 503"
+    },
+    {
+      "file": "pitch_mtnn_embeddings.json",
+      "expected_shape": "variable",
+      "status": "MISSING",
+      "placeholder": false,
+      "honest_503": true
+    },
+    {
+      "file": "unified_matrix.npz",
+      "expected_bytes": 18874368,
+      "shape": [
+        20719,
+        64
+      ],
+      "dtype": "float32",
+      "status": "READY",
+      "ready": true,
+      "sha16": "7c742c2715262ab1",
+      "exists": true,
+      "note": "18M 20719\u00d764 float32 READY true honest"
+    },
+    {
+      "file": "vegas_backfill_2020_2025.json",
+      "status": "READY",
+      "size_mb": 32,
+      "rows": 57660,
+      "exists": true
+    },
+    {
+      "file": "boards_2026_08_17.json",
+      "status": "READY",
+      "size_kb": 12,
+      "exists": true
+    },
+    {
+      "file": "boards_2026_08_18.json",
+      "status": "READY",
+      "size_kb": 13.6,
+      "exists": true,
+      "boards_count": 24
+    }
+  ],
+  "bundle_ok": true,
+  "json_tool_pass": true,
+  "bundle_size": 5120,
+  "built": "2026-08-16T18:39:17.983833Z",
+  "provenance": "honest 503 never faked \u2014 MTNN v9.2 150ep d_model128 4-head CLS128 4L RoPE RMSNorm SupCon0.07 VICReg0.05 CORAL0.5 centroid0.5 GRL \u03bb0.3\u21920.5 \u2014 unified 20719\u00d764 \u2014 no pip/torch frontend only stdlib",
+  "gdrive_harvesting": "2-3 collectors always active NBA/NFL/SEC equities fan out wide"
+}

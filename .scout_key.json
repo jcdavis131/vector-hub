@@ -1,0 +1,15 @@
+{
+  "created": "2026-08-12T21:32:23Z",
+  "owner": "Scout \ud83d\udc31\u2728",
+  "tier": "scout",
+  "prefix": "dm_scout_",
+  "scope": [
+    "read",
+    "write"
+  ],
+  "note": "API key for dumbmodel.com \u2014 free platform, proprietary trading edge private, no user charging",
+  "key_file": "~/.scout/dumbmodel_api_key",
+  "env_var": "DUMBMODEL_API_KEY",
+  "free": true,
+  "key": "dm_scout_***REDACTED***"
+}

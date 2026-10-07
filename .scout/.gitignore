@@ -1,0 +1,5 @@
+# Scout internal - never commit raw api key
+*.key
+*.key.txt
+api_key
+

@@ -1,0 +1,27 @@
+1
+00:00:00,000 --> 00:00:04,000
+Same link equals same stars — deterministic on every device.
+
+2
+00:00:04,000 --> 00:00:09,000
+Formula: (seed star 1103515245 plus 12345) and 0x7fffffff — glibc rand().
+
+3
+00:00:09,000 --> 00:00:14,500
+Seed is YYYYMMDD UTC. Example: 20260807 gives 11190772, idx 2512, pair 11804, triple 13128.
+
+4
+00:00:14,500 --> 00:00:19,000
+Second example: 20260809 gives 70737614, mod 20719 equals 2948.
+
+5
+00:00:19,000 --> 00:00:24,000
+Triplet: idx = a mod 20719, j = b mod 20719 bumping if collides, k likewise.
+
+6
+00:00:24,000 --> 00:00:29,000
+Expose via window.DAILY_SEED, window.UNIFIED_CHIMERA_DAILY, hubDailySeed, hubLcg.
+
+7
+00:00:29,000 --> 00:00:33,500
+Use ?daily=YYYYMMDD and n=1,3,5 for solo triple full — copy link, share streak.

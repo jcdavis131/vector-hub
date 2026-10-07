@@ -1,0 +1,162 @@
+{
+  "schema_version": "1.0",
+  "domain": "realty",
+  "task": "realty_adjacent_year_retrieval",
+  "task_type": "retrieval",
+  "split": "temporal",
+  "seed": 0,
+  "k_values": [
+    1,
+    5,
+    10
+  ],
+  "summary": {
+    "metrics_judged": 3,
+    "mtnn_wins": 0,
+    "baseline_wins": 3,
+    "headline": "baseline wins all 3 judged metric(s) \u2014 this domain is simple",
+    "built": "2026-08-09T19:32:42",
+    "n_train": 1575,
+    "n_test": 700
+  },
+  "methods": [
+    {
+      "name": "raw_cosine",
+      "kind": "retrieval",
+      "is_mtnn": false,
+      "status": "ok",
+      "metrics": {
+        "recall@1": 0.271451,
+        "recall@5": 0.566303,
+        "recall@10": 0.653666
+      },
+      "note": ""
+    },
+    {
+      "name": "learned_linear_map(ridge)",
+      "kind": "retrieval",
+      "is_mtnn": false,
+      "status": "ok",
+      "metrics": {
+        "recall@1": 0.299532,
+        "recall@5": 0.588144,
+        "recall@10": 0.659906
+      },
+      "note": ""
+    },
+    {
+      "name": "learned_linear_map(infonce)",
+      "kind": "retrieval",
+      "is_mtnn": false,
+      "status": "ok",
+      "metrics": {
+        "recall@1": 0.432137,
+        "recall@5": 0.764431,
+        "recall@10": 0.848674
+      },
+      "note": ""
+    },
+    {
+      "name": "mtnn",
+      "kind": "retrieval",
+      "is_mtnn": true,
+      "status": "ok",
+      "metrics": {
+        "recall@1": 0.365055,
+        "recall@5": 0.75663,
+        "recall@10": 0.848674
+      },
+      "note": ""
+    }
+  ],
+  "metrics": {
+    "recall@1": {
+      "higher_is_better": true,
+      "ranking": [
+        {
+          "method": "learned_linear_map(infonce)",
+          "value": 0.432137
+        },
+        {
+          "method": "mtnn",
+          "value": 0.365055
+        },
+        {
+          "method": "learned_linear_map(ridge)",
+          "value": 0.299532
+        },
+        {
+          "method": "raw_cosine",
+          "value": 0.271451
+        }
+      ],
+      "best_method": "learned_linear_map(infonce)",
+      "best_baseline": "learned_linear_map(infonce)",
+      "best_baseline_value": 0.432137,
+      "mtnn_value": 0.365055,
+      "mtnn_delta": -0.067083,
+      "mtnn_beats_best_baseline": false
+    },
+    "recall@5": {
+      "higher_is_better": true,
+      "ranking": [
+        {
+          "method": "learned_linear_map(infonce)",
+          "value": 0.764431
+        },
+        {
+          "method": "mtnn",
+          "value": 0.75663
+        },
+        {
+          "method": "learned_linear_map(ridge)",
+          "value": 0.588144
+        },
+        {
+          "method": "raw_cosine",
+          "value": 0.566303
+        }
+      ],
+      "best_method": "learned_linear_map(infonce)",
+      "best_baseline": "learned_linear_map(infonce)",
+      "best_baseline_value": 0.764431,
+      "mtnn_value": 0.75663,
+      "mtnn_delta": -0.0078,
+      "mtnn_beats_best_baseline": false
+    },
+    "recall@10": {
+      "higher_is_better": true,
+      "ranking": [
+        {
+          "method": "learned_linear_map(infonce)",
+          "value": 0.848674
+        },
+        {
+          "method": "mtnn",
+          "value": 0.848674
+        },
+        {
+          "method": "learned_linear_map(ridge)",
+          "value": 0.659906
+        },
+        {
+          "method": "raw_cosine",
+          "value": 0.653666
+        }
+      ],
+      "best_method": "learned_linear_map(infonce)",
+      "best_baseline": "learned_linear_map(infonce)",
+      "best_baseline_value": 0.848674,
+      "mtnn_value": 0.848674,
+      "mtnn_delta": 0.0,
+      "mtnn_beats_best_baseline": false
+    }
+  },
+  "notes": {
+    "source": "vector-realty (read-only): bis_property.json + realty_embeddings.json",
+    "task": "identity retrieval \u2014 same economy's next year among all country-years",
+    "split": "temporal, train target-year<=2015, test after; full-gallery pool",
+    "provenance": "features reconstructed from committed raw snapshot via realty's build_features.py logic; MTNN = shipped 32-d embeddings",
+    "review_context": "realty's own review found a correct-gradient learned linear map (~0.85 recall@10) beats the shipped MTNN (~0.83); this run reproduces that finding honestly through the harness."
+  }
+}

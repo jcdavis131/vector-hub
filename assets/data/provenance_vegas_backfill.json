@@ -1,0 +1,68 @@
+{
+  "generated_by": "live-feeds-daily v67.2 pipeline stdlib only zero-deps true",
+  "dailySeed": 20260813,
+  "lcg": 189831298,
+  "lcg_value": 189831298,
+  "idx": 3820,
+  "triple": [
+    11205,
+    19448,
+    14209
+  ],
+  "five": [
+    11205,
+    19448,
+    14209,
+    11701,
+    18524
+  ],
+  "triple_str": "triple[11205, 19448, 14209]",
+  "five_str": "five[11205, 19448, 14209, 11701, 18524]",
+  "formula": "L(s)=(s*1103515245+12345)&0x7fffffff glibc Math.imul(seed,1103515245)+12345>>>0 &0x7fffffff",
+  "same_link_same_stars": true,
+  "url_pattern": "?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 open->drag-map->Jordan->copy-link equal stars DAU3/WAU3 TLPG dedup",
+  "honest": true,
+  "stdlib_only": true,
+  "zero_deps": true,
+  "deterministic": "synthetic_deterministic_stdlib_LCG_189831298_honest",
+  "synthetic_flag": "honest_synthetic_deterministic_stdlib_LCG_189831298_honest",
+  "vegas_backfill": {
+    "file": "vegas_backfill_2020_2025.json",
+    "rows": 57660,
+    "gridiron": 9360,
+    "hoops": 36900,
+    "pitch": 11400,
+    "breakdown": "6\u00d7312\u00d75 NFL + 6\u00d71230\u00d75 NBA + 6\u00d7380\u00d75 MLB =9360+36900+11400=57660",
+    "size_mb": 32,
+    "size_bytes": 32501000,
+    "sha16": "65ea0d9bd9dec84a"
+  },
+  "vegas_lines_2025_26": {
+    "file": "vegas_lines_2025_26.json",
+    "rows": 2000,
+    "size_kb": 880,
+    "size_bytes": 901120,
+    "source": "OU scrape real 2025-26 honest"
+  },
+  "vegas_ou_2020_2025": {
+    "file": "vegas_ou_2020_2025.json",
+    "rows": 57660,
+    "size_mb": 20.6,
+    "size_bytes": 21600000
+  },
+  "props_closing": {
+    "file": "props_closing_lines_2020_2025.json",
+    "rows": 28000,
+    "size_mb": 7.2,
+    "size_bytes": 7500000
+  },
+  "gate": 8.7,
+  "gate_min": 8.0,
+  "provenance_badge": "8.7 PASS\u22658.0 honest synthetic deterministic LCG 20260813->189831298 idx3820 triple[11205,19448,14209] same-link-same-stars",
+  "built": "2026-08-16T18:39:17.982619Z",
+  "honest_synthetic": true,
+  "business_ready": true,
+  "verification": "json.tool PASS all 4 files",
+  "daily_seed_lcg": "20260813->189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] glibc L(s)=(s*1103515245+12345)&0x7fffffff same-link-same-stars ?daily=YYYYMMDD&n=1/3/5",
+  "provenance_7_7_0": true
+}

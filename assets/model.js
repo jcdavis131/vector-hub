@@ -209,9 +209,39 @@
     return sec;
   }
 
-  function renderSources(d) {
+  function renderSources(d, slug, prov) {
     var sec = el("section", "model-section");
     sec.appendChild(el("h2", "model-section__label", "Every number above came from these files"));
+
+    // Provenance drift, rendered rather than asserted. Each card ships a static
+    // "_verification: CLEAN — adversarially verified" string that cannot notice
+    // its own sources changing underneath it. scripts/check_provenance_hashes.py
+    // recomputes them; where they no longer match, the card's figures may
+    // describe a superseded artifact and the reader is told so here. Refreshing
+    // the hashes instead would launder exactly the thing worth surfacing.
+    var page = prov && prov.pages && prov.pages[slug + ".json"];
+    if (page && (page.mismatched || page.malformed)) {
+      var warn = el("p", "sources__drift");
+      var bits = [];
+      if (page.mismatched) {
+        bits.push(page.mismatched + " cited source" + (page.mismatched === 1 ? " has" : "s have") +
+                  " changed since these numbers were verified");
+      }
+      if (page.malformed) {
+        bits.push(page.malformed + " recorded hash" + (page.malformed === 1 ? " is" : "es are") +
+                  " not a hash");
+      }
+      warn.textContent = "⚠ Provenance: " + bits.join("; ") +
+        ". Figures on this card may describe a superseded artifact. Re-run " +
+        "scripts/check_provenance_hashes.py for the file list.";
+      sec.appendChild(warn);
+    } else if (prov) {
+      var ok = el("p", "sources__ok");
+      ok.textContent = "✓ Provenance: every cited source still hashes to the value " +
+        "recorded when these numbers were verified.";
+      sec.appendChild(ok);
+    }
+
     var ul = el("ul", "sources");
     (d.source_files || []).forEach(function (f) { ul.appendChild(el("li", null, f)); });
     sec.appendChild(ul);
@@ -222,12 +252,21 @@
     var root = document.getElementById("model-root");
     if (!root) return;
     var slug = root.dataset.slug;
-    fetch("/assets/data/" + slug + ".json")
-      .then(function (r) {
+    // provenance_status.json is generated and may legitimately be absent on an
+    // older deploy; a missing file means "no drift information", never "clean".
+    var provP = fetch("/assets/data/provenance_status.json")
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .catch(function () { return null; });
+
+    Promise.all([
+      fetch("/assets/data/" + slug + ".json").then(function (r) {
         if (!r.ok) throw new Error("HTTP " + r.status);
         return r.json();
-      })
-      .then(function (d) {
+      }),
+      provP,
+    ])
+      .then(function (both) {
+        var d = both[0], prov = both[1];
         document.title = d.name + " — dumbmodel";
         var page = document.querySelector(".model-page");
         if (page) page.dataset.model = d.slug;
@@ -238,7 +277,7 @@
         root.appendChild(renderGame(d));
         var cav = renderCaveat(d);
         if (cav) root.appendChild(cav);
-        root.appendChild(renderSources(d));
+        root.appendChild(renderSources(d, slug, prov));
       })
       .catch(function (e) {
         root.textContent = "";

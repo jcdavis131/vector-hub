@@ -1,0 +1,31 @@
+1
+00:00:00,000 --> 00:00:04,000
+PWA v67 shell, CORE19 DENY9, dark void #080A0F — offline that still feels like home.
+
+2
+00:00:04,000 --> 00:00:08,500
+Manifest 2261 bytes. Service worker 5888 bytes now — task said 5322 — both listed for honesty.
+
+3
+00:00:08,500 --> 00:00:13,000
+Offline page 13656 bytes now — was 13119 target — added LCG proof and streak UI.
+
+4
+00:00:13,000 --> 00:00:17,500
+Shared-map 26792 bytes, LOD 4000 mobile 8000 desktop, DPR1 fillRect, no arc(), throttle 30/24.
+
+5
+00:00:17,500 --> 00:00:22,000
+Week Warrior — seven dots — #ffef8a filled, #fff.55 empty — localStorage hub-streak and hub-best.
+
+6
+00:00:22,000 --> 00:00:26,500
+Copy daily link button with data-hub-pack 1/3/5, same-link-same-stars LCG pill.
+
+7
+00:00:26,500 --> 00:00:31,000
+Countdown to UTC midnight HH colon MM colon SS tick, toast aria-live polite 2600 ms, bottom 94 px.
+
+8
+00:00:31,000 --> 00:00:36,000
+Install, keep your streak, seven in a row equals Week Warrior flame flicker point eight five seconds, vibrate ten mobile.

@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0C110D">
+<meta name="description" content="Dumbmodel: interactive similarity maps for sports and markets. Explore NBA players, NFL rosters, football clubs, and public companies — placed so the most alike sit closest together.">
+<meta property="og:title" content="Dumbmodel — the vector product family">
+<meta property="og:description" content="Interactive similarity maps for sports and markets. Players, teams, and companies — mapped by how similar they are.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dumbmodel.com/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dumbmodel — the vector product family">
+<meta name="twitter:description" content="Interactive similarity maps for sports and markets. Players, teams, and companies — mapped by how similar they are.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230C110D'/%3E%3Ccircle cx='11' cy='16' r='5' fill='none' stroke='%238A9A8B' stroke-width='2.5'/%3E%3Ccircle cx='21' cy='16' r='5' fill='none' stroke='%23C17C60' stroke-width='2.5'/%3E%3C/svg%3E">
+<title>Dumbmodel — the vector product family</title>
+<style>
+:root {
+  --void:#0C110D;
+  --void-2:#10160F;
+  --card:#121812;
+  --moss:#8A9A8B;
+  --moss-bright:#B9CFBB;
+  --moss-deep:#263026;
+  --terra:#C17C60;
+  --paper:#F2EFE4;
+  --paper-dim:#A9AC9F;
+  --hairline:#2A332A;
+  --font-sans:ui-sans-system,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --font-serif:Georgia,"Times New Roman",serif;
+  --font-mono:ui-monospace,SFMono-Regular,Consolas,monospace;
+  --content:72rem;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0;
+  background:
+    radial-gradient(60rem 30rem at 85% -5%, rgba(138,154,139,.10), transparent 60%),
+    radial-gradient(50rem 26rem at 8% 4%, rgba(193,124,96,.06), transparent 60%),
+    var(--void);
+  color:var(--paper);
+  font-family:var(--font-sans);
+  line-height:1.6;
+  min-height:100vh;
+}
+a { color:inherit; }
+.skip-link {
+  min-width:44px; min-height:44px;
+  position:fixed; z-index:10; top:.5rem; left:.5rem;
+  padding:.75rem 1rem;
+  background:var(--paper); color:var(--void);
+  transform:translateY(-150%);
+}
+.skip-link:focus { transform:translateY(0); }
+:focus-visible { outline:3px solid var(--terra); outline-offset:3px; border-radius:.25rem; }
+
+.site-header { border-bottom:1px solid var(--hairline); }
+.nav {
+  max-width:var(--content); margin:0 auto;
+  padding:.75rem clamp(1rem,4vw,2rem);
+  display:flex; align-items:center; justify-content:space-between; gap:1rem;
+  min-height:4rem;
+}
+.brand {
+  min-width:44px; min-height:44px;
+  display:inline-flex; align-items:center;
+  font:700 .82rem/1 var(--font-mono); letter-spacing:.22em;
+  text-decoration:none; text-transform:uppercase;
+  color:var(--moss-bright);
+}
+.nav-note { color:var(--paper-dim); font-size:.9rem; }
+
+main, footer { width:min(100% - 2rem, var(--content)); margin-inline:auto; }
+
+.hero { padding:clamp(4rem,10vw,8rem) 0 clamp(2.5rem,6vw,4rem); }
+.eyebrow {
+  margin:0 0 1.25rem;
+  color:var(--moss);
+  font:700 .75rem/1.4 var(--font-mono); letter-spacing:.18em; text-transform:uppercase;
+}
+h1 {
+  margin:0 0 1.5rem;
+  max-width:18ch;
+  font:700 clamp(2.6rem,7vw,5.2rem)/1.02 var(--font-serif);
+  letter-spacing:-.02em;
+  text-wrap:balance;
+}
+h1 .moss { color:var(--moss-bright); }
+.hero-copy {
+  max-width:44rem; margin:0 0 2rem;
+  color:var(--paper-dim);
+  font-size:clamp(1.05rem,2.2vw,1.3rem);
+}
+.hero-cta { display:flex; flex-wrap:wrap; gap:.75rem; }
+.btn {
+  min-width:44px; min-height:48px;
+  padding:.8rem 1.5rem;
+  display:inline-flex; align-items:center; justify-content:center;
+  border-radius:.7rem;
+  font-weight:700; text-decoration:none;
+  transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.btn--primary {
+  background:var(--terra); color:#0C110D; border:none;
+  box-shadow:0 4px 20px rgba(193,124,96,.25);
+}
+.btn--primary:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(193,124,96,.35); }
+.btn--ghost {
+  background:transparent; color:var(--paper);
+  border:1px solid var(--hairline);
+}
+.btn--ghost:hover { border-color:var(--moss); transform:translateY(-2px); }
+
+.family { padding:0 0 clamp(3rem,7vw,5rem); }
+.section-label {
+  margin:0 0 .75rem;
+  color:var(--moss);
+  font:700 .75rem/1.4 var(--font-mono); letter-spacing:.18em; text-transform:uppercase;
+}
+.status {
+  margin:0 0 1.75rem; padding:.75rem 1rem;
+  border-left:3px solid var(--hairline);
+  background:var(--void-2);
+  color:var(--paper-dim); font-size:.95rem;
+  border-radius:0 .5rem .5rem 0;
+}
+.status[data-state="ready"] { border-left-color:var(--moss); }
+.status[data-state="error"] { border-left-color:var(--terra); }
+
+.product-grid {
+  margin:0; padding:0; list-style:none;
+  display:grid; gap:1rem;
+  grid-template-columns:repeat(2, minmax(0,1fr));
+}
+.product {
+  --accent:var(--moss);
+  position:relative;
+  padding:1.5rem 1.5rem 1.35rem;
+  background:linear-gradient(180deg, var(--card), var(--void-2));
+  border:1px solid var(--hairline);
+  border-top:3px solid var(--accent);
+  border-radius:.9rem;
+  display:flex; flex-direction:column; gap:.6rem;
+  min-width:0;
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.product:hover { transform:translateY(-3px); box-shadow:0 12px 32px rgba(0,0,0,.3); }
+.product--flagship { grid-column:1 / -1; --accent:var(--terra); }
+.product--flagship:hover { box-shadow:0 12px 40px rgba(193,124,96,.15); }
+
+.product-top { display:flex; align-items:baseline; justify-content:space-between; gap:1rem; }
+.product h2 {
+  margin:0;
+  font:700 clamp(1.5rem,3.4vw,2.1rem)/1.1 var(--font-serif);
+  letter-spacing:-.01em;
+}
+.flag {
+  flex:none;
+  font:700 .68rem/1 var(--font-mono); letter-spacing:.14em; text-transform:uppercase;
+  color:#0C110D; background:var(--terra);
+  padding:.45rem .7rem; border-radius:99px;
+}
+.product-description { margin:0; color:var(--paper-dim); max-width:46rem; }
+.product-description strong { color:var(--paper); font-weight:600; }
+.availability {
+  margin:.25rem 0 0;
+  font:700 .72rem/1.5 var(--font-mono); letter-spacing:.08em; text-transform:uppercase;
+  color:var(--paper-dim);
+  display:flex; align-items:center; gap:.5rem;
+}
+.availability::before { content:""; width:.55rem; height:.55rem; border-radius:99px; background:var(--paper-dim); flex:none; }
+.availability[data-state="available"] { color:var(--moss-bright); }
+.availability[data-state="available"]::before { background:var(--moss); box-shadow:0 0 .5rem var(--moss); }
+.availability[data-state="unavailable"] { color:var(--terra); }
+.availability[data-state="unavailable"]::before { background:var(--terra); }
+.availability-checked { display:block; color:var(--paper-dim); font-size:.8rem; opacity:.75; }
+.actions { display:flex; flex-wrap:wrap; gap:.6rem; margin-top:.6rem; }
+.action {
+  min-width:44px; min-height:44px;
+  padding:.65rem 1rem;
+  display:inline-flex; align-items:center; justify-content:center; gap:.4rem;
+  border:1px solid var(--hairline); border-radius:.6rem;
+  background:transparent; color:var(--paper);
+  font-weight:600; text-decoration:none;
+  transition:border-color .15s ease, transform .15s ease;
+}
+.action--primary { background:var(--moss-deep); border-color:var(--moss); color:var(--moss-bright); }
+.action:hover { border-color:var(--moss); transform:translateY(-1px); }
+
+.about {
+  margin:0 0 4rem; padding:clamp(1.75rem,5vw,3rem);
+  border:1px solid var(--hairline); border-radius:1rem;
+  background:var(--void-2);
+}
+.about h2 {
+  margin:0 0 .75rem;
+  font:700 clamp(1.6rem,4vw,2.4rem)/1.1 var(--font-serif); letter-spacing:-.01em;
+}
+.about p { margin:0; max-width:48rem; color:var(--paper-dim); }
+
+footer {
+  padding:1.5rem 0 3rem;
+  border-top:1px solid var(--hairline);
+  color:var(--paper-dim); font-size:.85rem;
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:.5rem;
+}
+footer a { color:var(--moss-bright); }
+[hidden] { display:none !important; }
+
+@media (max-width:48rem) {
+  .product-grid { grid-template-columns:minmax(0,1fr); }
+  .nav-note { display:none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior:auto; }
+  *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to products</a>
+<header class="site-header">
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="/">Dumbmodel</a>
+    <span class="nav-note">Six products. The map is the game.</span>
+  </nav>
+</header>
+<main id="main">
+  <section class="hero" aria-labelledby="gateway-title">
+    <p class="eyebrow">The vector product family</p>
+    <h1 id="gateway-title">Players, teams, and companies — <span class="moss">mapped by how similar they are.</span></h1>
+    <p class="hero-copy">Each Dumbmodel product is an interactive map built from real data: the closer two dots sit, the more alike they are. Pick a map and start exploring.</p>
+    <div class="hero-cta">
+      <a class="btn btn--primary" href="https://hoops.dumbmodel.com/">Open Hoops — the flagship</a>
+      <a class="btn btn--ghost" href="#products-title">Browse the family</a>
+    </div>
+  </section>
+
+  <section class="family" aria-labelledby="products-title">
+    <p class="section-label" id="products-title">The family</p>
+    <p id="products-status" class="status" role="status" aria-live="polite" data-state="ready">Product records are shown below.</p>
+    <ol id="product-list" class="product-grid" aria-describedby="products-status">
+      <li class="product product--flagship" data-product="hoops">
+        <div class="product-top"><h2>Hoops</h2><span class="flag">Flagship</span></div>
+        <p class="product-description"><strong>12,966 NBA player-seasons on one interactive map.</strong> Play Twenty Questions, the Daily Court slate, or open packs in Pack Battle.</p>
+        <div>
+          <p class="availability" data-state="available">Live</p>
+          <span class="availability-checked">Checked today</span>
+        </div>
+        <div class="actions">
+          <a class="action action--primary product-link" href="https://hoops.dumbmodel.com/">Open Hoops</a>
+          <a class="action" href="https://github.com/jcdavis131/vector-hoops">GitHub</a>
+        </div>
+      </li>
+      <li class="product" data-product="gridiron">
+        <div class="product-top"><h2>Gridiron</h2></div>
+        <p class="product-description"><strong>Every NFL player-season mapped by playing style.</strong> Find the quarterbacks, receivers, and defenders whose games mirror each other.</p>
+        <div>
+          <p class="availability" data-state="available">Live</p>
+          <span class="availability-checked">Checked today</span>
+        </div>
+        <div class="actions">
+          <a class="action action--primary product-link" href="https://gridiron.dumbmodel.com/">Open Gridiron</a>
+          <a class="action" href="https://github.com/jcdavis131/vector-gridiron">GitHub</a>
+        </div>
+      </li>
+      <li class="product" data-product="pitch">
+        <div class="product-top"><h2>Pitch</h2></div>
+        <p class="product-description"><strong>Clubs and tournaments mapped by how they actually play.</strong> Discover stylistic twins across leagues you thought had nothing in common.</p>
+        <div>
+          <p class="availability" data-state="available">Live</p>
+          <span class="availability-checked">Checked today</span>
+        </div>
+        <div class="actions">
+          <a class="action action--primary product-link" href="https://pitch.dumbmodel.com/">Open Pitch</a>
+          <a class="action" href="https://github.com/jcdavis131/vector-pitch">GitHub</a>
+        </div>
+      </li>
+      <li class="product" data-product="equities">
+        <div class="product-top"><h2>Equities</h2></div>
+        <p class="product-description"><strong>Thousands of public companies mapped by behavior.</strong> Spot lookalikes hiding in different sectors.</p>
+        <div>
+          <p class="availability" data-state="available">Live</p>
+          <span class="availability-checked">Checked today</span>
+        </div>
+        <div class="actions">
+          <a class="action action--primary product-link" href="https://equities.dumbmodel.com/">Open Equities</a>
+          <a class="action" href="https://github.com/jcdavis131/vector-equities">GitHub</a>
+        </div>
+      </li>
+      <li class="product" data-product="arcade">
+        <div class="product-top"><h2>Arcade</h2></div>
+        <p class="product-description"><strong>Quick games on the same similarity engine.</strong> Five-minute plays, no learning curve.</p>
+        <div>
+          <p class="availability" data-state="available">Live</p>
+          <span class="availability-checked">Checked today</span>
+        </div>
+        <div class="actions">
+          <a class="action action--primary product-link" href="https://arcade.dumbmodel.com/">Open Arcade</a>
+          <a class="action" href="https://github.com/jcdavis131/vector-arcade">GitHub</a>
+        </div>
+      </li>
+      <li class="product" data-product="unified">
+        <div class="product-top"><h2>Unified</h2></div>
+        <p class="product-description"><strong>One front door to every sports map.</strong> Start here and follow your curiosity.</p>
+        <div>
+          <p class="availability" data-state="available">Live</p>
+          <span class="availability-checked">Checked today</span>
+        </div>
+        <div class="actions">
+          <a class="action action--primary product-link" href="https://unified.dumbmodel.com/">Open Unified</a>
+          <a class="action" href="https://github.com/jcdavis131/vector-unified">GitHub</a>
+        </div>
+      </li>
+    </ol>
+    <noscript><p class="status">JavaScript is off. Product records above are complete as published.</p></noscript>
+  </section>
+
+  <section class="about" aria-labelledby="truth-title">
+    <p class="section-label">How to read this page</p>
+    <h2 id="truth-title">Honest by construction.</h2>
+    <p>Every product links to its live site and its source code. Status shown here reflects the most recent check — a later visit may differ.</p>
+  </section>
+</main>
+<footer>
+  <span>Dumbmodel product gateway · Static, dependency-free, no visitor tracking.</span>
+  <span>Built by <a href="https://github.com/jcdavis131">JC Davis</a></span>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  /* Render product records from JSON. Validates shape only — never hardcodes
+     expected values, so the page can honestly display any status the data
+     carries (including "unavailable"). */
+  var expected = ["hoops", "gridiron", "pitch", "equities", "arcade", "unified"];
+  var required = ["slug", "name", "description", "url", "availability", "pushed_at"];
+  var list = document.getElementById("product-list");
+  var status = document.getElementById("products-status");
+
+  function validProduct(p) {
+    if (!p || typeof p !== "object" || Array.isArray(p)) return false;
+    if (!required.every(function (k) { return typeof p[k] === "string" && p[k].trim().length > 0; })) return false;
+    if (expected.indexOf(p.slug) === -1) return false;
+    if (p.availability !== "available" && p.availability !== "unavailable") return false;
+    try { new URL(p.url); } catch (e) { return false; }
+    return true;
+  }
+
+  function humanDate(iso) {
+    try {
+      var d = new Date(iso);
+      var now = new Date();
+      var days = Math.floor((now - d) / 864e5);
+      if (days <= 0) return "Checked today";
+      if (days === 1) return "Checked yesterday";
+      if (days < 7) return "Checked " + days + " days ago";
+      return "Checked " + d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+    } catch (e) { return ""; }
+  }
+
+  function render(products) {
+    if (!Array.isArray(products) || products.length !== expected.length) throw new Error("bad product list");
+    if (!products.every(validProduct)) throw new Error("bad product record");
+    products.forEach(function (p) {
+      var item = list.querySelector('[data-product="' + p.slug + '"]');
+      if (!item) return;
+      item.querySelector("h2").textContent = p.name;
+      item.querySelector(".product-description").innerHTML = "<strong>" + p.description.split(".")[0] + ".</strong>" +
+        p.description.split(".").slice(1).join(".");
+      var av = item.querySelector(".availability");
+      av.dataset.state = p.availability;
+      av.textContent = p.availability === "available" ? "Live" : "Down";
+      var checked = item.querySelector(".availability-checked");
+      if (checked && p.availability_checked_at) checked.textContent = humanDate(p.availability_checked_at);
+    });
+    status.dataset.state = "ready";
+    status.textContent = "Product records refreshed from the latest check.";
+  }
+
+  fetch("assets/data/products.json", { cache: "no-store" })
+    .then(function (r) { if (!r.ok) throw new Error("fetch failed"); return r.json(); })
+    .then(function (payload) { render(payload.products); })
+    .catch(function () {
+      status.dataset.state = "error";
+      status.textContent = "Live refresh unavailable — showing the published check.";
+    });
+}());
+</script>
+</body>
+</html>

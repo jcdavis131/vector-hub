@@ -1,3 +1,8 @@
-
-# Vercel project linkage — machine-local, holds project/org ids
 .vercel
+apps/
+bundles/
+dottie/
+candidate.json
+*.bak
+workspace/
+exports/

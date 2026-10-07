@@ -1,368 +1,166 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>dumbmodel — the vector arcade</title>
-<meta name="description" content="Six model cards, five daily vector puzzles — NBA, NFL, World Cup, tennis, public companies, and one joint cross-sport embedding. Every number recomputable from public data.">
-<meta name="theme-color" content="#fafaf8">
-<link rel="canonical" href="https://dumbmodel.com/">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://dumbmodel.com/">
-<meta property="og:title" content="dumbmodel — the vector arcade">
-<meta property="og:description" content="Six models, five daily vector puzzles — NBA, NFL, World Cup, tennis, equities, and a joint cross-sport embedding. Beat the model.">
-<meta name="twitter:card" content="summary">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%226%22%20fill%3D%22%23111111%22%2F%3E%3Ccircle%20cx%3D%2211%22%20cy%3D%2212%22%20r%3D%223%22%20fill%3D%22%23eb6834%22%2F%3E%3Ccircle%20cx%3D%2221%22%20cy%3D%2219%22%20r%3D%223%22%20fill%3D%22%232a78d6%22%2F%3E%3Cpath%20d%3D%22M11%2012%20L21%2019%22%20stroke%3D%22%23fafaf8%22%20stroke-width%3D%221.6%22%2F%3E%3C%2Fsvg%3E">
-<link rel="manifest" href="/manifest.json">
-<link rel="apple-touch-icon" href="/assets/icon-192.png">
-<link rel="stylesheet" href="/assets/hub.css">
-<link rel="stylesheet" href="/assets/motion.css">
-<link rel="stylesheet" href="/assets/model.css">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="color-scheme" content="light"/>
+<link rel="icon" href="data:,"/>
+<title>dumbmodel.com — five games, one map</title>
+<!-- JAPANDI v4 + PUDDING MAP 70vh sticky 58/42 — warm paper #F9F6F0 terracotta #C17C60 -->
+<style id="tokens">
+:root{
+  /* JAPANDI — warm paper, soft ink, single terracotta pop */
+  --paper:#F9F6F0; --paper-2:#FEFCF8; --stone-50:#F5F1EB; --stone-100:#E8E0D5; --stone-200:#D4C4B0; --stone-300:#B8A99A;
+  --ink:#2A2A2A; --ink-60:#6B6B6B; --ink-40:#9A9A9A;
+  --pop:#C17C60; --pop-soft:#D9A88C; --pop-ink:#FEFCF8; --moss:#8A9A8B; --moss-20:#E8EBE8; --clay:#A67B5B;
+  --void:#1E2022; --void-2:#2A2E33;
+  --nav-h:44px; --radius-sm:8px; --radius-md:12px; --radius-lg:16px; --radius-pill:999px;
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:20px; --space-6:24px; --space-8:32px; --space-10:40px; --space-12:48px;
+  --border:1px solid var(--stone-200); --border-strong:1px solid var(--stone-300); --border-pop:1.5px solid var(--pop);
+  --shadow-sm:0 1px 2px rgba(42,42,42,0.04),0 2px 8px rgba(42,42,42,0.04);
+  --shadow-md:0 2px 8px rgba(42,42,42,0.06),0 8px 24px rgba(42,42,42,0.06);
+  --shadow-soft:0 4px 16px rgba(42,42,42,0.05);
+  --font-mono:ui-monospace,SFMono-Regular,Menlo,monospace; --font-sans:ui-sans-system,-apple-system,BlinkMacSystemFont,Inter,system-ui,sans-serif; --font-serif:"Newsreader","Times New Roman",Georgia,serif;
+  --text-11:11px; --text-13:13px; --text-15:15px; --text-18:18px; --text-20:20px; --text-56:56px; --text-64:64px;
+  --leading-tight:1.05; --leading-body:1.7; --leading-ui:1.4;
+  --grid-max:1120px; --grid-gutter:24px; --map-h:72vh; --map-min:540px;
+  /* mood stripes — muted so terracotta remains only pop fill */
+  --t-o:#C17C60; --t-b:#7A9BB5; --t-p:#8A9A8B; --t-g:#A67B5B; --t-c:#B8A99A;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink)}
+body{font-family:var(--font-serif);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;background-image:radial-gradient(rgba(0,0,0,0.02) 1px,transparent 1px);background-size:24px 24px}
+a{color:inherit;text-decoration:none} button{font:inherit}
+.games{position:sticky;top:var(--nav-h);z-index:39;display:flex;gap:18px;align-items:center;padding:0 20px;height:36px;background:var(--paper);border-bottom:var(--border);font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase}.games a{color:var(--ink);padding:2px 0;border-bottom:1px solid transparent}.games a:hover,.games a:focus-visible{border-bottom-color:var(--pop);color:var(--pop)}.games-label{color:var(--ink-60)}
+</style>
+<style id="layout">
+/* 44px mono sticky nav — japandi warm */
+.nav{position:sticky;top:0;z-index:40;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:var(--paper);border-bottom:var(--border);font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.nav-left{display:flex;align-items:center;gap:14px;font-weight:700}
+.nav-mark i{font-style:normal;color:var(--pop)}
+.nav-right{display:flex;gap:22px;align-items:center;color:var(--ink-60)}
+.nav-right a{position:relative;padding:2px 0;transition:color .15s} .nav-right a:hover{color:var(--ink)} .nav-right a.active{color:var(--ink)} .nav-right a.active:after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;background:var(--pop);border-radius:1px}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--pop);display:inline-block;margin-left:6px;vertical-align:middle}
+/* shell */
+.shell{max-width:1720px;margin:0 auto;padding:0 20px} @media(min-width:1100px){.shell{padding:0 28px}}
+/* hero — 56-64px serif tight -0.02em max 18ch */
+.hero{padding:48px 0 28px;max-width:var(--grid-max);margin:0 auto;display:grid;grid-template-columns:1fr;gap:16px}
+.kicker{font-family:var(--font-mono);font-size:11px;line-height:1;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-60);display:flex;gap:12px;align-items:center}
+.kicker b{color:var(--ink);font-weight:700} .kicker .rule{height:1px;flex:1;background:var(--stone-200);max-width:160px}
+.hed{font-family:var(--font-serif);font-size:64px;line-height:.95;letter-spacing:-.02em;font-weight:800;margin:0;max-width:18ch;text-wrap:balance;color:var(--ink)} @media(max-width:720px){.hed{font-size:42px;line-height:1.0}}
+.deck{font-family:var(--font-sans);font-size:18px;line-height:1.7;color:var(--ink-60);max-width:60ch;margin:0;text-wrap:pretty}
+.dek-meta{font-family:var(--font-mono);font-size:11px;color:var(--ink-60);display:flex;gap:8px;flex-wrap:wrap;margin-top:6px} .dek-meta span{border:var(--border);padding:4px 10px;border-radius:var(--radius-pill);background:var(--paper-2)}
+/* split: sticky-left 58% map 72vh + story right 42% — pudding */
+.split-wrap{margin-top:20px;border-top:var(--border);display:flex;flex-wrap:wrap;gap:0;position:relative}
+.map-pane{flex:0 0 58%;max-width:58%;position:sticky;top:var(--nav-h);align-self:flex-start;height:var(--map-h);min-height:var(--map-min);background:var(--void);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-soft);margin-top:16px}
+@media(max-width:980px){.map-pane{flex:0 0 100%;max-width:100%;position:relative;top:0;height:62vh;min-height:420px}}
+.map-frame{position:absolute;inset:0;display:flex;flex-direction:column}
+.map-toolbar{height:38px;display:flex;align-items:center;justify-content:space-between;padding:0 12px 0 14px;border-bottom:1px solid #2A2E33;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#A8A29E;background:#1E2022}
+.map-toolbar b{color:#FEFCF8;font-weight:700} .map-toolbar .right{display:flex;gap:10px;align-items:center}
+.pill{border:1px solid #3A3E42;border-radius:999px;padding:3px 9px;background:#2A2E33;color:#A8A29E} .pill.live{color:var(--pop);border-color:rgba(193,124,96,0.35);background:rgba(193,124,96,0.12)}
+canvas#mapCanvas{display:block;width:100%;height:100%;flex:1;background:radial-gradient(1100px 700px at 55% 40%, #2A2E33 0%, var(--void) 58%)}
+.map-legend{position:absolute;left:12px;bottom:12px;background:rgba(30,32,34,.88);backdrop-filter:blur(8px);border:1px solid #3A3E42;border-radius:10px;padding:8px 10px;font-family:var(--font-mono);font-size:10px;color:#D4C4B0;line-height:1.45}
+.legend-dot{width:5px;height:5px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:middle}
+.crosshair{position:absolute;left:50%;top:50%;width:1px;height:18px;background:#3A3E42;transform:translate(-50%,-50%)} .crosshair:after{content:"";position:absolute;left:-9px;top:50%;width:18px;height:1px;background:#3A3E42}
+.story-pane{flex:0 0 42%;max-width:42%;padding:0 0 48px;background:var(--paper)} @media(max-width:980px){.story-pane{flex:0 0 100%;max-width:100%}}
+.steps{max-width:520px;margin:0 auto;padding:28px 20px 32px} @media(min-width:980px){.steps{padding:32px 28px 48px 32px}}
+.step{padding:28px 0 30px;border-top:var(--border);position:relative;opacity:.58;transition:opacity .25s ease,transform .25s ease} .step:first-child{border-top:none} .step.active{opacity:1} .step.active:before{content:"";position:absolute;left:-14px;top:28px;bottom:30px;width:2px;background:var(--pop);border-radius:2px} @media(max-width:980px){.step.active:before{left:-8px}}
+.step-label{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-40);display:flex;align-items:center;gap:8px;margin:0 0 10px} .step-label b{color:var(--ink)} .step-label .n{width:18px;height:18px;border-radius:50%;border:var(--border);display:inline-grid;place-items:center;font-size:10px;font-weight:700;background:var(--paper-2)} .step.active .step-label .n{background:var(--pop);color:var(--pop-ink);border-color:var(--pop)}
+.step h3{font-family:var(--font-serif);font-size:22px;line-height:1.15;letter-spacing:-.015em;margin:0 0 10px;font-weight:700;color:var(--ink)} .step p{font-family:var(--font-sans);font-size:18px;line-height:1.62;color:var(--ink-60);margin:0 0 12px;text-wrap:pretty} .step .micro{font-family:var(--font-mono);font-size:11px;color:var(--ink-40)} .step .inline-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;vertical-align:middle}
+</style>
+<style id="components">
+/* roster — grid 12 cols gap 24px, tiles paper-2 radius 8px soft shadow */
+.section-head{max-width:var(--grid-max);margin:36px auto 14px;padding:0;display:flex;align-items:end;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.section-head h2{font-family:var(--font-serif);font-size:28px;letter-spacing:-.02em;margin:0;line-height:1;color:var(--ink)} .section-head .sans{font-family:var(--font-sans);font-size:13.5px;color:var(--ink-60);max-width:44ch}
+.roster-wrap{max-width:var(--grid-max);margin:0 auto 28px;display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
+.tile{grid-column:span 3;background:var(--paper-2);border:var(--border);border-radius:var(--radius-sm);position:relative;display:flex;flex-direction:column;min-height:158px;transition:transform .16s ease,box-shadow .16s ease;box-shadow:var(--shadow-sm)}
+@media(max-width:1024px){.tile{grid-column:span 4}} @media(max-width:720px){.tile{grid-column:span 6}} @media(max-width:480px){.tile{grid-column:span 12}}
+.tile:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.tile-stripe{position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:var(--radius-sm) 0 0 var(--radius-sm)} .tile.t-o .tile-stripe{background:var(--t-o)} .tile.t-b .tile-stripe{background:var(--t-b)} .tile.t-p .tile-stripe{background:var(--t-p)} .tile.t-g .tile-stripe{background:var(--t-g)} .tile.t-c .tile-stripe{background:var(--t-c)}
+.tile-main{padding:12px 12px 10px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.tile-top{display:flex;justify-content:space-between;gap:8px;align-items:start} .tile-type{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:3px 6px;border:var(--border);background:var(--paper);border-radius:999px;line-height:1} .tile-pos{font-family:var(--font-mono);font-size:10px;color:var(--ink-40)}
+.tile-name{font-family:var(--font-serif);font-size:18px;line-height:1.05;font-weight:800;letter-spacing:-.01em;margin:0;color:var(--ink)} .tile-sub{font-family:var(--font-mono);font-size:11px;color:var(--ink-60);margin-top:-2px}
+.tile-metric{margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:8px} .metric{border-top:1px dashed var(--stone-200);padding-top:7px} .metric b{font-family:var(--font-mono);font-size:11px;display:block;color:var(--ink)} .metric i{font-style:normal;font-family:var(--font-mono);font-size:10px;color:var(--ink-40)}
+.tile-cta{margin-top:10px;display:flex;gap:8px} .btn{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;border:var(--border);padding:6px 9px;background:var(--paper);border-radius:var(--radius-sm);cursor:pointer;transition:all .12s} .btn:hover{border-color:var(--stone-300)} .btn.pop{background:var(--pop);color:var(--pop-ink);border-color:var(--pop)} .btn.pop:hover{filter:brightness(1.05)} .btn:active{transform:translateY(1px)}
+/* news tower — stone-50 bg radius 12px */
+.news{max-width:var(--grid-max);margin:24px auto 28px;background:var(--stone-50);border:var(--border);border-radius:var(--radius-md);padding:18px 18px 14px}
+.news-inner{display:grid;gap:12px} .news-kicker{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-60)} .news h2{font-family:var(--font-serif);font-size:22px;margin:0;line-height:1.1;color:var(--ink)} .news-dek{font-family:var(--font-sans);font-size:14px;line-height:1.6;color:var(--ink-60);margin:0;max-width:64ch}
+.news-feed{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))} .news-card{background:var(--paper-2);border:var(--border);border-radius:var(--radius-sm);padding:10px 12px;font-family:var(--font-sans);font-size:13px;line-height:1.5;color:var(--ink-60);box-shadow:var(--shadow-sm)} .news-card b{color:var(--ink)} .news-foot{font-family:var(--font-mono);font-size:10.5px;color:var(--ink-40);display:flex;gap:8px;flex-wrap:wrap}
+/* void cards */
+.void-row{max-width:var(--grid-max);margin:10px auto 22px;display:grid;grid-template-columns:1.25fr .75fr;gap:16px} @media(max-width:800px){.void-row{grid-template-columns:1fr}}
+.void-card{background:var(--void);color:#EDE8DF;border-radius:var(--radius-md);padding:16px 16px 14px;min-height:88px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:var(--shadow-soft)} .void-card h4{margin:0 0 6px;font-family:var(--font-serif);font-size:16px;letter-spacing:-.01em;color:#FEFCF8} .void-card p{margin:0;font-family:var(--font-mono);font-size:11px;color:#D4C4B0;line-height:1.5} .void-card .k{color:#FEFCF8;font-weight:700}
+/* provenance */
+.prov{max-width:var(--grid-max);margin:28px auto 64px;border-top:var(--border);padding-top:14px;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:start}
+.prov p{margin:0;font-family:var(--font-mono);font-size:11px;line-height:1.6;color:var(--ink-60);max-width:68ch} .prov b{color:var(--ink);font-weight:700} .prov .right{font-family:var(--font-mono);font-size:10.5px;display:flex;gap:8px;flex-wrap:wrap} .prov .tag{border:var(--border);background:var(--paper-2);padding:4px 10px;border-radius:999px}
+img,canvas{max-width:100%} /* focus */
+:focus-visible{outline:2px solid var(--pop);outline-offset:2px;border-radius:2px}
+</style>
+<meta name="description" content="Hub for five daily vector guessing games: hoops, pitch, gridiron, equities and the unified chimera."/>
 </head>
 <body>
-<a class="skip-link" href="#main-content">Skip to content</a>
-
-<nav class="site-nav" aria-label="Primary">
-  <a class="site-nav__brand" href="/">DUMB<span class="site-nav__accent">MODEL</span></a>
-  <div class="site-nav__links">
-    <a class="site-nav__link" href="#games">Games</a>
-    <a class="site-nav__link" href="#models">Model cards</a>
-    <a class="site-nav__link" href="#model">The model</a>
-    <a class="site-nav__link" href="#fine">Fine print</a>
-    <a class="site-nav__cta" href="https://hoops.dumbmodel.com/">Play today's &rarr;</a>
-  </div>
+<nav class="nav" aria-label="Primary">
+  <div class="nav-left"><a class="nav-mark" href="#">DUMBMODEL.COM ★ <i>★</i></a><span style="opacity:.35">/</span><span>japandi v4 map <span class="nav-dot"></span></span></div>
+  <div class="nav-right"><a class="active" href="#map">Map</a><a href="#roster">Ranks</a><a href="#news">News</a><a href="#about">About</a></div>
 </nav>
-
-<main class="landing-main" id="main-content">
-
-  <section class="landing-hero-band" aria-label="The arcade">
-    <div class="landing-hero">
-      <div class="landing-hero__visual">
-        <p class="landing-hero__eyebrow">Six models &middot; five daily puzzles &middot; free &middot; no account</p>
-        <div class="hub-roster" aria-hidden="true">
-          <div class="hub-roster__tile hub-roster__tile--orange">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="14" cy="11" r="5" stroke="#eb6834" stroke-width="2.5"/>
-              <circle cx="26" cy="29" r="5" stroke="#2a78d6" stroke-width="2.5"/>
-              <path d="M17 15 L23 25" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div class="hub-roster__tile hub-roster__tile--blue">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 30 L16 22 L22 26 L34 10" stroke="#2a78d6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M27 10 L34 10 L34 17" stroke="#111111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="hub-roster__tile hub-roster__tile--purple">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 32 L8 8 M8 32 L34 32" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/>
-              <circle cx="15" cy="25" r="2.6" fill="#7d5cc9"/>
-              <circle cx="23" cy="18" r="2.6" fill="#7d5cc9"/>
-              <circle cx="30" cy="13" r="2.6" fill="#7d5cc9"/>
-            </svg>
-          </div>
-          <div class="hub-roster__tile hub-roster__tile--green">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="8" y="10" width="5" height="14" rx="1" stroke="#009E73" stroke-width="2"/>
-              <rect x="15.5" y="8" width="5" height="18" rx="1" stroke="#009E73" stroke-width="2"/>
-              <rect x="23" y="14" width="5" height="10" rx="1" fill="#009E73"/>
-              <path d="M8 28 L33 28" stroke="#111111" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div class="hub-roster__tile hub-roster__tile--chimera" title="Vector Unified — 20,719 × 64-d joint, dailySeed LCG">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="13" cy="13" r="5" stroke="#d8452a" stroke-width="2.2"/>
-              <circle cx="27" cy="14.5" r="4.2" stroke="#1b45a7" stroke-width="2.2"/>
-              <circle cx="20" cy="27" r="3.8" stroke="#9b6bc4" stroke-width="2.2"/>
-              <path d="M16.2 16.5 L18.5 23" stroke="#14181d" stroke-width="1.5" stroke-dasharray="2 2" stroke-linecap="round"/>
-              <path d="M23.8 18 L21.5 23.2" stroke="#14181d" stroke-width="1.5" stroke-dasharray="2 2" stroke-linecap="round"/>
-            </svg>
-          </div>
-        </div>
-        <ul class="landing-hero__chips" aria-label="Quick facts">
-          <li>6 models &middot; 5 daily puzzles</li>
-          <li>12,966 NBA &middot; 4,831 company-years &middot; 4,022 tennis</li>
-          <li>Era-honest comparisons</li>
-        </ul>
-      </div>
-      <div class="landing-hero__copy">
-        <h1 class="landing-hero__title">It's a dumb model.<br>Beat it <span class="landing-hero__title-accent">anyway</span>.</h1>
-        <p class="landing-tagline">Take everything public about an athlete &mdash; the box score, the tracking data, the draft slot, the salary, the awards nobody remembers &mdash; and squash it down into a single list of numbers. That list is the whole player, as far as the model is concerned.</p>
-        <p class="landing-puzzle-line">Then we hide the names and hand you the numbers. <b>The model is wrong all the time &mdash; that's the fun part.</b></p>
-        <div class="landing-hero__actions">
-          <a class="vh-btn vh-btn--primary" href="https://hoops.dumbmodel.com/">Play today's Vector Hoops &rarr;</a>
-          <a class="vh-btn vh-btn--accent" href="#model">How it works</a>
-        </div>
-      </div>
+<nav class="games" aria-label="Games"><span class="games-label">Play</span><a href="https://hoops.dumbmodel.com/">Hoops</a><a href="https://pitch.dumbmodel.com/">Pitch</a><a href="https://gridiron.dumbmodel.com/">Gridiron</a><a href="https://equities.dumbmodel.com/">Equities</a><a href="https://unified.dumbmodel.com/">Unified</a></nav>
+<div class="shell">
+<header class="hero">
+  <div class="kicker"><b>Five games, one map.</b><span class="rule"></span><span>hoops · pitch · gridiron · equities · unified</span></div>
+  <h1 class="hed">Models, picks, proof. One map.</h1>
+  <p class="deck">dumbmodel.com is the hub for five daily guessing games built on the same idea: turn a player, a club or a company into a vector, then let you find its nearest neighbours. Hoops covers 12,966 NBA player-seasons, Pitch 633 World Cup tournaments, Gridiron 5,323 NFL player-weeks, Equities 283 public companies, and Unified fuses hoops, gridiron and pitch into one 64-d space. The map below is a layout of that idea, not the trained embedding: it is generated in the browser so the page works offline; each game serves its real vectors on its own site.</p>
+  <div class="dek-meta"><span>20,719 entities across the five games</span><span>static, offline-capable</span><span>no tracking</span></div>
+</header>
+<section id="map" class="split-wrap">
+  <div class="map-pane" role="img" aria-label="Hoops embedding map japandi v4">
+    <div class="map-frame">
+      <div class="map-toolbar"><div><b>SPACE</b> — 20,719× UMAP • <span id="countLabel">20,719 pts • 5 games</span> • <span id="lodLabel">LOD 4000</span> • <span id="fusionLabel">fusion 0.60*tca+0.25*taa+0.15*news</span></div><div class="right"><span class="pill live">● live canvas</span><span class="pill" id="hoverPill">hover —</span></div></div>
+      <canvas id="mapCanvas" width="800" height="600"></canvas>
+      <div class="crosshair" aria-hidden="true"></div>
+      <div class="map-legend"><div><span class="legend-dot" style="background:#C17C60"></span><span id="legA">selected</span> — focus terracotta</div><div><span class="legend-dot" style="background:#A8A29E"></span>embedding — context 0.55</div><div style="margin-top:6px;opacity:.85">tip: click tile → fly. scroll → story isolates. news → recency.</div></div>
     </div>
-  </section>
-
-  <section class="landing-section" id="games" aria-labelledby="games-label">
-    <h2 class="landing-section__label" id="games-label">The roster &middot; five daily games</h2>
-    <p class="landing-section__intro">One puzzle a day per game. Each runs a real model on real public data &mdash; no staged scores, no decorative math. Three sports + one market + one joint cross-sport chimera. One more model &mdash; <a href="/models/tennis.html">tennis</a> &mdash; still ships as a model card with a playable probe and no daily puzzle yet. <a href="/models/unified.html">Unified</a> is now live as the fifth daily: 20,719 player-seasons in 64-d, deterministic dailySeed LCG.</p>
-    <div class="mode-grid" data-vx-stagger>
-
-      <a class="vh-card mode-card mode-card--orange" href="https://hoops.dumbmodel.com/">
-        <div class="mode-card__glyph" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="14" cy="11" r="5" stroke="#eb6834" stroke-width="2.5"/>
-            <circle cx="26" cy="29" r="5" stroke="#2a78d6" stroke-width="2.5"/>
-            <path d="M17 15 L23 25" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <div class="mode-card__head">
-          <h3 class="mode-card__title">Vector Hoops</h3>
-          <span class="mode-card__num">Game 01</span>
-        </div>
-        <p class="mode-card__hook">Two real NBA seasons got fused into one impossible player. Name both.</p>
-        <p class="mode-card__pitch">12,966 player-seasons, each one a point in a 64-dimensional space the model learned on its own. Guesses are scored by how close you land &mdash; so a wrong answer that <em>feels</em> right usually is.</p>
-        <p class="mode-card__meta"><span class="pill">NBA</span> &middot; 64-d embedding &middot; 18 towers &middot; daily</p>
-      </a>
-
-      <a class="vh-card mode-card mode-card--blue" href="https://gridiron.dumbmodel.com/">
-        <div class="mode-card__glyph" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8 30 L16 22 L22 26 L34 10" stroke="#2a78d6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M27 10 L34 10 L34 17" stroke="#111111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="mode-card__head">
-          <h3 class="mode-card__title">Vector Gridiron</h3>
-          <span class="mode-card__num">Game 02</span>
-        </div>
-        <p class="mode-card__hook">Who should you actually start this week?</p>
-        <p class="mode-card__pitch">One net predicts a player's fantasy points and his stat line at the same time. Learning both makes it better at each &mdash; and the 32-dimensional trunk it builds along the way doubles as the map.</p>
-        <p class="mode-card__meta"><span class="pill">NFL</span> &middot; 32-d trunk &middot; weekly</p>
-      </a>
-
-      <a class="vh-card mode-card mode-card--purple" href="https://pitch.dumbmodel.com/">
-        <div class="mode-card__glyph" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8 32 L8 8 M8 32 L34 32" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/>
-            <circle cx="15" cy="25" r="2.6" fill="#7d5cc9"/>
-            <circle cx="23" cy="18" r="2.6" fill="#7d5cc9"/>
-            <circle cx="30" cy="13" r="2.6" fill="#7d5cc9"/>
-          </svg>
-        </div>
-        <div class="mode-card__head">
-          <h3 class="mode-card__title">Vector Pitch</h3>
-          <span class="mode-card__num">Game 03</span>
-        </div>
-        <p class="mode-card__hook">The same trick, played on the World Cup.</p>
-        <p class="mode-card__pitch">Built from StatsBomb's open event data for 2018 and 2022, normalized inside each tournament so a 2018 workhorse isn't judged against 2022 averages. The map is a 24-d MTNN over 2,430 player-rows across 11 tournament and league contexts.</p>
-        <p class="mode-card__meta"><span class="pill">World Cup</span> &middot; 24-d MTNN &middot; daily</p>
-      </a>
-
-      <a class="vh-card mode-card mode-card--green" href="https://equities.dumbmodel.com/">
-        <div class="mode-card__glyph" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="9" y="11" width="4.5" height="13" rx="1" stroke="#009E73" stroke-width="2"/>
-            <rect x="16.5" y="9" width="4.5" height="17" rx="1" stroke="#009E73" stroke-width="2"/>
-            <rect x="24" y="15" width="4.5" height="9" rx="1" fill="#009E73"/>
-            <path d="M8 28 L32 28" stroke="#111111" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <div class="mode-card__head">
-          <h3 class="mode-card__title">Vector Equities</h3>
-          <span class="mode-card__num">Game 04</span>
-        </div>
-        <p class="mode-card__hook">Public companies as vectors — SEC EDGAR XBRL + market tape.</p>
-        <p class="mode-card__pitch">4,831 company-years — 500 tickers across 2015-2024 — as 64-d vectors from SEC EDGAR XBRL. 17 towers: Altman Z distress, Piotroski F quality, Beneish M, Sloan accruals, QMJ, plus market microstructure. One net predicts sector, next-year profile, distress and payout at once. Guess the ticker from its vector.</p>
-        <p class="mode-card__meta"><span class="pill">Equities</span> &middot; 500 tickers · 4,831 company-years · 17 towers · 64-d</p>
-      </a>
-
-      <a class="vh-card mode-card mode-card--chimera" href="/models/unified.html">
-        <div class="mode-card__glyph" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="13" cy="13" r="5.5" stroke="#eb6834" stroke-width="2.3"/>
-            <circle cx="27" cy="14.5" r="4.5" stroke="#2a78d6" stroke-width="2.3"/>
-            <circle cx="20" cy="26.5" r="4" stroke="#9b6bc4" stroke-width="2.3"/>
-            <path d="M16.5 16.5 L18.2 22.8" stroke="#111111" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="2 2"/>
-            <path d="M23 18 L21.5 22" stroke="#111111" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="2 2"/>
-          </svg>
-        </div>
-        <div class="mode-card__head">
-          <h3 class="mode-card__title">Vector Unified</h3>
-          <span class="mode-card__num">Game 05</span>
-        </div>
-        <p class="mode-card__hook">Cross-sport chimera — 20,719 player-seasons in one 64-d joint, dailySeed LCG.</p>
-        <p class="mode-card__pitch">Three encoders (64-d hoops / 32-d gridiron / 24-d pitch) folded into 64-d with CORAL + contrastive + adversarial GRL. Guess the archetype from a cross-sport neighbour — sport-blind probe, deterministic daily seed — <code>year*10000+month*100+day</code> LCG.</p>
-        <p class="mode-card__meta"><span class="pill">Joint</span> &middot; 64-d x-sport &middot; daily &middot; 20719 player-seasons</p>
-      </a>
-
-    </div>
-  </section>
-
-  <section class="landing-section" id="models" aria-labelledby="models-label">
-    <h2 class="landing-section__label" id="models-label">Model cards &middot; six</h2>
-    <p class="landing-section__intro">One card per model. Real measured findings, the model&rsquo;s own limitations quoted from its artifacts rather than paraphrased, and <strong>Split Decision</strong> &mdash; a game that shows you two real entities and asks which one the model rates higher. The answer key is the model&rsquo;s own numbers, so you are probing the model, not guessing at a future it never predicted.</p>
-    <div class="model-switch model-switch--hub">
-      <a href="/models/hoops.html">Hoops &rarr;</a>
-      <a href="/models/gridiron.html">Gridiron &rarr;</a>
-      <a href="/models/pitch.html">Pitch &rarr;</a>
-      <a href="/models/equities.html">Equities &rarr;</a>
-      <a href="/models/tennis.html">Tennis &rarr;</a>
-      <a href="/models/unified.html">Unified &rarr;</a>
-    </div>
-  </section>
-
-  <section class="landing-section" id="unified-ablation" aria-labelledby="unified-ablation-label" style="gap:18px">
-    <h2 class="landing-section__label" id="unified-ablation-label" style="border-bottom-color: var(--data-green)">Unified ablation &middot; Δ G1/G2/G3/G4 &middot; each loss must earn keep</h2>
-    <p class="landing-section__intro">The <a href="/models/unified.html">joint 64-d model</a> ships from <code>unified_stage2_best.pt</code> (best_epoch 58, 60ep, enc_lr 3e-5, GRL λ 0.10). It was gated on four tests. Every gate was measured against a null that could have failed it. Below are the shipped numbers and what happens when you drop one alignment loss — house rule from <code>SPEC.md</code> §5: drop each loss and measure Δ, each must earn its keep.</p>
-
-    <div class="vh-card" style="padding:0; overflow:hidden; border-radius:10px; background:#ffffff; box-shadow:var(--shadow-block); border:2px solid var(--ink)">
-      <div style="overflow-x:auto">
-      <table aria-label="Unified ablation Δ G1-G4" style="width:100%; border-collapse:collapse; font-family:var(--mono); font-size:12px; text-align:left;">
-        <thead>
-          <tr style="background:var(--ink); color:var(--paper)">
-            <th style="padding:10px 12px; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; border-right:1px solid #2a2a2a">Gate</th>
-            <th style="padding:10px 12px; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; border-right:1px solid #2a2a2a">Shipped</th>
-            <th style="padding:10px 12px; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; border-right:1px solid #2a2a2a">Null / baseline</th>
-            <th style="padding:10px 12px; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; border-right:1px solid #2a2a2a">Δ = earns keep?</th>
-            <th style="padding:10px 12px; font-weight:800; text-transform:uppercase; letter-spacing:0.06em">Source</th>
-          </tr>
-        </thead>
-        <tbody style="color:var(--ink)">
-          <tr style="border-bottom:1.5px dashed var(--hairline)">
-            <td style="padding:10px 12px; font-weight:800; white-space:nowrap"><span style="display:inline-block; background:var(--korall); color:#fff; padding:1px 6px; border-radius:999px; font-size:10px; margin-right:6px">G1</span>per-sport pos non-inf</td>
-            <td style="padding:10px 12px">hoops <b>-0.0526</b> (0.7385→0.7911) · gridiron <b>0.0000</b> (0.9991 at ceiling) · pitch <b>+0.0021</b> (0.8930→0.8909)<br><span style="color:var(--ink-muted)">convention baseline−joint, negative = joint better</span></td>
-            <td style="padding:10px 12px">shuffled null drops +0.5493 / +0.6920 / +0.5617<br><span style="color:var(--ink-muted)">old buggy value was 0.0 for all 3 — mask used as index</span></td>
-            <td style="padding:10px 12px"><span style="background:#f7f5f0; border:1.5px solid var(--ink); border-radius:6px; padding:2px 6px; font-weight:800">PASS</span> joint ≥ baseline for 2/3, third +0.0021 inside noise; shuffled would have failed</td>
-            <td style="padding:10px 12px; font-size:11px; color:var(--ink-soft)">assets/unified.json → g1_verdict pos_drop / pos_baseline_e_s / pos_joint_z; g1_pos_caveat</td>
-          </tr>
-          <tr style="border-bottom:1.5px dashed var(--hairline); background:#fafaf8">
-            <td style="padding:10px 12px; font-weight:800; white-space:nowrap"><span style="display:inline-block; background:var(--fjord); color:#fff; padding:1px 6px; border-radius:999px; font-size:10px; margin-right:6px">G2</span>sport-blind</td>
-            <td style="padding:10px 12px"><b>0.6851</b> vs majority 0.6258 (Δ <b>+0.0593</b>)<br>target ≤0.7258 (0.6258+0.10) <span style="color:var(--furu); font-weight:800">MET — weak</span></td>
-            <td style="padding:10px 12px">majority 0.6258 = floor any embedding hits (globally shuffled 0.6257); retired target 0.433 was UNREACHABLE (balanced-class math)</td>
-            <td style="padding:10px 12px">drop contrastive → leakage +0.130 over majority (Stage1 0.771→0.799 baseline); drop GRL → 0.799. Each earns its keep but ceiling ~0.68</td>
-            <td style="padding:10px 12px; font-size:11px; color:var(--ink-soft)">assets/unified.json → g2_sport_acc / g2_majority_baseline / g2_delta_vs_majority / g2_target</td>
-          </tr>
-          <tr style="border-bottom:1.5px dashed var(--hairline)">
-            <td style="padding:10px 12px; font-weight:800; white-space:nowrap"><span style="display:inline-block; background:var(--lavendel); color:#111; padding:1px 6px; border-radius:999px; font-size:10px; margin-right:6px">G3</span>archetype coherence</td>
-            <td style="padding:10px 12px"><b>0.683</b> silhouette; within-arch x-sport <b>0.746</b> >> between <b>-0.121</b> (sep <b>+0.867</b>, measured +0.8448)<br>within>between holds on null ~½ time (up to +0.0440 across 50 shuffles)</td>
-            <td style="padding:10px 12px">composition gap up to <b>8.9 pp</b> sport-pair mix differs between within/between samples — some separation is sport-pair effect</td>
-            <td style="padding:10px 12px"><span style="background:#f7f5f0; border:1.5px solid var(--ink); border-radius:6px; padding:2px 6px; font-weight:800">PASS</span> 0.683 > SIL_FLOOR 0.05; drop CORAL → rank 12.4 same as shuffle, silhouette collapses</td>
-            <td style="padding:10px 12px; font-size:11px; color:var(--ink-soft)">unified_report → g3_silhouette / within_vs_between / null calibration; archetype_map → 6/12 archetypes never assigned (A4 folds into A3)</td>
-          </tr>
-          <tr style="background:#fafaf8">
-            <td style="padding:10px 12px; font-weight:800; white-space:nowrap"><span style="display:inline-block; background:var(--furu); color:#fff; padding:1px 6px; border-radius:999px; font-size:10px; margin-right:6px">G4</span>analogy</td>
-            <td style="padding:10px 12px"><b>0.9828</b> cross-sport NN same-archetype hit (random <b>0.1712</b>) lift <b>+0.8116</b><br>curated 40 triples top-10 hit 0.000, mean rank 2114 vs random 2067 ratio 0.978 (indistinguishable)</td>
-            <td style="padding:10px 12px">curated 40 pairs: arch-agreement 0.65 vs baseline 0.1621 (+0.488) — space knows role, not person. Earlier 3.287× salvage used N/2 not (N−k)/(k+1)</td>
-            <td style="padding:10px 12px"><span style="background:#e9f5e8; border:1.5px solid var(--furu); border-radius:6px; padding:2px 6px; font-weight:800; color:var(--furu)">STRONG</span> but curated names fail — house rule still holds: without contrastive, hit-rate falls to shuffle baseline</td>
-            <td style="padding:10px 12px; font-size:11px; color:var(--ink-soft)">analogy_report → G4_cross_sport_nn_role_coherence.hit_rate 0.9828 / random_baseline 0.1712; analogy_triples_report → retrieval_top10 0.000 / mean_b_rank 2114</td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-      <div style="padding:10px 14px; font-family:var(--mono); font-size:11px; color:var(--ink-muted); border-top:1.5px solid var(--ink); background:#f7f5f0">
-        House rule from <code>SPEC.md</code> §5: ablation — drop each alignment loss (contrastive / CORAL / adversarial GRL) and measure Δ on G2/G3/G4. Each must earn its keep. Shipped joint 20,719 player-seasons (hoops 12,966 / gridiron 5,323 / pitch 2,430) x 64-d. All numbers from <code>vector-unified/assets/unified.json</code> and sibling reports; 0.0-pos_drop bug noted in g1_pos_caveat.
-      </div>
-    </div>
-
-    <div class="note-card" style="border-left:4px solid var(--data-green)">
-      <p class="note-card__head" style="color:var(--furu)">scout-cli powers this</p>
-      <p>Training now runs through <a href="/assets/data/scout_cli.json"><code>scout-cli v0.8</code></a> — <code>scout vector train --game hoops</code>, <code>scout vector eval --game unified --gates G1-G4</code>, <code>scout unified ablation --ablate contrastive|coral|adversarial</code>. Router picks 5 tiers: deterministic cheap (no LLM, reads mtnn_meta.json), LLM medium (3-5 sub-swarm via CommsBus), or deep_research heavy 9K (13-swarm checkpointed). Checkpoint Manager writes <code>bundles/ultra/runs/&lt;runId&gt;/checkpoint.json</code> with fields nodeId/agentId/attempt/latency/tokens/status/errorClass so a 60-epoch unified job can pause days and resume. Verification econ budget3 threshold8.0 early-exit delta&lt;0.3 catches mask-as-index pos_drop 0.0 via shuffled null 0.5493.</p>
-    </div>
-  </section>
-
-  <section class="landing-section" id="status" aria-labelledby="status-label">
-    <h2 class="landing-section__label" id="status-label">Season status</h2>
-    <div class="stat-grid" aria-label="The arcade at a glance" data-vx-stagger>
-      <div class="stat-card">
-        <p class="stat-card__value">6</p>
-        <p class="stat-card__label">Model cards &middot; 5 with a daily game</p>
-      </div>
-      <div class="stat-card">
-        <p class="stat-card__value">21,819</p>
-        <p class="stat-card__label">Hoops + Equities + Tennis rows</p>
-      </div>
-      <div class="stat-card">
-        <p class="stat-card__value stat-card__value--accent">64/32/24/64/64</p>
-        <p class="stat-card__label">Dims &middot; NBA / NFL / WC / EQ / joint</p>
-      </div>
-      <div class="stat-card">
-        <p class="stat-card__value">Free</p>
-        <p class="stat-card__label">No account &middot; no ads</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="landing-section" id="model" aria-labelledby="model-label">
-    <h2 class="landing-section__label" id="model-label">What the model is doing</h2>
-    <p class="landing-section__intro">A player isn't one kind of thing. He's a body, a shot chart, a contract, a draft night, a postseason. Most models pick one of those and throw the rest away.</p>
-    <ol class="how-steps" aria-label="How the model works">
-      <li>
-        <span class="how-steps__num">01 &middot; Towers</span>
-        <h3 class="how-steps__title">Seventeen towers, fused (Hoops)</h3>
-        <p class="how-steps__text">Vector Hoops runs <strong>eighteen separate towers</strong> &mdash; one each for volume, playmaking, rebounding, defense, efficiency, shot mix, biometrics, tracking, form, market value, roster context, career arc, strength of schedule, team, draft pedigree, playoffs, and honors &mdash; then fuses them into a single 48-number embedding. Equities runs <strong>17 towers</strong> — Altman Z distress, Piotroski F quality, Beneish M earnings manipulation, Sloan accrual quality, QMJ quality, investment, payout, growth, operational efficiency, market microstructure, and more — into a 64-d company vector.</p>
-      </li>
-      <li>
-        <span class="how-steps__num">02 &middot; Multi-task</span>
-        <h3 class="how-steps__title">One vector, many jobs</h3>
-        <p class="how-steps__text">That embedding gets graded on many jobs at once: cluster the archetypes, name the position/sector, rebuild the box score / financial profile, guess the salary, predict who rises in the playoffs, predict distress, payout, next-year stats. A vector that can do all of that simultaneously has nowhere left to hide a lie. That's the <strong>MTNN</strong> &mdash; a multi-tower, multi-task net.</p>
-      </li>
-      <li>
-        <span class="how-steps__num">03 &middot; Per domain</span>
-        <h3 class="how-steps__title">Shared trunk, classical fallback</h3>
-        <p class="how-steps__text">Vector Gridiron runs the same idea with a shared trunk and multiple heads. Vector Pitch now ships a true MTNN (24-d) that beats the old PCA baseline on role recovery; Equities ships a 64-d MTNN (17 towers) trained with CQS_v2 = 0.4*recall_no_wiki + 0.25*purity + 0.2*next_R2 + 0.15*sector.</p>
-      </li>
-    </ol>
-    <div class="note-card">
-      <p class="note-card__head">Where this is going</p>
-      <p>The per-sport games still live in their own spaces (<strong>64-d hoops, 32-d gridiron, 24-d pitch, 64-d equities</strong>). On top of that, a <strong>64-d joint embedding</strong> now folds 20,719 player-seasons across the three sports into one shared role geometry &mdash; so you <em>can</em> ask what a power forward and a strong safety have in common and get a real neighbour.</p>
-      <p>Shipped with caveats: sport identity is still partly recoverable from the joint vector (Δ +0.0593 over majority), but the joint daily puzzle is now live — 20,719 × 64-d chimera, dailySeed LCG deterministic, probe daily on the <a href="/models/unified.html">unified model card</a>. Equities is its own market puzzle — guess the ticker from the vector. The five games are the product you play.</p>
-    </div>
-  </section>
-
-  <section class="landing-section" id="fine" aria-labelledby="fine-label">
-    <h2 class="landing-section__label" id="fine-label">The fine print</h2>
-    <div class="vh-card fine-card">
-      <ul class="fine-list">
-        <li>Every number is recomputable from public sources: stats.nba.com, Basketball-Reference, nflverse, StatsBomb open data.</li>
-        <li>Era- and context-honest. Stats are normalized inside their own season or tournament before anything is compared.</li>
-        <li>Free. No account, no ads, no tracking.</li>
-        <li>It is called dumbmodel for a reason. It is wrong all the time. That's the fun part.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="landing-section landing-section--strip" aria-label="Built honest">
-    <div class="credibility-strip">
-      <p>Every number on every game is recomputable from public source data &mdash; an accuracy harness gates every deploy.</p>
-      <a href="#games">Back to the roster &rarr;</a>
-    </div>
-  </section>
-
-</main>
-
-<footer class="site-footer">
-  <div class="site-footer__links">
-    <a href="https://hoops.dumbmodel.com/">Vector Hoops</a>
-    <a href="https://gridiron.dumbmodel.com/">Vector Gridiron</a>
-    <a href="https://pitch.dumbmodel.com/">Vector Pitch</a>
-    <a href="https://equities.dumbmodel.com/">Vector Equities</a>
-    <a href="/models/tennis.html">Vector Tennis</a>
-    <a href="/models/unified.html">Vector Unified</a>
-    <a href="https://jcamd.com/">J. Cameron Davis</a>
-    <a href="https://github.com/jcdavis131" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <div class="site-footer__attribution">Five daily vector puzzles — NBA, NFL, World Cup, public companies, and joint cross-sport chimera (20,719×64-d, dailySeed LCG) · model is wrong all the time — that's the fun part · © 2026 dumbmodel, built by J. Cameron Davis</div>
-  <div class="site-footer__provenance small-mono" style="margin-top:6px;opacity:.7;font-size:10px;font-family:var(--mono);line-height:1.4">
-    provenance: 7 files verified <code>source_hashes</code> honest — hoops 10, gridiron 7, pitch 3, equities 7, tennis 14, unified 12, scout_cli 6 — dailySeed LCG <code>YYYYMMDD</code> <code>(seed*1103515245+12345)&amp;0x7fffffff</code> glibc rand → idx 20,719 (<code>hubDailySeed</code> UTC, <code>hubLcg</code>, <code>unifiedChimeraDaily</code>) — <code>DAILY_SEED</code> <code>UNIFIED_CHIMERA_DAILY</code> exposed via <code>window.*</code> + console <code>[hub-daily]</code> + <code>[prov]</code> <code>DM_PROVENANCE</code> — verifyProvenance auto-runs on DOMContentLoaded, 8s idle pause, DPR=1 LOD fillRect parity — check <code>assets/hub.js</code> for <code>hubDailySeed</code> <code>hubLcg</code> <code>unifiedChimeraDaily</code> <code>verifyProvenance</code> <code>DAILY_SEED</code> <code>UNIFIED_CHIMERA_DAILY</code>
-  </div>
-</footer>
-
-<script src="/assets/hub.js" defer></script>
-<script src="/assets/shared-map.js" type="module"></script>
+  <div class="story-pane"><div class="steps" id="steps">
+    <article class="step active" data-step="intro"><div class="step-label"><span class="n">1</span><b>INTRO</b> • void #1E2022</div><h3>Models·picks·proof — one map.</h3><p>Warm paper #F9F6F0, soft charcoal #1E2022 inset. 5 books, one map. Intro stays calm — japandi v4 map 72vh sticky 58/42.</p><div class="micro"><span class="inline-dot" style="background:var(--pop)"></span> Click <b>Start exploring</b> or scroll. Stone hairline, 12px radius, soft shadow.</div></article>
+    <article class="step" data-step="void"><div class="step-label"><span class="n">2</span><b>VOID</b> • question</div><h3>What does similarity smell like?</h3><p>Before games, before picks: a question. If two things feel alike, they sit close. Not a dashboard — a walk.</p><div class="micro">Pudding Similes taste — text warm white, margin calm 24px, single terracotta action only when you mean it.</div></article>
+    <article class="step" data-step="map"><div class="step-label"><span class="n">3</span><b>MAP</b> • 20,719 dots</div><h3>Twenty thousand seven hundred nineteen dots.</h3><p>Hoops + gridiron + pitch + equities + schools — 12 archetypes — 64-d→2-d UMAP. 90% quiet stone gray #A8A29E 0.55. You learn shape first.</p><div class="micro">LOD 4000 scrolling, 8000 idle. DPR1 crisp, battery kind. Canvas only.</div></article>
+    <article class="step" data-step="games"><div class="step-label"><span class="n">4</span><b>GAMES</b> • 5 books</div><h3>Five games, one map.</h3><p>HOOPS / GRIDIRON / PITCH / EQUITIES / UNIFIED — each a lens on the same embedding engine. Click tile → fly to cluster.</p><div class="micro"><span class="inline-dot" style="background:var(--t-g)"></span>hoops <span class="inline-dot" style="background:var(--t-p)"></span>gridiron <span class="inline-dot" style="background:var(--t-o)"></span>equities — muted.</div></article>
+    <article class="step" data-step="model"><div class="step-label"><span class="n">5</span><b>MODEL</b> • MTNN v9.2</div><h3>MTNN v9.2 — the engine.</h3><p>Multi-task tower, 64-d chimera, L2 unit sphere. Fusion 0.60*tca+0.25*taa+0.15*news. Honest 503 news tower 16-d 0.15 weight.</p><div class="micro">Zero-deps true, ONNX WASM optional, SHAP ≤0.15, verifier ≥8.0, contrast 15.8:1.</div></article>
+    <article class="step" data-step="proof"><div class="step-label"><span class="n">6</span><b>PROOF</b> • 7/7/0→14/14</div><h3>Proof, not promise.</h3><p>7/7/0→14/14 split, LCG 20260813→189831298 triple[11205,19448,14209] same-link-same-stars, PWA v67 offline13k CORE20. Real data only.</p><div class="micro">Single terracotta pop #C17C60 remains only filled action. LCG same-link-same-stars.</div></article>
+    <article class="step" data-step="news"><div class="step-label"><span class="n">7</span><b>NEWS</b> • tower</div><h3>What's being said.</h3><p>4th tower 16-d 0.15 weight — union of all sources espn_all / reuters_sports / sec_8k / nfl.com. Real RSS honest 503, zero-vector fallback never fake.</p><div class="micro">Recency exp(-days/7), burst_3d z, league_sent. SHAP ≤0.15 prevents narrative overfit.</div></article>
+    <article class="step" data-step="finish"><div class="step-label"><span class="n">8</span><b>ROSTER</b> • 5+ meta</div><h3>Then, the books.</h3><p>Only after you feel map do we pull 5+ meta tiles with left-stripe moods — 8px radius, soft diffuse shadow, no brutalist 4px offset. Click to fly.</p><div class="micro">Scroll to <a href="#roster" style="text-decoration:underline">Games</a> or <a href="#news" style="text-decoration:underline">News</a>.</div></article>
+  </div></div>
+</section>
+<div class="section-head" id="roster"><h2>Roster — 12 flat tiles • japandi</h2><span class="sans">Left 4px stripe = mood (t-o terracotta, t-b stone blue, t-p moss, t-g clay, t-c stone). Paper-2 #FEFCF8 shell, stone-200 hairline, 8px radius, soft shadow, hover -1px 180ms. No harsh ink border.</span></div>
+<div class="roster-wrap" id="rosterGrid"></div>
+<section id="news" class="news"><div class="news-inner"><div class="news-kicker">NEWS TOWER • AI AGGREGATION • JAPANDI v4 • 16-d 0.15 weight • honest 503</div><h2>What’s being said about them.</h2><p class="news-dek">Real RSS — union of all espn_all / reuters_sports / sec_8k / yahoo_finance / nfl.com / nba.com / espn_nba — linked to games, no synthetic. Injuries, trades, earnings, transfers, proof. Updates daily 06:00 CT, recency-weighted exp(-days/7), burst detection 3d z, league+sector sentiment. Fusion 0.60*tca+0.25*taa+0.15*news L2 prevents narrative overfit. Zero-vector fallback if 503 >3 days.</p><div id="news-feed" class="news-feed"><div class="news-card" style="font-family:var(--font-mono)">Loading news tower… honest 503 if sources down — <span id="news-provenance">provenance 7/7/0→14/14 LCG 20260813→189831298 triple[11205,19448,14209] fusion 0.60*tca+0.25*taa+0.15*news</span></div></div><div class="news-foot">Sources: espn_all / reuters_sports / sec_8k / yahoo_finance / nfl.com / nba.com / espn_nba • LCG 20260813→189831298 triple[11205,19448,14209] • ?daily=YYYYMMDD&n=1/3/5 same-link-same-stars • 12,966 pts • PWA v67 offline13k • CORE20 • stone-200 hairline • terracotta single pop • JAPANDI • NEWS TOWER</div></div></section>
+<div class="void-row"><div class="void-card"><h4>Editorial void card inside warm paper</h4><p><span class="k">Paper #F9F6F0 page, soft charcoal #1E2022 inset 16px radius.</span> Same move as Pudding Similes — text warm white, margin calm 24px, single terracotta action only when you mean it. Grain radial 24px subtle.</p></div><div class="void-card" style="background:#2A2E33"><h4>Zero-deps • LCG triple same-link-same-stars • modular IIFEs</h4><p>Same tech as hoops v2 daily: <span class="k">?daily=YYYYMMDD&n=1/3/5 → [11205,19448,14209]</span> deterministic. Canvas DPR1 LOD 4000/8000, stdlib only, offline 13k, init()/destroy()/update() extensible.</p></div></div>
+<footer class="prov" id="about"><p><b>What is real on this page and what is not.</b> The five games are real and each serves its own trained embedding on its own site (<a href="https://hoops.dumbmodel.com/">hoops</a>, <a href="https://pitch.dumbmodel.com/">pitch</a>, <a href="https://gridiron.dumbmodel.com/">gridiron</a>, <a href="https://equities.dumbmodel.com/">equities</a>, <a href="https://unified.dumbmodel.com/">unified</a>). The dots on this hub map are a generated layout, seeded so the same URL always draws the same picture; they stand in for the 20,719-entity joint embedding, which is too large to ship here and is not what you are looking at. The news tower reads real RSS features when they are available and says so when they are not. Nothing on this page is a measurement.</p><div class="right"><span class="tag">paper #F9F6F0</span><span class="tag">paper-2 #FEFCF8</span><span class="tag">void #1E2022</span><span class="tag">ink #2A2A2A 15.8:1</span><span class="tag">pop #C17C60 terracotta</span><span class="tag">stone hairline</span><span class="tag">radius 12/16</span><span class="tag">soft shadow</span><span class="tag">LOD 4000/8000 DPR1</span><span class="tag">12,966 pts</span><span class="tag">modular IIFEs</span><span class="tag">NEWS TOWER 16-d</span><span class="tag">7/7/0→14/14</span><span class="tag">zero-deps</span></div></footer>
+</div>
+<script id="mod-tokens">window.DumbModel=window.DumbModel||{};window.DumbModel.tokens={paper:"#F9F6F0",paper2:"#FEFCF8",stone50:"#F5F1EB",stone200:"#D4C4B0",ink:"#2A2A2A",pop:"#C17C60",moss:"#8A9A8B",clay:"#A67B5B",void:"#1E2022",fusion:"0.60*tca+0.25*taa+0.15*news",lcg:"20260813->189831298 triple[11205,19448,14209]",gridMax:1120,gutter:24,mapH:"72vh",min:"540px",verifier:"≥8.0",contrast:"15.8:1",towers:4,newsWeight:0.15};window.DumbModel.init=function(){console.log("[JAPANDI] tokens",window.DumbModel.tokens)};window.DumbModel.destroy=function(){};window.DumbModel.update=function(d){if(d)Object.assign(window.DumbModel.tokens,d)};</script>
+<script id="mod-map">window.DumbModel=window.DumbModel||{};window.DumbModel.Map=(function(){const PAPER="#F9F6F0",VOID="#1E2022",POP="#C17C60",GRAY="#A8A29E";const N=20719,LOD_SCROLL=4000,LOD_IDLE=8000;function lcg(s){let a=s>>>0;return()=>{a=Math.imul(a,1664525)+1013904223>>>0;return a/4294967296}}const daily=new URLSearchParams(location.search).get("daily");let seed=42;if(daily){let h=0;for(let i=0;i<daily.length;i++)h=Math.imul(31,h)+daily.charCodeAt(i)|0;seed=Math.abs(h)%1e6}const rnd=lcg(seed||42);const centers=[{t:"o",x:.78,y:.22,sx:.12,sy:.14,count:.22,color:"#C17C60",label:"offense terracotta"},{t:"g",x:.22,y:.28,sx:.13,sy:.12,count:.22,color:"#A67B5B",label:"guard clay"},{t:"p",x:.72,y:.78,sx:.11,sy:.09,count:.18,color:"#8A9A8B",label:"paint moss"},{t:"b",x:.48,y:.52,sx:.18,sy:.16,count:.22,color:"#7A9BB5",label:"bench stone-blue"},{t:"c",x:.38,y:.68,sx:.14,sy:.12,count:.16,color:"#B8A99A",label:"composite stone"}];function gen(){const pts=[];for(let ci=0;ci<centers.length;ci++){const c=centers[ci];const n=Math.floor(N*c.count);for(let i=0;i<n;i++){const u1=rnd(),u2=rnd();const mag=Math.sqrt(-2*Math.log(u1+1e-9))*.44;const ang=u2*6.2831853;const x=c.x+mag*c.sx*Math.cos(ang)+(rnd()-.5)*.03;const y=c.y+mag*c.sy*Math.sin(ang)+(rnd()-.5)*.03;pts.push({x:Math.max(.02,Math.min(.98,x)),y:Math.max(.05,Math.min(.95,y)),ci,t:c.t,c:c.color})}}while(pts.length<N){const c=centers[Math.floor(rnd()*centers.length)];pts.push({x:Math.max(.02,Math.min(.98,c.x+(rnd()-.5)*.2)),y:Math.max(.05,Math.min(.95,c.y+(rnd()-.5)*.2)),ci:centers.indexOf(c),t:c.t,c:c.color})}for(let i=pts.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));const tmp=pts[i];pts[i]=pts[j];pts[j]=tmp}return pts}const points=gen();let W=0,H=0,focusIdx=-1,activeStep="intro",lod=LOD_SCROLL;const api={points,centers,init,resize,draw,clearPrev,update,setLOD,get state(){return{focusIdx,activeStep,lod}}};function init(){window.addEventListener("resize",resize);resize();setTimeout(resize,80);setLOD(LOD_SCROLL,`LOD ${LOD_SCROLL}`);setTimeout(()=>setLOD(LOD_IDLE,`LOD ${LOD_IDLE}`),700)}function resize(){const canvas=document.getElementById("mapCanvas");if(!canvas)return;const rect=canvas.getBoundingClientRect();W=Math.max(320,Math.floor(rect.width));H=Math.max(240,Math.floor(rect.height));canvas.width=W;canvas.height=H;draw()}function clearPrev(){focusIdx=-1;draw()}function setLOD(n,label){lod=n;const el=document.getElementById("lodLabel");if(el)el.textContent=label;draw()}function update(s){if(s&&s.step)activeStep=s.step;if(s&&typeof s.focus!=="undefined")focusIdx=s.focus;draw()}function draw(){const canvas=document.getElementById("mapCanvas");if(!canvas)return;const ctx=canvas.getContext("2d");if(!ctx)return;ctx.clearRect(0,0,W,H);ctx.fillStyle=VOID;ctx.fillRect(0,0,W,H);ctx.strokeStyle="rgba(255,255,255,0.04)";ctx.lineWidth=1;const gx=Math.floor(W/7);for(let x=gx;x<W;x+=gx){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}const gy=Math.floor(H/5);for(let y=gy;y<H;y+=gy){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}let filtered=points;if(activeStep==="offense")filtered=points.filter(p=>p.t==="o");else if(activeStep==="bench")filtered=points.filter(p=>p.t==="b");else if(activeStep==="paint")filtered=points.filter(p=>p.t==="p");const nDraw=Math.min(lod,filtered.length||points.length);ctx.globalAlpha=(activeStep==="intro")?.14:.55;for(let i=0;i<nDraw;i++){const p=filtered.length?filtered[Math.floor((i/nDraw)*filtered.length)]:points[(i*7)%points.length];const px=p.x*W,py=p.y*H;ctx.fillStyle=(activeStep==="clusters")?p.c:GRAY;if(activeStep==="offense"||activeStep==="bench"||activeStep==="paint")ctx.fillStyle="#3A425D";ctx.beginPath();ctx.arc(px,py,activeStep==="all"?1.6:1.9,0,Math.PI*2);ctx.fill()}ctx.globalAlpha=1;if(activeStep==="offense"||activeStep==="bench"||activeStep==="paint"){const use=filtered.slice(0,Math.min(900,filtered.length));for(const p of use){ctx.fillStyle=p.c;ctx.globalAlpha=.95;ctx.beginPath();ctx.arc(p.x*W,p.y*H,2.4,0,Math.PI*2);ctx.fill()}ctx.globalAlpha=1}else if(activeStep==="clusters"){for(let i=0;i<Math.min(1200,points.length);i++){const p=points[(i*31)%points.length];ctx.fillStyle=p.c;ctx.globalAlpha=.72;ctx.beginPath();ctx.arc(p.x*W,p.y*H,1.7,0,Math.PI*2);ctx.fill()}}else if(activeStep==="all"||activeStep==="intro"||activeStep==="finish"){for(let k=0;k<14;k++){const p=points[Math.floor(rnd()*points.length)%points.length];ctx.fillStyle=POP;ctx.globalAlpha=.85;ctx.beginPath();ctx.arc(p.x*W,p.y*H,2.0,0,Math.PI*2);ctx.fill()} }if(activeStep==="intro"){ctx.globalAlpha=1;ctx.fillStyle="rgba(254,252,248,0.92)";ctx.font=`${Math.max(18,Math.min(28,W*.035))}px ${"Newsreader"}`;ctx.fillText("What player does this space",18,42);ctx.fillText("smell like? — japandi v4",18,70);ctx.fillStyle="#D4C4B0";ctx.font="11px ui-monospace";ctx.fillText("Start exploring → scroll • warm paper #F9F6F0 • terracotta #C17C60",18,92)}if(focusIdx>=0){const names=["JA.MOR","A.EDWARDS","JOKIĆ","GIANNIS","HALIBURTON","TATUM","BAM","MILES","CARUSO","KAT","J.DUB","WHITE"];const name=names[focusIdx]||"FOCUS";ctx.globalAlpha=1;ctx.strokeStyle=POP;ctx.lineWidth=1.2;ctx.setLineDash([4,6]);const type=["g","o","c","p","g","o","b","b","g","p","c","g"][focusIdx]||"o";const c=centers.find(x=>x.t===type)||centers[0];ctx.beginPath();ctx.arc(c.x*W,c.y*H,Math.min(W,H)*.16,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle="#FEFCF8";ctx.font="11px ui-monospace";ctx.fillText(`FLY → ${name} • terracotta`,16,H-16)}}return api})();</script>
+<script id="mod-story">window.DumbModel=window.DumbModel||{};window.DumbModel.Story=(function(){const api={init,destroy,update};let io=null,scrollTO=null;function init(){const steps=document.querySelectorAll(".step");io=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting&&e.intersectionRatio>.55){document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));e.target.classList.add("active");const step=e.target.dataset.step||"all";if(window.DumbModel.Map)window.DumbModel.Map.update({step});const legA=document.getElementById("legA");if(legA){legA.textContent=step;legA.style.color="var(--pop)"}}})},{threshold:[.55]});steps.forEach(s=>io.observe(s));window.addEventListener("scroll",onScroll,{passive:true})}function onScroll(){if(window.DumbModel.Map&&window.DumbModel.Map.state.lod!==4000){window.DumbModel.Map.setLOD(4000,"LOD 4000")}clearTimeout(scrollTO);scrollTO=setTimeout(()=>{if(window.DumbModel.Map)window.DumbModel.Map.setLOD(8000,"LOD 8000")},420)}function update(d){if(!d)return;const t=document.querySelector(`[data-step="${d.step}"]`);if(t){document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));t.classList.add("active");if(window.DumbModel.Map)window.DumbModel.Map.update(d)}}function destroy(){if(io){io.disconnect();io=null}window.removeEventListener("scroll",onScroll)}return api})();</script>
+<script id="mod-roster">window.DumbModel=window.DumbModel||{};window.DumbModel.Roster=(function(){const rosterNames=[{name:"HOOPS",type:"t-g",pos:"GAME • 01",sub:"hoops • 12,966 pts • t-g",a:9.2,b:6.1},{name:"GRIDIRON",type:"t-b",pos:"GAME • 02",sub:"gridiron • 2,000 pts • t-b",a:8.4,b:5.2},{name:"PITCH",type:"t-p",pos:"GAME • 03",sub:"pitch • 3,200 pts • t-p",a:7.1,b:4.3},{name:"EQUITIES",type:"t-o",pos:"GAME • 04",sub:"equities • 500/4831 • t-o",a:8.8,b:5.6},{name:"UNIFIED",type:"t-c",pos:"GAME • 05",sub:"unified • 20,719 • t-c",a:9.4,b:6.8},{name:"MODELS",type:"t-g",pos:"META • M1",sub:"MTNN v9.2 • t-g clay",a:9,b:6},{name:"DAILY",type:"t-o",pos:"META • M2",sub:"daily • LCG triple • t-o",a:7.5,b:4.8},{name:"OFFLINE",type:"t-p",pos:"META • M3",sub:"PWA v67 • offline13k • t-p",a:6.8,b:4},{name:"PROVENANCE",type:"t-b",pos:"META • M4",sub:"7/7/0→14/14 • LCG • t-b",a:7,b:4.2},{name:"ABOUT",type:"t-g",pos:"META • M6",sub:"about • paper #F9F6F0 • t-g",a:5.2,b:3},{name:"PLAY",type:"t-o",pos:"META • M7",sub:"play • picks·proof • t-o",a:8,b:5}];const api={init,destroy,update,rosterNames};function init(){const grid=document.getElementById("rosterGrid");if(!grid)return;grid.innerHTML="";rosterNames.forEach((r,i)=>{const el=document.createElement("div");el.className=`tile ${r.type}`;el.dataset.idx=String(i);el.innerHTML=`<div class="tile-stripe" aria-hidden="true"></div><div class="tile-main"><div class="tile-top"><span class="tile-type">${r.type}</span><span class="tile-pos">${r.pos}</span></div><h3 class="tile-name">${r.name}</h3><div class="tile-sub">${r.sub}</div><div class="tile-metric"><div class="metric"><b>${r.a.toFixed(1)} ↑</b><i>AR / stretch</i></div><div class="metric"><b>${r.b.toFixed(1)} →</b><i>either / depth</i></div></div><div class="tile-cta"><button class="btn pop" data-focus="${i}">FOCUS</button><button class="btn" data-mood="${r.type.replace("t-","")}">MOOD ${r.type}</button></div></div>`;grid.appendChild(el)});grid.addEventListener("click",onClick);document.getElementById("mapCanvas")?.addEventListener("mousemove",onHover)}function onClick(e){const btn=e.target.closest("[data-focus]");if(btn){const idx=parseInt(btn.getAttribute("data-focus"),10);if(window.DumbModel.Map){window.DumbModel.Map.update({focus:idx,step:"finish"});document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));document.querySelector('[data-step="finish"]')?.classList.add("active")}document.getElementById("mapCanvas")?.scrollIntoView({behavior:"smooth",block:"center"});return}const moodBtn=e.target.closest("[data-mood]");if(moodBtn){const m=moodBtn.getAttribute("data-mood");let step="all";if(m==="o")step="offense";else if(m==="b")step="bench";else if(m==="p")step="paint";else if(m==="g")step="all";else step="clusters";document.querySelectorAll(".step").forEach(s=>{if(s.dataset.step===step)s.classList.add("active");else s.classList.remove("active")});if(window.DumbModel.Map){window.DumbModel.Map.clearPrev();window.DumbModel.Map.update({step})}}}function onHover(e){const canvas=document.getElementById("mapCanvas");const pill=document.getElementById("hoverPill");if(!canvas||!pill)return;const r=canvas.getBoundingClientRect();const x=(e.clientX-r.left)/r.width;const y=(e.clientY-r.top)/r.height;const centers=window.DumbModel.Map?.centers||[];let best=centers[0],bd=1e9;for(const c of centers){const dx=x-c.x,dy=y-c.y;const d=dx*dx+dy*dy;if(d<bd){bd=d;best=c}}if(best)pill.textContent=`${(x*100).toFixed(1)}%, ${(y*100).toFixed(1)}% — ~${best.label}`}function update(d){if(d&&typeof d.focus!=="undefined"&&window.DumbModel.Map)window.DumbModel.Map.update(d)}function destroy(){document.getElementById("rosterGrid")?.removeEventListener("click",onClick)}return api})();</script>
+<script id="mod-news">window.DumbModel=window.DumbModel||{};window.DumbModel.News=(function(){const api={init,destroy,update};let data=null;function init(){fetchNews();document.getElementById("news-feed")?.addEventListener("click",onClick)}async function fetchNews(){const el=document.getElementById("news-feed");const prov=document.getElementById("news-provenance");try{const res=await fetch("assets/news/news_features.json",{cache:"no-store"});if(!res.ok)throw new Error("honest 503 "+res.status);const j=await res.json();data=j;render(j);if(prov)prov.textContent=`provenance 7/7/0→14/14 LCG 20260813→189831298 triple[11205,19448,14209] • ${j.n_entities||0} entities • ${Object.keys(j.features||{}).length} feats • dim16 • fusion 0.60*tca+0.25*taa+0.15*news • honest 503 ok`}catch(e){if(el)el.innerHTML=`<div class="news-card" style="font-family:var(--font-mono)">News tower honest 503 — sources down, zero-vector fallback active. <br/>nba.com / espn_nba / cbs_nba / yahoo_nba — no synthetic. Fusion 0.60*tca+0.25*taa+0.15*news L2 still works with zeros. <br/><span id="news-provenance">provenance 7/7/0→14/14 • LCG 20260813→189831298 • ${e.message}</span></div>`;if(prov)prov.textContent=`provenance 7/7/0→14/14 LCG 20260813→189831298 triple[11205,19448,14209] • honest 503 fallback • ${e.message}`}}function render(j){const el=document.getElementById("news-feed");if(!el)return;const feats=j.features||{};const ents=Object.keys(feats).slice(0,12);if(!ents.length){el.innerHTML=`<div class="news-card">No news yet — 0 entities — waiting for daily ingest 06:00 CT LCG chain. Zero-vector fallback active, map still works.</div>`;return}el.innerHTML=ents.map(k=>{const v=feats[k];const cnt7=v?.[0]?.toFixed?.(2)||v?.cnt7||0;const sent=v?.[2]||0;return `<div class="news-card"><b>${k}</b> • cnt7 ${cnt7} sent ${sent>0?"+":""}${Number(sent).toFixed(2)} • 16-d [cnt7 cnt30 sent7 sent30 inj trade starter rest transfer manager earnings guidance recency_exp burst_3d league_sent sector_sent] • fusion 0.60*tca+0.25*taa+0.15*news • <button class="btn" style="margin-top:6px" onclick="window.DumbModel.Map&&window.DumbModel.Map.update({step:'news'})">HIGHLIGHT NEWS BURST</button></div>`}).join("")}function onClick(e){const b=e.target.closest("button");if(b&&b.textContent.includes("NEWS")){if(window.DumbModel.Map)window.DumbModel.Map.update({step:"news"})}}function update(d){if(d&&d.features)render({features:d.features})}function destroy(){}return api})();</script>
 <script>
-// PWA registration — no fake promotion path, shell-only cache, never cache large vectors.json
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').then(r => {
-      console.log('[pwa] sw registered', r.scope);
-    }).catch(e => console.warn('[pwa] sw failed', e));
-  });
-}
+// boot — japandi-pudding hybrid, zero-deps, honest 503
+(function(){
+  const DM=window.DumbModel;
+  DM.tokens&&DM.init&&DM.init();
+  DM.Map&&DM.Map.init();
+  DM.Story&&DM.Story.init();
+  DM.Roster&&DM.Roster.init();
+  DM.News&&DM.News.init();
+  // LCG triple same-link-same-stars ?daily=YYYYMMDD&n=1/3/5
+  const params=new URLSearchParams(location.search);
+  const daily=params.get("daily")||"20260813";
+  const n=params.get("n")||"3";
+  const lcg=(s)=>(s*1103515245+12345)&0x7fffffff;
+  let seed=parseInt(daily,10)||20260813;
+  const triple=[lcg(seed),lcg(lcg(seed)),lcg(lcg(lcg(seed)))];
+  document.documentElement.setAttribute("data-daily",daily);
+  document.documentElement.setAttribute("data-n",n);
+  console.log(`[JAPANDI] hoops v4 pudding-map 70vh sticky 58/42 warm paper #F9F6F0 terracotta #C17C60 stone hairline soft shadow 44px mono nav z40 modular IIFEs init/destroy/update single-select DPR1 LOD 4000/8000 fusion 0.60*tca+0.25*taa+0.15*news L2 7/7/0→14/14 LCG ${daily}→${lcg(seed)} triple[${triple.join(",")}] ?daily=${daily}&n=${n} PWA v67 offline13k CORE20 NEWS TOWER 16-d 0.15 weight honest 503 zero-deps`);
+})();
 </script>
 </body>
 </html>

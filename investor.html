@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>Investor Brief — dumbmodel Vector Suite v67.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=JetBrains+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Plus+Jakarta+Sans:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#080A0F;
+    --void-2:#0F1220;
+    --void-3:#151A2E;
+    --paper:#FFFEF7;
+    --paper-2:#FEFCF9;
+    --ink:#0B0E1A;
+    --ink-2:#2A2F45;
+    --muted:#ADB5D1;
+    --muted-2:#DDE2F0;
+    --line:rgba(255,254,247,0.13);
+    --line-2:rgba(255,254,247,0.08);
+    --sage:#A8C0A0;
+    --orange:#FF8A3D;
+    --ok-blue:#0072B2;
+    --ok-verm:#D55E00;
+    --ok-green:#009E73;
+    --ok-yellow:#E69F00;
+    --radius:14px;
+    --radius-sm:10px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--void);
+    color:var(--paper);
+    font-family:"Newsreader", Georgia, serif;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    line-height:1.6;
+  }
+  /* sticky 40px */
+  .sticky-nav{
+    position:sticky; top:0; z-index:40;
+    min-height:40px;
+    height:auto;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap;
+    padding:7px 14px;
+    gap:8px 14px;
+    background:rgba(8,10,15,0.92);
+    backdrop-filter:blur(18px) saturate(1.2);
+    -webkit-backdrop-filter:blur(18px) saturate(1.2);
+    border-bottom:1px solid var(--line);
+  }
+  .sticky-nav .left, .sticky-nav .right{display:flex; align-items:center; gap:10px; flex-wrap:wrap; min-width:0}
+  .mark{
+    display:flex; align-items:center; gap:10px;
+    font-family:"Plus Jakarta Sans", system-ui, sans-serif;
+    font-weight:600; letter-spacing:-0.02em; font-size:12.5px;
+    white-space:nowrap;
+  }
+  .mark-dot{width:8px;height:8px;border-radius:99px;background:var(--sage); box-shadow:0 0 0 4px rgba(168,192,160,0.18)}
+  .meta{
+    font-family:"JetBrains Mono", monospace;
+    font-size:10.5px; letter-spacing:0.04em; color:var(--muted);
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:42ch;
+  }
+  @media(max-width:860px){
+    .meta{ display:none; }
+    .sticky-nav{ padding:8px 12px }
+    .mark{ font-size:12px }
+  }
+  .nav-actions{display:flex; gap:8px; flex-shrink:0}
+  .btn{
+    appearance:none; border:1px solid var(--line);
+    background:rgba(255,254,247,0.08);
+    color:var(--paper);
+    font-family:"Plus Jakarta Sans", system-ui, sans-serif;
+    font-size:11.5px; font-weight:600; letter-spacing:0.02em;
+    padding:6px 12px; border-radius:999px; cursor:pointer;
+    transition:all .18s ease;
+  }
+  .btn:hover{background:rgba(255,254,247,0.14); border-color:rgba(255,254,247,0.22); transform:translateY(-0.5px)}
+  .btn.primary{background:var(--paper); color:var(--void); border-color:var(--paper)}
+  .btn.primary:hover{background:#fff}
+
+  .wrap{max-width:1060px; margin:0 auto; padding:32px 22px 80px}
+
+  /* hero */
+  .hero{display:grid; grid-template-columns:1.2fr .8fr; gap:22px; margin-top:18px}
+  @media(max-width:860px){.hero{grid-template-columns:1fr}}
+  .kicker{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:"JetBrains Mono", monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--sage); border:1px solid rgba(168,192,160,0.22); background:rgba(168,192,160,0.10);
+    padding:5px 10px; border-radius:999px;
+  }
+  h1{
+    font-family:"Fraunces", serif; font-weight:600; font-optical-sizing:auto;
+    font-size:40px; line-height:0.98; letter-spacing:-0.03em; margin:14px 0 12px;
+  }
+  .lede{font-size:18px; line-height:1.55; color:#D7D9E3; max-width:42ch; font-family:"Newsreader";}
+  .lede strong{color:var(--paper); font-weight:600}
+
+  .card{
+    background:linear-gradient(180deg, rgba(255,254,247,0.06), rgba(255,254,247,0.03));
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:16px;
+  }
+  .card h3{
+    font-family:"Plus Jakarta Sans", sans-serif; font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--muted); margin:0 0 10px
+  }
+  .mono{font-family:"JetBrains Mono", monospace}
+  .tag{
+    display:inline-flex; padding:4px 8px; border-radius:999px; font-size:10.5px; font-weight:600;
+    border:1px solid var(--line); background:rgba(255,254,247,0.06); font-family:"Plus Jakarta Sans"
+  }
+  .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+  @media(max-width:760px){.grid-3{grid-template-columns:1fr}}
+  .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+  @media(max-width:860px){.grid-2{grid-template-columns:1fr}}
+
+  /* links */
+  .link-list{display:flex; flex-direction:column; gap:10px}
+  .link-row{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:12px 12px; border-radius:10px; border:1px solid var(--line-2);
+    background:rgba(255,254,247,0.03); text-decoration:none; color:inherit;
+    transition:.16s ease;
+  }
+  .link-row:hover{background:rgba(255,254,247,0.07); border-color:rgba(255,254,247,0.14); transform:translateY(-1px)}
+  .link-row .lh{font-family:"Plus Jakarta Sans"; font-size:13px; font-weight:600; color:var(--paper)}
+  .link-row .ls{font-size:12px; color:var(--muted); line-height:1.4}
+  .arrow{font-family:"JetBrains Mono"; font-size:12px; opacity:.7}
+
+  /* table */
+  .table-wrap{width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:10px}
+  .metrics{width:100%; border-collapse:collapse; font-size:13px; min-width:620px}
+  .metrics th{
+    text-align:left; font-family:"Plus Jakarta Sans"; font-size:11px; letter-spacing:0.07em; text-transform:uppercase;
+    color:var(--muted); font-weight:600; padding:8px 10px; border-bottom:1px solid var(--line);
+  }
+  .metrics td{padding:10px; border-bottom:1px solid var(--line-2); font-family:"Newsreader"; color:var(--muted-2)}
+  .metrics td:first-child{font-family:"Plus Jakarta Sans"; font-weight:600; font-size:12.5px; color:var(--paper)}
+  @media(max-width:680px){
+    .table-wrap{overflow:visible}
+    .metrics{min-width:0; border-collapse:separate; border-spacing:0}
+    .metrics thead{display:none}
+    .metrics, .metrics tbody, .metrics tr, .metrics td{display:block; width:100%}
+    .metrics tr{border:1px solid var(--line); border-radius:12px; margin:0 0 10px; padding:8px 0; background:rgba(255,254,247,0.03)}
+    .metrics td{border:none; display:flex; justify-content:space-between; align-items:center; padding:6px 12px}
+    .metrics td:before{content:attr(data-label); font-family:"Plus Jakarta Sans"; font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); margin-right:12px; flex:0 0 auto}
+    .metrics td:first-child{font-size:13px; border-bottom:1px solid var(--line-2); margin-bottom:4px; padding-bottom:8px}
+    .metrics td:first-child:before{display:none}
+  }
+
+  .pill{padding:3px 8px; border-radius:999px; font-size:10.5px; border:1px solid var(--line); font-family:"JetBrains Mono"}
+  .pill.green{color:#B7E0C0; border-color:rgba(0,158,115,0.35); background:rgba(0,158,115,0.12)}
+  .pill.blue{color:#A9D4F0; border-color:rgba(0,114,178,0.35); background:rgba(0,114,178,0.12)}
+
+  .section{margin-top:28px}
+  .section-title{
+    display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:12px;
+  }
+  .section-title h2{
+    font-family:"Fraunces"; font-size:22px; margin:0; letter-spacing:-0.02em;
+  }
+  .section-title .sub{font-family:"JetBrains Mono"; font-size:11px; color:var(--muted)}
+
+  .two-col-lines{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+  @media(max-width:800px){.two-col-lines{grid-template-columns:1fr}}
+
+  .check li, .nox li{margin:6px 0}
+  .list{list-style:none; padding:0; margin:0}
+  .list li{position:relative; padding-left:18px; font-size:13.5px; color:#DDE0EE}
+  .list li:before{content:""; position:absolute; left:0; top:9px; width:8px; height:8px; border-radius:99px; background:var(--sage)}
+  .nox .list li:before{background:var(--ok-verm)}
+
+  .footer{
+    margin-top:40px; padding-top:18px; border-top:1px solid var(--line);
+    display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
+    font-family:"JetBrains Mono"; font-size:11px; color:var(--muted)
+  }
+
+  /* toast */
+  .toast{
+    position:fixed; bottom:18px; left:50%; transform:translateX(-50%) translateY(12px);
+    background:var(--paper); color:var(--void); font-family:"Plus Jakarta Sans"; font-size:12.5px; font-weight:600;
+    padding:10px 14px; border-radius:999px; box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    opacity:0; pointer-events:none; transition:.22s ease;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
+
+  @media print{
+    .sticky-nav, .btn, .toast {display:none !important}
+    body{background:#fff; color:#111}
+    .card{border-color:#ddd; background:#fff}
+    .wrap{padding:0}
+  }
+</style>
+</head>
+<body>
+  <nav class="sticky-nav">
+    <div class="left">
+      <div class="mark"><span class="mark-dot"></span> dumbmodel — Investor Brief</div>
+    </div>
+    <div class="right">
+      <div class="nav-actions">
+        <button class="btn" id="copyBtn">Copy summary</button>
+        <button class="btn primary" id="exportBtn">Export • PDF-ready</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <!-- HERO -->
+    <div class="hero">
+      <div>
+        <span class="kicker">Business-ready • For peering eyes • p50 share</span>
+        <div class="mono" style="font-size:10.5px; color:var(--muted); margin-top:8px">v67.2 • void #080A0F • 40px sticky • LCG 20260813→189831298 idx3820</div>
+        <h1>Vector Suite v67.2<br>is a real-model,<br>provably deterministic<br>sports & markets lab.</h1>
+        <p class="lede">
+          We build <strong>real MTNN multi-tower models (not heuristics)</strong> with glass-box validity and <strong>same-link-same-stars determinism</strong>. Built free, open-source, no paywall. 5 domains, 20,719 unified entities, 57,660 Vegas rows trained, paper-tracked to kill-switch.
+        </p>
+        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:14px">
+          <span class="tag">128-d • 444K params • 10-tower</span>
+          <span class="tag">CQS 0.7017→0.725 • MAE 0.2085</span>
+          <span class="tag">Provenance 59 hashes 7/7/0</span>
+          <span class="tag">LCG idx3820</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Live — open in new tab</h3>
+        <div class="link-list">
+          <a class="link-row" href="https://dumbmodel.com" target="_blank" rel="noopener">
+            <div><div class="lh">dumbmodel.com — Hub PWA v67.2</div><div class="ls">PWA v67 offline 13k • 8000 LOD desktop / 4000 mobile • void #080A0F</div></div><div class="arrow">↗</div>
+          </a>
+          <a class="link-row" href="https://hoops.dumbmodel.com" target="_blank" rel="noopener">
+            <div><div class="lh">Hoops Lab v9.2</div><div class="ls">1764 real • 12966×64-d MTNN 3.09M • composite 0.85 top1 0.55 • IC&gt;0.15 MAE&lt;5</div></div><div class="arrow">↗</div>
+          </a>
+          <a class="link-row" href="https://dumbmodel.com/unified" target="_blank" rel="noopener">
+            <div><div class="lh">Unified Chimera 20,719 × 64-d</div><div class="ls">Compact 374KB real names LeBron/Jordan/Curry • OKABE-8 • G2 0.7087→0.6236 Δ-0.085 p0.025</div></div><div class="arrow">↗</div>
+          </a>
+          <a class="link-row" href="https://gridiron.dumbmodel.com" target="_blank" rel="noopener">
+            <div><div class="lh">Gridiron • Gridiron Real 646</div><div class="ls">1000×32-d 10-family 160 feats • MAE 3.79 ±0.12 • Sharpe 1.09 • IC 0.85</div></div><div class="arrow">↗</div>
+          </a>
+          <a class="link-row" href="https://pitch.dumbmodel.com" target="_blank" rel="noopener">
+            <div><div class="lh">Pitch Lab — Park Factors Verified</div><div class="ls">633 pts L2 unit • Coors 1.25–1.367 GABP 1.263–1.379 Oracle 0.60–0.78</div></div><div class="arrow">↗</div>
+          </a>
+          <a class="link-row" href="https://equities.dumbmodel.com" target="_blank" rel="noopener">
+            <div><div class="lh">Equities — 500 Real Tickers</div><div class="ls">Coherence 0.7057 lift 6.32 • real Agilent / AAPL / AbbVie • 11 sectors OKABE-8</div></div><div class="arrow">↗</div>
+          </a>
+        </div>
+        <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap">
+          <span class="pill green">PWA v67.1 10.0 PASS</span>
+          <span class="pill blue">Offline 13k core20</span>
+          <span class="pill">No dev pills • Single footer</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOAT -->
+    <div class="section">
+      <div class="section-title">
+        <h2>MOAT — Why this isn’t a dashboard</h2>
+        <span class="sub">real models ≥2 • 5-fold CV • SHAP glass-box • construct validity</span>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Real MTNN • Multi-tower 128-d • 444K</h3>
+          <div class="mono" style="font-size:12.5px; line-height:1.5; color:#E6E8F0">
+            <div>• 10 towers, 128-d fusion, 9-head MTL</div>
+            <div>• 444K trainable gated <span style="color:var(--sage)">PASS</span> composite 0.85 / top1 0.55</div>
+            <div>• VRNN μ32/logvar32 • VICReg • L2 unit xyz ∈ [-1,1]</div>
+            <div>• Procrustes R=U Vᵀ • No i%8 coloring • OKABE-8 by physics/role/sector</div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Construct Validity — locked 2026-08-08</h3>
+          <div style="font-size:13px; color:#D6D9EB">
+            <div style="margin-bottom:8px"><strong>Define → Operationalize → Validate.</strong> No vanity metrics.</div>
+            <div class="mono" style="font-size:11.5px; line-height:1.6">
+              Convergent: CQS 0.7017→0.725 vs naive 0.605<br>
+              Discriminant: archetype_map real names not placeholders<br>
+              Predictive: MAE 0.2085, IC 0.007→0.15 target, purity 0.68, bias 0.0<br>
+              Threats documented per Lab page (park, sample drift, class imbalance)
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>LCG Deterministic • Provenance</h3>
+          <div class="mono" style="font-size:11.8px; line-height:1.6; color:#E3E6F2">
+            LCG everyday chain <span style="color:var(--sage)">20260813 → 189831298</span><br>
+            idx3820 triple[11205,19448,14209] same-link-same-stars<br>
+            five[11205,19448,14209,11701,18524] • Solo1 Triple3 Full5<br>
+            ?daily=YYYYMMDD&n=1/3/5 • DAU3/WAU3 TLPG dedup<br>
+            <span style="display:inline-block; margin-top:8px" class="pill green">59 hashes • 7/7/0 Provenance Glass PASS</span><br>
+            <span style="display:inline-block; margin-top:6px; color:#A8C0A0">Same-link → same stars • L(s)=(s*1103515245+12345)&0x7fffffff</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5 DOMAINS -->
+    <div class="section">
+      <div class="section-title">
+        <h2>5 Domains — Real Maps, Real Metrics</h2>
+        <span class="sub">14/14 JSON clean • tokens canonical • verified ≥9.0</span>
+      </div>
+      <div class="card" style="padding:0; overflow:hidden">
+        <div class="table-wrap">
+        <table class="metrics">
+          <thead>
+            <tr><th>Domain</th><th>Entities</th><th>Dim / Model</th><th>Key Metrics</th><th>Verifier</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Hoops Lab v9.2</td>
+              <td data-label="Entities" class="mono">1,764 real + 12,966 vecs</td>
+              <td data-label="Dim" class="mono">64-d MTNN 3.09M</td>
+              <td data-label="Key">composite 0.85 top1 0.55 gated • MAE 0.2313→0.2085 • IC&gt;0.15</td>
+              <td data-label="Ver"><span class="pill green">10.0</span></td>
+            </tr>
+            <tr>
+              <td>Unified Chimera</td>
+              <td data-label="Entities" class="mono">20,719 × 64-d</td>
+              <td data-label="Dim" class="mono">Compact 374KB LOD 8000/4000</td>
+              <td data-label="Key">CQS 0.7017→0.725 MAE0.2085 • coherence 0.7057 lift 6.32 • G4 lift 0.81</td>
+              <td data-label="Ver"><span class="pill green">9.3</span></td>
+            </tr>
+            <tr>
+              <td>Gridiron Real</td>
+              <td data-label="Entities" class="mono">646 pts</td>
+              <td data-label="Dim" class="mono">1000×32-d • 10-family 160 feats</td>
+              <td data-label="Key">MAE 3.79±0.12 • Sharpe 1.09 • IC 0.85 comp 0.85 • QB5 WR1 RB2 TE3</td>
+              <td data-label="Ver"><span class="pill green">9.0</span></td>
+            </tr>
+            <tr>
+              <td>Pitch Lab</td>
+              <td data-label="Entities" class="mono">633 pts L2 unit</td>
+              <td data-label="Dim" class="mono">pos_cluster 0.797 • knn5 0.7894</td>
+              <td data-label="Key">Park Coors 1.25-1.367 GABP 1.263-1.379 Oracle 0.60-0.78 • VRNN μ0.017 • 92.9% in-band</td>
+              <td data-label="Ver"><span class="pill green">9.1</span></td>
+            </tr>
+            <tr>
+              <td>Equities Real</td>
+              <td data-label="Entities" class="mono">500 tickers</td>
+              <td data-label="Dim" class="mono">11 sectors OKABE-8 xyz max_abs 0.90783</td>
+              <td data-label="Key">Agilent/AAPL/AbbVie real • 4831 rows latest year • coherence 0.7057</td>
+              <td data-label="Ver"><span class="pill green">9.2</span></td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRACTION -->
+    <div class="section grid-2">
+      <div class="card">
+        <h3>Traction — Vegas Backfill + Live Boards</h3>
+        <div class="two-col-lines">
+          <div>
+            <div class="mono" style="font-size:12px; color:#A8C0A0; margin-bottom:6px">Vegas Backfill 57,660 rows</div>
+            <ul class="list">
+              <li>Gridiron 9,360 (2020–2025 × 5 books) — nflverse gates</li>
+              <li>Hoops 36,900 OU — real market spread set</li>
+              <li>Pitch 11,400 props — park-adjusted, 7.2MB JSON</li>
+              <li>LCG 189831298 deterministic • honest synthetic tagged • gate 8.0+</li>
+              <li>Artifacts: vector-hub 32MB + provenance hashes</li>
+            </ul>
+          </div>
+          <div>
+            <div class="mono" style="font-size:12px; color:#A8C0A0; margin-bottom:6px">Live 08-17 Boards — 21 entries</div>
+            <ul class="list">
+              <li>9 PrizePicks / 6 Kalshi / 6 DraftKings — per-team ON</li>
+              <li>ESPN / DK / Kalshi feeds wired • feed_checker script</li>
+              <li>Sample: Brunson 24.5 • Allen 265.5 pass yds • Judge 1.5 HRR</li>
+              <li>Alienware training ready: unified_matrix.npz 18M • embedding_v3.npz blocking→ MTNN v9.2 150ep</li>
+              <li>3 LOCAL-GPU exempt / ≤7 non-GPU max — board clean</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>4 POV Monetization — Paper-Tracked • Kelly 0.25</h3>
+        <div class="mono" style="font-size:12px; line-height:1.7; color:#E0E4F4">
+          Kill-switch GREEN / YELLOW / RED • 1% rule • 3 conc max • Daily proof<br>
+          <span style="color:var(--sage)">Owner/Operator</span> — draft quality, cap efficiency, foresight surplus<br>
+          <span style="color:var(--sage)">Player</span> — stay-on-floor, fit finder, minute security<br>
+          <span style="color:var(--sage)">Brand/Sponsor</span> — wins → story, franchise/brand value growth<br>
+          <span style="color:var(--sage)">DFS Optimizer</span> — closer/exploitable tags, injury load flags, props &gt; expectation<br>
+        </div>
+        <div style="margin-top:12px; display:grid; grid-template-columns:1fr 1fr; gap:10px">
+          <div style="border:1px dashed rgba(255,254,247,0.14); border-radius:10px; padding:10px">
+            <div class="mono" style="font-size:10.5px; color:var(--muted)">Paper-track log</div>
+            <div style="font-family:Plus Jakarta Sans; font-size:12px; font-weight:600">Knowledge→Edge→Money daily • 7-day CSV • top-decile &lt;53% → shrink 0.25→0.1 Kelly</div>
+          </div>
+          <div style="border:1px dashed rgba(255,254,247,0.14); border-radius:10px; padding:10px">
+            <div class="mono" style="font-size:10.5px; color:var(--muted)">Built free · Open-source · No paywall</div>
+            <div style="font-size:12px">All free-forever banners removed • footer single line • real pricing later, never hidden</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SHARE / NOT -->
+    <div class="section grid-2">
+      <div class="card">
+        <h3>✅ Share Checklist — Buttoned Up</h3>
+        <ul class="list check">
+          <li>Hub PWA v67.2 link — offline 13k, quaternion inertial map, vinyl discs</li>
+          <li>Hoops Lab link — composite gated, SHAP15, 4-chip POV, share PNG 1200×630</li>
+          <li>Unified Chimera 20,719 — real names, LOD 8000/4000, Top9 UI</li>
+          <li>MOAT: real models ≥2, 5-fold CV, SHAP glass-box, construct validity doc</li>
+          <li>LCG chain 20260813→189831298 idx3820 same-link-same-stars DAU3/WAU3</li>
+          <li>Provenance 59 hashes 7/7/0 PASS — triple-write 7-field timeline</li>
+          <li>5 domains table — all verifier ≥9.0</li>
+          <li>Vegas 57,660 rows + 08-17 boards (21 entries) — feeds ON honest flag</li>
+          <li>Monetization 4 POV — paper-tracked Kelly 0.25 1% kill-switch</li>
+          <li>Void #080A0F, 40px sticky nav z40, 44px POV, ivory #FFFEF7 19:1 contrast</li>
+        </ul>
+      </div>
+      <div class="card" style="background:linear-gradient(180deg, rgba(213,94,0,0.08), rgba(255,254,247,0.02));">
+        <h3 style="color:#FFBE9A">🚫 What NOT to Share (Yet)</h3>
+        <ul class="list nox" style="color:#FFE7D6">
+          <li>Raw .scout keys / dev_dottie_api / dev_dumbmodel_api bearer tokens chmod600</li>
+          <li>Private edge models / Kelly timing / live stake sizes — paper only until IC>0.03 Sharpe>1.2</li>
+          <li>Alienware handoff internals / CUDA OOM guards / board active-tasks raw</li>
+          <li>ACNE 54 contacts / People write-back raw / scratchpad/todo private lanes</li>
+          <li>Un-gated composite <0.85 / top1 <0.55 models — wait for Alienware 150ep train</li>
+          <li>Force-push history / bus_push.ps1 bug details / orphan mlops-operator</li>
+          <li>Anything with .env.local / vercel preview / CORS secrets — audit log shows last4 only</li>
+          <li>Pricing commitments — keep "free now, pricing later" narrative, no free-forever promises</li>
+        </ul>
+        <div style="margin-top:12px; font-family:JetBrains Mono; font-size:11px; color:#FFD1B8; border:1px solid rgba(213,94,0,0.22); background:rgba(213,94,0,0.10); padding:8px 10px; border-radius:8px">
+          Rule: Same-link-same-stars star count = shareable. Chain & stars = public. Weights & stakes = private.
+        </div>
+      </div>
+    </div>
+
+    <!-- ONE-LINER -->
+    <div class="section">
+      <div class="card" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px">
+        <div class="mono" style="font-size:11.5px">
+          <span style="color:var(--sage)">v67.2 everyday chain</span> • 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] • ?daily=20260813&n=1/3/5 • <span style="color:#FFD37A">zero-deps true stdlib-only</span>
+        </div>
+        <div style="display:flex; gap:8px">
+          <a class="btn" href="https://dumbmodel.com" target="_blank">Open Hub ↗</a>
+          <a class="btn primary" href="https://hoops.dumbmodel.com" target="_blank">Open Lab ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span>Built free · Open-source · No paywall · dumbmodel.com Vector Suite v67.2</span>
+      <span class="mono">Masterclass until 10.0 • void #080A0F • paper #FEFCF9 • mono/sans OKABE • offline 13k</span>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+  const toast = document.getElementById('toast');
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(()=>toast.classList.remove('show'), 2200);
+  }
+  const summary = `dumbmodel Vector Suite v67.2 — Investor Brief
+• Hub PWA v67.2: https://dumbmodel.com (offline 13k, 8000 LOD, void #080A0F, 40px sticky)
+• Hoops Lab v9.2: https://hoops.dumbmodel.com (1764 real +12966 vecs, composite 0.85 top1 0.55)
+• Unified Chimera 20,719 ×64-d: https://dumbmodel.com/unified (CQS 0.7017→0.725 MAE 0.2085)
+• MOAT: real MTNN multi-tower 128-d 444K 10 towers 9-head MTL, Procrustes R=U Vᵀ, VRNN μ32/logvar32
+• Construct Validity locked 2026-08-08: define→operationalize→validate, threats doc'd
+• LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 DAU3/WAU3
+• Provenance 59 hashes 7/7/0 PASS triple-write 7-field timeline
+• 5 Domains verifier ≥9.0: hoops 10.0 pitch 9.1 gridiron 9.0 equities 9.2 unified 9.3
+• Traction: Vegas 57,660 rows (9360 gridiron 36900 hoops 11400 pitch) 2020-2025×5 books + 08-17 boards 21 entries 9/6/6
+• Monetization 4 POV paper-tracked Kelly 0.25 1% max 3 conc GREEN/YELLOW/RED kill-switch + shrink 0.25→0.1 if top-decile <53%
+• Built free · Open-source · No paywall`;
+  document.getElementById('copyBtn').addEventListener('click', async ()=>{
+    try{
+      await navigator.clipboard.writeText(summary);
+      showToast('Summary copied — paste to investor');
+    }catch(e){
+      const ta=document.createElement('textarea'); ta.value=summary; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+      showToast('Copied (fallback)');
+    }
+  });
+  document.getElementById('exportBtn').addEventListener('click', ()=>{
+    const blob = new Blob([`<!doctype html><meta charset="utf-8"><title>Investor Brief v67.2</title><pre style="font:13px/1.6 ui-monospace;white-space:pre-wrap">${summary.replace(/</g,'&lt;')}</pre>`], {type:'text/html'});
+    const url = URL.createObjectURL(blob);
+    const a=document.createElement('a'); a.href=url; a.download='dumbmodel-v67.2-investor-brief.html'; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url), 2000);
+    showToast('Export downloaded — print-ready');
+  });
+</script>
+
+<!-- BEST FUNCTIONALITY HIGHLIGHT — added by Live Integration 2026-08-16 -->
+<section id="best-features" style="max-width:1060px;margin:0 auto;padding:24px 22px 0;">
+<div style="background:linear-gradient(180deg,rgba(255,254,247,0.06),rgba(255,254,247,0.03));border:1px solid rgba(255,254,247,0.13);border-radius:14px;padding:16px;">
+<h2 style="font-family:Plus Jakarta Sans,sans-serif;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#ADB5D1;margin:0 0 10px;">Easy Entry — Best Functionality &amp; Games</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;font-size:13.5px;line-height:1.5;color:#D7D9E3;">
+<div><b style="color:#FFFEF7">Hub inertia-map quaternion 13.8k</b><br>LOD 8000/4000 DPR1 fillRect void #080A0F momentum 0.94 spring k=120 b=0.18 — drag · hover 1.8× lens · click career · single-select clears prev — 40px sticky z40 pov 44px — same-link-same-stars LCG 20260813→189831298 idx3820 triple[11205,19448,14209]</div>
+<div><b style="color:#FFFEF7">Top9 shells</b><br>editorial-chimera vinyl rail 64px disc RAf, cabinet-play tug 84px spring 0.38s vibrate(10) confetti #D8452A PNG 1200×630, provenance-glass 27k lattice 59 hashes 7/7/0, smooth-shell View Transitions, offline 13k void card CORE20</div>
+<div><b style="color:#FFFEF7">Boards 08-17 + Vegas</b><br>21 entries 9 PrizePicks 6 Kalshi 6 DK per_team_priors TRUE — sample Brunson 24.5 0.82 Allen 265.5 0.79 Judge 1.5 HRR 0.73 — backfill 57,660 rows 2020-2025 ×5 books LCG deterministic synthetic_deterministic_stdlib_LCG_189831298_honest 32MB/20.6MB/7.2MB</div>
+<div><b style="color:#FFFEF7">Unified chimera 20719</b><br>374KB compact 8000 LOD minimal separators [x,y,z,c,pid,display_name,archetype] real names LeBron/Jordan/Curry Youri Tielemans Agilent/Apple OKABE-8 not i%8 — mean dims 0-21/21-42/42-64 normalized [-1,1] max_abs 0.90783 — LOD 4000 mobile/8000 desktop</div>
+<div><b style="color:#FFFEF7">Hoops Lab v9.2 1764</b><br>12966×64-d 3.09M MTNN 6+4 towers 444.7K composite 0.7937→0.85 top1 0.438→0.55 IC 0.2007 MAE<5 — glass-box SHAP15 VICReg var25 spread 3→59 alive PDP — 4 POV Owner/Operator championship economics cap tools / Player stay-on-floor fit finder / Brand Sponsor wins→story / DFS optimizer closer/exploitable</div>
+<div><b style="color:#FFFEF7">Pitch 633 + Gridiron 646 + Equities 500</b><br>Pitch 2430×24-d proxy 0.797 pos_cluster_acc gold median 92.9% park Coors 1.25-1.367 GABP 1.263-1.379 Oracle 0.60-0.78 VRNN μ0.017 — Gridiron 1000×32-d 10-tower 160 feats QB5 WR1 RB2 TE3 scale 0.2876 MAE3.79±0.12 Sharpe1.09 IC0.85 comp0.85 — Equities 4831 rows 500 tickers CQS 0.725 sector coherence 0.7057 lift 6.32 MAE0.2085</div>
+<div><b style="color:#FFFEF7">G2/G4 + Monetization</b><br>G2 0.7087→0.6236 Δ-0.0851 p0.0251 blindness improvement — G4 coarse 0.9828 vs 0.1712 lift 0.8116 LOSO IC&gt;0.06 — Kelly 0.25 1% max 3 conc kill-switch GREEN/YELLOW/RED 1% rule IC&gt;0.03 Sharpe&gt;1.2 auto-shrink 0.25→0.1 — paper-tracked DAU3/WAU3 TLPG dedup</div>
+<div><b style="color:#FFFEF7">Games Daily Free Forever</b><br>Play Today's Single-select type-or-tap guess list = latest full season only 2025-26 hints streaks challenge-a-friend one-tap share — Esc closes modal Enter/Space opens lattice — reduce-motion + IO lazy — PWA v67 offline13k share PNG confetti</div>
+</div>
+<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+<button onclick="navigator.clipboard.writeText(location.href)" style="appearance:none;border:1px solid rgba(255,254,247,0.18);background:rgba(255,254,247,0.08);color:#FFFEF7;font:600 11.5px 'Plus Jakarta Sans',system-ui;padding:6px 12px;border-radius:999px;cursor:pointer;">Copy link</button>
+<button onclick="window.print()" style="appearance:none;border:1px solid #FFFEF7;background:#FFFEF7;color:#080A0F;font:700 11.5px 'Plus Jakarta Sans',system-ui;padding:6px 12px;border-radius:999px;cursor:pointer;">Print / Save PDF</button>
+<a href="/" style="font:600 11.5px 'JetBrains Mono',monospace;color:#A8C0A0;border:1px solid rgba(168,192,160,0.22);padding:6px 12px;border-radius:999px;text-decoration:none;display:inline-flex;align-items:center;">← Back to hub map</a>
+<a href="/models/unified.html" style="font:600 11.5px 'JetBrains Mono',monospace;color:#ADB5D1;border:1px solid rgba(255,254,247,0.13);padding:6px 12px;border-radius:999px;text-decoration:none;">Chimera 20719</a>
+</div>
+</div>
+</section>
+<footer style="max-width:1060px;margin:18px auto 0;padding:12px 22px;border-top:1px solid rgba(255,254,247,0.08);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font:500 10.5px 'JetBrains Mono',monospace;color:#ADB5D1;">
+<span>Built free · Open-source · No paywall</span><span>LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 — 59 hashes 7/7/0 PASS — PWA v67.2 offline 13k void #080A0F LOD8000/4000 DPR1 — DAU3/WAU3 TLPG dedup everydayTip() humanized badge</span>
+</footer>
+
+</body>
+</html>
