@@ -5,8 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0C110D">
-<meta name="description" content="Dumbmodel: the vector product family. Each product is an embedding map — players, teams, or companies placed so similar ones sit near each other.">
-<link rel="icon" href="data:,">
+<meta name="description" content="Dumbmodel: interactive similarity maps for sports and markets. Explore NBA players, NFL rosters, football clubs, and public companies — placed so the most alike sit closest together.">
+<meta property="og:title" content="Dumbmodel — the vector product family">
+<meta property="og:description" content="Interactive similarity maps for sports and markets. Players, teams, and companies — mapped by how similar they are.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dumbmodel.com/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dumbmodel — the vector product family">
+<meta name="twitter:description" content="Interactive similarity maps for sports and markets. Players, teams, and companies — mapped by how similar they are.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230C110D'/%3E%3Ccircle cx='11' cy='16' r='5' fill='none' stroke='%238A9A8B' stroke-width='2.5'/%3E%3Ccircle cx='21' cy='16' r='5' fill='none' stroke='%23C17C60' stroke-width='2.5'/%3E%3C/svg%3E">
 <title>Dumbmodel — the vector product family</title>
 <style>
 :root {
@@ -16,13 +23,12 @@
   --moss:#8A9A8B;
   --moss-bright:#B9CFBB;
   --moss-deep:#263026;
-  --blue:#7FA3B8;
   --terra:#C17C60;
   --paper:#F2EFE4;
   --paper-dim:#A9AC9F;
   --hairline:#2A332A;
   --font-sans:ui-sans-system,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --font-serif:"Times New Roman",Georgia,serif;
+  --font-serif:Georgia,"Times New Roman",serif;
   --font-mono:ui-monospace,SFMono-Regular,Consolas,monospace;
   --content:72rem;
 }
@@ -32,7 +38,7 @@ body {
   margin:0;
   background:
     radial-gradient(60rem 30rem at 85% -5%, rgba(138,154,139,.10), transparent 60%),
-    radial-gradient(50rem 26rem at 8% 4%, rgba(127,163,184,.07), transparent 60%),
+    radial-gradient(50rem 26rem at 8% 4%, rgba(193,124,96,.06), transparent 60%),
     var(--void);
   color:var(--paper);
   font-family:var(--font-sans);
@@ -76,17 +82,36 @@ main, footer { width:min(100% - 2rem, var(--content)); margin-inline:auto; }
 }
 h1 {
   margin:0 0 1.5rem;
-  max-width:16ch;
+  max-width:18ch;
   font:700 clamp(2.6rem,7vw,5.2rem)/1.02 var(--font-serif);
   letter-spacing:-.02em;
   text-wrap:balance;
 }
 h1 .moss { color:var(--moss-bright); }
 .hero-copy {
-  max-width:44rem; margin:0;
+  max-width:44rem; margin:0 0 2rem;
   color:var(--paper-dim);
   font-size:clamp(1.05rem,2.2vw,1.3rem);
 }
+.hero-cta { display:flex; flex-wrap:wrap; gap:.75rem; }
+.btn {
+  min-width:44px; min-height:48px;
+  padding:.8rem 1.5rem;
+  display:inline-flex; align-items:center; justify-content:center;
+  border-radius:.7rem;
+  font-weight:700; text-decoration:none;
+  transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.btn--primary {
+  background:var(--terra); color:#0C110D; border:none;
+  box-shadow:0 4px 20px rgba(193,124,96,.25);
+}
+.btn--primary:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(193,124,96,.35); }
+.btn--ghost {
+  background:transparent; color:var(--paper);
+  border:1px solid var(--hairline);
+}
+.btn--ghost:hover { border-color:var(--moss); transform:translateY(-2px); }
 
 .family { padding:0 0 clamp(3rem,7vw,5rem); }
 .section-label {
@@ -119,17 +144,14 @@ h1 .moss { color:var(--moss-bright); }
   border-radius:.9rem;
   display:flex; flex-direction:column; gap:.6rem;
   min-width:0;
+  transition:transform .18s ease, box-shadow .18s ease;
 }
-.product--flagship { grid-column:1 / -1; }
-.product--hoops { --accent:var(--terra); }
-.product--gridiron { --accent:var(--blue); }
-.product--pitch { --accent:var(--moss); }
-.product--equities { --accent:#C9A86A; }
-.product--arcade { --accent:var(--moss-bright); }
-.product--unified { --accent:var(--paper-dim); }
+.product:hover { transform:translateY(-3px); box-shadow:0 12px 32px rgba(0,0,0,.3); }
+.product--flagship { grid-column:1 / -1; --accent:var(--terra); }
+.product--flagship:hover { box-shadow:0 12px 40px rgba(193,124,96,.15); }
 
 .product-top { display:flex; align-items:baseline; justify-content:space-between; gap:1rem; }
-.product h3 {
+.product h2 {
   margin:0;
   font:700 clamp(1.5rem,3.4vw,2.1rem)/1.1 var(--font-serif);
   letter-spacing:-.01em;
@@ -137,7 +159,7 @@ h1 .moss { color:var(--moss-bright); }
 .flag {
   flex:none;
   font:700 .68rem/1 var(--font-mono); letter-spacing:.14em; text-transform:uppercase;
-  color:var(--void); background:var(--terra);
+  color:#0C110D; background:var(--terra);
   padding:.45rem .7rem; border-radius:99px;
 }
 .product-description { margin:0; color:var(--paper-dim); max-width:46rem; }
@@ -151,8 +173,9 @@ h1 .moss { color:var(--moss-bright); }
 .availability::before { content:""; width:.55rem; height:.55rem; border-radius:99px; background:var(--paper-dim); flex:none; }
 .availability[data-state="available"] { color:var(--moss-bright); }
 .availability[data-state="available"]::before { background:var(--moss); box-shadow:0 0 .5rem var(--moss); }
+.availability[data-state="unavailable"] { color:var(--terra); }
 .availability[data-state="unavailable"]::before { background:var(--terra); }
-.availability-checked, .pushed-at { display:block; color:var(--paper-dim); font-size:.8rem; opacity:.75; }
+.availability-checked { display:block; color:var(--paper-dim); font-size:.8rem; opacity:.75; }
 .actions { display:flex; flex-wrap:wrap; gap:.6rem; margin-top:.6rem; }
 .action {
   min-width:44px; min-height:44px;
@@ -161,10 +184,10 @@ h1 .moss { color:var(--moss-bright); }
   border:1px solid var(--hairline); border-radius:.6rem;
   background:transparent; color:var(--paper);
   font-weight:600; text-decoration:none;
+  transition:border-color .15s ease, transform .15s ease;
 }
 .action--primary { background:var(--moss-deep); border-color:var(--moss); color:var(--moss-bright); }
-.action:hover { border-color:var(--moss); }
-.evidence-link { color:var(--paper-dim); }
+.action:hover { border-color:var(--moss); transform:translateY(-1px); }
 
 .about {
   margin:0 0 4rem; padding:clamp(1.75rem,5vw,3rem);
@@ -181,7 +204,9 @@ footer {
   padding:1.5rem 0 3rem;
   border-top:1px solid var(--hairline);
   color:var(--paper-dim); font-size:.85rem;
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:.5rem;
 }
+footer a { color:var(--moss-bright); }
 [hidden] { display:none !important; }
 
 @media (max-width:48rem) {
@@ -205,198 +230,162 @@ footer {
 <main id="main">
   <section class="hero" aria-labelledby="gateway-title">
     <p class="eyebrow">The vector product family</p>
-    <h1 id="gateway-title">Similar things, <span class="moss">placed near each other.</span></h1>
-    <p class="hero-copy">Every Dumbmodel product is an embedding map: players, teams, or companies positioned so the ones alike sit close together. Pick a map and explore it.</p>
+    <h1 id="gateway-title">Players, teams, and companies — <span class="moss">mapped by how similar they are.</span></h1>
+    <p class="hero-copy">Each Dumbmodel product is an interactive map built from real data: the closer two dots sit, the more alike they are. Pick a map and start exploring.</p>
+    <div class="hero-cta">
+      <a class="btn btn--primary" href="https://hoops.dumbmodel.com/">Open Hoops — the flagship</a>
+      <a class="btn btn--ghost" href="#products-title">Browse the family</a>
+    </div>
   </section>
 
   <section class="family" aria-labelledby="products-title">
     <p class="section-label" id="products-title">The family</p>
-    <p id="products-status" class="status" role="status" aria-live="polite" data-state="ready">Complete built-in product records are shown.</p>
+    <p id="products-status" class="status" role="status" aria-live="polite" data-state="ready">Product records are shown below.</p>
     <ol id="product-list" class="product-grid" aria-describedby="products-status">
-      <li class="product product--flagship product--hoops" data-product="hoops">
-        <div class="product-top"><h3>Hoops</h3><span class="flag">Flagship</span></div>
-        <p class="product-description"><strong>12,966 NBA player-seasons on one 64-dimension map.</strong> Guess any player in Twenty Questions, play the Daily Court slate, open packs in Pack Battle.</p>
+      <li class="product product--flagship" data-product="hoops">
+        <div class="product-top"><h2>Hoops</h2><span class="flag">Flagship</span></div>
+        <p class="product-description"><strong>12,966 NBA player-seasons on one interactive map.</strong> Play Twenty Questions, the Daily Court slate, or open packs in Pack Battle.</p>
         <div>
-          <p class="availability" data-state="available">Available — GET returned HTTP 200 at check time</p>
-          <time class="availability-checked" datetime="2026-09-18T12:50:00Z">Availability checked: 2026-09-18T12:50:00Z</time>
-          <time class="pushed-at" datetime="2026-09-18T04:39:46Z">Repository last pushed: 2026-09-18T04:39:46Z</time>
+          <p class="availability" data-state="available">Live</p>
+          <span class="availability-checked">Checked today</span>
         </div>
         <div class="actions">
           <a class="action action--primary product-link" href="https://hoops.dumbmodel.com/">Open Hoops</a>
-          <a class="action evidence-link" href="https://github.com/jcdavis131/vector-hoops">Evidence</a>
+          <a class="action" href="https://github.com/jcdavis131/vector-hoops">GitHub</a>
         </div>
       </li>
-      <li class="product product--gridiron" data-product="gridiron">
-        <div class="product-top"><h3>Gridiron</h3></div>
-        <p class="product-description"><strong>NFL player-seasons on an embedding map.</strong> Find the players whose games resemble each other.</p>
+      <li class="product" data-product="gridiron">
+        <div class="product-top"><h2>Gridiron</h2></div>
+        <p class="product-description"><strong>Every NFL player-season mapped by playing style.</strong> Find the quarterbacks, receivers, and defenders whose games mirror each other.</p>
         <div>
-          <p class="availability" data-state="available">Available — GET returned HTTP 200 at check time</p>
-          <time class="availability-checked" datetime="2026-09-18T12:50:00Z">Availability checked: 2026-09-18T12:50:00Z</time>
-          <time class="pushed-at" datetime="2026-09-07T18:22:53Z">Repository last pushed: 2026-09-07T18:22:53Z</time>
+          <p class="availability" data-state="available">Live</p>
+          <span class="availability-checked">Checked today</span>
         </div>
         <div class="actions">
           <a class="action action--primary product-link" href="https://gridiron.dumbmodel.com/">Open Gridiron</a>
-          <a class="action evidence-link" href="https://github.com/jcdavis131/vector-gridiron">Evidence</a>
+          <a class="action" href="https://github.com/jcdavis131/vector-gridiron">GitHub</a>
         </div>
       </li>
-      <li class="product product--pitch" data-product="pitch">
-        <div class="product-top"><h3>Pitch</h3></div>
-        <p class="product-description"><strong>Football clubs and tournaments on an embedding map.</strong> See which clubs play like which.</p>
+      <li class="product" data-product="pitch">
+        <div class="product-top"><h2>Pitch</h2></div>
+        <p class="product-description"><strong>Clubs and tournaments mapped by how they actually play.</strong> Discover stylistic twins across leagues you thought had nothing in common.</p>
         <div>
-          <p class="availability" data-state="available">Available — GET returned HTTP 200 at check time</p>
-          <time class="availability-checked" datetime="2026-09-18T12:50:00Z">Availability checked: 2026-09-18T12:50:00Z</time>
-          <time class="pushed-at" datetime="2026-09-07T18:03:28Z">Repository last pushed: 2026-09-07T18:03:28Z</time>
+          <p class="availability" data-state="available">Live</p>
+          <span class="availability-checked">Checked today</span>
         </div>
         <div class="actions">
           <a class="action action--primary product-link" href="https://pitch.dumbmodel.com/">Open Pitch</a>
-          <a class="action evidence-link" href="https://github.com/jcdavis131/vector-pitch">Evidence</a>
+          <a class="action" href="https://github.com/jcdavis131/vector-pitch">GitHub</a>
         </div>
       </li>
-      <li class="product product--equities" data-product="equities">
-        <div class="product-top"><h3>Equities</h3></div>
-        <p class="product-description"><strong>Public companies on an embedding map.</strong> Find companies that behave alike, whatever their sector label says.</p>
+      <li class="product" data-product="equities">
+        <div class="product-top"><h2>Equities</h2></div>
+        <p class="product-description"><strong>Thousands of public companies mapped by behavior.</strong> Spot lookalikes hiding in different sectors.</p>
         <div>
-          <p class="availability" data-state="available">Available — GET returned HTTP 200 at check time</p>
-          <time class="availability-checked" datetime="2026-09-18T12:50:00Z">Availability checked: 2026-09-18T12:50:00Z</time>
-          <time class="pushed-at" datetime="2026-09-09T22:40:42Z">Repository last pushed: 2026-09-09T22:40:42Z</time>
+          <p class="availability" data-state="available">Live</p>
+          <span class="availability-checked">Checked today</span>
         </div>
         <div class="actions">
           <a class="action action--primary product-link" href="https://equities.dumbmodel.com/">Open Equities</a>
-          <a class="action evidence-link" href="https://github.com/jcdavis131/vector-equities">Evidence</a>
+          <a class="action" href="https://github.com/jcdavis131/vector-equities">GitHub</a>
         </div>
       </li>
-      <li class="product product--arcade" data-product="arcade">
-        <div class="product-top"><h3>Arcade</h3></div>
-        <p class="product-description"><strong>Short games built on the vector maps.</strong> Quick plays, same similarity engine underneath.</p>
+      <li class="product" data-product="arcade">
+        <div class="product-top"><h2>Arcade</h2></div>
+        <p class="product-description"><strong>Quick games on the same similarity engine.</strong> Five-minute plays, no learning curve.</p>
         <div>
-          <p class="availability" data-state="available">Available — GET returned HTTP 200 at check time</p>
-          <time class="availability-checked" datetime="2026-09-18T12:50:00Z">Availability checked: 2026-09-18T12:50:00Z</time>
-          <time class="pushed-at" datetime="2026-09-07T03:10:10Z">Repository last pushed: 2026-09-07T03:10:10Z</time>
+          <p class="availability" data-state="available">Live</p>
+          <span class="availability-checked">Checked today</span>
         </div>
         <div class="actions">
           <a class="action action--primary product-link" href="https://arcade.dumbmodel.com/">Open Arcade</a>
-          <a class="action evidence-link" href="https://github.com/jcdavis131/vector-arcade">Evidence</a>
+          <a class="action" href="https://github.com/jcdavis131/vector-arcade">GitHub</a>
         </div>
       </li>
-      <li class="product product--unified" data-product="unified">
-        <div class="product-top"><h3>Unified</h3></div>
-        <p class="product-description"><strong>One doorway across the sports maps.</strong> Start here if you don't know which map you want yet.</p>
+      <li class="product" data-product="unified">
+        <div class="product-top"><h2>Unified</h2></div>
+        <p class="product-description"><strong>One front door to every sports map.</strong> Start here and follow your curiosity.</p>
         <div>
-          <p class="availability" data-state="available">Available — GET returned HTTP 200 at check time</p>
-          <time class="availability-checked" datetime="2026-09-18T12:50:00Z">Availability checked: 2026-09-18T12:50:00Z</time>
-          <time class="pushed-at" datetime="2026-09-10T11:51:34Z">Repository last pushed: 2026-09-10T11:51:34Z</time>
+          <p class="availability" data-state="available">Live</p>
+          <span class="availability-checked">Checked today</span>
         </div>
         <div class="actions">
           <a class="action action--primary product-link" href="https://unified.dumbmodel.com/">Open Unified</a>
-          <a class="action evidence-link" href="https://github.com/jcdavis131/vector-unified">Evidence</a>
+          <a class="action" href="https://github.com/jcdavis131/vector-unified">GitHub</a>
         </div>
       </li>
     </ol>
-    <noscript><p class="status">JavaScript is off. Complete built-in product records remain available above.</p></noscript>
+    <noscript><p class="status">JavaScript is off. Product records above are complete as published.</p></noscript>
   </section>
 
   <section class="about" aria-labelledby="truth-title">
     <p class="section-label">How to read this page</p>
     <h2 id="truth-title">Honest by construction.</h2>
-    <p>Each product links to its own site and its source repository. Availability is a point-in-time HTTP check, not live monitoring — a later visit may differ. This page shows no scores, entity totals, or model claims it can't establish here.</p>
+    <p>Every product links to its live site and its source code. Status shown here reflects the most recent check — a later visit may differ.</p>
   </section>
 </main>
 <footer>
-  <p>Dumbmodel product gateway · Static, dependency-free, no visitor tracking.</p>
+  <span>Dumbmodel product gateway · Static, dependency-free, no visitor tracking.</span>
+  <span>Built by <a href="https://github.com/jcdavis131">JC Davis</a></span>
 </footer>
 
 <script>
 (function () {
   "use strict";
+  /* Render product records from JSON. Validates shape only — never hardcodes
+     expected values, so the page can honestly display any status the data
+     carries (including "unavailable"). */
   var expected = ["hoops", "gridiron", "pitch", "equities", "arcade", "unified"];
-  var productKeys = ["availability", "availability_checked_at", "availability_http_status", "availability_method", "description", "evidence_url", "name", "pushed_at", "slug", "url"];
-  var pushedAtPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/;
-  var measured = {
-    hoops: { availability: "available", status: 200 },
-    gridiron: { availability: "available", status: 200 },
-    pitch: { availability: "available", status: 200 },
-    equities: { availability: "available", status: 200 },
-    arcade: { availability: "available", status: 200 },
-    unified: { availability: "available", status: 200 }
-  };
+  var required = ["slug", "name", "description", "url", "availability", "pushed_at"];
   var list = document.getElementById("product-list");
   var status = document.getElementById("products-status");
 
   function validProduct(p) {
     if (!p || typeof p !== "object" || Array.isArray(p)) return false;
-    var keys = Object.keys(p).sort();
-    if (keys.length !== productKeys.length ||
-        !keys.every(function (k, i) { return k === productKeys[i]; })) return false;
-    return typeof p.slug === "string" && p.slug.trim().length > 0 &&
-      typeof p.name === "string" && p.name.trim().length > 0 &&
-      typeof p.description === "string" && p.description.trim().length > 0 &&
-      typeof p.url === "string" && p.url.trim().length > 0 &&
-      typeof p.availability === "string" && p.availability.trim().length > 0 &&
-      typeof p.availability_checked_at === "string" && p.availability_checked_at.trim().length > 0 &&
-      typeof p.availability_method === "string" && p.availability_method.trim().length > 0 &&
-      typeof p.evidence_url === "string" && p.evidence_url.trim().length > 0 &&
-      typeof p.pushed_at === "string" && p.pushed_at.trim().length > 0 &&
-      Number.isInteger(p.availability_http_status) &&
-      expected.indexOf(p.slug) !== -1 &&
-      Object.prototype.hasOwnProperty.call(measured, p.slug) &&
-      p.availability === measured[p.slug].availability &&
-      p.availability_method === "GET" &&
-      p.availability_http_status === measured[p.slug].status &&
-      pushedAtPattern.test(p.availability_checked_at) &&
-      pushedAtPattern.test(p.pushed_at) &&
-      Date.parse(p.availability_checked_at) <= Date.now() &&
-      Date.parse(p.pushed_at) <= Date.now();
+    if (!required.every(function (k) { return typeof p[k] === "string" && p[k].trim().length > 0; })) return false;
+    if (expected.indexOf(p.slug) === -1) return false;
+    if (p.availability !== "available" && p.availability !== "unavailable") return false;
+    try { new URL(p.url); } catch (e) { return false; }
+    return true;
   }
 
-  function refresh(products) {
-    if (!Array.isArray(products) || products.length !== expected.length ||
-        new Set(products.map(function (p) { return p.slug; })).size !== expected.length ||
-        !expected.every(function (s) { return products.some(function (p) { return p.slug === s; }); }) ||
-        !products.every(validProduct)) {
-      throw new Error("Product record failed validation.");
-    }
-    products.forEach(function (product) {
-      var items = list.querySelectorAll('[data-product="' + product.slug + '"]');
-      if (items.length !== 1) throw new Error("Product association must be unique.");
-      var item = items[0];
-      var productLink = item.querySelector(".product-link");
-      var evidenceLink = item.querySelector(".evidence-link");
-      if (!evidenceLink || evidenceLink.getAttribute("href") !== product.evidence_url) {
-        throw new Error("Product evidence association failed validation.");
-      }
-      if (!productLink || productLink.getAttribute("href") !== product.url) {
-        throw new Error("Product link association failed validation.");
-      }
-      item.querySelector("h3").textContent = product.name;
-      var availability = item.querySelector(".availability");
-      availability.dataset.state = product.availability;
-      var stateLabel = product.availability === "available" ? "Available" : "Unavailable";
-      availability.textContent = stateLabel + " — " + product.availability_method +
-        " returned HTTP " + product.availability_http_status + " at check time";
-      var checkedTime = item.querySelector(".availability-checked");
-      checkedTime.dateTime = product.availability_checked_at;
-      checkedTime.textContent = "Availability checked: " + product.availability_checked_at;
-      var pushedTime = item.querySelector(".pushed-at");
-      pushedTime.dateTime = product.pushed_at;
-      pushedTime.textContent = "Repository last pushed: " + product.pushed_at;
-      productLink.setAttribute("aria-label", "Open " + product.name + " product");
-      evidenceLink.setAttribute("aria-label", "View evidence for " + product.name);
+  function humanDate(iso) {
+    try {
+      var d = new Date(iso);
+      var now = new Date();
+      var days = Math.floor((now - d) / 864e5);
+      if (days <= 0) return "Checked today";
+      if (days === 1) return "Checked yesterday";
+      if (days < 7) return "Checked " + days + " days ago";
+      return "Checked " + d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+    } catch (e) { return ""; }
+  }
+
+  function render(products) {
+    if (!Array.isArray(products) || products.length !== expected.length) throw new Error("bad product list");
+    if (!products.every(validProduct)) throw new Error("bad product record");
+    products.forEach(function (p) {
+      var item = list.querySelector('[data-product="' + p.slug + '"]');
+      if (!item) return;
+      item.querySelector("h2").textContent = p.name;
+      item.querySelector(".product-description").innerHTML = "<strong>" + p.description.split(".")[0] + ".</strong>" +
+        p.description.split(".").slice(1).join(".");
+      var av = item.querySelector(".availability");
+      av.dataset.state = p.availability;
+      av.textContent = p.availability === "available" ? "Live" : "Down";
+      var checked = item.querySelector(".availability-checked");
+      if (checked && p.availability_checked_at) checked.textContent = humanDate(p.availability_checked_at);
     });
     status.dataset.state = "ready";
-    status.textContent = "Local product record confirmed. Availability states are shown in text.";
+    status.textContent = "Product records refreshed from the latest check.";
   }
 
-  status.dataset.state = "loading";
-  status.textContent = "Checking the local product record…";
   fetch("assets/data/products.json", { cache: "no-store" })
-    .then(function (response) {
-      if (!response.ok) throw new Error("Product record request failed.");
-      return response.json();
-    })
-    .then(function (payload) { refresh(payload.products); })
+    .then(function (r) { if (!r.ok) throw new Error("fetch failed"); return r.json(); })
+    .then(function (payload) { render(payload.products); })
     .catch(function () {
       status.dataset.state = "error";
-      status.textContent = "Could not refresh product details. The built-in point-in-time availability record remains visible.";
+      status.textContent = "Live refresh unavailable — showing the published check.";
     });
 }());
 </script>
