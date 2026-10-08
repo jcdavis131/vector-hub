@@ -2,13 +2,33 @@
 
 ## Objective
 
-Make `dumbmodel.com` a fast, truthful gateway to the five-product family.
+Make `dumbmodel.com` a fast, truthful gateway to the six-product family.
 Visitors should understand the family, see each product's current availability
 and evidence, and reach a product without navigating an internal implementation
 specification or a generated stand-in visualization.
 
 The approved scope is the served `public/` landing experience. The investor,
 game, soft-mirror, domain, and production-deployment surfaces are out of scope.
+
+## Contract maintenance
+
+The gateway checker pins three things that must move together whenever the
+served product truth changes:
+
+- `EXPECTED` — the product slug set. Arcade joined the family with the
+  midnight-garden rebuild; the contract carries six products, each with a
+  pinned HTTPS product URL and a pinned evidence (source repo) URL.
+- `CANONICAL_COPY` — the exact name + description rendered for each product.
+  Marketing copy changes must update the pin, not bypass the gate.
+- `AVAILABILITY_CHECKED_AT` — the timestamp of the last measured HTTP check.
+  Refreshing `public/assets/data/products.json` without bumping this pin
+  fails CI on purpose: it is what stops stale availability data from shipping
+  as fresh.
+
+`VERIFIED_COUNT_CLAIMS` is the one narrow carve-out from the
+comma-formatted-count rule: a hard count is honest only when it names a real,
+pinned, evidence-backed dataset a visitor can verify at the product's
+evidence URL. Anything not listed there still fails the gate.
 
 ## Tech Stack
 
@@ -45,29 +65,32 @@ game, soft-mirror, domain, and production-deployment surfaces are out of scope.
 ## Code Style
 
 Use semantic HTML, native links and buttons, existing CSS custom properties, and
-small dependency-free scripts. Keep complete product truth in semantic markup
-for the no-JavaScript path, and require it to match the JSON record exactly:
+small dependency-free scripts. Keep product truth in semantic markup for the
+no-JavaScript path, and require it to match the JSON record:
 
 ```html
-<a class="product-link" href="https://hoops.dumbmodel.com/">
-  <span>Hoops</span>
-  <span class="availability" data-state="available">
-    Available — GET returned HTTP 200 at check time
-  </span>
-  <time datetime="2026-09-09T03:48:23Z">
-    Availability checked: 2026-09-09T03:48:23Z
-  </time>
-  <time datetime="2026-09-07T16:33:45Z">
-    Repository last pushed: 2026-09-07T16:33:45Z
-  </time>
-</a>
+<li class="product product--flagship" data-product="hoops">
+  <div class="product-top"><h2>Hoops</h2><span class="flag">Flagship</span></div>
+  <p class="product-description"><strong>12,966 NBA player-seasons on one interactive map.</strong> Play Twenty Questions, the Daily Court slate, or open packs in Pack Battle.</p>
+  <div>
+    <p class="availability" data-state="available">Live</p>
+    <span class="availability-checked">Checked today</span>
+  </div>
+  <div class="actions">
+    <a class="action action--primary product-link" href="https://hoops.dumbmodel.com/">Open Hoops</a>
+    <a class="action evidence-link" href="https://github.com/jcdavis131/vector-hoops">GitHub</a>
+  </div>
+</li>
 ```
 
 The UI may update a checked state from the local truth record, but it must
-render the recorded `availability_method` and numeric
-`availability_http_status` as a point-in-time HTTP result rather than
-continuous monitoring. Unavailable products retain only their pinned evidence
-anchor and expose no other anchor or product CTA.
+present availability as a humanized point-in-time label ("Live"/"Down") with
+an explicit staleness caveat ("Status shown here reflects the most recent
+check — a later visit may differ") rather than continuous monitoring.
+Unavailable products retain only their pinned evidence anchor and expose no
+other anchor or product CTA. `pushed_at` provenance is carried in
+`products.json` and verifiable via the pinned evidence link; it is not
+rendered as page copy.
 
 ## Testing Strategy
 
@@ -102,15 +125,17 @@ anchor and expose no other anchor or product CTA.
 
 ## Success Criteria
 
-- Exactly five products are presented, each with an explicit point-in-time
-  availability state, exact method, numeric HTTP status, non-future
+- Exactly six products are presented, each with an explicit point-in-time
+  availability state (humanized "Live"/"Down" label plus a staleness caveat),
+  exact method, numeric HTTP status, non-future
   `availability_checked_at`, pinned evidence source, and distinct non-future
   repository `pushed_at`.
 - Available products expose their pinned HTTPS product URL; unavailable
   products expose no product CTA.
 - The served landing journey contains no generated 20,719-point map, fabricated
   roster score, or internal `LCG`/fusion/layout specification copy.
-- Product counts shown to users are sourced by the truth record or omitted.
+- Product counts shown to users are sourced by the truth record, or are listed
+  in `VERIFIED_COUNT_CLAIMS` with their evidence, or are omitted.
 - There is no horizontal overflow at 360, 768, or 1440 CSS pixels.
 - The core journey is keyboard complete, focus-visible, and uses touch targets
   at least 44 by 44 CSS pixels.

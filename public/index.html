@@ -44,6 +44,7 @@ body {
   font-family:var(--font-sans);
   line-height:1.6;
   min-height:100vh;
+  overflow-wrap:anywhere;
 }
 a { color:inherit; }
 .skip-link {
@@ -187,6 +188,7 @@ h1 .moss { color:var(--moss-bright); }
   transition:border-color .15s ease, transform .15s ease;
 }
 .action--primary { background:var(--moss-deep); border-color:var(--moss); color:var(--moss-bright); }
+.product-unavailable { color:var(--terra); font-weight:600; }
 .action:hover { border-color:var(--moss); transform:translateY(-1px); }
 
 .about {
@@ -251,7 +253,7 @@ footer a { color:var(--moss-bright); }
         </div>
         <div class="actions">
           <a class="action action--primary product-link" href="https://hoops.dumbmodel.com/">Open Hoops</a>
-          <a class="action" href="https://github.com/jcdavis131/vector-hoops">GitHub</a>
+          <a class="action evidence-link" href="https://github.com/jcdavis131/vector-hoops">GitHub</a>
         </div>
       </li>
       <li class="product" data-product="gridiron">
@@ -263,7 +265,7 @@ footer a { color:var(--moss-bright); }
         </div>
         <div class="actions">
           <a class="action action--primary product-link" href="https://gridiron.dumbmodel.com/">Open Gridiron</a>
-          <a class="action" href="https://github.com/jcdavis131/vector-gridiron">GitHub</a>
+          <a class="action evidence-link" href="https://github.com/jcdavis131/vector-gridiron">GitHub</a>
         </div>
       </li>
       <li class="product" data-product="pitch">
@@ -275,7 +277,7 @@ footer a { color:var(--moss-bright); }
         </div>
         <div class="actions">
           <a class="action action--primary product-link" href="https://pitch.dumbmodel.com/">Open Pitch</a>
-          <a class="action" href="https://github.com/jcdavis131/vector-pitch">GitHub</a>
+          <a class="action evidence-link" href="https://github.com/jcdavis131/vector-pitch">GitHub</a>
         </div>
       </li>
       <li class="product" data-product="equities">
@@ -287,7 +289,7 @@ footer a { color:var(--moss-bright); }
         </div>
         <div class="actions">
           <a class="action action--primary product-link" href="https://equities.dumbmodel.com/">Open Equities</a>
-          <a class="action" href="https://github.com/jcdavis131/vector-equities">GitHub</a>
+          <a class="action evidence-link" href="https://github.com/jcdavis131/vector-equities">GitHub</a>
         </div>
       </li>
       <li class="product" data-product="arcade">
@@ -299,7 +301,7 @@ footer a { color:var(--moss-bright); }
         </div>
         <div class="actions">
           <a class="action action--primary product-link" href="https://arcade.dumbmodel.com/">Open Arcade</a>
-          <a class="action" href="https://github.com/jcdavis131/vector-arcade">GitHub</a>
+          <a class="action evidence-link" href="https://github.com/jcdavis131/vector-arcade">GitHub</a>
         </div>
       </li>
       <li class="product" data-product="unified">
@@ -311,7 +313,7 @@ footer a { color:var(--moss-bright); }
         </div>
         <div class="actions">
           <a class="action action--primary product-link" href="https://unified.dumbmodel.com/">Open Unified</a>
-          <a class="action" href="https://github.com/jcdavis131/vector-unified">GitHub</a>
+          <a class="action evidence-link" href="https://github.com/jcdavis131/vector-unified">GitHub</a>
         </div>
       </li>
     </ol>
@@ -326,26 +328,44 @@ footer a { color:var(--moss-bright); }
 </main>
 <footer>
   <span>Dumbmodel product gateway · Static, dependency-free, no visitor tracking.</span>
+  <nav class="nav-secondary" aria-label="More from Dumbmodel">
+    <a href="/season-clock.html">Season Clock</a>
+  </nav>
   <span>Built by <a href="https://github.com/jcdavis131">JC Davis</a></span>
 </footer>
 
 <script>
 (function () {
   "use strict";
-  /* Render product records from JSON. Validates shape only — never hardcodes
-     expected values, so the page can honestly display any status the data
-     carries (including "unavailable"). */
+  /* Render product records from the local truth JSON. Validates the exact
+     record shape and binds each record to its pinned static links: never
+     invents values, never rewrites pinned hrefs, and drops the product CTA
+     when a product is unavailable. */
   var expected = ["hoops", "gridiron", "pitch", "equities", "arcade", "unified"];
-  var required = ["slug", "name", "description", "url", "availability", "pushed_at"];
+  var required = ["availability", "availability_checked_at", "availability_http_status", "availability_method", "description", "evidence_url", "name", "pushed_at", "slug", "url"];
+  var stringFields = ["slug", "name", "description", "url", "evidence_url", "availability"];
+  var isoUtc = /^\d{4}-\d{2}-\d{2}t\d{2}:\d{2}:\d{2}z$/;
   var list = document.getElementById("product-list");
   var status = document.getElementById("products-status");
 
   function validProduct(p) {
     if (!p || typeof p !== "object" || Array.isArray(p)) return false;
-    if (!required.every(function (k) { return typeof p[k] === "string" && p[k].trim().length > 0; })) return false;
+    var keys = Object.keys(p).sort();
+    if (keys.length !== required.length) return false;
+    for (var i = 0; i < required.length; i++) {
+      if (keys[i] !== required[i]) return false;
+    }
+    for (var j = 0; j < stringFields.length; j++) {
+      var k = stringFields[j];
+      if (typeof p[k] !== "string" || !p[k].trim()) return false;
+    }
     if (expected.indexOf(p.slug) === -1) return false;
     if (p.availability !== "available" && p.availability !== "unavailable") return false;
-    try { new URL(p.url); } catch (e) { return false; }
+    if (p.availability_method !== "GET") return false;
+    if (!Number.isInteger(p.availability_http_status)) return false;
+    if (!isoUtc.test(p.availability_checked_at)) return false;
+    if (!isoUtc.test(p.pushed_at)) return false;
+    try { new URL(p.url); new URL(p.evidence_url); } catch (e) { return false; }
     return true;
   }
 
@@ -365,21 +385,35 @@ footer a { color:var(--moss-bright); }
     if (!Array.isArray(products) || products.length !== expected.length) throw new Error("bad product list");
     if (!products.every(validProduct)) throw new Error("bad product record");
     products.forEach(function (p) {
-      var item = list.querySelector('[data-product="' + p.slug + '"]');
-      if (!item) return;
+      var matches = list.querySelectorAll('[data-product="' + p.slug + '"]');
+      if (matches.length !== 1) throw new Error("ambiguous product record");
+      var item = matches[0];
+      var productLink = item.querySelector(".product-link");
+      var evidenceLink = item.querySelector(".evidence-link");
+      if (!evidenceLink || evidenceLink.getAttribute("href") !== p.evidence_url) throw new Error("evidence link mismatch");
+      if (p.availability === "available") {
+        if (!productLink || productLink.getAttribute("href") !== p.url) throw new Error("product link mismatch");
+      } else {
+        if (productLink) productLink.remove();
+        var note = document.createElement("span");
+        note.className = "product-unavailable";
+        note.textContent = "Currently unavailable";
+        item.querySelector(".actions").appendChild(note);
+      }
       item.querySelector("h2").textContent = p.name;
-      item.querySelector(".product-description").innerHTML = "<strong>" + p.description.split(".")[0] + ".</strong>" +
-        p.description.split(".").slice(1).join(".");
+      item.querySelector(".product-description").textContent = p.description;
       var av = item.querySelector(".availability");
       av.dataset.state = p.availability;
       av.textContent = p.availability === "available" ? "Live" : "Down";
       var checked = item.querySelector(".availability-checked");
-      if (checked && p.availability_checked_at) checked.textContent = humanDate(p.availability_checked_at);
+      if (checked) checked.textContent = humanDate(p.availability_checked_at);
     });
     status.dataset.state = "ready";
     status.textContent = "Product records refreshed from the latest check.";
   }
 
+  status.dataset.state = "loading";
+  status.textContent = "Checking the local product record…";
   fetch("assets/data/products.json", { cache: "no-store" })
     .then(function (r) { if (!r.ok) throw new Error("fetch failed"); return r.json(); })
     .then(function (payload) { render(payload.products); })
