@@ -29,7 +29,7 @@ AVAILABILITY = {"available", "unavailable", "unknown", "stale"}
 # public/assets/data/products.json whenever the availability record is
 # refreshed: the pin is what stops stale availability data from shipping as
 # fresh. See spec/vector-hub-real-product-gateway.md ("Contract maintenance").
-AVAILABILITY_CHECKED_AT = "2026-10-07T22:56:47Z"
+AVAILABILITY_CHECKED_AT = "2026-10-13T04:31:15Z"
 MEASURED_AVAILABILITY = {
     "hoops": "available",
     "gridiron": "available",
