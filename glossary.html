@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en" data-theme="paper">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="color-scheme" content="light dark"/>
+<meta name="description" content="Plain-words definitions: embedding, cosine similarity, PCA, champion vs challenger, held-out, twin, macro-MAE, and the rest."/>
+<title>Glossary — dumbmodel.com</title>
+<link rel="stylesheet" href="/drafting.css"/>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Sections">
+  <a class="brand" href="/"><i>▦</i> dumbmodel</a>
+  <div class="links">
+    <a href="/">Home</a><a href="/model">Model</a><a href="/embeddings">Embeddings</a><a href="/era-twins">Era&nbsp;Twins</a><a href="/career-trails">Career&nbsp;Trails</a><a href="/forecasting">Forecasting</a><a href="/data">Data</a><a href="/methodology">Methodology</a><a href="/provenance">Provenance</a><a href="/glossary" class="active">Glossary</a>
+  </div>
+  <button class="toggle" id="themeToggle" type="button">night</button>
+</nav>
+<main class="sheet" id="main">
+  <p class="kicker">glossary · plain words</p>
+  <h1 class="hed">The words, without the fog.</h1>
+  <p class="deck">Every term this site uses, defined the way you'd explain it at a whiteboard.</p>
+
+  <div class="plate">
+    <dl>
+      <div class="def"><dt>embedding</dt><dd>A player-season turned into a list of numbers (here, 64) that places it in a space where nearby means "similar." The model's output, not its input.</dd></div>
+      <div class="def"><dt>dimension (d)</dt><dd>One of the numbers in the vector. "64-d" means 64 numbers per player-season. The dimensions aren't named things — together they form a position.</dd></div>
+      <div class="def"><dt>cosine similarity</dt><dd>A score for how alike two vectors' <em>directions</em> are — the angle between two arrows. Near 1: very similar style. Near 0: unrelated. It ignores overall volume and hears the shape of the game.</dd></div>
+      <div class="def"><dt>PCA (principal component analysis)</dt><dd>A classic technique for squashing many numbers into fewer while keeping as much variation as possible. The atlas's x/y/z is a PCA(3) of the 14 stats keeping 62.4% of their variance — a <em>view</em>, not the model.</dd></div>
+      <div class="def"><dt>tower</dt><dd>One small network inside the MTNN, reading one family of stats. The towers' outputs are concatenated and fused into the final 64-d vector.</dd></div>
+      <div class="def"><dt>fusion</dt><dd>The step where the towers' outputs are combined (here, concatenated, then run through an MLP) into the single 64-d embedding.</dd></div>
+      <div class="def"><dt>champion / challenger</dt><dd>The champion is the one model serving everything. A challenger is a new model trained offline that must beat the champion on held-out data to take its place. See <a href="/methodology">/methodology</a>.</dd></div>
+      <div class="def"><dt>held-out</dt><dd>Data the model never saw in training, reserved for honest testing. A win on held-out data is the load-bearing promotion gate.</dd></div>
+      <div class="def"><dt>era twin (argmax)</dt><dd>A player's nearest neighbor from another decade in the served 64-d space — the "argmax" (highest-similarity pick) with the era constraint. Recomputed for all 1,313 players on 2026-10-12.</dd></div>
+      <div class="def"><dt>macro-MAE</dt><dd>Mean absolute error, averaged evenly across groups (here, across players) rather than across all predictions at once — so a few high-volume players can't dominate the score. Arc Forecaster v1's is 0.4382 <em>in embedding space</em>.</dd></div>
+      <div class="def"><dt>z-score (within season)</dt><dd>Rescaling each stat by its season's mean and spread, so a number means "how unusual was this, <em>that year</em>." Lets a 1962 season and a 2024 season speak the same language.</dd></div>
+      <div class="def"><dt>per-100 stats</dt><dd>Box-score stats scaled to 100 possessions, so players with different minutes are comparable on rate, not just totals.</dd></div>
+      <div class="def"><dt>calibration (ECE)</dt><dd>Whether a model's reported confidence means what it says. ECE (expected calibration error) under 0.05 is one of the promotion gates.</dd></div>
+      <div class="def"><dt>CKA</dt><dd>Centered kernel alignment — a check that a challenger model's internal representations still resemble the champion's, so a swap doesn't silently redraw the map.</dd></div>
+      <div class="def"><dt>drift</dt><dd>Numbers on the site quietly disagreeing with the served model — stale copy, wrong dimensions, old counts. This site's anti-drift showcase is <a href="/provenance">/provenance</a>.</dd></div>
+      <div class="def"><dt>provenance</dt><dd>The record of where a number came from — file, commit, or measurement. Every headline number on this site has one.</dd></div>
+      <div class="def"><dt>single-model serving</dt><dd>The policy that exactly one champion model answers every query — no shadow models, no split traffic. The map you see and the map we evaluate are the same map.</dd></div>
+      <div class="def"><dt>style map vs value map</dt><dd>The 64-d space measures <em>how</em> players play, not <em>how good</em> they are. Nearby = similar style. It is not a ranking, and has no "up."</dd></div>
+    </dl>
+  </div>
+
+  <footer class="site">
+    <div>dumbmodel.com — methodology notebook for the hoops embedding models.</div>
+    <div>numbers traced on <a href="/provenance">/provenance</a> · code on <a href="https://github.com/jcdavis131">github.com/jcdavis131</a></div>
+    <div>© 2026 · plain-words explanations, real data only</div>
+  </footer>
+</main>
+<script src="/drafting.js"></script>
+</body>
+</html>

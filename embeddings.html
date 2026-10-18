@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en" data-theme="paper">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="color-scheme" content="light dark"/>
+<meta name="description" content="The embedding explainer: what the 64-d vectors are, the two assets you must not conflate, and the exact scope of what the model can see."/>
+<title>Embeddings — dumbmodel.com</title>
+<link rel="stylesheet" href="/drafting.css"/>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Sections">
+  <a class="brand" href="/"><i>▦</i> dumbmodel</a>
+  <div class="links">
+    <a href="/">Home</a><a href="/model">Model</a><a href="/embeddings" class="active">Embeddings</a><a href="/era-twins">Era&nbsp;Twins</a><a href="/career-trails">Career&nbsp;Trails</a><a href="/forecasting">Forecasting</a><a href="/data">Data</a><a href="/methodology">Methodology</a><a href="/provenance">Provenance</a><a href="/glossary">Glossary</a>
+  </div>
+  <button class="toggle" id="themeToggle" type="button">night</button>
+</nav>
+<main class="sheet" id="main">
+  <p class="kicker">embeddings · the explainer</p>
+  <h1 class="hed">What a player vector is.</h1>
+  <p class="lede-scope">This map measures how players play, not how good they are.</p>
+  <p class="deck">An <em>embedding</em> is a player-season turned into 64 numbers — a position in a space where nearby means "played a similar style." The rest of this page is about keeping two different assets straight, and about the exact boundary of what the model can see.</p>
+
+  <div class="plate">
+    <p class="plate-no">Plate 01 · the two assets — do not conflate them</p>
+    <p>There are two different "vectors" in this project, and past drafts of this site mixed them up. Here they are, separated:</p>
+    <table class="ledger">
+      <tr><th>asset</th><th>what it is</th></tr>
+      <tr><td><span class="inline-code">assets/mtnn_embeddings.f32</span></td><td>The <b>production 64-d embeddings</b> — the MTNN v5 model's own output, <span class="num">12,966</span> player-seasons × 64 numbers. This is what the games, the twins, and the trails actually query. <b>Single-model serving.</b></td></tr>
+      <tr><td><span class="inline-code">assets/vectors.json</span></td><td><b>NOT a projection of the embedding.</b> It holds the <span class="num">14</span> raw per-100 game stats per player-season, z-scored within season — the model's <em>input view</em>, not its output. Useful for inspection; never the thing being served.</td></tr>
+    </table>
+    <p>The atlas's x/y/z coordinates are a <b>PCA(3) of those 14 stats</b> — a 3-number <em>view</em> that keeps <span class="num">62.4%</span> of the stats' variance, drawn so humans can look at the cloud. It is a visualization aid, not the model. The model lives in 64-d; the atlas is a shadow it casts for your eyes.</p>
+    <p class="src"><b>sources:</b> asset roles and PCA figures per overhaul plan §1.3 and project records (14 stats z-scored within season; Atlas xyz = PCA(3), 62.4% variance kept, labeled a view). Full ledger: <a href="/provenance">/provenance</a>.</p>
+  </div>
+
+  <div class="plate">
+    <p class="plate-no">Plate 02 · stat scope, stated plainly</p>
+    <p>The model sees <span class="num">14</span> per-100, z-scored-within-season box-score stats per player-season. That is all:</p>
+    <ul>
+      <li><b>No lineup data.</b> The model does not know who shared the floor with whom.</li>
+      <li><b>No matchup context.</b> It does not know who guarded whom, or the score when a stat happened.</li>
+      <li><b>Defense is represented only via steals and blocks.</b> Everything a defender does that isn't a steal or a block is invisible to the model.</li>
+    </ul>
+    <p><b>What the model cannot see, it cannot know.</b> Two players with identical stat lines get identical vectors even if one anchored a defense and the other hunted highlights. The map is faithful to its input — and its input is the box score, not the game.</p>
+    <p class="src"><b>source:</b> stat-scope statement per overhaul plan §6b (Oliver's scope-honesty amendment).</p>
+  </div>
+
+  <div class="plate">
+    <p class="plate-no">Plate 03 · how "nearby" is measured</p>
+    <p>Similarity is <b>cosine similarity</b> — the angle between two 64-number arrows. Pointing the same direction: near 1, very similar style. At right angles: near 0, unrelated style. It ignores how <em>long</em> the arrows are (overall volume) and cares only about their <em>direction</em> (the shape of the game).</p>
+    <p>Why the angle and not the distance? Because a high-usage scorer and a low-usage scorer can play the <em>same style</em> at different volumes. Cosine similarity hears the shape of the game through the noise of minutes.</p>
+    <div class="warn"><p><b>Honesty note.</b> These similarity scores are <b>uncalibrated point estimates</b> — there are no confidence intervals attached. A 0.886 and a 0.884 may not be meaningfully different. Treat close scores as ties, not rankings. More on <a href="/provenance">/provenance</a>.</p></div>
+  </div>
+
+  <div class="plate">
+    <p class="plate-no">Plate 04 · the scope sentence, everywhere it matters</p>
+    <p>Because it is easy to slide from "similar style" to "similar quality," the rule on this site is: <b>wherever a model claim sits near value-language, the scope sentence (or its tighter form) sits with it.</b></p>
+    <p><em>"This map measures how players play, not how good they are."</em> — or, tighter: <em>"how they play, not how good they are."</em> (The full form opens this page, above.)</p>
+    <p>Two examples of the rule in action: the atlas intro lede opens with it; the PLUS_MINUS stat is labeled an <b>"on/off estimate (noisy)"</b> rather than a rating; and a twin chip that once read "both tilt the floor" now reads <b>"both outscore opponents on court"</b> — a statement about what happened, not a crown.</p>
+    <p class="src"><b>source:</b> scope-sentence placement spec, overhaul plan §6b; 2026-10-18 wording fixes per project records.</p>
+  </div>
+
+  <footer class="site">
+    <div>dumbmodel.com — methodology notebook for the hoops embedding models.</div>
+    <div>numbers traced on <a href="/provenance">/provenance</a> · code on <a href="https://github.com/jcdavis131">github.com/jcdavis131</a></div>
+    <div>© 2026 · plain-words explanations, real data only</div>
+  </footer>
+</main>
+<script src="/drafting.js"></script>
+</body>
+</html>

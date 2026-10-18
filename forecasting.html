@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" data-theme="paper">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="color-scheme" content="light dark"/>
+<meta name="description" content="Arc Forecaster v1: held-out (≥2024) macro-MAE 0.4382 in embedding space, 491 players shipped. The honest note: the MAE is in style-space, not points."/>
+<title>Forecasting — dumbmodel.com</title>
+<link rel="stylesheet" href="/drafting.css"/>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Sections">
+  <a class="brand" href="/"><i>▦</i> dumbmodel</a>
+  <div class="links">
+    <a href="/">Home</a><a href="/model">Model</a><a href="/embeddings">Embeddings</a><a href="/era-twins">Era&nbsp;Twins</a><a href="/career-trails">Career&nbsp;Trails</a><a href="/forecasting" class="active">Forecasting</a><a href="/data">Data</a><a href="/methodology">Methodology</a><a href="/provenance">Provenance</a><a href="/glossary">Glossary</a>
+  </div>
+  <button class="toggle" id="themeToggle" type="button">night</button>
+</nav>
+<main class="sheet" id="main">
+  <p class="kicker">forecasting · arc forecaster v1</p>
+  <h1 class="hed">Predicting where a style goes next.</h1>
+  <p class="lede-scope">This map measures how players play, not how good they are — so a forecast predicts a <em>style vector</em>, not a stat line.</p>
+  <p class="deck">Arc Forecaster v1 predicts a player's next-season <b>embedding</b>: given the trail so far, where in the 64-d space does the style land next year? It does not predict points, wins, or awards.</p>
+
+  <div class="plate">
+    <p class="plate-no">Plate 01 · the result</p>
+    <table class="ledger">
+      <tr><th>field</th><th>value</th></tr>
+      <tr><td>model</td><td>Arc Forecaster v1 (in production via PR #45)</td></tr>
+      <tr><td>held-out test</td><td>seasons ≥ 2024 — the model never saw these seasons in training</td></tr>
+      <tr><td>macro-MAE</td><td><span class="num">0.4382</span> — beats the baselines on the held-out set</td></tr>
+      <tr><td>shipped</td><td><span class="inline-code">arc_forecasts_v1.json</span> + <span class="inline-code">arc_priors_2026-27.json</span> — <span class="num">491</span> players, byte-verified live</td></tr>
+    </table>
+    <p class="src"><b>sources:</b> figures per overhaul plan §1.6 and project records — held-out (≥2024) macro-MAE 0.4382 vs baselines; 491 players shipped in arc_forecasts_v1.json + arc_priors_2026-27.json; in prod via PR #45. Full ledger: <a href="/provenance">/provenance</a>.</p>
+  </div>
+
+  <div class="plate">
+    <p class="plate-no">Plate 02 · the honest note about the MAE</p>
+    <p><b>The MAE is in embedding space, not points.</b> A macro-MAE of <span class="num">0.4382</span> is the average distance between the predicted 64-d style vector and the actual 64-d style vector on held-out seasons. It is <em>not</em> "off by 0.44 points per game." It answers "how close did we get to the shape of next season's game?" — a harder, stranger question than predicting a stat line, and the number only means something next to the baselines it beat.</p>
+    <p>Why forecast style instead of stats? Because the embedding is the shared language of the whole system — twins, trails, and the map all speak it. A forecaster that predicts the vector plugs into everything; a forecaster that predicts points plugs into nothing.</p>
+    <div class="warn"><p><b>Data flag, kept in the open.</b> During development, the <span class="inline-code">mpg</span> (minutes per game) field was found <b>uncorrelated with real minutes</b> — it could not be trusted, so it was not used. Real 2025-26 minutes were used instead. A model is only as honest as the fields it refuses.</p></div>
+    <p class="src"><b>sources:</b> embedding-space MAE framing per overhaul plan §1.6 (audit: ODDLY_FRAMED — the number needed this note); mpg flag per project records (arc_forecasts_v1 data flag).</p>
+  </div>
+
+  <div class="plate">
+    <p class="plate-no">Plate 03 · how to read a forecast</p>
+    <ul>
+      <li><b>A forecast is a direction, not a destiny.</b> It says "players on this kind of trail usually drift <em>here</em>" — injuries, trades, and breakouts live outside the model's sight.</li>
+      <li><b>Young players are harder.</b> Short trails give the forecaster less to work with; the honest read is wider uncertainty on second- and third-year players.</li>
+      <li><b>It inherits the stat scope.</b> No lineup data, no matchup context, defense via steals/blocks only — the forecast cannot see a role change coming, only the statistical shadow after it lands.</li>
+    </ul>
+  </div>
+
+  <footer class="site">
+    <div>dumbmodel.com — methodology notebook for the hoops embedding models.</div>
+    <div>numbers traced on <a href="/provenance">/provenance</a> · code on <a href="https://github.com/jcdavis131">github.com/jcdavis131</a></div>
+    <div>© 2026 · plain-words explanations, real data only</div>
+  </footer>
+</main>
+<script src="/drafting.js"></script>
+</body>
+</html>

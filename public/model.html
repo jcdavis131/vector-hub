@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en" data-theme="paper">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="color-scheme" content="light dark"/>
+<meta name="description" content="Model card: the MTNN v5 champion behind the hoops map — 12,966 player-seasons × 64-d, incumbent since 2026-07-25, single-model serving policy."/>
+<title>Model — dumbmodel.com</title>
+<link rel="stylesheet" href="/drafting.css"/>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Sections">
+  <a class="brand" href="/"><i>▦</i> dumbmodel</a>
+  <div class="links">
+    <a href="/">Home</a><a href="/model" class="active">Model</a><a href="/embeddings">Embeddings</a><a href="/era-twins">Era&nbsp;Twins</a><a href="/career-trails">Career&nbsp;Trails</a><a href="/forecasting">Forecasting</a><a href="/data">Data</a><a href="/methodology">Methodology</a><a href="/provenance">Provenance</a><a href="/glossary">Glossary</a>
+  </div>
+  <button class="toggle" id="themeToggle" type="button">night</button>
+</nav>
+<main class="sheet" id="main">
+  <p class="kicker">model card · the champion</p>
+  <h1 class="hed">One model serves the whole map.</h1>
+  <p class="deck">The hoops embedding model is a multi-tower neural network (MTNN), version 5. It reads a player-season's box-score stats and outputs 64 numbers — a position in style-space. One champion serves every surface; nothing else is allowed to answer.</p>
+
+  <div class="plate">
+    <p class="plate-no">Plate 01 · the card</p>
+    <table class="ledger">
+      <tr><th>field</th><th>value</th></tr>
+      <tr><td>architecture</td><td><span class="inline-code">mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256</span> — multi-tower neural net, v5, concat fusion, <span class="num">64</span>-d output</td></tr>
+      <tr><td>coverage</td><td><span class="num">12,966</span> NBA player-seasons × <span class="num">64</span> dimensions</td></tr>
+      <tr><td>input</td><td><span class="num">14</span> per-100 box-score stats per player-season, z-scored within season</td></tr>
+      <tr><td>incumbent since</td><td>2026-07-25</td></tr>
+      <tr><td>serving policy</td><td><b>single-model</b> — every game, map, and twin lookup queries this one model</td></tr>
+      <tr><td>served asset</td><td><span class="inline-code">assets/mtnn_embeddings.f32</span> (64-d production embeddings)</td></tr>
+    </table>
+    <p class="src"><b>sources:</b> architecture name, coverage, incumbent date, and serving policy per the overhaul plan §1 and project records; 12,966 cross-checked in this repo at <span class="inline-code">assets/manim/hub_series.json</span> → <span class="inline-code">entity_total.breakdown_joint.hoops_player_seasons = 12966</span>. Full ledger: <a href="/provenance">/provenance</a>.</p>
+  </div>
+
+  <div class="plate">
+    <p class="plate-no">Plate 02 · what the network takes in</p>
+    <p>Each player-season enters the model as <span class="num">14</span> numbers: per-100-possession box-score stats (points, rebounds, assists, steals, blocks, shooting splits, and friends), each z-scored within its own season so a 1962 season and a 2024 season speak the same language. That is the <em>entire</em> input. No lineup data, no matchup context, no tracking data — defense is represented only through steals and blocks.</p>
+    <p class="src"><b>source:</b> input schema per overhaul plan §6b (stat-scope statement); full scope on <a href="/embeddings">/embeddings</a>.</p>
+  </div>
+
+  <div class="plate">
+    <p class="plate-no">Plate 03 · what the 64 numbers mean</p>
+    <p>Each tower of the network reads one family of stats; the towers' outputs are concatenated and fused down to a 64-number vector. Those 64 numbers are not 64 named things — they are a <em>position</em>. Two player-seasons whose vectors point nearly the same direction played the game in a similar style. Closeness is measured with cosine similarity: the angle between two arrows, not the length of either.</p>
+    <p>Think of it like a fingerprint made of playing style. The model never sees a player's name, team, or era — only the 14 stats. If two far-apart eras land near each other, that is the stats talking, not nostalgia.</p>
+    <p class="src"><b>source:</b> architecture family and fusion per model name <span class="inline-code">mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256</span>; similarity metric per era-twins method (true argmax in served 64-d), plan §1.4.</p>
+  </div>
+
+  <div class="plate">
+    <p class="plate-no">Plate 04 · why 64 dimensions</p>
+    <p>Sixty-four is the champion's width — a hyperparameter, not a law of nature. It is wide enough to hold the variation across 14 stats and eight decades, and narrow enough to serve fast. Any challenger at any width may take the crown, but only by beating v5 on held-out evaluation. The dimension count is an engineering choice that earned its keep; the gates that keep it honest are on <a href="/methodology">/methodology</a>.</p>
+    <div class="warn"><p><b>Honesty note.</b> A bigger number is not a better model. Past drafts of this site once printed a "v6 / 128-d" claim that was never the served model — see the drift changelog on <a href="/provenance">/provenance</a>. The served model is v5, 64-d. Everything on this site is written against that.</p></div>
+  </div>
+
+  <div class="plate">
+    <p class="plate-no">Plate 05 · the single-model rule</p>
+    <p>One champion serves every surface — the games, the atlas, the twin lookups, the trails. There is no A/B shadow model answering half the traffic, no "experimental" embedding leaking into production. When a challenger wins (see <a href="/methodology">/methodology</a>), it replaces the champion wholesale, and the asset is re-served. This is the anti-drift guarantee: the map you see and the map we evaluate are the same map.</p>
+  </div>
+
+  <footer class="site">
+    <div>dumbmodel.com — methodology notebook for the hoops embedding models.</div>
+    <div>numbers traced on <a href="/provenance">/provenance</a> · code on <a href="https://github.com/jcdavis131">github.com/jcdavis131</a></div>
+    <div>© 2026 · plain-words explanations, real data only</div>
+  </footer>
+</main>
+<script src="/drafting.js"></script>
+</body>
+</html>
