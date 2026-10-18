@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" data-theme="paper">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="color-scheme" content="light dark"/>
+<meta name="description" content="The era-twins method: each player's twin is the true nearest neighbor from another decade in the served 64-d space. 1,313 players, recomputed 2026-10-12."/>
+<title>Era Twins — dumbmodel.com</title>
+<link rel="stylesheet" href="/drafting.css"/>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Sections">
+  <a class="brand" href="/"><i>▦</i> dumbmodel</a>
+  <div class="links">
+    <a href="/">Home</a><a href="/model">Model</a><a href="/embeddings">Embeddings</a><a href="/era-twins" class="active">Era&nbsp;Twins</a><a href="/career-trails">Career&nbsp;Trails</a><a href="/forecasting">Forecasting</a><a href="/data">Data</a><a href="/methodology">Methodology</a><a href="/provenance">Provenance</a><a href="/glossary">Glossary</a>
+  </div>
+  <button class="toggle" id="themeToggle" type="button">night</button>
+</nav>
+<main class="sheet" id="main">
+  <p class="kicker">era twins · the method</p>
+  <h1 class="hed">Who played most like you — from another era?</h1>
+  <p class="lede-scope">This map measures how players play, not how good they are — so a "twin" is a style match, not a greatness ranking.</p>
+  <p class="deck">A player's <b>era twin</b> is the true argmax other-decade career in the served 64-d space: among every player-season whose peak sits in a <em>different</em> decade, the one whose vector points closest to yours. No hand-picking, no narrative — just the nearest neighbor with the era constraint.</p>
+
+  <div class="plate">
+    <p class="plate-no">Plate 01 · the computation</p>
+    <ol>
+      <li>Take every player-season's 64-d vector from the served model (MTNN v5).</li>
+      <li>For a given player, consider only player-seasons from <b>other decades</b> — the twin must come from another era by construction.</li>
+      <li>Rank those candidates by cosine similarity to the player's vector.</li>
+      <li>The twin is the <b>argmax</b>: the single highest-similarity candidate. The <em>true</em> argmax — the search runs over all <span class="num">1,313</span> players, not a shortlist.</li>
+    </ol>
+    <p>On 2026-10-12 the twin list was <b>regenerated on v5</b> (PR #90): every one of the <span class="num">1,313</span> players got the true argmax other-decade career in the served 64-d space, and <span class="num">79%</span> of players got a <em>new</em> twin. The old list had been computed against a stale model; the regeneration replaced opinion with measurement.</p>
+    <p class="src"><b>sources:</b> method and figures per overhaul plan §1.4 and project records — PR #90, 2026-10-12: all 1,313 players, 79% new twin, true argmax other-decade career in served 64-d. Full ledger: <a href="/provenance">/provenance</a>.</p>
+  </div>
+
+  <div class="plate">
+    <p class="plate-no">Plate 02 · worked examples, real numbers</p>
+    <p><b>Curry 2015-16 ↔ SGA 2024-25 — mutual.</b> Stephen Curry's 2015-16 season (unanimous MVP, 402 threes) and Shai Gilgeous-Alexander's 2024-25 season are each other's era twin: Curry's nearest other-decade neighbor is SGA 2024-25, and SGA's nearest other-decade neighbor is Curry 2015-16. Two on-ball engines, a decade apart, converged on the same corner of style-space.</p>
+    <p><b>LeBron 2008-09 → Durant 2013-14 @ <span class="num">0.886</span>.</b> LeBron James's 2008-09 season — first MVP, two-way freight train — has its nearest other-decade neighbor in Kevin Durant's 2013-14 MVP season, at cosine similarity <span class="num">0.886</span> in the served 64-d. The arrow points one way here: LeBron's twin is Durant; the method makes no promise the feeling is mutual.</p>
+    <div class="warn"><p><b>Honesty note.</b> These are <b>style matches, not greatness claims</b> — how they played, not how good they were. And <span class="num">0.886</span> is an uncalibrated point estimate: there is no confidence interval, and a near-tie at 0.884 would be a coin flip, not a verdict. See <a href="/provenance">/provenance</a>.</p></div>
+    <p class="src"><b>sources:</b> examples per overhaul plan §1.4 (Curry 2015-16 ↔ SGA 2024-25 mutual; LeBron 2008-09 → Durant 2013-14 @ 0.886).</p>
+  </div>
+
+  <div class="plate">
+    <p class="plate-no">Plate 03 · the twin explainer chips</p>
+    <p>When a twin is revealed, a chip explains <em>why</em> in plain words. The method: for the two 64-d vectors, find the dimensions where they differ <b>least</b> — the smallest <span class="inline-code">|a_d − b_d|</span> — and translate those dimensions into plain-words labels, e.g. <b>"both outscore opponents on court"</b> (the on/off estimate dimension) rather than jargon.</p>
+    <p>The chips deliberately describe <em>shared</em> dimensions — what the two seasons have in common — because the twin claim is "these two played alike," and the evidence for it is the overlap. Wording is kept factual: "both outscore opponents on court," never "both tilt the floor."</p>
+    <p class="src"><b>source:</b> chip method per overhaul plan §1.4 (shared dims = smallest |a_d − b_d|, plain-words labels); 2026-10-18 wording fixes per project records.</p>
+  </div>
+
+  <footer class="site">
+    <div>dumbmodel.com — methodology notebook for the hoops embedding models.</div>
+    <div>numbers traced on <a href="/provenance">/provenance</a> · code on <a href="https://github.com/jcdavis131">github.com/jcdavis131</a></div>
+    <div>© 2026 · plain-words explanations, real data only</div>
+  </footer>
+</main>
+<script src="/drafting.js"></script>
+</body>
+</html>

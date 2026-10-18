@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en" data-theme="paper">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="color-scheme" content="light dark"/>
+<meta name="description" content="Career trails: each season is a point in the 64-d space, and a career is the path between them. What movement means, in plain words."/>
+<title>Career Trails — dumbmodel.com</title>
+<link rel="stylesheet" href="/drafting.css"/>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Sections">
+  <a class="brand" href="/"><i>▦</i> dumbmodel</a>
+  <div class="links">
+    <a href="/">Home</a><a href="/model">Model</a><a href="/embeddings">Embeddings</a><a href="/era-twins">Era&nbsp;Twins</a><a href="/career-trails" class="active">Career&nbsp;Trails</a><a href="/forecasting">Forecasting</a><a href="/data">Data</a><a href="/methodology">Methodology</a><a href="/provenance">Provenance</a><a href="/glossary">Glossary</a>
+  </div>
+  <button class="toggle" id="themeToggle" type="button">night</button>
+</nav>
+<main class="sheet" id="main">
+  <p class="kicker">career trails · reading the path</p>
+  <h1 class="hed">A career is a path through the map.</h1>
+  <p class="lede-scope">This map measures how players play, not how good they are — so a trail shows how a <em>style</em> evolved, not whether a player improved.</p>
+  <p class="deck">Every season of a player's career is one point in the 64-d space. Connect the seasons in order and you get a <b>trail</b>: the visible shape of how that player's game changed over time.</p>
+
+  <div class="plate">
+    <p class="plate-no">Plate 01 · how the trail maps to embedding movement</p>
+    <ul>
+      <li><b>Each dot is a season.</b> One player-season in, one 64-d vector out, one dot on the trail.</li>
+      <li><b>Consecutive seasons usually sit near each other.</b> Most players evolve gradually, so the trail creeps — small steps year to year.</li>
+      <li><b>Long jumps mean the style changed.</b> A new team, a new role, an injury, age — whatever the cause, a big move on the trail means the stat fingerprint moved. The trail shows <em>that</em> it moved, not <em>why</em>; the why lives in the box scores and the history books.</li>
+      <li><b>Loops and returns happen.</b> A player who reinvents themselves late can wander back toward an earlier style — the trail can revisit old territory.</li>
+    </ul>
+    <p>The animation is just the trail drawn in order: dot appears, line extends, next season. Nothing is interpolated or smoothed — every position on screen is a real season's real vector.</p>
+  </div>
+
+  <div class="plate">
+    <p class="plate-no">Plate 02 · the "what changed" strip</p>
+    <p>Under the trail, a strip names <b>the two dimensions that moved most</b> between the selected seasons — in plain words, not dimension indices. If a player's trail jumps between 2018-19 and 2019-20, the strip says what the model saw change: for example, a shift toward "more of the offense runs through him" or "fewer rebounds, more perimeter play."</p>
+    <p>How it works: for the two seasons' vectors, compute <span class="inline-code">|a_d − b_d|</span> on each of the 64 dimensions and take the two largest — the axes where the style moved furthest. Those two get the plain-words labels. It is a description of movement, not an explanation of cause: the strip says <em>what</em> changed in the stats, and you supply the story.</p>
+    <p class="src"><b>source:</b> trail-to-movement mapping and "what changed" = 2 largest-moving dimensions, per overhaul plan §1.5.</p>
+  </div>
+
+  <div class="plate">
+    <p class="plate-no">Plate 03 · reading trails honestly</p>
+    <ul>
+      <li><b>A long trail is not a great career.</b> Distance on the map is style change, not value added. A journeyman who changed roles five times can out-travel a superstar who played one way for fifteen years.</li>
+      <li><b>A short trail is not stagnation.</b> Staying in one corner of the map for a decade means a stable, repeatable style — often the mark of the very best.</li>
+      <li><b>The map has no up.</b> There is no "better" direction in style-space. Movement is lateral by definition: different, not higher.</li>
+    </ul>
+    <div class="warn"><p><b>Honesty note.</b> Because the input is 14 box-score stats, the trail cannot show what those stats miss — defensive positioning, leadership, gravity without the ball. A trail that looks flat may hide a real evolution the box score never recorded. What the model cannot see, it cannot draw.</p></div>
+  </div>
+
+  <footer class="site">
+    <div>dumbmodel.com — methodology notebook for the hoops embedding models.</div>
+    <div>numbers traced on <a href="/provenance">/provenance</a> · code on <a href="https://github.com/jcdavis131">github.com/jcdavis131</a></div>
+    <div>© 2026 · plain-words explanations, real data only</div>
+  </footer>
+</main>
+<script src="/drafting.js"></script>
+</body>
+</html>
