@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en" data-theme="paper">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="color-scheme" content="light dark"/>
+<meta name="description" content="The honesty ledger: every headline number traced to its source, the drift changelog of what was wrong before, and what we don't know."/>
+<title>Provenance — dumbmodel.com</title>
+<link rel="stylesheet" href="/drafting.css"/>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Sections">
+  <a class="brand" href="/"><i>▦</i> dumbmodel</a>
+  <div class="links">
+    <a href="/">Home</a><a href="/model">Model</a><a href="/embeddings">Embeddings</a><a href="/era-twins">Era&nbsp;Twins</a><a href="/career-trails">Career&nbsp;Trails</a><a href="/forecasting">Forecasting</a><a href="/data">Data</a><a href="/methodology">Methodology</a><a href="/provenance" class="active">Provenance</a><a href="/glossary">Glossary</a>
+  </div>
+  <button class="toggle" id="themeToggle" type="button">night</button>
+</nav>
+<main class="sheet" id="main">
+  <p class="kicker">provenance · the honesty ledger</p>
+  <h1 class="hed">Every number, traced. Every mistake, kept.</h1>
+  <p class="deck">This page is the point of the site. Each headline number maps to the file, commit, or record it came from. Below that: the drift changelog — what this project printed wrong before, and when it was fixed. And below that: what we don't know.</p>
+
+  <div class="plate">
+    <p class="plate-no">Plate 01 · the ledger</p>
+    <table class="ledger">
+      <tr><th>number</th><th>value</th><th>source</th></tr>
+      <tr><td>player-seasons</td><td><span class="num">12,966</span></td><td>Served asset <span class="inline-code">assets/mtnn_embeddings.f32</span> (vector-hoops pipeline). Cross-check in this repo: <span class="inline-code">assets/manim/hub_series.json</span> → <span class="inline-code">entity_total.breakdown_joint.hoops_player_seasons = 12966</span>.</td></tr>
+      <tr><td>embedding width</td><td><span class="num">64</span>-d</td><td>Champion architecture <span class="inline-code">mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256</span>; cross-check <span class="inline-code">hub_series.json</span> → <span class="inline-code">hoops.json_dims = "64-d MTNN"</span>.</td></tr>
+      <tr><td>champion incumbent</td><td>2026-07-25</td><td>Project records (overhaul plan §1: "incumbent since 2026-07-25").</td></tr>
+      <tr><td>input stats</td><td><span class="num">14</span> per-100, z-scored within season</td><td>Overhaul plan §6b (stat-scope statement); <span class="inline-code">assets/vectors.json</span> is the input-view asset, not a projection.</td></tr>
+      <tr><td>atlas view</td><td>PCA(3), <span class="num">62.4%</span> variance kept</td><td>Overhaul plan §1.3; project records — labeled a <em>view</em>, not the model.</td></tr>
+      <tr><td>era-twins regen</td><td><span class="num">1,313</span> players · <span class="num">79%</span> new twin · 2026-10-12</td><td>vector-hoops PR #90 (era-twins regen on v5): true argmax other-decade career in served 64-d. Per overhaul plan §1.4.</td></tr>
+      <tr><td>twin examples</td><td>Curry 2015-16 ↔ SGA 2024-25 (mutual); LeBron 2008-09 → Durant 2013-14 @ <span class="num">0.886</span></td><td>Overhaul plan §1.4 (worked examples with real numbers).</td></tr>
+      <tr><td>arc forecaster</td><td>held-out (≥2024) macro-MAE <span class="num">0.4382</span> · <span class="num">491</span> players</td><td><span class="inline-code">arc_forecasts_v1.json</span> + <span class="inline-code">arc_priors_2026-27.json</span>, byte-verified live; in prod via PR #45. Per overhaul plan §1.6.</td></tr>
+      <tr><td>promotion gates</td><td>held-out win required · ECE &lt; 0.05</td><td>Overhaul plan §1.8 (champion-vs-challenger protocol).</td></tr>
+    </table>
+    <p class="src"><b>rule:</b> any future entry that adds a number must also add (or link) its uncertainty note. A claim without a trust note is incomplete.</p>
+  </div>
+
+  <div class="plate">
+    <p class="plate-no">Plate 02 · drift changelog — what was wrong before</p>
+    <table class="ledger">
+      <tr><th>what was wrong</th><th>fixed</th></tr>
+      <tr><td><b>v6 / 128-d / 12,452 copy.</b> Draft copy once described a "v6" 128-d model over 12,452 player-seasons. No such model ever served.</td><td>Removed. Served model is v5, 64-d, 12,966 — verified against the served asset.</td></tr>
+      <tr><td><b>14-d scoring copy.</b> Draft copy described scoring in "14-d" — conflating the 14 input stats with the embedding width.</td><td>Fixed to 64-d everywhere; the two-asset split is now stated explicitly on <a href="/embeddings">/embeddings</a>.</td></tr>
+      <tr><td><b>Stale twin QA count.</b> Copy cited 1,308 players; the regenerated twin list covers 1,313.</td><td>Fixed 2026-10-12 with the PR #90 regeneration.</td></tr>
+      <tr><td><b>Value-language leaks.</b> PLUS_MINUS presented as a rating; a twin chip read "both tilt the floor."</td><td>Fixed 2026-10-18: PLUS_MINUS relabeled "on/off estimate (noisy)"; chip reads "both outscore opponents on court."</td></tr>
+    </table>
+    <p class="src"><b>sources:</b> overhaul plan §1 (provenance drift changelog); 2026-10-18 wording fixes per project records and plan §6b.</p>
+  </div>
+
+  <div class="plate">
+    <p class="plate-no">Plate 03 · what we don't know</p>
+    <p>Where the numbers come from is only half the ledger. The other half is how much to trust them — an explicit, dated list (2026-10-18):</p>
+    <ul>
+      <li><b>Similarity scores are uncalibrated point estimates.</b> A twin at 0.886 and a near-miss at 0.884 may not be meaningfully different — there are no confidence intervals, so treat close scores as ties, not rankings.</li>
+      <li><b>Era comparisons span data-quality regimes.</b> Pre-2000s tracking data is thinner, so older seasons' vectors rest on less detail. Direction of bias: older players' styles may look simpler — and therefore more "modern-comparable" — than they were.</li>
+      <li><b>PLUS_MINUS is a noisy on/off estimate, not a skill rating.</b> It measures what happened while a player was on the floor, tangled with teammates, opponents, and luck. Direction of bias: noisy toward zero in small samples; never read it as value.</li>
+      <li><b>The 64-d space is a style map, and style similarity is not value similarity.</b> A fun comp is not a claim about who was better. Direction of bias: the map flatters stylistic novelty — unusual games stand out — which is interesting, not better.</li>
+    </ul>
+    <p class="src"><b>source:</b> overhaul plan §6a (Hullman's "what we don't know" amendment, 2026-10-18). This section is the point of the page.</p>
+  </div>
+
+  <footer class="site">
+    <div>dumbmodel.com — methodology notebook for the hoops embedding models.</div>
+    <div>numbers traced on <a href="/provenance">/provenance</a> · code on <a href="https://github.com/jcdavis131">github.com/jcdavis131</a></div>
+    <div>© 2026 · plain-words explanations, real data only</div>
+  </footer>
+</main>
+<script src="/drafting.js"></script>
+</body>
+</html>

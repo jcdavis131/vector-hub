@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" data-theme="paper">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="color-scheme" content="light dark"/>
+<meta name="description" content="Methodology: the MTNN framework, the champion-vs-challenger protocol, and the held-out promotion gates. No promotion without a held-out win."/>
+<title>Methodology — dumbmodel.com</title>
+<link rel="stylesheet" href="/drafting.css"/>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Sections">
+  <a class="brand" href="/"><i>▦</i> dumbmodel</a>
+  <div class="links">
+    <a href="/">Home</a><a href="/model">Model</a><a href="/embeddings">Embeddings</a><a href="/era-twins">Era&nbsp;Twins</a><a href="/career-trails">Career&nbsp;Trails</a><a href="/forecasting">Forecasting</a><a href="/data">Data</a><a href="/methodology" class="active">Methodology</a><a href="/provenance">Provenance</a><a href="/glossary">Glossary</a>
+  </div>
+  <button class="toggle" id="themeToggle" type="button">night</button>
+</nav>
+<main class="sheet" id="main">
+  <p class="kicker">methodology · frameworks &amp; gates</p>
+  <h1 class="hed">How a model earns the crown.</h1>
+  <p class="deck">The framework is a multi-tower neural network. The discipline around it matters more: one champion serves, challengers train offline, and <b>no promotion without a held-out win</b>.</p>
+
+  <div class="plate">
+    <p class="plate-no">Plate 01 · the framework</p>
+    <p><b>MTNN — multi-tower neural network.</b> Each "tower" is a small network that reads one family of the 14 input stats (scoring, rebounding, playmaking, defense, efficiency…). The towers' outputs are concatenated and fused through an MLP down to the 64-d embedding. The design bet: letting each stat family get its own representation before fusion preserves structure that a single flat layer would smear.</p>
+    <p>v5 is the fifth major version of this design. The version number counts <em>promoted champions</em> — v5 beat v4 on held-out evaluation, v4 beat v3, and so on. There is no v6 in production; past copy that said otherwise was wrong (see <a href="/provenance">/provenance</a>).</p>
+    <p class="src"><b>sources:</b> MTNN family and concat-fusion per architecture name <span class="inline-code">mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256</span>; version discipline per project records.</p>
+  </div>
+
+  <div class="plate">
+    <p class="plate-no">Plate 02 · champion vs challenger</p>
+    <ol>
+      <li><b>One champion serves.</b> MTNN v5 answers every query (single-model policy). It is never retrained in place.</li>
+      <li><b>Challengers train offline.</b> New architectures, widths, and features are trained as challengers against the same corpus.</li>
+      <li><b>Challengers are evaluated on held-out data</b> the champion never saw — including twin-stability identity checks (do the known twin pairs survive?) and representation-similarity checks (CKA) against the champion.</li>
+      <li><b>Promotion is wholesale.</b> A challenger that clears every gate replaces the champion entirely; the served asset is re-cut and the version number advances. A challenger that fails stays offline.</li>
+    </ol>
+    <p class="src"><b>source:</b> champion-vs-challenger protocol and identity checks per overhaul plan §1.8 and project records (twin-stability + CKA checks from the standing retrain protocol).</p>
+  </div>
+
+  <div class="plate">
+    <p class="plate-no">Plate 03 · the held-out promotion gates</p>
+    <p>A challenger must clear <em>all</em> of these. One miss, no crown:</p>
+    <ul>
+      <li><b>Held-out win.</b> The challenger must beat the champion on data neither model saw in training. No promotion without it — this is the load-bearing gate.</li>
+      <li><b>Calibration gate: ECE &lt; 0.05.</b> Where the model reports confidence, its expected calibration error must stay under 0.05 — predicted probabilities must mean what they say.</li>
+      <li><b>Twin-stability.</b> The established twin pairs must substantially survive the swap; a "better" model that scrambles every known comp is a different map, not a better one.</li>
+      <li><b>No synthetic leakage.</b> Training and evaluation data are real recorded games only. Synthetic or imputed rows anywhere in the eval path fail the run.</li>
+    </ul>
+    <div class="warn"><p><b>Why the gates are strict.</b> The map is downstream of everything — games, twins, trails, forecasts. A quiet regression in the embedding would corrupt all of them at once, and style-space has no single "accuracy" number to catch it. The gates are the immune system.</p></div>
+    <p class="src"><b>source:</b> gates per overhaul plan §1.8 (ECE &lt; 0.05, no promotion without a held-out win) and project records.</p>
+  </div>
+
+  <footer class="site">
+    <div>dumbmodel.com — methodology notebook for the hoops embedding models.</div>
+    <div>numbers traced on <a href="/provenance">/provenance</a> · code on <a href="https://github.com/jcdavis131">github.com/jcdavis131</a></div>
+    <div>© 2026 · plain-words explanations, real data only</div>
+  </footer>
+</main>
+<script src="/drafting.js"></script>
+</body>
+</html>

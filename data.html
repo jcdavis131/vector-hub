@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" data-theme="paper">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="color-scheme" content="light dark"/>
+<meta name="description" content="Data sources and pipeline for the hoops embedding models: what feeds them, coverage, refresh cadence, and known gaps. Real data only, never synthetic."/>
+<title>Data — dumbmodel.com</title>
+<link rel="stylesheet" href="/drafting.css"/>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Sections">
+  <a class="brand" href="/"><i>▦</i> dumbmodel</a>
+  <div class="links">
+    <a href="/">Home</a><a href="/model">Model</a><a href="/embeddings">Embeddings</a><a href="/era-twins">Era&nbsp;Twins</a><a href="/career-trails">Career&nbsp;Trails</a><a href="/forecasting">Forecasting</a><a href="/data" class="active">Data</a><a href="/methodology">Methodology</a><a href="/provenance">Provenance</a><a href="/glossary">Glossary</a>
+  </div>
+  <button class="toggle" id="themeToggle" type="button">night</button>
+</nav>
+<main class="sheet" id="main">
+  <p class="kicker">data · sources &amp; pipeline</p>
+  <h1 class="hed">Real data only. Never synthetic.</h1>
+  <p class="deck">Everything the hoops models learn comes from real recorded games. No generated players, no simulated seasons, no filler. What follows is every source we claim — enumerated from the pipeline, not invented — plus the gaps we know about.</p>
+
+  <div class="plate">
+    <p class="plate-no">Plate 01 · the sources</p>
+    <table class="ledger">
+      <tr><th>source</th><th>what it feeds</th><th>coverage / cadence</th></tr>
+      <tr><td>Hoops training corpus — <span class="num">12,966</span> player-seasons × <span class="num">14</span> per-100 box-score stats, z-scored within season</td><td>The MTNN v5 champion; served as <span class="inline-code">assets/mtnn_embeddings.f32</span></td><td>Decades of NBA player-seasons. Re-served only when a challenger beats the champion on held-out (single-model policy) — no silent swaps.</td></tr>
+      <tr><td>Basketball-Reference game logs</td><td>Point-in-time pace and availability inputs for the forecasting lab</td><td>Pulled on a 15-minute collector cadence during the season (gamelog-collector). Historical backfill in progress.</td></tr>
+      <tr><td>Arc Forecaster v1 outputs — <span class="inline-code">arc_forecasts_v1.json</span>, <span class="inline-code">arc_priors_2026-27.json</span></td><td><span class="num">491</span> players' next-season style vectors and priors</td><td>Versioned v1, byte-verified live. New versions ship as v2, v3 — never overwritten in place.</td></tr>
+    </table>
+    <p class="src"><b>sources:</b> corpus and served asset per overhaul plan §1–§1.3 and model card; Basketball-Reference game-log collector per project records (NBA game-log batch collector, 2026-10-10); arc outputs per plan §1.6. Full ledger: <a href="/provenance">/provenance</a>.</p>
+  </div>
+
+  <div class="plate">
+    <p class="plate-no">Plate 02 · what is <em>not</em> a source</p>
+    <p>This repo's history contains files that fed the <em>previous</em> hub site — Vegas lines, daily boards, feed flags (<span class="inline-code">assets/data/vegas_*.json</span>, <span class="inline-code">boards_2026_08_*.json</span>). <b>None of that trained the hoops model.</b> Some of those pipeline logs even document honestly-synthetic deterministic data for the old games' lines. The hoops embeddings come from the hoops training corpus above, full stop. If a file isn't in the sources table, it didn't train the model.</p>
+    <p class="src"><b>source:</b> this repo's <span class="inline-code">assets/data/data_pipeline_log.md</span> (boards / Vegas backfill / feed pipeline sections) vs. the hoops corpus — enumerated during build, no invented sources.</p>
+  </div>
+
+  <div class="plate">
+    <p class="plate-no">Plate 03 · known gaps</p>
+    <ul>
+      <li><b>Stat scope.</b> 14 per-100 box-score stats; no lineup data, no matchup context, defense via steals/blocks only. (See <a href="/embeddings">/embeddings</a>.)</li>
+      <li><b>Era data-quality regimes.</b> Pre-2000s tracking data is thinner — older seasons' vectors rest on less recorded detail. Era comparisons span these regimes; read them accordingly.</li>
+      <li><b>Minutes field.</b> The <span class="inline-code">mpg</span> field was found uncorrelated with real minutes and was dropped from forecasting inputs; real 2025-26 minutes used instead.</li>
+      <li><b>No synthetic backfill.</b> Where history is thin, we leave it thin rather than generate plausible filler. Gaps are visible; that is the policy.</li>
+    </ul>
+    <p class="src"><b>sources:</b> stat scope per plan §6b; era regimes and mpg flag per plan §6a and project records.</p>
+  </div>
+
+  <footer class="site">
+    <div>dumbmodel.com — methodology notebook for the hoops embedding models.</div>
+    <div>numbers traced on <a href="/provenance">/provenance</a> · code on <a href="https://github.com/jcdavis131">github.com/jcdavis131</a></div>
+    <div>© 2026 · plain-words explanations, real data only</div>
+  </footer>
+</main>
+<script src="/drafting.js"></script>
+</body>
+</html>
