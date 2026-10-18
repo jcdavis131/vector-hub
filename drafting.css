@@ -5,7 +5,7 @@
   --warn:#A33B2A; --ok:#2E7D4F;
   --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
   --sans:ui-sans-system,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
-  --nav-h:40px; --maxw:760px; --radius:10px;
+  --nav-h:44px; --maxw:760px; --radius:10px;
   color-scheme:light;
 }
 [data-theme="night"]{
@@ -15,11 +15,13 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-wrap:anywhere}
 html,body{margin:0;padding:0}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 body{
   font-family:var(--sans); color:var(--ink); background:var(--paper);
   -webkit-font-smoothing:antialiased; line-height:1.65; font-size:16px;
+  overflow-wrap:anywhere;
   background-image:
     linear-gradient(var(--hair) 1px, transparent 1px),
     linear-gradient(90deg, var(--hair) 1px, transparent 1px);
@@ -30,22 +32,25 @@ body{
     linear-gradient(90deg, rgba(143,176,255,.055) 1px, transparent 1px);}
 ::selection{background:var(--accent);color:#fff}
 
-/* 40px sticky mono nav */
+/* 44px sticky mono nav — WCAG 2.5.5 target size */
 .nav{position:sticky;top:0;z-index:50;height:var(--nav-h);display:flex;align-items:stretch;
   background:var(--paper-2);border-bottom:1px solid var(--hair-2);font-family:var(--mono);
   font-size:11px;letter-spacing:.08em;text-transform:uppercase}
 .nav .brand{display:flex;align-items:center;gap:8px;padding:0 14px;color:var(--ink);
-  font-weight:700;text-decoration:none;border-right:1px solid var(--hair);white-space:nowrap}
+  font-weight:700;text-decoration:none;border-right:1px solid var(--hair);white-space:nowrap;
+  min-width:44px;min-height:44px}
 .nav .brand i{font-style:normal;color:var(--accent)}
 .nav .links{display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:none;flex:1}
 .nav .links::-webkit-scrollbar{display:none}
 .nav .links a{display:flex;align-items:center;padding:0 12px;color:var(--ink-60);
-  text-decoration:none;white-space:nowrap;border-bottom:2px solid transparent}
+  text-decoration:none;white-space:nowrap;border-bottom:2px solid transparent;
+  min-width:44px;min-height:44px}
 .nav .links a:hover{color:var(--ink)}
 .nav .links a.active{color:var(--ink);border-bottom-color:var(--accent);font-weight:700}
 .nav .toggle{margin-left:auto;display:flex;align-items:center;padding:0 14px;border-left:1px solid var(--hair);
   background:none;border-top:0;border-right:0;border-bottom:0;font:inherit;color:var(--ink-60);cursor:pointer;
-  text-transform:uppercase;letter-spacing:.08em;font-size:11px;white-space:nowrap}
+  text-transform:uppercase;letter-spacing:.08em;font-size:11px;white-space:nowrap;
+  min-width:44px;min-height:44px}
 .nav .toggle:hover{color:var(--ink)}
 
 .sheet{max-width:var(--maxw);margin:0 auto;padding:0 20px 64px}
@@ -96,6 +101,10 @@ footer.site{border-top:1px solid var(--hair-2);margin-top:40px;padding:22px 0 40
   font-family:var(--mono);font-size:11px;color:var(--ink-60);line-height:2}
 footer.site a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
 footer.site a:hover{color:var(--accent)}
-.skip{position:absolute;left:-9999px}
+.skip{position:absolute;left:-9999px;min-width:44px;min-height:44px}
 .skip:focus{left:8px;top:48px;background:var(--accent);color:#fff;padding:8px 12px;z-index:99;border-radius:6px}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none !important;transition:none !important}
+}
 @media(min-width:720px){.sheet{padding:0 28px 80px}.plate{padding:26px}}

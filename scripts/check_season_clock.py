@@ -233,14 +233,17 @@ def check_page(errors: list[str]) -> None:
 
 
 def check_index_link(errors: list[str]) -> None:
+    """Season Clock remains a standalone demo page, not a notebook section.
+
+    PR #24 replaced the product-gateway index (secondary nav → season-clock.html)
+    with the methodology notebook's 10-section TOC. The demo itself is still
+    gated by check_page; the notebook is not required to re-grow that chrome.
+    """
     if not INDEX.exists():
         fail(errors, "season clock: public/index.html is missing")
         return
-    text = INDEX.read_text(encoding="utf-8")
-    if 'href="/season-clock.html"' not in text and 'href="season-clock.html"' not in text:
-        fail(errors, "season clock: gateway index must link to Season Clock")
-    if "nav-secondary" not in text:
-        fail(errors, "season clock: gateway Season Clock link should be secondary nav")
+    if not PAGE.exists():
+        fail(errors, "season clock: public/season-clock.html is missing")
 
 
 def check_vercelignore(errors: list[str]) -> None:
@@ -275,7 +278,7 @@ def main() -> int:
     print("SEASON CLOCK CHECK PASSED")
     print("PASS: demo JSON parses with sample tracks spanning 2015–2025")
     print("PASS: page exists with scrubber, product links, and honesty note")
-    print("PASS: gateway index secondary nav points at Season Clock")
+    print("PASS: methodology index and Season Clock demo page both still exist")
     print("PASS: .vercelignore keeps season_clock_demo.json packaged")
     return 0
 
