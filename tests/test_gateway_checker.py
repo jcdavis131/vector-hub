@@ -16,6 +16,15 @@ assert SPEC and SPEC.loader
 check_gateway = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(check_gateway)
 
+# Mirrors vector-hoops master assets/mtnn_meta.json headline fields so page
+# tests stay hermetic. The live script still fetches GitHub raw in CI.
+SERVED_META_FIXTURE = {
+    "built": "2026-07-25",
+    "model": "mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256",
+    "dim": 64,
+    "rows": 12966,
+}
+
 
 class GatewayCheckerAdversarialTests(unittest.TestCase):
     @classmethod
@@ -25,6 +34,16 @@ class GatewayCheckerAdversarialTests(unittest.TestCase):
                 encoding="utf-8"
             )
         )
+        cls._truth = patch.object(
+            check_gateway,
+            "load_served_model_truth",
+            return_value=(SERVED_META_FIXTURE, None),
+        )
+        cls._truth.start()
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls._truth.stop()
 
     def product_errors(self, mutate) -> list[str]:
         payload = copy.deepcopy(self.payload)
@@ -205,6 +224,56 @@ class GatewayCheckerAdversarialTests(unittest.TestCase):
         )
         self.assertTrue(
             any("player-seasons count" in error for error in errors),
+            errors,
+        )
+
+    def test_changed_served_rows_fail_stale_page(self) -> None:
+        """A vector-hoops promote that changes rows must fail until copy matches."""
+        promoted = dict(SERVED_META_FIXTURE, rows=12452)
+        with patch.object(
+            check_gateway,
+            "load_served_model_truth",
+            return_value=(promoted, None),
+        ):
+            errors: list[str] = []
+            products = check_gateway.check_products(errors)
+            check_gateway.check_page(errors, products)
+        self.assertTrue(
+            any(
+                "player-seasons count" in error and "12,452" in error
+                for error in errors
+            ),
+            errors,
+        )
+
+    def test_changed_served_champion_fails_stale_page(self) -> None:
+        promoted = dict(
+            SERVED_META_FIXTURE,
+            model="mtnn_v6_concat_b3_h256_t64_d128_mlp256_fus512",
+        )
+        with patch.object(
+            check_gateway,
+            "load_served_model_truth",
+            return_value=(promoted, None),
+        ):
+            errors: list[str] = []
+            products = check_gateway.check_products(errors)
+            check_gateway.check_page(errors, products)
+        self.assertTrue(
+            any("champion model" in error and "MTNN v6" in error for error in errors),
+            errors,
+        )
+
+    def test_served_meta_fetch_error_fails_check(self) -> None:
+        with patch.object(
+            check_gateway,
+            "load_served_model_truth",
+            side_effect=RuntimeError("could not fetch mtnn_meta.json: timed out"),
+        ):
+            errors: list[str] = []
+            check_gateway.check_page(errors, [])
+        self.assertTrue(
+            any("served-model truth" in error and "timed out" in error for error in errors),
             errors,
         )
 

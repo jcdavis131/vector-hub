@@ -23,8 +23,12 @@ changes:
   record. Arcade joined the family with the midnight-garden rebuild; the JSON
   contract carries six products. Refreshing `products.json` without bumping the
   availability pin fails CI on purpose.
-- `HEADLINE_CLAIMS` — the methodology home must keep 12,966 player-seasons,
-  MTNN v5, incumbent 2026-07-25, 1,313 era-twin players, and macro-MAE 0.4382.
+- Headlines — player-season count, champion label (`MTNN vN`), and incumbent
+  date are read at check time from vector-hoops `assets/mtnn_meta.json` on
+  `master` (public raw GitHub). Era-twin count and forecast MAE are not in
+  `mtnn_meta.json` / `mtnn_lineage.json` yet, so those stay literals. A
+  promote that changes the meta must fail this gate until the notebook copy
+  matches.
 - Cut list — the home must not regrow product-hub framing or `*.dumbmodel.com`
   storefront CTAs.
 - Accessibility — skip link, `:focus-visible`, 44×44 targets, reduced motion,
@@ -110,8 +114,9 @@ methodology overhaul it is not part of the notebook TOC.
 
 ## Success Criteria
 
-- The methodology home pins 12,966 / MTNN v5 / 2026-07-25 / 1,313 / 0.4382 and
-  states that the site is an explanation notebook, not a storefront.
+- The methodology home matches vector-hoops served-model truth for rows,
+  champion, and incumbent date, plus the remaining literal pins (era-twins,
+  forecast MAE, purpose sentence).
 - All ten notebook sections exist, each with skip link, nav, main, footer, and
   one h1. MTNN v5 is documented champion copy, not a forbidden spec leak.
 - `products.json` still contains exactly six evidence-backed records, each with
