@@ -8,6 +8,8 @@ import re
 import subprocess
 import sys
 import tempfile
+import urllib.error
+import urllib.request
 from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
@@ -115,12 +117,29 @@ SECTION_HREFS = (
     "/provenance",
     "/glossary",
 )
-HEADLINE_CLAIMS = (
-    ("12,966", "player-seasons count"),
-    ("MTNN v5", "champion model"),
-    ("2026-07-25", "incumbent date"),
-    ("1,313", "era-twin players"),
-    ("0.4382", "forecasting macro-MAE"),
+# Live served-model truth on vector-hoops master. Fetching beats a vendored
+# pin: a promote that changes rows/model/built must fail this repo's CI even
+# if nobody remembered to bump a checked-in copy. The files are public JSON
+# (~15KB); CI retries the GET. mtnn_lineage.json is not on master yet.
+HOOPS_TRUTH_REPO = "jcdavis131/vector-hoops"
+HOOPS_TRUTH_REF = "master"
+HOOPS_META_URL = (
+    f"https://raw.githubusercontent.com/{HOOPS_TRUTH_REPO}/{HOOPS_TRUTH_REF}"
+    "/assets/mtnn_meta.json"
+)
+HOOPS_LINEAGE_URL = (
+    f"https://raw.githubusercontent.com/{HOOPS_TRUTH_REPO}/{HOOPS_TRUTH_REF}"
+    "/assets/mtnn_lineage.json"
+)
+FETCH_ATTEMPTS = 3
+FETCH_TIMEOUT_S = 15
+# Not present in mtnn_meta.json or mtnn_lineage.json (lineage is unpublished
+# on vector-hoops master as of 2026-10-18). Keep as literals until those
+# files grow the fields. Era-twin count is len(assets/eratwins.json players);
+# forecast MAE is assets/arc_forecasts_v1.json metrics.challenger.macro_mae.
+LITERAL_HEADLINE_CLAIMS = (
+    ("1,313", "era-twin players"),  # not in mtnn_meta.json / mtnn_lineage.json
+    ("0.4382", "forecasting macro-MAE"),  # not in mtnn_meta.json / mtnn_lineage.json
     ("not a lab and not a storefront", "site purpose"),
 )
 STOREFRONT_URLS = tuple(f"https://{slug}.dumbmodel.com/" for slug in EXPECTED)
@@ -179,6 +198,91 @@ class GatewayParser(HTMLParser):
 
 def fail(errors: list[str], message: str) -> None:
     errors.append(message)
+
+
+def fetch_json(url: str, *, required: bool) -> dict[str, object] | None:
+    """GET JSON from public GitHub raw. 404 on an optional file returns None."""
+    headers = {
+        "User-Agent": "vector-hub-gateway-check/1.0 (+https://github.com/jcdavis131/vector-hub)",
+        "Accept": "application/json",
+    }
+    last_error: Exception | None = None
+    for attempt in range(FETCH_ATTEMPTS):
+        try:
+            request = urllib.request.Request(url, headers=headers)
+            with urllib.request.urlopen(request, timeout=FETCH_TIMEOUT_S) as response:
+                payload = json.loads(response.read().decode("utf-8"))
+            if not isinstance(payload, dict):
+                raise ValueError(f"{url} is not a JSON object")
+            return payload
+        except urllib.error.HTTPError as exc:
+            if exc.code == 404 and not required:
+                return None
+            last_error = exc
+        except (OSError, ValueError, json.JSONDecodeError) as exc:
+            last_error = exc
+    raise RuntimeError(f"could not fetch {url}: {last_error}")
+
+
+def load_served_model_truth() -> tuple[dict[str, object] | None, dict[str, object] | None]:
+    """Return (mtnn_meta.json, mtnn_lineage.json-or-None) from vector-hoops master."""
+    meta = fetch_json(HOOPS_META_URL, required=True)
+    lineage = fetch_json(HOOPS_LINEAGE_URL, required=False)
+    return meta, lineage
+
+
+def champion_copy(model: object) -> str | None:
+    if type(model) is not str:
+        return None
+    match = re.match(r"mtnn_v(\d+)", model, re.IGNORECASE)
+    if match is None:
+        return None
+    return f"MTNN v{match.group(1)}"
+
+
+def comma_count(rows: object) -> str | None:
+    if type(rows) is not int or rows < 0:
+        return None
+    return f"{rows:,}"
+
+
+def headline_claims_from_truth(
+    meta: dict[str, object] | None,
+    lineage: dict[str, object] | None,
+    errors: list[str],
+) -> list[tuple[str, str]]:
+    """Build page pins from served-model files; literals fill gaps those files lack."""
+    _ = lineage  # no headline fields on master yet; see LITERAL_HEADLINE_CLAIMS
+    claims: list[tuple[str, str]] = []
+    if meta is None:
+        fail(errors, "served-model truth: mtnn_meta.json could not be loaded")
+        return list(LITERAL_HEADLINE_CLAIMS)
+    rows_copy = comma_count(meta.get("rows"))
+    if rows_copy is None:
+        fail(
+            errors,
+            "served-model truth: mtnn_meta.json rows must be a non-negative int",
+        )
+    else:
+        claims.append((rows_copy, "player-seasons count"))
+    model_copy = champion_copy(meta.get("model"))
+    if model_copy is None:
+        fail(
+            errors,
+            "served-model truth: mtnn_meta.json model must look like mtnn_vN_…",
+        )
+    else:
+        claims.append((model_copy, "champion model"))
+    built = meta.get("built")
+    if type(built) is not str or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", built):
+        fail(
+            errors,
+            "served-model truth: mtnn_meta.json built must be a YYYY-MM-DD date",
+        )
+    else:
+        claims.append((built, "incumbent date"))
+    claims.extend(LITERAL_HEADLINE_CLAIMS)
+    return claims
 
 
 def path_ignored_by_vercelignore(rules_text: str, relative_path: str) -> bool:
@@ -444,7 +548,8 @@ def check_page(errors: list[str], _products: list[dict[str, object]]) -> None:
     Re-baselined 2026-10-18 after PR #24 replaced the product-hub landing page
     with the hoops methodology notebook. Honesty substance is preserved:
 
-    - headline numbers are pinned (12,966 / MTNN v5 / 1,313 / 0.4382);
+    - headline numbers for rows / champion / incumbent date come from
+      vector-hoops mtnn_meta.json (and mtnn_lineage.json when present);
     - the home is an explanation site, not a six-product storefront;
     - generated-map and fabricated-spec leaks remain forbidden;
     - accessibility (skip link, focus, 44px targets, reduced motion,
@@ -453,10 +558,16 @@ def check_page(errors: list[str], _products: list[dict[str, object]]) -> None:
     if not PAGE.exists():
         fail(errors, "served page: public/index.html is missing")
         return
+    try:
+        meta, lineage = load_served_model_truth()
+    except RuntimeError as exc:
+        fail(errors, f"served-model truth: {exc}")
+        meta, lineage = None, None
+    claims = headline_claims_from_truth(meta, lineage, errors)
     text = PAGE.read_text(encoding="utf-8")
     parser = check_markup(errors, text, "served journey")
 
-    for claim, label in HEADLINE_CLAIMS:
+    for claim, label in claims:
         if claim not in text:
             fail(errors, f"methodology truth: missing pinned {label} ({claim!r})")
     if "vector product family" in text.lower():
@@ -536,7 +647,7 @@ def main() -> int:
         return 1
     print("GATEWAY CHECK PASSED")
     print("PASS: six evidence-backed product records remain internally consistent")
-    print("PASS: methodology notebook pins headline numbers and keeps the product-hub cut list")
+    print("PASS: methodology headlines match vector-hoops served-model truth")
     print("PASS: semantic, focus, motion, target, contrast, and overflow contracts")
     print("PASS: .vercelignore keeps products.json and season_clock_demo.json while ignoring heavy public datasets")
     return 0
