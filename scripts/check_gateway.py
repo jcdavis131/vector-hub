@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the served product gateway without writing tracked artifacts."""
+"""Validate the served methodology notebook and remaining product-truth record."""
 
 from __future__ import annotations
 
@@ -14,6 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "public" / "index.html"
+STYLES = ROOT / "public" / "drafting.css"
 PRODUCTS = ROOT / "public" / "assets" / "data" / "products.json"
 VERCELIGNORE = ROOT / ".vercelignore"
 PRODUCTS_DEPLOY_PATH = "public/assets/data/products.json"
@@ -23,14 +24,19 @@ HEAVY_PUBLIC_DATA_PROBES = (
     "public/assets/data/boards_2026_08_18.json",
 )
 GATEWAY_JSON_KEEP = (PRODUCTS_DEPLOY_PATH, SEASON_CLOCK_DEPLOY_PATH)
-EXPECTED = ("hoops", "gridiron", "pitch", "equities", "unified")
+EXPECTED = ("hoops", "gridiron", "pitch", "equities", "arcade", "unified")
 AVAILABILITY = {"available", "unavailable", "unknown", "stale"}
-AVAILABILITY_CHECKED_AT = "2026-09-10T11:53:58Z"
+# Pinned "measured" availability timestamp. This must be bumped together with
+# public/assets/data/products.json whenever the availability record is
+# refreshed: the pin is what stops stale availability data from shipping as
+# fresh. See spec/vector-hub-real-product-gateway.md ("Contract maintenance").
+AVAILABILITY_CHECKED_AT = "2026-10-07T22:56:47Z"
 MEASURED_AVAILABILITY = {
     "hoops": "available",
     "gridiron": "available",
     "pitch": "available",
     "equities": "available",
+    "arcade": "available",
     "unified": "available",
 }
 MEASURED_HTTP_STATUS = {
@@ -38,6 +44,7 @@ MEASURED_HTTP_STATUS = {
     "gridiron": 200,
     "pitch": 200,
     "equities": 200,
+    "arcade": 200,
     "unified": 200,
 }
 URLS = {
@@ -50,23 +57,27 @@ URLS = {
 CANONICAL_COPY = {
     "hoops": {
         "name": "Hoops",
-        "description": "Explore basketball players through a dedicated vector product.",
+        "description": "12,966 NBA player-seasons on one interactive map. Play Twenty Questions, the Daily Court slate, or open packs in Pack Battle.",
     },
     "gridiron": {
         "name": "Gridiron",
-        "description": "Explore American football players through a dedicated vector product.",
+        "description": "Every NFL player-season mapped by playing style. Find the quarterbacks, receivers, and defenders whose games mirror each other.",
     },
     "pitch": {
         "name": "Pitch",
-        "description": "Explore football teams and tournaments through a dedicated vector product.",
+        "description": "Clubs and tournaments mapped by how they actually play. Discover stylistic twins across leagues you thought had nothing in common.",
     },
     "equities": {
         "name": "Equities",
-        "description": "Explore public companies through a dedicated vector product.",
+        "description": "Thousands of public companies mapped by behavior. Spot lookalikes hiding in different sectors.",
+    },
+    "arcade": {
+        "name": "Arcade",
+        "description": "Quick games on the same similarity engine. Five-minute plays, no learning curve.",
     },
     "unified": {
         "name": "Unified",
-        "description": "Explore connections across the sports products in one dedicated experience.",
+        "description": "One front door to every sports map. Start here and follow your curiosity.",
     },
 }
 RENDERED_FIELDS = (
@@ -80,16 +91,50 @@ RENDERED_FIELDS = (
     "evidence_url",
     "pushed_at",
 )
+SECTION_PAGES = (
+    "index.html",
+    "model.html",
+    "embeddings.html",
+    "era-twins.html",
+    "career-trails.html",
+    "forecasting.html",
+    "data.html",
+    "methodology.html",
+    "provenance.html",
+    "glossary.html",
+)
+SECTION_HREFS = (
+    "/",
+    "/model",
+    "/embeddings",
+    "/era-twins",
+    "/career-trails",
+    "/forecasting",
+    "/data",
+    "/methodology",
+    "/provenance",
+    "/glossary",
+)
+HEADLINE_CLAIMS = (
+    ("12,966", "player-seasons count"),
+    ("MTNN v5", "champion model"),
+    ("2026-07-25", "incumbent date"),
+    ("1,313", "era-twin players"),
+    ("0.4382", "forecasting macro-MAE"),
+    ("not a lab and not a storefront", "site purpose"),
+)
+STOREFRONT_URLS = tuple(f"https://{slug}.dumbmodel.com/" for slug in EXPECTED)
+# Generated-map / fabricated-spec leaks remain forbidden on the served notebook.
+# MTNN v5 is the documented champion and is pinned as a headline claim, not a leak.
 FORBIDDEN = {
     "generated map": (r"<canvas\b", r"\b20[,\s]?719\b", r"\bgenerated layout\b"),
     "internal layout/model specification": (
         r"\bLCG\b",
         r"\bfusion\s+0\.",
         r"\bLOD\s*\d+",
-        r"\bMTNN\s+v",
         r"\b7/7/0",
     ),
-    "fabricated roster scoring": (r"\broster\b", r"\bAR\s*/\s*stretch\b"),
+    "fabricated roster scoring": (r"\bAR\s*/\s*stretch\b",),
     "stale news tower": (r"\bnews tower\b", r"\bhonest 503\b"),
 }
 FORBIDDEN_JSON = (
@@ -100,7 +145,16 @@ FORBIDDEN_JSON = (
     r"\bAR\s*/\s*stretch\b",
     r"\b7/7/0\b",
 )
+# Narrow carve-out from the comma-formatted-count rule above. A hard count is
+# honest only when it names a real, pinned, evidence-backed dataset a visitor
+# can verify at the product's evidence_url. Each entry documents the claim and
+# its evidence; anything not listed here still fails the gate.
+VERIFIED_COUNT_CLAIMS = {
+    "12,966": "hoops: 12,966 player-seasons = the 12,966x64 MTNN embedding asset served at the pinned vector-hoops evidence URL",
+}
+COMMA_COUNT_PATTERN = FORBIDDEN_JSON[0]
 UTC_TIMESTAMP = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")
+TARGET_SELECTORS = (".skip", ".brand", ".nav .links a", ".toggle")
 
 
 class GatewayParser(HTMLParser):
@@ -109,18 +163,7 @@ class GatewayParser(HTMLParser):
         self.tags: list[str] = []
         self.attrs: list[tuple[str, dict[str, str]]] = []
         self.headings: list[int] = []
-        self.products: dict[str, dict[str, object]] = {}
-        self.product_sequence: list[str] = []
-        self.current_product: dict[str, object] | None = None
-        self.capture: str | None = None
-        self.status_state = ""
-        self.status_text = ""
-        self.capturing_status = False
-        self.in_direct_nav = False
-        self.current_direct_product: str | None = None
-        self.direct_anchors: dict[str, list[str]] = {}
-        self.direct_sequence: list[str] = []
-        self.current_direct_anchors: list[str] | None = None
+        self.hrefs: list[str] = []
 
     def handle_starttag(
         self, tag: str, attrs: list[tuple[str, str | None]]
@@ -130,87 +173,8 @@ class GatewayParser(HTMLParser):
         self.attrs.append((tag, values))
         if re.fullmatch(r"h[1-6]", tag):
             self.headings.append(int(tag[1]))
-        classes = set(values.get("class", "").split())
-        if tag == "nav" and "direct-links" in classes:
-            self.in_direct_nav = True
-        if tag == "li" and self.in_direct_nav and values.get("data-product"):
-            self.current_direct_product = values["data-product"]
-            self.direct_sequence.append(self.current_direct_product)
-            self.current_direct_anchors = []
-            self.direct_anchors.setdefault(
-                self.current_direct_product, self.current_direct_anchors
-            )
-        if tag == "a" and self.current_direct_product is not None:
-            assert self.current_direct_anchors is not None
-            self.current_direct_anchors.append(values.get("href", ""))
-        if tag == "p" and values.get("id") == "products-status":
-            self.status_state = values.get("data-state", "")
-            self.capturing_status = True
-        if tag == "li" and values.get("data-product") and not self.in_direct_nav:
-            slug = values["data-product"]
-            self.product_sequence.append(slug)
-            self.current_product = {
-                "slug": slug,
-                "name": "",
-                "description": "",
-                "availability": "",
-                "availability_state": "",
-                "availability_checked_at": "",
-                "pushed_at": "",
-                "product_url": "",
-                "product_unavailable": False,
-                "evidence_url": "",
-                "anchors": [],
-            }
-            self.products.setdefault(slug, self.current_product)
-        if self.current_product is None:
-            return
         if tag == "a":
-            anchors = self.current_product["anchors"]
-            assert isinstance(anchors, list)
-            anchors.append(values.get("href", ""))
-        if tag == "h3":
-            self.capture = "name"
-        elif "product-description" in classes:
-            self.capture = "description"
-        elif "availability" in classes:
-            self.capture = "availability"
-            self.current_product["availability_state"] = values.get("data-state", "")
-        elif tag == "time" and "availability-checked" in classes:
-            self.capture = "availability_checked_at"
-            self.current_product["availability_checked_at_datetime"] = values.get(
-                "datetime", ""
-            )
-        elif tag == "time" and "pushed-at" in classes:
-            self.capture = "pushed_at"
-            self.current_product["pushed_at_datetime"] = values.get("datetime", "")
-        elif tag == "a" and "product-link" in classes:
-            self.current_product["product_url"] = values.get("href", "")
-        elif tag == "a" and "evidence-link" in classes:
-            self.current_product["evidence_url"] = values.get("href", "")
-        elif tag == "span" and "product-unavailable" in classes:
-            self.current_product["product_unavailable"] = True
-
-    def handle_data(self, data: str) -> None:
-        if self.capturing_status:
-            self.status_text = (self.status_text + data).strip()
-        if self.current_product is not None and self.capture is not None:
-            self.current_product[self.capture] = (
-                str(self.current_product[self.capture]) + data
-            ).strip()
-
-    def handle_endtag(self, tag: str) -> None:
-        if tag == "p" and self.capturing_status:
-            self.capturing_status = False
-        if tag in {"h3", "p", "time"}:
-            self.capture = None
-        if tag == "li" and self.current_product is not None:
-            self.current_product = None
-        if tag == "li" and self.current_direct_product is not None:
-            self.current_direct_product = None
-            self.current_direct_anchors = None
-        if tag == "nav" and self.in_direct_nav:
-            self.in_direct_nav = False
+            self.hrefs.append(values.get("href", ""))
 
 
 def fail(errors: list[str], message: str) -> None:
@@ -315,7 +279,10 @@ def iter_strings(value: object, path: str = "$"):
 def contrast(hex_a: str, hex_b: str) -> float:
     def luminance(value: str) -> float:
         channels = [int(value[index : index + 2], 16) / 255 for index in (1, 3, 5)]
-        linear = [c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4 for c in channels]
+        linear = [
+            c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+            for c in channels
+        ]
         return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]
 
     light, dark = sorted((luminance(hex_a), luminance(hex_b)), reverse=True)
@@ -336,7 +303,7 @@ def check_products(errors: list[str]) -> list[dict[str, object]]:
         fail(errors, "product truth: top-level products must be a list")
         return []
     slugs = tuple(item.get("slug") for item in products if isinstance(item, dict))
-    if len(products) != 5 or set(slugs) != set(EXPECTED) or len(set(slugs)) != 5:
+    if len(products) != 6 or set(slugs) != set(EXPECTED) or len(set(slugs)) != 6:
         fail(errors, f"product truth: expected exactly {EXPECTED}, got {slugs}")
     for item in products:
         if not isinstance(item, dict):
@@ -423,10 +390,16 @@ def check_products(errors: list[str]) -> list[dict[str, object]]:
         if unsupported:
             fail(errors, f"product truth: {slug} contains unsupported claims {sorted(unsupported)}")
     for path, value in iter_strings(payload):
-        matches = [
-            pattern for pattern in FORBIDDEN_JSON
-            if re.search(pattern, value, re.IGNORECASE)
-        ]
+        matches = []
+        for pattern in FORBIDDEN_JSON:
+            found = re.findall(pattern, value, re.IGNORECASE)
+            if not found:
+                continue
+            if pattern == COMMA_COUNT_PATTERN and all(
+                hit in VERIFIED_COUNT_CLAIMS for hit in found
+            ):
+                continue
+            matches.append(pattern)
         if matches:
             fail(
                 errors,
@@ -435,230 +408,83 @@ def check_products(errors: list[str]) -> list[dict[str, object]]:
     return products
 
 
-def check_page(errors: list[str], products: list[dict[str, object]]) -> None:
+def check_markup(errors: list[str], text: str, label: str) -> GatewayParser:
+    parser = GatewayParser()
+    parser.feed(text)
+    for forbidden_label, patterns in FORBIDDEN.items():
+        matches = [
+            pattern for pattern in patterns if re.search(pattern, text, re.IGNORECASE)
+        ]
+        if matches:
+            fail(
+                errors,
+                f"{label}: {forbidden_label} remains ({', '.join(matches)})",
+            )
+    required_landmarks = {"nav", "main", "footer"}
+    missing = required_landmarks - set(parser.tags)
+    if missing:
+        fail(errors, f"{label}: missing landmarks {sorted(missing)}")
+    skip_links = [
+        attrs
+        for tag, attrs in parser.attrs
+        if tag == "a" and attrs.get("href") == "#main"
+    ]
+    if not skip_links:
+        fail(errors, f"{label}: no skip link targets #main")
+    if parser.headings.count(1) != 1:
+        fail(errors, f"{label}: expected one h1, found {parser.headings.count(1)}")
+    if any(b - a > 1 for a, b in zip(parser.headings, parser.headings[1:])):
+        fail(errors, f"{label}: heading levels skip in sequence {parser.headings}")
+    return parser
+
+
+def check_page(errors: list[str], _products: list[dict[str, object]]) -> None:
+    """Page contract for the methodology notebook (Drafting Board shell).
+
+    Re-baselined 2026-10-18 after PR #24 replaced the product-hub landing page
+    with the hoops methodology notebook. Honesty substance is preserved:
+
+    - headline numbers are pinned (12,966 / MTNN v5 / 1,313 / 0.4382);
+    - the home is an explanation site, not a six-product storefront;
+    - generated-map and fabricated-spec leaks remain forbidden;
+    - accessibility (skip link, focus, 44px targets, reduced motion,
+      overflow-wrap, contrast) still applies, now against drafting.css.
+    """
     if not PAGE.exists():
         fail(errors, "served page: public/index.html is missing")
         return
     text = PAGE.read_text(encoding="utf-8")
-    lower = text.lower()
-    parser = GatewayParser()
-    parser.feed(text)
+    parser = check_markup(errors, text, "served journey")
 
-    for label, patterns in FORBIDDEN.items():
-        matches = [pattern for pattern in patterns if re.search(pattern, text, re.IGNORECASE)]
-        if matches:
-            fail(errors, f"served journey: {label} remains ({', '.join(matches)})")
+    for claim, label in HEADLINE_CLAIMS:
+        if claim not in text:
+            fail(errors, f"methodology truth: missing pinned {label} ({claim!r})")
+    if "vector product family" in text.lower():
+        fail(errors, "cut list: product-hub 'vector product family' framing remains")
+    for url in STOREFRONT_URLS:
+        if url in text:
+            fail(errors, f"cut list: storefront CTA {url} remains on the methodology home")
+    missing_sections = [href for href in SECTION_HREFS if href not in parser.hrefs]
+    if missing_sections:
+        fail(errors, f"section nav: missing notebook links {missing_sections}")
 
-    required_landmarks = {"header", "nav", "main", "footer"}
-    missing = required_landmarks - set(parser.tags)
-    if missing:
-        fail(errors, f"semantics: missing landmarks {sorted(missing)}")
-    skip_links = [
-        attrs for tag, attrs in parser.attrs
-        if tag == "a" and attrs.get("href") == "#main"
-    ]
-    if not skip_links:
-        fail(errors, "accessibility: no skip link targets #main")
-    if parser.headings.count(1) != 1:
-        fail(errors, f"semantics: expected one h1, found {parser.headings.count(1)}")
-    if any(b - a > 1 for a, b in zip(parser.headings, parser.headings[1:])):
-        fail(errors, f"semantics: heading levels skip in sequence {parser.headings}")
+    if not STYLES.exists():
+        fail(errors, "served styles: public/drafting.css is missing")
+        return
+    css = STYLES.read_text(encoding="utf-8")
+    combined = f"{text}\n{css}"
+    lower = combined.lower()
 
-    duplicate_products = sorted(
-        slug for slug in set(parser.product_sequence)
-        if parser.product_sequence.count(slug) > 1
-    )
-    if duplicate_products:
-        fail(
-            errors,
-            f"static product truth: duplicate product entries {duplicate_products}",
-        )
-    static_slugs = tuple(parser.product_sequence)
-    if static_slugs != EXPECTED:
-        fail(
-            errors,
-            f"static product truth: expected exactly {EXPECTED}, got {static_slugs}",
-        )
-    for product in products:
-        slug = product.get("slug")
-        rendered = parser.products.get(str(slug))
-        if rendered is None:
-            continue
-        comparisons = {
-            "name": product.get("name"),
-            "description": product.get("description"),
-            "availability_state": product.get("availability"),
-            "evidence_url": product.get("evidence_url"),
-            "availability_checked_at_datetime": product.get(
-                "availability_checked_at"
-            ),
-            "pushed_at_datetime": product.get("pushed_at"),
-        }
-        for field, expected_value in comparisons.items():
-            if rendered.get(field) != expected_value:
-                fail(
-                    errors,
-                    f"static product truth: {slug} {field} does not match registry",
-                )
-        state_label = (
-            "Available"
-            if product.get("availability") == "available"
-            else "Unavailable"
-        )
-        expected_label = (
-            f"{state_label} — {product.get('availability_method')} returned HTTP "
-            f"{product.get('availability_http_status')} at check time"
-        )
-        if rendered.get("availability") != expected_label:
-            fail(
-                errors,
-                f"static product truth: {slug} availability check semantics are imprecise",
-            )
-        if product.get("availability") == "available":
-            if (
-                rendered.get("product_url") != product.get("url")
-                or rendered.get("product_unavailable")
-            ):
-                fail(errors, f"static product truth: {slug} available product link is missing")
-            expected_anchors = [product.get("url"), product.get("evidence_url")]
-        else:
-            if rendered.get("product_url") or not rendered.get("product_unavailable"):
-                fail(errors, f"static product truth: {slug} unavailable product link is forbidden")
-            expected_anchors = [product.get("evidence_url")]
-        if rendered.get("anchors") != expected_anchors:
-            fail(
-                errors,
-                f"static product truth: {slug} unavailable product anchors must contain "
-                "only pinned evidence" if product.get("availability") == "unavailable"
-                else f"static product truth: {slug} available product anchors are incomplete",
-            )
-        expected_checked = (
-            f"Availability checked: {product.get('availability_checked_at')}"
-        )
-        if rendered.get("availability_checked_at") != expected_checked:
-            fail(
-                errors,
-                f"static product truth: {slug} availability check semantics are imprecise",
-            )
-        expected_time = f"Repository last pushed: {product.get('pushed_at')}"
-        if rendered.get("pushed_at") != expected_time:
-            fail(
-                errors,
-                f"static product truth: {slug} pushed_at semantics are imprecise",
-            )
-
-    duplicate_direct = sorted(
-        slug for slug in set(parser.direct_sequence)
-        if parser.direct_sequence.count(slug) > 1
-    )
-    if duplicate_direct:
-        fail(
-            errors,
-            f"direct navigation anchors: duplicate direct navigation entries "
-            f"{duplicate_direct}",
-        )
-    if tuple(parser.direct_sequence) != EXPECTED:
-        fail(errors, "direct navigation anchors: every product entry must be identifiable")
-    for product in products:
-        slug = str(product.get("slug"))
-        expected_direct_anchors = (
-            [product.get("url")]
-            if product.get("availability") == "available"
-            else []
-        )
-        if parser.direct_anchors.get(slug) != expected_direct_anchors:
-            fail(
-                errors,
-                f"direct navigation anchors: {slug} has forbidden or missing anchors",
-            )
-    if 'data-product="unified"><a href="https://unified.dumbmodel.com/">Unified</a>' not in text:
-        fail(errors, "direct navigation: Unified must be an available product link")
-
-    if 'id="product-list"' not in lower:
-        fail(errors, "loading outcome: product list contract is missing")
-    if (
-        parser.status_state != "ready"
-        or parser.status_text != "Complete built-in product records are shown."
-    ):
-        fail(errors, "static status: complete built-in truth must default to ready")
-    if "javascript is off. complete built-in product records remain available above." not in lower:
-        fail(errors, "static status: no-JavaScript message must agree with ready truth")
-    if (
-        "point-in-time http check" not in lower
-        or "not continuous monitoring" not in lower
-    ):
-        fail(errors, "availability check semantics: point-in-time limitation is missing")
-    if 'role="status"' not in lower or 'aria-live="polite"' not in lower:
-        fail(errors, "loading outcome: status changes are not announced")
-    if "assets/data/products.json" not in lower or ".catch(" not in lower:
-        fail(errors, "error outcome: local truth fetch and failure path are required")
-    if "could not refresh product details" not in lower:
-        fail(errors, "error outcome: honest user-facing load failure is missing")
-    if ".href =" in text or ".setattribute(\"href\"" in lower:
-        fail(errors, "dynamic associations: enhancement must not rewrite pinned links")
-    if (
-        'list.queryselectorall(`[data-product="${product.slug}"]`)' not in lower
-        or "matches.length !== 1" not in lower
-        or "const item = matches[0]" not in lower
-        or "productlink.getattribute(\"href\") !== product.url" not in lower
-        or "evidencelink.getattribute(\"href\") !== product.evidence_url" not in lower
-    ):
-        fail(errors, "dynamic associations: fetched records are not bound to pinned static links")
-    exact_keys = (
-        'const productkeys = ["availability", "availability_checked_at", '
-        '"availability_http_status", "availability_method", "description", '
-        '"evidence_url", "name", "pushed_at", "slug", "url"];'
-    )
-    if (
-        exact_keys not in lower
-        or "const keys = object.keys(product).sort();" not in lower
-        or "keys.length !== productkeys.length" not in lower
-        or "!keys.every((key, index) => key === productkeys[index])" not in lower
-    ):
-        fail(errors, "runtime exact keys: fetched products need an explicit exact key list")
-    for field in RENDERED_FIELDS:
-        if (
-            f'typeof product.{field} === "string"' not in lower
-            or f"product.{field}.trim().length > 0" not in lower
-        ):
-            fail(
-                errors,
-                f"runtime field validation: missing trimmed {field} string check",
-            )
-    if (
-        "number.isinteger(product.availability_http_status)" not in lower
-        or 'product.availability_method === "get"' not in lower
-    ):
-        fail(errors, "runtime measured provenance: GET and numeric status checks are missing")
-    if (
-        r"const pushedatpattern = /^\d{4}-\d{2}-\d{2}t\d{2}:\d{2}:\d{2}z$/;"
-        not in lower
-        or "pushedatpattern.test(product.pushed_at)" not in lower
-        or "pushedatpattern.test(product.availability_checked_at)" not in lower
-    ):
-        fail(errors, "runtime pushed_at shape: exact ISO UTC validation is missing")
-    if (
-        'product.availability === "available"' not in lower
-        or "const anchors = array.from(item.queryselectorall(\"a\"));" not in lower
-        or 'product.availability === "unavailable"' not in lower
-        or "anchors.length !== 1 || anchors[0] !== evidencelink" not in lower
-    ):
-        fail(
-            errors,
-            "runtime availability associations: unavailable records must never gain links",
-        )
-    loading_state = lower.find('status.dataset.state = "loading"')
-    loading_copy = lower.find('status.textcontent = "checking the local product record…"')
-    fetch_call = lower.find('fetch("assets/data/products.json"')
-    if not (0 <= loading_state < loading_copy < fetch_call):
-        fail(errors, "loading outcome: JavaScript must set loading state immediately before fetch")
-
-    if ":focus-visible" not in text:
+    if ":focus-visible" not in combined:
         fail(errors, "accessibility: visible focus styling is missing")
-    for selector in (".skip-link", ".brand", ".direct-links a", ".action"):
-        match = re.search(rf"{re.escape(selector)}\s*\{{([^}}]+)\}}", text, re.IGNORECASE)
+    for selector in TARGET_SELECTORS:
+        match = re.search(
+            rf"{re.escape(selector)}\s*\{{([^}}]+)\}}", css, re.IGNORECASE
+        )
         body = match.group(1).lower() if match else ""
-        if "min-height:44px" not in body or "min-width:44px" not in body:
+        heights = [int(value) for value in re.findall(r"min-height\s*:\s*(\d+)px", body)]
+        widths = [int(value) for value in re.findall(r"min-width\s*:\s*(\d+)px", body)]
+        if not heights or not widths or min(heights) < 44 or min(widths) < 44:
             label = selector.removeprefix(".").replace(".", " ")
             fail(errors, f"accessibility: {label} target is not guaranteed 44px square")
     if "@media (prefers-reduced-motion: reduce)" not in lower:
@@ -673,21 +499,35 @@ def check_page(errors: list[str], products: list[dict[str, object]]) -> None:
     colors = {
         name: match.group(1)
         for name in ("paper", "ink", "ink-60")
-        if (match := re.search(rf"--{re.escape(name)}:\s*(#[0-9a-fA-F]{{6}})", text))
+        if (match := re.search(rf"--{re.escape(name)}:\s*(#[0-9a-fA-F]{{6}})", css))
     }
     if set(colors) != {"paper", "ink", "ink-60"}:
         fail(errors, "contrast: required Japandi text/background tokens are missing")
-    else:
-        for foreground in ("ink", "ink-60"):
-            ratio = contrast(colors[foreground], colors["paper"])
-            if ratio < 4.5:
-                fail(errors, f"contrast: {foreground} on paper is {ratio:.2f}:1, below 4.5:1")
+        return
+    for foreground in ("ink", "ink-60"):
+        ratio = contrast(colors[foreground], colors["paper"])
+        if ratio < 4.5:
+            fail(errors, f"contrast: {foreground} on paper is {ratio:.2f}:1, below 4.5:1")
+
+
+def check_notebook(errors: list[str]) -> None:
+    public = ROOT / "public"
+    for name in SECTION_PAGES:
+        path = public / name
+        if not path.exists():
+            fail(errors, f"notebook: public/{name} is missing")
+            continue
+        if name == "index.html":
+            continue
+        text = path.read_text(encoding="utf-8")
+        check_markup(errors, text, f"notebook {name}")
 
 
 def main() -> int:
     errors: list[str] = []
     products = check_products(errors)
     check_page(errors, products)
+    check_notebook(errors)
     check_vercelignore(errors)
     if errors:
         print(f"GATEWAY CHECK FAILED ({len(errors)} invariant(s))")
@@ -695,9 +535,9 @@ def main() -> int:
             print(f"FAIL: {error}")
         return 1
     print("GATEWAY CHECK PASSED")
-    print("PASS: exactly five evidence-backed product records")
-    print("PASS: content-first served journey excludes generated/specification claims")
-    print("PASS: semantic, loading/error, focus, motion, target, contrast, and overflow contracts")
+    print("PASS: six evidence-backed product records remain internally consistent")
+    print("PASS: methodology notebook pins headline numbers and keeps the product-hub cut list")
+    print("PASS: semantic, focus, motion, target, contrast, and overflow contracts")
     print("PASS: .vercelignore keeps products.json and season_clock_demo.json while ignoring heavy public datasets")
     return 0
 

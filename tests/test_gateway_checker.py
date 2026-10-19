@@ -49,6 +49,18 @@ class GatewayCheckerAdversarialTests(unittest.TestCase):
                 check_gateway.check_page(errors, products)
         return errors
 
+    def css_errors(self, mutate) -> list[str]:
+        css = (ROOT / "public" / "drafting.css").read_text(encoding="utf-8")
+        css = mutate(css)
+        with tempfile.TemporaryDirectory() as directory:
+            css_file = Path(directory) / "drafting.css"
+            css_file.write_text(css, encoding="utf-8")
+            errors: list[str] = []
+            products = check_gateway.check_products(errors)
+            with patch.object(check_gateway, "STYLES", css_file):
+                check_gateway.check_page(errors, products)
+        return errors
+
     def test_rejects_numeric_rendered_fields(self) -> None:
         errors = self.product_errors(
             lambda products: products[0].update(name=2026)
@@ -122,11 +134,10 @@ class GatewayCheckerAdversarialTests(unittest.TestCase):
         self.assertTrue(any("future" in error for error in errors), errors)
 
     def test_requires_target_size_for_each_interactive_contract(self) -> None:
-        errors = self.page_errors(
-            lambda page: page.replace(
-                "  min-height:44px;\n  display:inline-flex;\n"
-                "  align-items:center;\n  font:700 .78rem",
-                "  display:inline-flex;\n  align-items:center;\n  font:700 .78rem",
+        errors = self.css_errors(
+            lambda css: css.replace(
+                "min-width:44px;min-height:44px",
+                "",
                 1,
             )
         )
@@ -136,10 +147,10 @@ class GatewayCheckerAdversarialTests(unittest.TestCase):
         )
 
     def test_rejects_horizontal_overflow_clipping(self) -> None:
-        errors = self.page_errors(
-            lambda page: page.replace(
-                "html { scroll-behavior:smooth; }",
-                "html { scroll-behavior:smooth; overflow-x:hidden; }",
+        errors = self.css_errors(
+            lambda css: css.replace(
+                "html{scroll-behavior:smooth;overflow-wrap:anywhere}",
+                "html{scroll-behavior:smooth;overflow-wrap:anywhere;overflow-x:hidden}",
                 1,
             )
         )
@@ -148,96 +159,136 @@ class GatewayCheckerAdversarialTests(unittest.TestCase):
             errors,
         )
 
-    def test_requires_complete_static_product_truth(self) -> None:
-        errors = self.page_errors(
-            lambda page: page.replace(
-                "Explore basketball players through a dedicated vector product.",
-                "",
+    def test_requires_focus_visible(self) -> None:
+        errors = self.css_errors(
+            lambda css: css.replace(":focus-visible", ":focus", 1)
+        )
+        self.assertTrue(
+            any("visible focus styling is missing" in error for error in errors),
+            errors,
+        )
+
+    def test_requires_reduced_motion(self) -> None:
+        errors = self.css_errors(
+            lambda css: css.replace(
+                "@media (prefers-reduced-motion: reduce)",
+                "@media (prefers-reduced-data: reduce)",
                 1,
             )
         )
         self.assertTrue(
-            any("static product truth" in error for error in errors),
+            any("reduced-motion handling is missing" in error for error in errors),
             errors,
         )
 
-    def test_rejects_swapped_static_product_link(self) -> None:
+    def test_requires_overflow_wrap(self) -> None:
+        errors = self.css_errors(
+            lambda css: css.replace("overflow-wrap:anywhere", "overflow-wrap:normal")
+        )
+        self.assertTrue(
+            any("horizontal overflow" in error for error in errors),
+            errors,
+        )
+
+    def test_requires_skip_link(self) -> None:
+        errors = self.page_errors(
+            lambda page: page.replace('href="#main"', 'href="#top"', 1)
+        )
+        self.assertTrue(
+            any("no skip link targets #main" in error for error in errors),
+            errors,
+        )
+
+    def test_requires_headline_player_season_count(self) -> None:
+        errors = self.page_errors(
+            lambda page: page.replace("12,966", "12,452")
+        )
+        self.assertTrue(
+            any("player-seasons count" in error for error in errors),
+            errors,
+        )
+
+    def test_requires_mtnn_v5_champion(self) -> None:
+        errors = self.page_errors(lambda page: page.replace("MTNN v5", "MTNN v6"))
+        self.assertTrue(
+            any("champion model" in error for error in errors),
+            errors,
+        )
+
+    def test_requires_era_twin_count(self) -> None:
+        errors = self.page_errors(lambda page: page.replace("1,313", "1,308"))
+        self.assertTrue(
+            any("era-twin players" in error for error in errors),
+            errors,
+        )
+
+    def test_requires_forecast_mae(self) -> None:
+        errors = self.page_errors(lambda page: page.replace("0.4382", "0.4400"))
+        self.assertTrue(
+            any("forecasting macro-MAE" in error for error in errors),
+            errors,
+        )
+
+    def test_requires_explanation_not_storefront(self) -> None:
         errors = self.page_errors(
             lambda page: page.replace(
-                'href="https://hoops.dumbmodel.com/">Open Hoops',
-                'href="https://gridiron.dumbmodel.com/">Open Hoops',
+                "not a lab and not a storefront",
+                "a storefront for the vector product family",
                 1,
             )
         )
         self.assertTrue(
-            any("static product truth: hoops available product link" in error for error in errors),
+            any("site purpose" in error or "vector product family" in error for error in errors),
             errors,
         )
 
-    def test_requires_dynamic_link_association_guard(self) -> None:
+    def test_rejects_product_storefront_cta(self) -> None:
         errors = self.page_errors(
             lambda page: page.replace(
-                '          || evidenceLink.getAttribute("href") !== product.evidence_url',
-                "",
+                '<a href="/model">Model card →</a>',
+                '<a href="https://hoops.dumbmodel.com/">Open Hoops</a>',
                 1,
             )
         )
         self.assertTrue(
-            any("dynamic associations" in error for error in errors),
+            any("storefront CTA" in error for error in errors),
             errors,
         )
 
-    def test_requires_truthful_ready_static_status(self) -> None:
+    def test_rejects_vector_product_family_framing(self) -> None:
         errors = self.page_errors(
             lambda page: page.replace(
-                'data-state="ready">Complete built-in product records are shown.',
-                'data-state="loading">Checking the local product record…',
+                "methodology notebook",
+                "vector product family",
                 1,
             )
         )
-        self.assertTrue(any("static status" in error for error in errors), errors)
+        self.assertTrue(
+            any("vector product family" in error for error in errors),
+            errors,
+        )
 
-    def test_requires_runtime_exact_key_contract(self) -> None:
+    def test_requires_section_nav_hrefs(self) -> None:
         errors = self.page_errors(
-            lambda page: page.replace(
-                '  const productKeys = ["availability", "availability_checked_at", '
-                '"availability_http_status", "availability_method", "description", '
-                '"evidence_url", "name", "pushed_at", "slug", "url"];\n',
-                "",
-                1,
-            )
+            lambda page: page.replace('href="/career-trails"', 'href="/missing"')
         )
-        self.assertTrue(any("runtime exact keys" in error for error in errors), errors)
+        self.assertTrue(
+            any("missing notebook links" in error for error in errors),
+            errors,
+        )
 
-    def test_requires_runtime_name_validation(self) -> None:
+    def test_rejects_generated_map_on_home(self) -> None:
         errors = self.page_errors(
             lambda page: page.replace(
-                '      && typeof product.name === "string"\n',
-                "",
+                "<main class=\"sheet\" id=\"main\">",
+                "<main class=\"sheet\" id=\"main\"><canvas id=\"map\"></canvas>",
                 1,
             )
         )
-        self.assertTrue(any("runtime field validation" in error for error in errors), errors)
-
-    def test_requires_runtime_description_validation(self) -> None:
-        errors = self.page_errors(
-            lambda page: page.replace(
-                '      && typeof product.description === "string"\n',
-                "",
-                1,
-            )
+        self.assertTrue(
+            any("generated map" in error for error in errors),
+            errors,
         )
-        self.assertTrue(any("runtime field validation" in error for error in errors), errors)
-
-    def test_requires_runtime_exact_utc_timestamp_shape(self) -> None:
-        errors = self.page_errors(
-            lambda page: page.replace(
-                "      && pushedAtPattern.test(product.pushed_at)\n",
-                "",
-                1,
-            )
-        )
-        self.assertTrue(any("runtime pushed_at shape" in error for error in errors), errors)
 
     def test_requires_availability_checked_at(self) -> None:
         errors = self.product_errors(
@@ -268,73 +319,6 @@ class GatewayCheckerAdversarialTests(unittest.TestCase):
             errors,
         )
 
-    def test_unified_static_record_requires_product_link(self) -> None:
-        errors = self.page_errors(
-            lambda page: page.replace(
-                '<a class="action action--primary product-link" '
-                'href="https://unified.dumbmodel.com/">Open Unified</a>',
-                '<span class="product-unavailable">Product unavailable</span>',
-                1,
-            )
-        )
-        self.assertTrue(
-            any("static product truth" in error for error in errors),
-            errors,
-        )
-
-    def test_unified_direct_navigation_is_a_link(self) -> None:
-        errors = self.page_errors(
-            lambda page: page.replace(
-                '<li data-product="unified">'
-                '<a href="https://unified.dumbmodel.com/">Unified</a></li>',
-                '<li data-product="unified"><span class="direct-unavailable" '
-                'data-product="unified">Unified — unavailable</span></li>',
-                1,
-            )
-        )
-        self.assertTrue(
-            any("direct navigation" in error for error in errors),
-            errors,
-        )
-
-    def test_requires_static_availability_check_semantics(self) -> None:
-        errors = self.page_errors(
-            lambda page: page.replace(
-                '<time class="availability-checked" '
-                'datetime="2026-09-10T11:53:58Z">'
-                "Availability checked: 2026-09-10T11:53:58Z</time>",
-                "",
-                1,
-            )
-        )
-        self.assertTrue(
-            any("availability check semantics" in error for error in errors),
-            errors,
-        )
-
-    def test_requires_runtime_unavailable_link_guard(self) -> None:
-        errors = self.page_errors(
-            lambda page: page.replace(
-                "        if (anchors.length !== 1 || anchors[0] !== evidenceLink\n",
-                "        if (anchors.length > 1\n",
-                1,
-            )
-        )
-        self.assertTrue(
-            any("runtime availability associations" in error for error in errors),
-            errors,
-        )
-
-    def test_runtime_strings_require_trimmed_content(self) -> None:
-        errors = self.page_errors(
-            lambda page: page.replace(
-                "product.name.trim().length > 0",
-                "product.name.length > 0",
-                1,
-            )
-        )
-        self.assertTrue(any("runtime field validation" in error for error in errors), errors)
-
     def test_requires_exact_get_availability_method(self) -> None:
         errors = self.product_errors(
             lambda products: products[0].update(availability_method="HEAD")
@@ -347,107 +331,28 @@ class GatewayCheckerAdversarialTests(unittest.TestCase):
         )
         self.assertTrue(any("availability_http_status" in error for error in errors), errors)
 
-    def test_rejects_extra_absolute_anchor_in_unified_product(self) -> None:
-        errors = self.page_errors(
-            lambda page: page.replace(
-                '<a class="action action--primary product-link" '
-                'href="https://unified.dumbmodel.com/">Open Unified</a>',
-                '<a class="action action--primary product-link" '
-                'href="https://unified.dumbmodel.com/">Open Unified</a>'
-                '<a class="other-link" href="https://unified.dumbmodel.com">'
-                "Unexpected Unified link</a>",
-                1,
+    def test_accepts_six_product_family(self) -> None:
+        errors: list[str] = []
+        check_gateway.check_products(errors)
+        self.assertEqual(errors, [])
+
+    def test_rejects_unverified_comma_count_claim(self) -> None:
+        errors = self.product_errors(
+            lambda products: products[1].update(
+                description="Every NFL player-season mapped by playing style. 48,000 plays charted."
             )
         )
         self.assertTrue(
-            any(
-                "static product truth" in error or "available product" in error
-                for error in errors
-            ),
+            any("forbidden rendered claim" in error for error in errors),
             errors,
         )
 
-    def test_rejects_relative_extra_anchor_in_unified_product(self) -> None:
-        errors = self.page_errors(
-            lambda page: page.replace(
-                '<a class="action action--primary product-link" '
-                'href="https://unified.dumbmodel.com/">Open Unified</a>',
-                '<a class="action action--primary product-link" '
-                'href="https://unified.dumbmodel.com/">Open Unified</a>'
-                '<a href="/unified">Unexpected Unified link</a>',
-                1,
-            )
-        )
-        self.assertTrue(
-            any(
-                "static product truth" in error or "available product" in error
-                for error in errors
-            ),
-            errors,
-        )
-
-    def test_rejects_extra_absolute_anchor_in_unified_direct_nav(self) -> None:
-        errors = self.page_errors(
-            lambda page: page.replace(
-                '<li data-product="unified">'
-                '<a href="https://unified.dumbmodel.com/">Unified</a></li>',
-                '<li data-product="unified">'
-                '<a href="https://unified.dumbmodel.com/">Unified</a>'
-                '<a class="other-link" href="https://unified.dumbmodel.com">'
-                "Unexpected Unified link</a></li>",
-                1,
-            )
-        )
-        self.assertTrue(any("direct navigation anchors" in error for error in errors), errors)
-
-    def test_rejects_relative_extra_anchor_in_unified_direct_nav(self) -> None:
-        errors = self.page_errors(
-            lambda page: page.replace(
-                '<li data-product="unified">'
-                '<a href="https://unified.dumbmodel.com/">Unified</a></li>',
-                '<li data-product="unified">'
-                '<a href="https://unified.dumbmodel.com/">Unified</a>'
-                '<a href="/unified">Unexpected Unified link</a></li>',
-                1,
-            )
-        )
-        self.assertTrue(any("direct navigation anchors" in error for error in errors), errors)
-
-    def test_rejects_earlier_duplicate_unified_product_entry(self) -> None:
-        errors = self.page_errors(
-            lambda page: page.replace(
-                '<li class="product product--unified" data-product="unified">',
-                '<li class="product" data-product="unified">'
-                '<a href="/unified">Forbidden duplicate CTA</a></li>'
-                '<li class="product product--unified" data-product="unified">',
-                1,
-            )
-        )
-        self.assertTrue(any("duplicate product entries" in error for error in errors), errors)
-
-    def test_rejects_earlier_duplicate_unified_direct_nav_entry(self) -> None:
-        errors = self.page_errors(
-            lambda page: page.replace(
-                '<li data-product="unified">'
-                '<a href="https://unified.dumbmodel.com/">Unified</a>',
-                '<li data-product="unified"><a href="/unified">'
-                "Forbidden duplicate CTA</a></li>"
-                '<li data-product="unified">'
-                '<a href="https://unified.dumbmodel.com/">Unified</a>',
-                1,
-            )
-        )
-        self.assertTrue(any("duplicate direct navigation entries" in error for error in errors), errors)
-
-    def test_requires_runtime_unique_product_match(self) -> None:
-        errors = self.page_errors(
-            lambda page: page.replace(
-                'const matches = list.querySelectorAll(`[data-product="${product.slug}"]`);',
-                'const item = list.querySelector(`[data-product="${product.slug}"]`);',
-                1,
-            )
-        )
-        self.assertTrue(any("dynamic associations" in error for error in errors), errors)
+    def test_live_methodology_home_passes(self) -> None:
+        errors: list[str] = []
+        products = check_gateway.check_products(errors)
+        check_gateway.check_page(errors, products)
+        check_gateway.check_notebook(errors)
+        self.assertEqual(errors, [])
 
     def test_live_vercelignore_packages_products_json(self) -> None:
         errors: list[str] = []

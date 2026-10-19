@@ -2,13 +2,36 @@
 
 ## Objective
 
-Make `dumbmodel.com` a fast, truthful gateway to the five-product family.
-Visitors should understand the family, see each product's current availability
-and evidence, and reach a product without navigating an internal implementation
-specification or a generated stand-in visualization.
+Make `dumbmodel.com` a truthful methodology notebook for the hoops embedding
+models. Visitors should understand what the served 64-d map measures, where
+every headline number comes from, and that this site is an explanation notebook
+— not a lab and not a six-product storefront.
 
-The approved scope is the served `public/` landing experience. The investor,
-game, soft-mirror, domain, and production-deployment surfaces are out of scope.
+`public/assets/data/products.json` still ships the six-product availability
+record. It is gated for internal consistency, but it is not rendered as the
+landing journey.
+
+The approved scope is the served `public/` notebook. The investor, game,
+soft-mirror, domain, and production-deployment surfaces are out of scope.
+
+## Contract maintenance
+
+The checker pins four things that must move together whenever served truth
+changes:
+
+- `EXPECTED` / `CANONICAL_COPY` / `AVAILABILITY_CHECKED_AT` — the product JSON
+  record. Arcade joined the family with the midnight-garden rebuild; the JSON
+  contract carries six products. Refreshing `products.json` without bumping the
+  availability pin fails CI on purpose.
+- `HEADLINE_CLAIMS` — the methodology home must keep 12,966 player-seasons,
+  MTNN v5, incumbent 2026-07-25, 1,313 era-twin players, and macro-MAE 0.4382.
+- Cut list — the home must not regrow product-hub framing or `*.dumbmodel.com`
+  storefront CTAs.
+- Accessibility — skip link, `:focus-visible`, 44×44 targets, reduced motion,
+  overflow-wrap, and paper/ink contrast still apply, now against `drafting.css`.
+
+`VERIFIED_COUNT_CLAIMS` is the one narrow carve-out from the
+comma-formatted-count rule on the JSON record.
 
 ## Tech Stack
 
@@ -31,7 +54,8 @@ game, soft-mirror, domain, and production-deployment surfaces are out of scope.
 
 ## Project Structure
 
-- `public/index.html` — served gateway UI
+- `public/index.html` — served methodology notebook home
+- `public/drafting.css` — Drafting Board shell (paper + night-board)
 - `public/season-clock.html` — Season Clock / sponsor-bridge timeline demo
 - `public/assets/data/products.json` — verified product truth record
 - `public/assets/data/season_clock_demo.json` — small committed Season Clock sample
@@ -45,29 +69,13 @@ game, soft-mirror, domain, and production-deployment surfaces are out of scope.
 ## Code Style
 
 Use semantic HTML, native links and buttons, existing CSS custom properties, and
-small dependency-free scripts. Keep complete product truth in semantic markup
-for the no-JavaScript path, and require it to match the JSON record exactly:
+small dependency-free scripts. The methodology home pins headline numbers in
+plain markup (no JavaScript required to read them) and links the ten notebook
+sections. Product-hub cards, availability fetchers, and `*.dumbmodel.com`
+storefront CTAs stay off this site: hoops.dumbmodel.com remains the product.
 
-```html
-<a class="product-link" href="https://hoops.dumbmodel.com/">
-  <span>Hoops</span>
-  <span class="availability" data-state="available">
-    Available — GET returned HTTP 200 at check time
-  </span>
-  <time datetime="2026-09-09T03:48:23Z">
-    Availability checked: 2026-09-09T03:48:23Z
-  </time>
-  <time datetime="2026-09-07T16:33:45Z">
-    Repository last pushed: 2026-09-07T16:33:45Z
-  </time>
-</a>
-```
-
-The UI may update a checked state from the local truth record, but it must
-render the recorded `availability_method` and numeric
-`availability_http_status` as a point-in-time HTTP result rather than
-continuous monitoring. Unavailable products retain only their pinned evidence
-anchor and expose no other anchor or product CTA.
+Season Clock (`public/season-clock.html`) is a standalone demo. After the
+methodology overhaul it is not part of the notebook TOC.
 
 ## Testing Strategy
 
@@ -102,18 +110,19 @@ anchor and expose no other anchor or product CTA.
 
 ## Success Criteria
 
-- Exactly five products are presented, each with an explicit point-in-time
-  availability state, exact method, numeric HTTP status, non-future
-  `availability_checked_at`, pinned evidence source, and distinct non-future
-  repository `pushed_at`.
-- Available products expose their pinned HTTPS product URL; unavailable
-  products expose no product CTA.
-- The served landing journey contains no generated 20,719-point map, fabricated
-  roster score, or internal `LCG`/fusion/layout specification copy.
-- Product counts shown to users are sourced by the truth record or omitted.
+- The methodology home pins 12,966 / MTNN v5 / 2026-07-25 / 1,313 / 0.4382 and
+  states that the site is an explanation notebook, not a storefront.
+- All ten notebook sections exist, each with skip link, nav, main, footer, and
+  one h1. MTNN v5 is documented champion copy, not a forbidden spec leak.
+- `products.json` still contains exactly six evidence-backed records, each with
+  an explicit point-in-time availability state, exact GET method, numeric HTTP
+  status, non-future `availability_checked_at`, pinned evidence source, and
+  distinct non-future repository `pushed_at`.
+- The served notebook contains no generated 20,719-point map, fabricated roster
+  score, `LCG`, `fusion 0.`, or news-tower copy.
 - There is no horizontal overflow at 360, 768, or 1440 CSS pixels.
 - The core journey is keyboard complete, focus-visible, and uses touch targets
-  at least 44 by 44 CSS pixels.
+  at least 44 by 44 CSS pixels (nav, brand, skip link, theme toggle).
 - Automated accessibility reports zero serious or critical findings.
 - Lab LCP is at most 2.5 seconds, CLS at most 0.10, and TBT at most 200 ms.
 - Static, package-regression, browser, and preview gates pass before readiness.
