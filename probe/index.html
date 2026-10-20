@@ -3,154 +3,303 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Atlas Model Probe — dumbmodel</title>
+<title>Six Degrees — the Atlas game</title>
 <style>
-  :root { --ink:#1a1a1a; --mut:#666; --line:#e2e2e2; --acc:#0b5fff; --bg:#fafafa; }
-  * { box-sizing:border-box; }
-  body { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color:var(--ink); background:var(--bg); margin:0; padding:0 16px 64px; }
-  .wrap { max-width:860px; margin:0 auto; }
-  header { padding:28px 0 8px; border-bottom:2px solid var(--ink); }
-  header h1 { font-size:22px; margin:0 0 4px; }
-  header p { color:var(--mut); font-size:13px; margin:0 0 12px; }
-  .modelcard { border:1px solid var(--line); background:#fff; padding:12px 14px; font-size:12.5px; margin:14px 0; }
+  :root { --ink:#1a1a1a; --mut:#666; --line:#e2e2e2; --acc:#0b5fff; --bg:#fafafa; --win:#0a7a3d; }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color:var(--ink); background:var(--bg); margin:0; padding:0 14px 80px; }
+  .wrap { max-width:760px; margin:0 auto; }
+  header.top { padding:20px 0 6px; border-bottom:2px solid var(--ink); display:flex; align-items:baseline; justify-content:space-between; }
+  header.top h1 { font-size:20px; margin:0; }
+  header.top h1 span { color:var(--acc); }
+  .tabs { display:flex; gap:8px; margin:12px 0; }
+  .tabs button { font:inherit; font-size:13px; padding:8px 16px; border:1px solid var(--line); background:#fff; cursor:pointer; }
+  .tabs button.on { background:var(--ink); color:#fff; border-color:var(--ink); }
+  .modes { display:flex; gap:8px; margin:0 0 12px; align-items:center; }
+  .modes button { font:inherit; font-size:13px; padding:8px 14px; border:1px solid var(--line); background:#fff; cursor:pointer; }
+  .modes button.on { border-color:var(--acc); color:var(--acc); font-weight:bold; }
+  .streak { margin-left:auto; font-size:13px; color:var(--mut); }
+  .card { border:1px solid var(--line); background:#fff; padding:14px; margin:10px 0; }
+  .card h2 { margin:0 0 4px; font-size:17px; }
+  .card.target { border-left:4px solid var(--acc); }
+  .card.current { border-left:4px solid var(--ink); }
+  .pill { display:inline-block; font-size:11px; border:1px solid var(--line); padding:2px 8px; margin:2px 4px 2px 0; color:var(--mut); }
+  .anchors { font-size:12.5px; color:var(--mut); margin-top:6px; }
+  .meta { display:flex; gap:16px; font-size:13px; color:var(--mut); margin:10px 0; }
+  .meta b { color:var(--ink); font-size:16px; }
+  .crumbs { font-size:12.5px; margin:8px 0; line-height:2; }
+  .crumbs span { cursor:pointer; color:var(--acc); text-decoration:underline; }
+  .crumbs span.cur { color:var(--ink); text-decoration:none; cursor:default; font-weight:bold; }
+  #nf { width:100%; font:inherit; font-size:14px; padding:10px; border:1px solid var(--line); margin:6px 0; }
+  .nbs { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:8px; max-height:420px; overflow:auto; }
+  .nb { border:1px solid var(--line); background:#fff; padding:9px 10px; cursor:pointer; font-size:13px; }
+  .nb:hover { border-color:var(--acc); background:#f2f7ff; }
+  .nb .rel { font-size:11px; color:var(--win); display:block; margin-top:2px; text-transform:capitalize; }
+  .nb .deg { font-size:10.5px; color:var(--mut); }
+  .actions { display:flex; gap:8px; margin:10px 0; flex-wrap:wrap; }
+  .actions button { font:inherit; font-size:13px; padding:9px 14px; cursor:pointer; border:1px solid var(--line); background:#fff; }
+  .actions button.primary { background:var(--acc); color:#fff; border-color:var(--acc); }
+  .win { border:2px solid var(--win); }
+  .win h2 { color:var(--win); }
+  .pathline { font-size:13px; line-height:2; }
+  #howto { position:fixed; inset:0; background:rgba(0,0,0,.55); display:none; align-items:center; justify-content:center; z-index:50; padding:20px; }
+  #howto .box { background:#fff; max-width:440px; padding:24px; font-size:14px; line-height:1.7; }
+  #howto .box h3 { margin-top:0; }
+  #howto button { font:inherit; padding:10px 20px; background:var(--ink); color:#fff; border:0; cursor:pointer; margin-top:8px; }
+  .hidden { display:none !important; }
+  #q { width:100%; font:inherit; font-size:15px; padding:11px; border:2px solid var(--ink); background:#fff; margin:12px 0 4px; }
+  #sugg { border:1px solid var(--line); background:#fff; display:none; max-height:240px; overflow:auto; }
+  #sugg div { padding:8px 12px; cursor:pointer; font-size:14px; }
+  #sugg div:hover { background:#eef4ff; }
+  .sim { float:right; color:var(--acc); font-size:13px; }
+  .modelcard { border:1px solid var(--line); background:#fff; padding:12px 14px; font-size:12.5px; margin:12px 0; }
   .modelcard table { border-collapse:collapse; width:100%; }
   .modelcard td { padding:3px 8px 3px 0; vertical-align:top; }
   .modelcard td:first-child { color:var(--mut); white-space:nowrap; }
-  #q { width:100%; font:inherit; font-size:16px; padding:12px; border:2px solid var(--ink); background:#fff; margin:18px 0 4px; }
-  #sugg { border:1px solid var(--line); background:#fff; display:none; max-height:260px; overflow:auto; }
-  #sugg div { padding:8px 12px; cursor:pointer; font-size:14px; }
-  #sugg div:hover, #sugg div.on { background:#eef4ff; }
-  #sugg .lay { color:var(--mut); font-size:11px; margin-left:8px; }
-  .card { border:1px solid var(--line); background:#fff; padding:14px; margin:14px 0; }
-  .card h2 { margin:0 0 6px; font-size:18px; }
-  .pill { display:inline-block; font-size:11px; border:1px solid var(--line); padding:2px 8px; margin-right:6px; color:var(--mut); }
-  .anchors { font-size:13px; color:var(--mut); margin:8px 0; }
-  .anchors a { color:var(--acc); }
-  .nb { border-top:1px solid var(--line); padding:10px 0; cursor:pointer; }
-  .nb:hover { background:#f4f8ff; }
-  .nb .nm { font-size:14px; }
-  .nb .sim { float:right; color:var(--acc); font-size:13px; }
-  .nb .why { font-size:12px; color:var(--mut); margin-top:3px; }
-  .nb .edge { font-size:12px; color:#0a7a3d; margin-top:2px; }
-  footer { margin-top:32px; font-size:12px; color:var(--mut); border-top:1px solid var(--line); padding-top:12px; }
-  .relname { text-transform:capitalize; }
+  footer { margin-top:28px; font-size:11.5px; color:var(--mut); border-top:1px solid var(--line); padding-top:10px; }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <h1>Atlas Model Probe</h1>
-    <p>Interrogate the world-model embeddings. Every neighbor below is a measured cosine in the model's own space — click anything to re-center.</p>
+  <header class="top">
+    <h1>SIX <span>DEGREES</span></h1>
+    <div style="font-size:12px;color:var(--mut)">the atlas game · dumbmodel</div>
   </header>
 
-  <div class="modelcard">
-    <table>
-      <tr><td>model</td><td><b>gnn-gcn2hop</b> — 32-d GCN-style encoder, symmetric degree normalization, 2 hops, pure stdlib</td></tr>
-      <tr><td>trained on</td><td>snapshot <b>atlas-20261020-f3c5146b</b> — 382,086 entities, 109,227 edges</td></tr>
-      <tr><td>held-out eval</td><td>played_for link prediction, n=8,703, clean protocol (graph from train edges only) — <b>MRR 0.158</b> · Hits@1 0.038 · Hits@10 0.446</td></tr>
-      <tr><td>vs baselines</td><td>popularity MRR 0.093 · mean-aggregation MRR 0.106 — the normalized graph wins on every metric</td></tr>
-      <tr><td>probe set</td><td>20,000 highest-degree entities (the most connected nodes)</td></tr>
-    </table>
+  <div class="tabs">
+    <button id="tab-play" class="on">▶ Play</button>
+    <button id="tab-lab">🔬 Lab</button>
   </div>
 
-  <input id="q" type="text" placeholder="Type an entity name — try LeBron James, Ohio State University, Real Madrid…" autocomplete="off">
-  <div id="sugg"></div>
-  <div id="out"></div>
+  <!-- ============ PLAY ============ -->
+  <div id="pane-play">
+    <div class="modes">
+      <button id="m-daily" class="on">📅 Daily</button>
+      <button id="m-random">🎲 Random</button>
+      <div class="streak" id="streak"></div>
+    </div>
+    <div class="meta"><div>Moves <b id="moves">0</b></div><div>Par <b id="par">–</b></div><div>Shortest path is computed live — beat it.</div></div>
+    <div class="card target"><h2>🎯 Reach: <span id="t-name">…</span></h2><div class="anchors" id="t-anch"></div></div>
+    <div class="crumbs" id="crumbs"></div>
+    <div class="card current"><h2>📍 <span id="c-name">…</span></h2><div id="c-pills"></div><div class="anchors" id="c-anch"></div></div>
+    <input id="nf" placeholder="Filter neighbors — type a team, school, player…">
+    <div class="nbs" id="nbs"></div>
+    <div class="actions">
+      <button id="btn-giveup">Reveal shortest path</button>
+      <button id="btn-new" class="primary hidden">Next pair →</button>
+      <button id="btn-share" class="hidden">Share result</button>
+    </div>
+    <div class="card win hidden" id="wincard"></div>
+  </div>
 
-  <footer>
-    Neighbors are embedding similarity, not endorsements. Every entity carries its anchors and a Wikidata receipt.
-    Model card: predictions pre-registered before the bake-off; results published either way. Next candidate: GNN+JEPA.
-  </footer>
+  <!-- ============ LAB ============ -->
+  <div id="pane-lab" class="hidden">
+    <div class="modelcard"><table>
+      <tr><td>model</td><td><b>gnn-gcn2hop</b> — 32-d GCN encoder, 2 hops, pure stdlib</td></tr>
+      <tr><td>trained on</td><td>snapshot <b>atlas-20261020-f3c5146b</b> — 382,086 entities, 109,227 edges</td></tr>
+      <tr><td>held-out eval</td><td>played_for link prediction n=8,703 — <b>MRR 0.158</b> · H@1 0.038 · H@10 0.446 (popularity 0.093)</td></tr>
+    </table></div>
+    <input id="q" placeholder="Probe the model — type an entity name…" autocomplete="off">
+    <div id="sugg"></div>
+    <div id="out"></div>
+  </div>
+
+  <footer>Every move rides a real edge: played-for, alma-mater, employer, founded-by — banked from Wikidata with provenance. Neighbors are the graph, not vibes.</footer>
 </div>
 
+<div id="howto"><div class="box">
+  <h3>How to play</h3>
+  <p>🌍 You're at <b>one entity</b>. Reach the <b>target</b> by clicking through neighbors — every click is one move along a real relationship.</p>
+  <p>🏆 <b>Par</b> is the shortest path, computed live. Beat it. Hubs (teams, big schools) are your wormholes.</p>
+  <p>🔥 Win the daily to build your streak.</p>
+  <button id="howto-go">Play</button>
+</div></div>
+
 <script>
-let E = [], byId = {}, adj = {};
+/* ---------- data ---------- */
+let ENT = {}, ADJ = {}, DEG = {}, RELS = {};
 const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function anchors(e){ const b=[]; if(e.date)b.push(esc(e.date)); if(e.place)b.push(esc(e.place)); if(e.country)b.push(esc(e.country)); return b.join(' · ')||'—'; }
 
-fetch('probe-embeddings.json').then(r => r.json()).then(d => {
-  E = d.entities;
-  E.forEach(e => { byId[e.id] = e; });
-  (d.edges || []).forEach(x => {
-    (adj[x.s] = adj[x.s] || []).push(x);
-  });
-  $('q').focus();
-});
+/* ---------- seeded rng ---------- */
+function h32(s){ let h=2166136261; for(let i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619);} return h>>>0; }
+function mulberry(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; let t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
 
-function dot(a, b) { let s = 0; for (let i = 0; i < a.length; i++) s += a[i] * b[i]; return s; }
-function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
-function anchors(e) {
-  const bits = [];
-  if (e.date) bits.push('born/founded ' + esc(e.date));
-  if (e.place) bits.push(esc(e.place));
-  if (e.country) bits.push(esc(e.country));
-  return bits.join(' · ') || '—';
-}
-function receipt(e) {
-  return e.qid ? ' · <a href="https://www.wikidata.org/wiki/' + e.qid + '" target="_blank" rel="noopener">Wikidata ↗</a>' : '';
-}
-function edgeNote(qid, nid) {
-  const xs = (adj[qid] || []).filter(x => x.d === nid);
-  if (!xs.length) return '';
-  return xs.map(x => {
-    let t = '<span class="relname">' + esc(x.r.replace(/_/g, ' ')) + '</span> → ' + esc((byId[x.d] || {}).name || '');
-    if (x.st) t += ' <span style="color:#666">(' + esc(x.st.slice(0,4)) + (x.en ? '–' + esc(x.en.slice(0,4)) : '') + ')</span>';
-    return '<div class="edge">' + t + '</div>';
-  }).join('');
-}
-
-let cur = null, suggIdx = -1, matches = [];
-$('q').addEventListener('input', () => {
-  const v = $('q').value.trim().toLowerCase();
-  const box = $('sugg');
-  if (v.length < 2 || !E.length) { box.style.display = 'none'; return; }
-  matches = E.filter(e => e.name.toLowerCase().includes(v)).slice(0, 8);
-  suggIdx = -1;
-  if (!matches.length) { box.style.display = 'none'; return; }
-  box.innerHTML = matches.map((e, i) =>
-    '<div data-i="' + i + '">' + esc(e.name) + '<span class="lay">' + esc(e.layer) + '</span></div>').join('');
-  box.style.display = 'block';
-  box.querySelectorAll('div').forEach(d => d.onclick = () => pick(matches[+d.dataset.i]));
-});
-$('q').addEventListener('keydown', ev => {
-  const box = $('sugg');
-  if (box.style.display === 'none') return;
-  if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
-    ev.preventDefault();
-    suggIdx = (suggIdx + (ev.key === 'ArrowDown' ? 1 : -1) + matches.length) % matches.length;
-    box.querySelectorAll('div').forEach((d, i) => d.classList.toggle('on', i === suggIdx));
-  } else if (ev.key === 'Enter' && suggIdx >= 0) pick(matches[suggIdx]);
-  else if (ev.key === 'Enter' && matches.length) pick(matches[0]);
-});
-document.addEventListener('click', ev => { if (!ev.target.closest('#sugg') && ev.target.id !== 'q') $('sugg').style.display = 'none'; });
-
-function pick(e) {
-  $('sugg').style.display = 'none';
-  $('q').value = e.name;
-  cur = e;
-  render(e);
-}
-
-function render(e) {
-  const scored = [];
-  for (const o of E) {
-    if (o.id === e.id) continue;
-    scored.push([dot(e.v, o.v), o]);
+/* ---------- graph ---------- */
+function bfs(a,b,cap){
+  cap = cap||8;
+  if(a===b) return [a];
+  const prev = {}; prev[a]=null; const q=[a];
+  while(q.length){
+    const n = q.shift();
+    let d=0, x=n; while(prev[x]!==null){ d++; x=prev[x]; }
+    if(d>=cap) continue;
+    for(const m of (ADJ[n]||[])){
+      if(!(m in prev)){ prev[m]=n; if(m===b){ const p=[b]; let y=b; while(prev[y]!==null){ y=prev[y]; p.unshift(y);} return p; } q.push(m); }
+    }
   }
-  scored.sort((a, b) => b[0] - a[0]);
-  const top = scored.slice(0, 12);
-  $('out').innerHTML =
-    '<div class="card"><h2>' + esc(e.name) + '</h2>' +
-    '<div><span class="pill">' + esc(e.layer) + '</span></div>' +
-    '<div class="anchors">' + anchors(e) + receipt(e) + '</div></div>' +
-    '<div class="card"><h2 style="font-size:15px">Nearest in model space</h2>' +
-    top.map(([s, o]) =>
-      '<div class="nb" data-id="' + o.id + '"><span class="sim">' + s.toFixed(3) + '</span>' +
-      '<div class="nm">' + esc(o.name) + ' <span class="pill">' + esc(o.layer) + '</span></div>' +
-      '<div class="why">' + anchors(o) + receipt(o) + '</div>' +
-      edgeNote(e.id, o.id) + '</div>'
-    ).join('') + '</div>';
-  document.querySelectorAll('.nb').forEach(d => d.onclick = () => render(byId[d.dataset.id]));
+  return null;
 }
+function bfsDist(a,b){ const p=bfs(a,b,8); return p? p.length-1 : 99; }
+
+/* ---------- game state ---------- */
+const SEEDS = ["LeBron James","Michael Jordan","Shaquille ONeal","Allen Iverson","Tim Duncan","Kevin Garnett","Dwyane Wade","Chris Paul","Carmelo Anthony","Dwight Howard","Vince Carter","Tracy McGrady","Ray Allen","Paul Pierce","Steve Nash","Jason Kidd","Charles Barkley","Scottie Pippen","Dennis Rodman","Dominique Wilkins","Chris Mullin","Robert Parish","Dikembe Mutombo","Alonzo Mourning","Grant Hill","Shawn Kemp","Mitch Richmond","Tim Hardaway","Latrell Sprewell","Stephon Marbury","Steve Francis","Baron Davis","Elton Brand","Rasheed Wallace","Ben Wallace","Chauncey Billups","Richard Hamilton","Tayshaun Prince","Pau Gasol","Marc Gasol","Joakim Noah","Derrick Rose","Russell Westbrook","James Harden","Kevin Durant","Kyrie Irving","Anthony Davis","Damian Lillard","Klay Thompson","Kawhi Leonard","Barack Obama","Elon Musk","Harvard University","FC Barcelona","New York Yankees"];
+let G = null;
+
+function nameToId(n){ for(const id in ENT){ if(ENT[id].name===n) return id; } return null; }
+function pickPair(rng){
+  const ids = SEEDS.map(nameToId).filter(Boolean);
+  for(let t=0;t<300;t++){
+    const a = ids[Math.floor(rng()*ids.length)], b = ids[Math.floor(rng()*ids.length)];
+    if(a===b) continue;
+    const d = bfsDist(a,b);
+    if(d>=3 && d<=6) return {a,b,par:d};
+  }
+  const a=ids[0], b=ids[1]; return {a,b,par:bfsDist(a,b)};
+}
+function dailyPair(){
+  const day = new Date().toISOString().slice(0,10);
+  const p = pickPair(mulberry(h32('sixdeg-daily-'+day)));
+  p.day = day; return p;
+}
+function randomPair(){ const p = pickPair(Math.random); p.day=null; return p; }
+
+function newGame(mode){
+  const p = mode==='daily'? dailyPair() : randomPair();
+  G = {a:p.a, b:p.b, par:p.par, day:p.day, moves:0, mode, trail:[p.a], over:false};
+  $('moves').textContent='0'; $('par').textContent=p.par;
+  $('wincard').classList.add('hidden'); $('btn-new').classList.add('hidden'); $('btn-share').classList.add('hidden');
+  $('m-daily').classList.toggle('on', mode==='daily');
+  $('m-random').classList.toggle('on', mode==='random');
+  render(); updateStreak();
+}
+function cur(){ return G.trail[G.trail.length-1]; }
+
+function neighbors(id){
+  const out = [];
+  for(const m of (ADJ[id]||[])){
+    const e = ENT[m]; if(!e) continue;
+    const rel = (RELS[id+'|'+m]||RELS[m+'|'+id]||'').replace(/_/g,' ');
+    out.push({e, rel, deg: DEG[m]||0});
+  }
+  out.sort((a,b)=> b.deg - a.deg);
+  return out;
+}
+
+function render(){
+  const b = ENT[G.b], c = ENT[cur()];
+  $('t-name').textContent = b.name;
+  $('t-anch').textContent = anchors(b);
+  $('c-name').textContent = c.name;
+  $('c-pills').innerHTML = '<span class="pill">'+esc(c.layer)+'</span>';
+  $('c-anch').textContent = anchors(c);
+  $('crumbs').innerHTML = G.trail.map((id,i)=>
+    i===G.trail.length-1 ? '<span class="cur">'+esc(ENT[id].name)+'</span>'
+    : '<span data-i="'+i+'">'+esc(ENT[id].name)+'</span>').join(' → ');
+  $('crumbs').querySelectorAll('span[data-i]').forEach(s=> s.onclick=()=>{ if(!G.over){ G.trail = G.trail.slice(0, +s.dataset.i+1); render(); } });
+  renderNeighbors('');
+  $('moves').textContent = G.moves;
+  $('nf').value='';
+}
+function renderNeighbors(f){
+  const fl = (f||'').trim().toLowerCase();
+  let nbs = neighbors(cur());
+  if(fl) nbs = nbs.filter(n=> n.e.name.toLowerCase().includes(fl));
+  nbs = nbs.slice(0,80);
+  $('nbs').innerHTML = nbs.map(n=>
+    '<div class="nb" data-id="'+n.e.id+'"><b>'+esc(n.e.name)+'</b><span class="deg"> · '+n.deg+' links</span>'+
+    (n.rel? '<span class="rel">'+esc(n.rel)+'</span>':'') +'</div>').join('')
+    || '<div style="color:var(--mut);font-size:13px">No matches — try another spelling.</div>';
+  $('nbs').querySelectorAll('.nb').forEach(d=> d.onclick=()=> move(d.dataset.id));
+}
+function move(id){
+  if(G.over) return;
+  G.trail.push(id); G.moves++;
+  if(id===G.b) return win();
+  render();
+}
+function win(){
+  G.over = true;
+  const path = G.trail.map(id=>ENT[id].name);
+  const beat = G.moves<=G.par;
+  $('wincard').innerHTML = '<h2>'+(beat?'🏆 You beat par!':'🎉 Reached in '+G.moves+' moves')+'</h2>'+
+    '<div class="pathline">'+path.map(esc).join(' → ')+'</div>'+
+    '<div style="margin-top:8px;font-size:13px">Par was '+G.par+'. '+(G.moves<G.par?'Under par — the graph bows to you.':G.moves===G.par?'Matched the shortest path.':'The shortest was '+G.par+'.')+'</div>';
+  $('wincard').classList.remove('hidden');
+  $('btn-new').classList.remove('hidden'); $('btn-share').classList.remove('hidden');
+  if(G.mode==='daily'){
+    const s = JSON.parse(localStorage.getItem('sixdeg')||'{}');
+    if(s.lastDay!==G.day){ s.streak=(s.streak||0)+1; s.lastDay=G.day; s.played=(s.played||0)+1; localStorage.setItem('sixdeg',JSON.stringify(s)); }
+  }
+  updateStreak();
+}
+function updateStreak(){
+  const s = JSON.parse(localStorage.getItem('sixdeg')||'{}');
+  $('streak').textContent = '🔥 '+(s.streak||0)+' day streak · '+(s.played||0)+' played';
+}
+$('nf').addEventListener('input', e=> renderNeighbors(e.target.value));
+$('m-daily').onclick = ()=> newGame('daily');
+$('m-random').onclick = ()=> newGame('random');
+$('btn-new').onclick = ()=> newGame(G.mode==='daily'?'random':'daily');
+$('btn-giveup').onclick = ()=>{
+  if(G.over) return;
+  const p = bfs(cur(), G.b, 8);
+  $('wincard').innerHTML = p
+    ? '<h2>Shortest path ('+(p.length-1)+' moves)</h2><div class="pathline">'+p.map(id=>esc(ENT[id].name)).join(' → ')+'</div>'
+    : '<h2>No path found within 8 moves</h2><div class="pathline">Try the hubs — teams and big schools connect everything.</div>';
+  $('wincard').classList.remove('hidden'); G.over = true;
+  $('btn-new').classList.remove('hidden');
+};
+$('btn-share').onclick = ()=>{
+  const t = '🌍 SIX DEGREES — I connected '+ENT[G.a].name+' → '+ENT[G.b].name+' in '+G.moves+' moves (par '+G.par+'). Play: dumbmodel.com/probe/';
+  if(navigator.share) navigator.share({text:t}).catch(()=>{});
+  else { navigator.clipboard.writeText(t).then(()=>{ $('btn-share').textContent='Copied!'; setTimeout(()=>$('btn-share').textContent='Share result',1500); }); }
+};
+
+/* ---------- tabs ---------- */
+$('tab-play').onclick = ()=>{ $('tab-play').classList.add('on'); $('tab-lab').classList.remove('on'); $('pane-play').classList.remove('hidden'); $('pane-lab').classList.add('hidden'); };
+$('tab-lab').onclick = ()=>{ $('tab-lab').classList.add('on'); $('tab-play').classList.remove('on'); $('pane-lab').classList.remove('hidden'); $('pane-play').classList.add('hidden'); };
+
+/* ---------- lab ---------- */
+let LE = [];
+function dot(a,b){ let s=0; for(let i=0;i<a.length;i++) s+=a[i]*b[i]; return s; }
+let labMatches = [];
+$('q').addEventListener('input', ()=>{
+  const v=$('q').value.trim().toLowerCase(), box=$('sugg');
+  if(v.length<2||!LE.length){ box.style.display='none'; return; }
+  labMatches = LE.filter(e=>e.name.toLowerCase().includes(v)).slice(0,8);
+  if(!labMatches.length){ box.style.display='none'; return; }
+  box.innerHTML = labMatches.map((e,i)=>'<div data-i="'+i+'">'+esc(e.name)+'<span style="color:var(--mut);font-size:11px;margin-left:8px">'+esc(e.layer)+'</span></div>').join('');
+  box.style.display='block';
+  box.querySelectorAll('div').forEach(d=> d.onclick=()=> labPick(labMatches[+d.dataset.i]));
+});
+$('q').addEventListener('keydown', ev=>{ if(ev.key==='Enter'&&labMatches.length) labPick(labMatches[0]); });
+document.addEventListener('click', ev=>{ if(!ev.target.closest('#sugg')&&ev.target.id!=='q') $('sugg').style.display='none'; });
+function labPick(e){
+  $('sugg').style.display='none'; $('q').value=e.name;
+  const byId={}; LE.forEach(x=>byId[x.id]=x);
+  const top = LE.filter(o=>o.id!==e.id).map(o=>[dot(e.v,o.v),o]).sort((a,b)=>b[0]-a[0]).slice(0,10);
+  $('out').innerHTML = '<div class="card"><h2>'+esc(e.name)+'</h2><div class="anchors">'+anchors(e)+'</div></div>'+
+    '<div class="card"><h2 style="font-size:14px">Nearest in model space</h2>'+
+    top.map(([s,o])=>'<div style="border-top:1px solid var(--line);padding:8px 0;cursor:pointer" data-id="'+o.id+'"><span class="sim">'+s.toFixed(3)+'</span><b style="font-size:13px">'+esc(o.name)+'</b><div class="anchors">'+anchors(o)+'</div></div>').join('')+'</div>';
+  $('out').querySelectorAll('[data-id]').forEach(d=> d.onclick=()=> labPick(byId[d.dataset.id]));
+}
+
+/* ---------- boot ---------- */
+fetch('probe-embeddings.json').then(r=>r.json()).then(d=>{
+  LE = d.entities;
+  LE.forEach(e=> ENT[e.id]=e);
+  (d.edges||[]).forEach(x=>{
+    if(!(ADJ[x.s]||[]).includes(x.d)) (ADJ[x.s]=ADJ[x.s]||[]).push(x.d);
+    if(!(ADJ[x.d]||[]).includes(x.s)) (ADJ[x.d]=ADJ[x.d]||[]).push(x.s);
+    if(!RELS[x.s+'|'+x.d]) RELS[x.s+'|'+x.d]=x.r;
+  });
+  for(const id in ADJ) DEG[id]=ADJ[id].length; // deduped degrees
+  if(!localStorage.getItem('sixdeg-howto')) $('howto').style.display='flex';
+  newGame('daily');
+}).catch(()=>{ $('c-name').textContent='Could not load the atlas data — check your connection and reload.'; });
+$('howto-go').onclick = ()=>{ localStorage.setItem('sixdeg-howto','1'); $('howto').style.display='none'; };
 </script>
 </body>
 </html>
