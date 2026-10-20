@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atlas Model Probe — dumbmodel</title>
+<style>
+  :root { --ink:#1a1a1a; --mut:#666; --line:#e2e2e2; --acc:#0b5fff; --bg:#fafafa; }
+  * { box-sizing:border-box; }
+  body { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color:var(--ink); background:var(--bg); margin:0; padding:0 16px 64px; }
+  .wrap { max-width:860px; margin:0 auto; }
+  header { padding:28px 0 8px; border-bottom:2px solid var(--ink); }
+  header h1 { font-size:22px; margin:0 0 4px; }
+  header p { color:var(--mut); font-size:13px; margin:0 0 12px; }
+  .modelcard { border:1px solid var(--line); background:#fff; padding:12px 14px; font-size:12.5px; margin:14px 0; }
+  .modelcard table { border-collapse:collapse; width:100%; }
+  .modelcard td { padding:3px 8px 3px 0; vertical-align:top; }
+  .modelcard td:first-child { color:var(--mut); white-space:nowrap; }
+  #q { width:100%; font:inherit; font-size:16px; padding:12px; border:2px solid var(--ink); background:#fff; margin:18px 0 4px; }
+  #sugg { border:1px solid var(--line); background:#fff; display:none; max-height:260px; overflow:auto; }
+  #sugg div { padding:8px 12px; cursor:pointer; font-size:14px; }
+  #sugg div:hover, #sugg div.on { background:#eef4ff; }
+  #sugg .lay { color:var(--mut); font-size:11px; margin-left:8px; }
+  .card { border:1px solid var(--line); background:#fff; padding:14px; margin:14px 0; }
+  .card h2 { margin:0 0 6px; font-size:18px; }
+  .pill { display:inline-block; font-size:11px; border:1px solid var(--line); padding:2px 8px; margin-right:6px; color:var(--mut); }
+  .anchors { font-size:13px; color:var(--mut); margin:8px 0; }
+  .anchors a { color:var(--acc); }
+  .nb { border-top:1px solid var(--line); padding:10px 0; cursor:pointer; }
+  .nb:hover { background:#f4f8ff; }
+  .nb .nm { font-size:14px; }
+  .nb .sim { float:right; color:var(--acc); font-size:13px; }
+  .nb .why { font-size:12px; color:var(--mut); margin-top:3px; }
+  .nb .edge { font-size:12px; color:#0a7a3d; margin-top:2px; }
+  footer { margin-top:32px; font-size:12px; color:var(--mut); border-top:1px solid var(--line); padding-top:12px; }
+  .relname { text-transform:capitalize; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Atlas Model Probe</h1>
+    <p>Interrogate the world-model embeddings. Every neighbor below is a measured cosine in the model's own space — click anything to re-center.</p>
+  </header>
+
+  <div class="modelcard">
+    <table>
+      <tr><td>model</td><td><b>gnn-gcn2hop</b> — 32-d GCN-style encoder, symmetric degree normalization, 2 hops, pure stdlib</td></tr>
+      <tr><td>trained on</td><td>snapshot <b>atlas-20261020-f3c5146b</b> — 382,086 entities, 109,227 edges</td></tr>
+      <tr><td>held-out eval</td><td>played_for link prediction, n=8,703, clean protocol (graph from train edges only) — <b>MRR 0.158</b> · Hits@1 0.038 · Hits@10 0.446</td></tr>
+      <tr><td>vs baselines</td><td>popularity MRR 0.093 · mean-aggregation MRR 0.106 — the normalized graph wins on every metric</td></tr>
+      <tr><td>probe set</td><td>20,000 highest-degree entities (the most connected nodes)</td></tr>
+    </table>
+  </div>
+
+  <input id="q" type="text" placeholder="Type an entity name — try LeBron James, Ohio State University, Real Madrid…" autocomplete="off">
+  <div id="sugg"></div>
+  <div id="out"></div>
+
+  <footer>
+    Neighbors are embedding similarity, not endorsements. Every entity carries its anchors and a Wikidata receipt.
+    Model card: predictions pre-registered before the bake-off; results published either way. Next candidate: GNN+JEPA.
+  </footer>
+</div>
+
+<script>
+let E = [], byId = {}, adj = {};
+const $ = id => document.getElementById(id);
+
+fetch('probe-embeddings.json').then(r => r.json()).then(d => {
+  E = d.entities;
+  E.forEach(e => { byId[e.id] = e; });
+  (d.edges || []).forEach(x => {
+    (adj[x.s] = adj[x.s] || []).push(x);
+  });
+  $('q').focus();
+});
+
+function dot(a, b) { let s = 0; for (let i = 0; i < a.length; i++) s += a[i] * b[i]; return s; }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function anchors(e) {
+  const bits = [];
+  if (e.date) bits.push('born/founded ' + esc(e.date));
+  if (e.place) bits.push(esc(e.place));
+  if (e.country) bits.push(esc(e.country));
+  return bits.join(' · ') || '—';
+}
+function receipt(e) {
+  return e.qid ? ' · <a href="https://www.wikidata.org/wiki/' + e.qid + '" target="_blank" rel="noopener">Wikidata ↗</a>' : '';
+}
+function edgeNote(qid, nid) {
+  const xs = (adj[qid] || []).filter(x => x.d === nid);
+  if (!xs.length) return '';
+  return xs.map(x => {
+    let t = '<span class="relname">' + esc(x.r.replace(/_/g, ' ')) + '</span> → ' + esc((byId[x.d] || {}).name || '');
+    if (x.st) t += ' <span style="color:#666">(' + esc(x.st.slice(0,4)) + (x.en ? '–' + esc(x.en.slice(0,4)) : '') + ')</span>';
+    return '<div class="edge">' + t + '</div>';
+  }).join('');
+}
+
+let cur = null, suggIdx = -1, matches = [];
+$('q').addEventListener('input', () => {
+  const v = $('q').value.trim().toLowerCase();
+  const box = $('sugg');
+  if (v.length < 2 || !E.length) { box.style.display = 'none'; return; }
+  matches = E.filter(e => e.name.toLowerCase().includes(v)).slice(0, 8);
+  suggIdx = -1;
+  if (!matches.length) { box.style.display = 'none'; return; }
+  box.innerHTML = matches.map((e, i) =>
+    '<div data-i="' + i + '">' + esc(e.name) + '<span class="lay">' + esc(e.layer) + '</span></div>').join('');
+  box.style.display = 'block';
+  box.querySelectorAll('div').forEach(d => d.onclick = () => pick(matches[+d.dataset.i]));
+});
+$('q').addEventListener('keydown', ev => {
+  const box = $('sugg');
+  if (box.style.display === 'none') return;
+  if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
+    ev.preventDefault();
+    suggIdx = (suggIdx + (ev.key === 'ArrowDown' ? 1 : -1) + matches.length) % matches.length;
+    box.querySelectorAll('div').forEach((d, i) => d.classList.toggle('on', i === suggIdx));
+  } else if (ev.key === 'Enter' && suggIdx >= 0) pick(matches[suggIdx]);
+  else if (ev.key === 'Enter' && matches.length) pick(matches[0]);
+});
+document.addEventListener('click', ev => { if (!ev.target.closest('#sugg') && ev.target.id !== 'q') $('sugg').style.display = 'none'; });
+
+function pick(e) {
+  $('sugg').style.display = 'none';
+  $('q').value = e.name;
+  cur = e;
+  render(e);
+}
+
+function render(e) {
+  const scored = [];
+  for (const o of E) {
+    if (o.id === e.id) continue;
+    scored.push([dot(e.v, o.v), o]);
+  }
+  scored.sort((a, b) => b[0] - a[0]);
+  const top = scored.slice(0, 12);
+  $('out').innerHTML =
+    '<div class="card"><h2>' + esc(e.name) + '</h2>' +
+    '<div><span class="pill">' + esc(e.layer) + '</span></div>' +
+    '<div class="anchors">' + anchors(e) + receipt(e) + '</div></div>' +
+    '<div class="card"><h2 style="font-size:15px">Nearest in model space</h2>' +
+    top.map(([s, o]) =>
+      '<div class="nb" data-id="' + o.id + '"><span class="sim">' + s.toFixed(3) + '</span>' +
+      '<div class="nm">' + esc(o.name) + ' <span class="pill">' + esc(o.layer) + '</span></div>' +
+      '<div class="why">' + anchors(o) + receipt(o) + '</div>' +
+      edgeNote(e.id, o.id) + '</div>'
+    ).join('') + '</div>';
+  document.querySelectorAll('.nb').forEach(d => d.onclick = () => render(byId[d.dataset.id]));
+}
+</script>
+</body>
+</html>
